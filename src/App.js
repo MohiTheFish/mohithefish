@@ -1,17 +1,22 @@
 import React from 'react';
-
+import { BrowserRouter, Route, Link, useRouteMatch} from 'react-router-dom';
 import MainPage from './pages/mainpage';
 
 import './App.css';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <Route exact path="/">
+        <MainPage />
+      </Route>
 
-    </Router>
-    <div className="App">
-      <MainPage />
-    </div>
+      <Route path="/hi">
+        <div>
+          HELLOW WORLDlihsfuoipsagh sopgiopuesgh go
+        </div>
+      </Route>
+    </BrowserRouter>
   );
 }
 
