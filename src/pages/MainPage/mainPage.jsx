@@ -1,5 +1,5 @@
 import React from 'react';
-import Loading from 'components/Loading/loading';
+import { Link } from 'react-router-dom';
 
 import './mainPage.scss';
 
@@ -9,7 +9,9 @@ export default function MainPage() {
       <div className="intro">
         <h1>Muhammed Imran</h1>
         <h2>MohiTheFish</h2>
-        <Loading />
+
+        <Link to="/games">Click me to see some games.</Link> 
+
       </div>
     </div>
   )
