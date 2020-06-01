@@ -1,5 +1,12 @@
-import react from 'react';
+import React from 'react';
 
-export default function Loading(props) {
-  return <div class="lds-ripple"><div></div><div></div></div>
+import './loading.scss';
+
+export default function Loading() {
+  return (
+    <div className="loading">
+
+      <div className="lds-ripple"><div></div><div></div></div>
+    </div>
+  );
 }

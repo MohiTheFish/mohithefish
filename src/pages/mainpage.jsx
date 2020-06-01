@@ -9,6 +9,7 @@ export default function MainPage() {
   const [imgName, setImageName] = useState("");
 
   useEffect( () => {
+    document.title = "MohiTheFish"
     async function fetchData() {
         
       const response = await fetch("https://cors-anywhere.herokuapp.com/https://randomfox.ca/floof/?ref=apilist.fun", 
