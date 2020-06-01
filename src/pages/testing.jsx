@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Loading from 'components/Loading/loading';
 
 export default function MainPage() {
   const [count, setCount] = useState(0);
@@ -33,7 +34,7 @@ export default function MainPage() {
   }
   return (
     <div>
-      This will be my main page.
+      This page is being used to test new features.
       <div>
         <p>You clicked {count} times</p>
         <button onClick={() => setCount(count+1)}>
@@ -54,7 +55,8 @@ export default function MainPage() {
           <option value="6">6</option>
         </select>
       </div>
-      <img src={imageName} />
+
+      { imageName === '' ? <Loading /> : <img src={imageName} alt="A fox" />}
     </div>
   );
 }
