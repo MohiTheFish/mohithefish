@@ -6,7 +6,7 @@ export default function MainPage() {
 
   const [number, setNumber] = useState(1);
 
-  const [imgName, setImageName] = useState("");
+  const [imageName, setImageName] = useState('');
 
   useEffect( () => {
     document.title = "MohiTheFish"
@@ -54,6 +54,7 @@ export default function MainPage() {
           <option value="6">6</option>
         </select>
       </div>
+      <img src={imageName} />
     </div>
   );
 }
