@@ -1,39 +1,58 @@
 import React, { useState, useEffect } from 'react';
 
-const tempData = ['I', "won't", 'be', 'silenced'];
-
 export default function MainPage() {
   const [count, setCount] = useState(0);
-  const [data, setData] = useState([]);
-  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [email, setEmail] = useState('');
 
-  useEffect(() => {
-    console.log(`API effect called. IsLoadingData: ${isLoadingData}`);
-    setTimeout(()=> {
-      console.log('set isLoading to false')
-      setIsLoadingData(false);
-      setData(tempData);
-    }, 2000);
-  }, []);
+  const [number, setNumber] = useState(1);
 
-  console.log(isLoadingData);
+  const [imgName, setImageName] = useState("");
+
+  useEffect( () => {
+    async function fetchData() {
+        
+      const response = await fetch("https://cors-anywhere.herokuapp.com/https://randomfox.ca/floof/?ref=apilist.fun", 
+      {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(res => res.json())
+      .then(res => {
+        setImageName(res.image);
+      });
+      console.log(response);
+      
+    }
+    fetchData();
+  }, [])
+
+  const handleChange = (e) => {
+    setEmail(e.target.value);
+  }
   return (
     <div>
       This will be my main page.
       <div>
         <p>You clicked {count} times</p>
-        <button onClick={() => setIsLoadingData(true)}>
+        <button onClick={() => setCount(count+1)}>
           Click me
         </button>
       </div>
       <div>
-        Your data is {isLoadingData ? 'NOT LOADED' : 'DONE LOADING'}
-        {
-          data.map(val =>
-            <p key={val}> {val}</p>)
-        }
+        <input type='text' value={email} onChange={handleChange} />
       </div>
-
+      <div>
+        <h1>Pick a movie</h1>
+        <select value={number} onChange={e => setNumber(e.target.value)}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </div>
     </div>
   );
 }
