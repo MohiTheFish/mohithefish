@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Testing from 'pages/testing'
 import MainPage from 'pages/MainPage/mainPage';
 import Games from 'pages/Games';
@@ -23,7 +23,7 @@ const theme = createMuiTheme({
   },
 });
 function App() {
-  console.log(process.env.PUBLIC_URL)
+  
   return (
     <ThemeProvider theme={theme}>
       <HashRouter basename="/">
@@ -32,6 +32,10 @@ function App() {
           <Route path="/testing" component={Testing} /> 
           <Route path="/testcomponent" component={NavBar} />
           <Route path="/games" component={Games} />
+
+          <Route>
+            <Redirect to="/" />
+          </Route>
         </Switch>
       </HashRouter>
     </ThemeProvider>
