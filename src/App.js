@@ -2,7 +2,8 @@ import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Testing from 'pages/testing'
 import MainPage from 'pages/MainPage/mainPage';
-import Games from 'pages/Games';
+import Games from 'pages/Games/games';
+import Spyfall from 'pages/Games/Spyfall/spyfall';
 import NavBar from 'components/NavBar/navbar';
 
 import './App.css';
@@ -31,7 +32,8 @@ function App() {
           <Route exact path="/" component={MainPage} />
           <Route path="/testing" component={Testing} /> 
           <Route path="/testcomponent" component={NavBar} />
-          <Route path="/games" component={Games} />
+          <Route exact path="/games" component={Games} />
+          <Route path="/games/spyfall" component={Spyfall} />
 
           <Route>
             <Redirect to="/" />
