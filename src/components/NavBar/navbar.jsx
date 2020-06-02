@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React from 'react';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';

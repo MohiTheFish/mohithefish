@@ -23,9 +23,10 @@ const theme = createMuiTheme({
   },
 });
 function App() {
+  console.log(process.env.PUBLIC_URL);
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter basename={`${process.env.PUBLIC_URL}/mohithefish`}>
         <Switch>
           <Route exact path="/" component={MainPage} />
           <Route path="/testing" component={Testing} /> 
