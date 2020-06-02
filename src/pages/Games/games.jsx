@@ -42,7 +42,7 @@ export default function Games() {
   if (Boolean(redirectPage) && !isInvalid) {
    return (
      <Redirect push to={{
-        pathname: "/games/spyfall",
+        pathname: `/games/${redirectPage}`,
         state: {username: name}
       }}
       />

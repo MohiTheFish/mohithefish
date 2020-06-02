@@ -23,8 +23,18 @@ const theme = createMuiTheme({
     danger: 'orange',
   },
 });
-function App() {
-  
+
+function ComebackGame(props) {
+  const { match: {params}} = props;
+  console.log(props);
+  return <div>
+    <h1>
+      <span style={{textTransform: "uppercase"}}>{params.name}</span> is not yet built. Come back soon.
+      </h1>
+  </div>;
+}
+
+function App() {  
   return (
     <ThemeProvider theme={theme}>
       <HashRouter basename="/">
@@ -34,6 +44,7 @@ function App() {
           <Route path="/testcomponent" component={NavBar} />
           <Route exact path="/games" component={Games} />
           <Route path="/games/spyfall" component={Spyfall} />
+          <Route path="/games/:name" component={ComebackGame} />
 
           <Route>
             <Redirect to="/" />
