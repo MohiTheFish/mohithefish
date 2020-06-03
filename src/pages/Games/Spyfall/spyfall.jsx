@@ -1,7 +1,5 @@
 import React from 'react';
 import io from 'socket.io-client';
-import Typography from '@material-ui/core/Typography';
-
 import './spyfall.scss';
 
 const locations = [
@@ -23,28 +21,6 @@ const names = [
   "EFE",
   "loejofjeeojfoso"
 ];
-
-function renderLocations(selectedLocations) {
-  return locations.map(value => {
-    const isSelected = selectedLocations.has(value);
-    let callback = this.select;
-    let selectClass = "unselected";
-    if (isSelected) {
-      callback = this.deselect;
-      selectClass = "selected";
-    }
-
-    return (
-      <div
-        key={value} 
-        className={`location vertically-center-text ${selectClass}`}
-        onClick={callback}
-      > 
-        <p>{value}</p>
-      </div>
-    );
-  });
-}
 
 export default class Spyfall extends React.Component {
   constructor(props) {
@@ -175,7 +151,7 @@ export default class Spyfall extends React.Component {
 
   render () {
     return (
-      <div className="spyfall-page-wrapper">
+      <div className="wrapper spyfall-page-wrapper">
         <div className="header-text">
           <h1>Play Spyfall</h1>
           <h4>Your name is: {this.myName}</h4>

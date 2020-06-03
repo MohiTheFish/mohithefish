@@ -41,10 +41,12 @@ function App() {
           <Route exact path="/" component={MainPage} />
           <Route path="/testing" component={Testing} /> 
           <Route path="/testcomponent" component={NavBar} />
-          <Route exact path="/games" component={Games} />
-          <Route path="/games/spyfall" component={SpyfallWaitingRoom} />
+
           <Route path="/games/spyfall/play" component={Spyfall} />
+          <Route path="/games/spyfall" component={SpyfallWaitingRoom} />
           <Route path="/games/:name" component={ComebackGame} />
+          
+          <Route path="/games" component={Games} />
 
           <Route>
             <Redirect to="/" />
