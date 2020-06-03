@@ -46,7 +46,7 @@ export default function Games() {
         state: {username: name}
       }}
       />
-   )
+   );
   }
   return (
     <div className="games-page-wrapper">
