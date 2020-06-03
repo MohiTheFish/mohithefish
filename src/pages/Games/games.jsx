@@ -33,10 +33,6 @@ export default function Games() {
   function handleChange(e) {
     setName(e.target.value);
   }
-
-  function handleSubmit(e) {
-    console.log(e);
-  }
   
   const [isInvalid, msg] = validateName(name);
   if (Boolean(redirectPage) && !isInvalid) {
