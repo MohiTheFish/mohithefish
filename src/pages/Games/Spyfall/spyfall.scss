@@ -4,7 +4,7 @@
   margin-left: auto;
   margin-right: auto;
 
-  $section-divs: 20px;
+  $section-divs: 10px;
   .header-text {
     margin-bottom: $section-divs;
     h1 {
@@ -13,51 +13,92 @@
   }
 
   .other-players {
-    background-color: red;
     margin-bottom: $section-divs;
-  }
-
-  .location-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    flex-grow: 1;
-    width: 400px;
+    width: 60%;
     margin-left: auto;
     margin-right: auto;
 
-    .location {
-      cursor: pointer;
-      position: relative;
-      transition-duration: .25s;
-      transition-property: color;
-      transition-property: background-color;
-      background-color: #eeeeee;
-      border-radius: 4px;
-      width: 160px; // Make width + 2*margin = width of locationwrapper
-      margin: 0 20px; 
-      height: 40px;
-      margin-bottom: 15px;
+    .header {
+      padding: 10px;
+    }
+    
+    .names {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
 
-      img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+      h4 {
+        cursor: pointer;
+        background-color: #616161;
+        color: white;
+        box-sizing: border-box;
+        width: 30%;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
-      box-shadow: 
-        0px 2px 1px -1px rgba(0,0,0,0.2), 
-        0px 1px 1px 0px rgba(0,0,0,0.14), 
-        0px 1px 3px 0px rgba(0,0,0,0.12);
+      .selected {
+        background-color: #424242;
+        color: #e0e0e0;
+        text-decoration: line-through;
+      }
     }
+  }
 
-    .selected {
-      background-color: #616161;
-      color: #9e9e9e;
+  .location-section{
+    .header {
+      padding: 10px;
     }
+    .location-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      flex-grow: 1;
+      width: 500px;
+      margin-left: auto;
+      margin-right: auto;
 
-    .unselected {
+      .location {
+        cursor: pointer;
+        position: relative;
+        transition-duration: .25s;
+        transition-property: color;
+        transition-property: background-color;
+        background-color: #eeeeee;
+        border-radius: 4px;
+        width: 210px; // Make width + 2*margin = width of locationwrapper
+        margin: 0 20px; 
+        height: 40px;
+        margin-bottom: 15px;
 
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+        }
+
+        box-shadow: 
+          0px 2px 1px -1px rgba(0,0,0,0.2), 
+          0px 1px 1px 0px rgba(0,0,0,0.14), 
+          0px 1px 3px 0px rgba(0,0,0,0.12);
+      }
+
+      .location:hover {
+        background-color: #bdbdbd;
+      }
+
+      .selected {
+        background-color: #424242;
+        color: #e0e0e0;
+        text-decoration: line-through;
+      }
+      .selected:hover {
+        background-color: #616161;
+      }
     }
   }
 }

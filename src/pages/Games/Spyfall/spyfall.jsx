@@ -1,6 +1,6 @@
 import React from 'react';
 import io from 'socket.io-client';
-import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import './spyfall.scss';
 
@@ -9,14 +9,24 @@ const locations = [
   'Swamp',
   'Forest',
   'City',
-  'Boat'
+  'Boat',
+  'Crusader Army',
+  'World War II Squad',
+  'Polar Station',
+  'Space Station'
 ];
 
+const names = [
+  "Abefsefsefsfesef;isoefjsoiefsjfoec", 
+  "BCD",
+  "CDFE",
+  "EFE",
+  "loejofjeeojfoso"
+];
 
-
-function renderLocations(selected) {
+function renderLocations(selectedLocations) {
   return locations.map(value => {
-    const isSelected = selected.has(value);
+    const isSelected = selectedLocations.has(value);
     let callback = this.select;
     let selectClass = "unselected";
     if (isSelected) {
@@ -48,58 +58,102 @@ export default class Spyfall extends React.Component {
     this.myName = localStorage.getItem('username');
 
     this.state = {
-      selected: new Set()
+      selectedLocations: new Set(),
+      selectedNames: new Set(),
+      isSpy: true,
     }
 
     /** Event Handlers */
     this.select = this.select.bind(this);
     this.deselect = this.deselect.bind(this);
 
+    this.selectName = this.selectName.bind(this);
+    this.deselectName = this.deselectName.bind(this);
+
     /** Render functions */
+    this.renderNames = this.renderNames.bind(this);
     this.renderLocations = this.renderLocations.bind(this);
   }
 
-  componentDidMount() {
-    document.title = "Spyfall";
-  }
-
   // componentDidMount() {
-  //   const socket = io('http://localhost:5000', {
-  //     reconnection: false,
-  //   });
-
-  //   socket.on('connect', function(){
-  //     console.log('THe client connected');
-  //   });
-
-  //   socket.on('my response', function(data){
-  //     console.log(data);
-  //   });
+  //   document.title = "Spyfall";
   // }
 
-  select(e) {
-    const { selected } = this.state;
-    selected.add(e.target.textContent);
-    console.log(selected);
+  componentDidMount() {
+    document.title = "Spyfall";
+    const socket = io('http://localhost:5000', {
+      reconnection: false,
+    });
+
+    socket.on('connect', function(){
+      console.log('THe client connected');
+    });
+
+    socket.on('my response', function(data){
+      console.log(data);
+    });
+  }
+
+  selectName(e) {
+    const { selectedNames } = this.state;
+    selectedNames.add(e.target.innerHTML);
     this.setState({
-      selected
+      selectedNames,
+    });
+  }
+
+  deselectName(e) {
+    const { selectedNames } = this.state;
+    selectedNames.delete(e.target.innerHTML);
+    this.setState({
+      selectedNames,
+    });
+  }
+
+  select(e) {
+    const { selectedLocations } = this.state;
+    selectedLocations.add(e.target.textContent);
+    
+    this.setState({
+      selectedLocations
     });
   }
 
   deselect(e) {
-    const { selected } = this.state;
-    selected.delete(e.target.textContent);
-    console.log(selected);
+    const { selectedLocations } = this.state;
+    selectedLocations.delete(e.target.textContent);
 
     this.setState({
-      selected
+      selectedLocations
     });
   }
 
+
+  renderNames() {
+    const { selectedNames } = this.state;
+    return names.map(name => {
+      const isSelected = selectedNames.has(name);
+      let callback = this.selectName;
+      let selectClass = "";
+      if (isSelected) {
+        callback = this.deselectName;
+        selectClass = "selected";
+      }
+      
+      return (
+        <h4 key={name}
+         className={selectClass}
+         onClick={callback}>
+          {name}
+        </h4>
+      )
+    })
+  }
+
   renderLocations() {
-    const { selected } = this.state; 
+    const { selectedLocations } = this.state; 
     return locations.map(value => {
-      const isSelected = selected.has(value);
+      const isSelected = selectedLocations.has(value);
       let callback = this.select;
       let selectClass = "";
       if (isSelected) {
@@ -125,16 +179,31 @@ export default class Spyfall extends React.Component {
         <div className="header-text">
           <h1>Play Spyfall</h1>
           <h4>Your name is: {this.myName}</h4>
+          <h4>
+            {
+              this.state.isSpy 
+              ? "You ARE the spy! " 
+              : "You are NOT the spy."
+            }
+          </h4>
         </div>
 
         <div className="other-players">
-          <h2> Other players</h2>
+          <h2 className="header">Other Players</h2>
+          <div className="names">
+            {
+              this.renderNames()
+            }
+          </div>
         </div>
 
-        <div className="location-wrapper">
-          {
-            this.renderLocations()
-          }
+        <div className="location-section">
+          <h2 className="header">Locations</h2>
+          <div className="location-wrapper">
+            {
+              this.renderLocations()
+            }
+          </div>
         </div>
       </div>
     );
