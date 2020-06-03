@@ -3,11 +3,10 @@ import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Testing from 'pages/testing'
 import MainPage from 'pages/MainPage/mainPage';
 import Games from 'pages/Games/games';
-import Spyfall from 'pages/Games/Spyfall/spyfall';
+import { Spyfall, SpyfallWaitingRoom } from 'pages/Games/Spyfall';
 import NavBar from 'components/NavBar/navbar';
 
 import './App.css';
-
 
 import { ThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -43,7 +42,8 @@ function App() {
           <Route path="/testing" component={Testing} /> 
           <Route path="/testcomponent" component={NavBar} />
           <Route exact path="/games" component={Games} />
-          <Route path="/games/spyfall" component={Spyfall} />
+          <Route path="/games/spyfall" component={SpyfallWaitingRoom} />
+          <Route path="/games/spyfall/play" component={Spyfall} />
           <Route path="/games/:name" component={ComebackGame} />
 
           <Route>

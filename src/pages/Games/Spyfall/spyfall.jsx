@@ -182,7 +182,7 @@ export default class Spyfall extends React.Component {
           <h4>
             {
               this.state.isSpy 
-              ? "You ARE the spy! " 
+              ? "You ARE the spy! 🕵️" 
               : "You are NOT the spy."
             }
           </h4>
