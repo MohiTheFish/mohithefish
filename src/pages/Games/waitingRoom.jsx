@@ -4,6 +4,8 @@ import Loading from 'components/Loading/loading';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
+import { connectToServer } from './socketHandlers';
+
 import './waitingRoom.scss';
 
 function ConnectedChoices(props) {
@@ -104,6 +106,7 @@ export default class WaitingRoom extends React.Component {
     });
 
     socket.on('connect', function() {
+      self.socket = socket;
       console.log('The client connected');
 
       socket.emit('initialConnection', {
@@ -114,11 +117,17 @@ export default class WaitingRoom extends React.Component {
       self.setState({
         connected: true,
       })
-      
     });
 
+    
+
+    socket.on('print', function(data) {
+      console.log(data);
+    });
+    
     socket.on('disconnect', function() {
       console.log('The client disconnected');
+      self.socket = null;
       self.setState({
         connected: false,
         numPlayers: 1,
@@ -129,6 +138,7 @@ export default class WaitingRoom extends React.Component {
 
 
   handleSelect(e) {
+    this.socket.emit('hello world', 'garbage');
     this.setState({
       selectedChoice: e,
       isLoadingRoom: true,
