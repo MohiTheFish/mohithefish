@@ -35,12 +35,14 @@ function ConnectedChoices(props) {
     <div className="connected-choices">
       <Button 
         disableFocusRipple={true}
-        className={createClassName} 
+        className={createClassName}
+        color="primary"
         {...createButtonProps}
         onClick={() => handleSelect('create')}>Create Room</Button>
       <Button 
         disableFocusRipple={true}
         className={joinClassName} 
+        color="primary"
         {...joinButtonProps}
         onClick={() => handleSelect('join')}>Join Room</Button>
     </div>
@@ -124,7 +126,7 @@ export default class WaitingRoom extends React.Component {
     socket.on('print', function(data) {
       console.log(data);
     });
-    
+
     socket.on('disconnect', function() {
       console.log('The client disconnected');
       self.socket = null;
