@@ -1,25 +1,69 @@
 import React from 'react';
 import io from 'socket.io-client';
 import Loading from 'components/Loading/loading';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+
+import './waitingRoom.scss';
 
 function ConnectedChoices(props) {
   const { selectedChoice, handleSelect } = props;
 
-  let createClassName = "enabled";
-  let joinClassName = "enabled";
+  const createButtonProps = {
+    variant: "contained",
+    className: "button",
+  };
+  const joinButtonProps = {
+    variant: "contained",
+    className: "button",
+  };
+
+
+  let createClassName = "button";
+  let joinClassName = "button";
   if (selectedChoice === "create") {
-    joinClassName = "disabled";
+    joinButtonProps.className += " disabled";
+    joinButtonProps.variant = "outlined"
   }
   else if (selectedChoice === "join") {
-    createClassName = "enabled";
+    createButtonProps.className += " disabled";
+    createButtonProps.variant = "outlined"
   }
   return (
     <div className="connected-choices">
-      <h4 id="create" className={createClassName} onClick={handleSelect}>Create Room</h4>
-      <h4 id="join" className={joinClassName} onClick={handleSelect}>Join Room</h4>
+      <Button 
+        disableFocusRipple={true}
+        className={createClassName} 
+        {...createButtonProps}
+        onClick={() => handleSelect('create')}>Create Room</Button>
+      <Button 
+        disableFocusRipple={true}
+        className={joinClassName} 
+        {...joinButtonProps}
+        onClick={() => handleSelect('join')}>Join Room</Button>
     </div>
-  )
+  );
+}
+
+function RoomInfo(props) {
+  const { connected, selectedChoice, name } = props;
+  if (!connected || !selectedChoice) { return ""; }
+
+  if (selectedChoice === "create") {
+    return (
+      <div className="room-info">
+        <div className="room-title">
+          <h3>Host: {name}</h3>
+          <h3>Room id:</h3>
+          <h4>Share your room id to let others join!</h4>
+        </div>
+      </div>
+    );
+  }
+  else {
+    return "";
+  }
+
 }
 
 export default class WaitingRoom extends React.Component {
@@ -73,6 +117,7 @@ export default class WaitingRoom extends React.Component {
       this.setState({
         connected: false,
         numPlayers: 1,
+        selectedChoice: "",
       });
     })
   }
@@ -81,7 +126,7 @@ export default class WaitingRoom extends React.Component {
 
   handleSelect(e) {
     this.setState({
-      selectedChoice: e.target.id,
+      selectedChoice: e,
     });
   }
 
@@ -101,6 +146,11 @@ export default class WaitingRoom extends React.Component {
               handleSelect={this.handleSelect}
             />
         }
+        <RoomInfo
+        name={this.myName}
+        selectedChoice={selectedChoice}
+        connected={connected}
+        isLoading={true}/>
       </div>
     );
   }
