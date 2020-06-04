@@ -4,6 +4,8 @@ import Loading from 'components/Loading/loading';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
+import store from 'redux/store';
+
 import { connectToServer } from './socketHandlers';
 
 import './waitingRoom.scss';
@@ -148,6 +150,7 @@ export default class WaitingRoom extends React.Component {
   }
 
   render() {
+    console.log(store.getState());
     const { connected, selectedChoice, isLoadingRoom } = this.state;
     const { match: {params}} = this.props;
     return (

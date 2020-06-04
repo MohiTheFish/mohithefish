@@ -3,6 +3,11 @@ import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
+import store from 'redux/store';
+import {
+  setGameUsername
+} from 'redux/actions/actions';
+
 import './games.scss';
 
 const allGames = [
@@ -39,6 +44,10 @@ export default function Games() {
    */
   const [isInvalid, msg] = validateName(name);
   if (Boolean(redirectPage) && !isInvalid) {
+    store.dispatch(setGameUsername({
+      username: name,
+      gamename: redirectPage
+    }));
    return (
      <Redirect push to={{
         pathname: `/games/${redirectPage}`,
