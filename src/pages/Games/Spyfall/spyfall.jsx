@@ -1,5 +1,5 @@
 import React from 'react';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import './spyfall.scss';
 
 const locations = [
@@ -29,9 +29,11 @@ export default class Spyfall extends React.Component {
 
     /* Best way to keep track of the name after refreshing??? */
     if(props.location.state) {
-      localStorage.setItem('username', props.location.state.username)
+      localStorage.setItem('username', props.location.state.username);
+      localStorage.setItem('gameName', props.location.state.gameName);
     }
     this.myName = localStorage.getItem('username');
+    this.gameName = localStorage.getItem('gameName');
 
     this.state = {
       selectedLocations: new Set(),
@@ -57,17 +59,6 @@ export default class Spyfall extends React.Component {
 
   componentDidMount() {
     document.title = "Spyfall";
-    const socket = io('http://localhost:5000', {
-      reconnection: false,
-    });
-
-    socket.on('connect', function(){
-      console.log('THe client connected');
-    });
-
-    socket.on('my response', function(data){
-      console.log(data);
-    });
   }
 
   selectName(e) {

@@ -33,13 +33,19 @@ export default function Games() {
   function handleChange(e) {
     setName(e.target.value);
   }
-  
+
+  /**
+   * @todo Look into creating the component as soon as the link is pressed.
+   */
   const [isInvalid, msg] = validateName(name);
   if (Boolean(redirectPage) && !isInvalid) {
    return (
      <Redirect push to={{
         pathname: `/games/${redirectPage}`,
-        state: {username: name}
+        state: {
+          username: name,
+          gameName: redirectPage,
+        }
       }}
       />
    );
