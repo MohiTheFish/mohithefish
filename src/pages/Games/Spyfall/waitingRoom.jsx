@@ -46,7 +46,7 @@ function ConnectedChoices(props) {
 }
 
 function RoomInfo(props) {
-  const { connected, selectedChoice, name } = props;
+  const { connected, selectedChoice, name, host } = props;
   if (!connected || !selectedChoice) { return ""; }
 
   if (selectedChoice === "create") {
@@ -61,9 +61,14 @@ function RoomInfo(props) {
     );
   }
   else {
-    return "";
+    return (
+      <div className="room-info">
+        <div className="room-title">
+          Enter room you would like to join:
+        </div>
+      </div>
+    );
   }
-
 }
 
 export default class WaitingRoom extends React.Component {
@@ -91,7 +96,6 @@ export default class WaitingRoom extends React.Component {
 
   componentDidMount() {
     document.title = "WaitingRoom";
-
     const self = this;
     
     var socket = io.connect('http://localhost:5000', {
@@ -122,8 +126,6 @@ export default class WaitingRoom extends React.Component {
     })
   }
 
-  componentWillUnmount(){}
-
   handleSelect(e) {
     this.setState({
       selectedChoice: e,
@@ -146,11 +148,14 @@ export default class WaitingRoom extends React.Component {
               handleSelect={this.handleSelect}
             />
         }
+
         <RoomInfo
-        name={this.myName}
-        selectedChoice={selectedChoice}
-        connected={connected}
-        isLoading={true}/>
+          name={this.myName}
+          host={"a host"}
+          selectedChoice={selectedChoice}
+          connected={connected}
+          isLoading={true}
+        />
       </div>
     );
   }

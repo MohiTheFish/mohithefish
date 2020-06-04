@@ -26,7 +26,6 @@ export default class Spyfall extends React.Component {
   constructor(props) {
     super(props);
 
-
     /* Best way to keep track of the name after refreshing??? */
     if(props.location.state) {
       localStorage.setItem('username', props.location.state.username);
