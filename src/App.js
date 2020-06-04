@@ -3,7 +3,7 @@ import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Testing from 'pages/testing'
 import MainPage from 'pages/MainPage/mainPage';
 import Games from 'pages/Games/games';
-import { Spyfall, SpyfallWaitingRoom } from 'pages/Games/Spyfall';
+import { Spyfall, WaitingRoom } from 'pages/Games/Spyfall';
 import NavBar from 'components/NavBar/navbar';
 
 import './App.css';
@@ -43,8 +43,7 @@ function App() {
           <Route path="/testcomponent" component={NavBar} />
 
           <Route path="/games/spyfall/play" component={Spyfall} />
-          <Route path="/games/spyfall" component={SpyfallWaitingRoom} />
-          <Route path="/games/:name" component={ComebackGame} />
+          <Route path="/games/:name" component={WaitingRoom} />
           
           <Route path="/games" component={Games} />
 

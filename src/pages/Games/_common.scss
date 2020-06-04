@@ -1,7 +1,6 @@
 $section-divs: 10px;
 
 .wrapper {
-  
   padding: 20px;
   text-align: center;
   margin-left: auto;
@@ -11,6 +10,7 @@ $section-divs: 10px;
     margin-bottom: $section-divs;
     h1 {
       margin: 10px 0;
+      text-transform: capitalize;
     }
   }
 

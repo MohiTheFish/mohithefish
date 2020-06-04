@@ -1,5 +1,5 @@
 import Spyfall from './spyfall';
-import SpyfallWaitingRoom from './waitingRoom';
+import WaitingRoom from '../waitingRoom';
 
 
-export { Spyfall, SpyfallWaitingRoom };
+export { Spyfall, WaitingRoom };

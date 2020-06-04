@@ -71,6 +71,7 @@ function RoomInfo(props) {
   }
 }
 
+
 export default class WaitingRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -78,17 +79,15 @@ export default class WaitingRoom extends React.Component {
     /* Best way to keep track of the name after refreshing??? */
     if(props.location.state) {
       localStorage.setItem('username', props.location.state.username);
-      localStorage.setItem('gameName', props.location.state.gameName);
     }
     this.myName = localStorage.getItem('username');
-    this.gameName = localStorage.getItem('gameName');
 
     this.state = {
       isConnected: false,
       numPlayers: 1,
       selectedChoice: "",
+      isLoadingRoom: false,
     }
-
 
     /* Event Handlers */
     this.handleSelect = this.handleSelect.bind(this);
@@ -96,9 +95,11 @@ export default class WaitingRoom extends React.Component {
 
   componentDidMount() {
     document.title = "WaitingRoom";
+    
+    const { match: {params}} = this.props;
     const self = this;
     
-    var socket = io.connect('http://localhost:5000', {
+    var socket = io.connect(`http://localhost:5000/${params.name}`, {
       reconnection: true,
     });
 
@@ -106,19 +107,19 @@ export default class WaitingRoom extends React.Component {
       console.log('The client connected');
 
       socket.emit('initialConnection', {
-        game: self.gameName,
+        game: params.name,
         name: self.myName,
       });
 
       self.setState({
         connected: true,
       })
-
+      
     });
 
     socket.on('disconnect', function() {
       console.log('The client disconnected');
-      this.setState({
+      self.setState({
         connected: false,
         numPlayers: 1,
         selectedChoice: "",
@@ -126,18 +127,21 @@ export default class WaitingRoom extends React.Component {
     })
   }
 
+
   handleSelect(e) {
     this.setState({
       selectedChoice: e,
+      isLoadingRoom: true,
     });
   }
 
   render() {
-    const { connected, selectedChoice } = this.state;
+    const { connected, selectedChoice, isLoadingRoom } = this.state;
+    const { match: {params}} = this.props;
     return (
       <div className="wrapper waiting-room-wrapper">
         <div className="header-text">
-          <h1>Play Spyfall</h1>
+          <h1>Play {params.name}</h1>
           <h4>Your name is: {this.myName}</h4>
         </div>
         {
@@ -154,7 +158,7 @@ export default class WaitingRoom extends React.Component {
           host={"a host"}
           selectedChoice={selectedChoice}
           connected={connected}
-          isLoading={true}
+          isLoadingRoom={isLoadingRoom}
         />
       </div>
     );
