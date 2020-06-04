@@ -1,22 +1,39 @@
 import { createStore } from 'redux'
 import MohiApp from '../reducers';
+import {initialState as initalGameSessionNameState} from '../reducers/nameReducers';
 
 const defaultState = {
-  username: "",
-  gamename: "",
+  gameSessionNameManager: initalGameSessionNameState,
 };
 
-class StateLoader {
-  loadState() {
-    const username = localStorage.getItem('username');
-    const gamename = localStorage.getItem('gamename');
+function loadState() {
+  const username = localStorage.getItem('username');
+  const gamename = localStorage.getItem('gamename');
 
-    if (username === null || gamename === null) {
-      return {
+  console.log(username);
+  console.log(gamename);
+  if (!username && !gamename) {
+    return {
+        gameSessionNameManager: {
+        username,
+        gamename,
       }
     }
   }
+
+  return defaultState;
 }
 
-const store = createStore(MohiApp);
+const store = createStore(MohiApp, loadState());
+
+export function saveState(state) {
+  const { username, gamename } = state.gameSessionNameManager;
+  localStorage.setItem('username', username);
+  localStorage.setItem('gamename', gamename);
+}
+
+export function saveCurrentState() {
+  saveState(store.getState());
+}
+
 export default store;

@@ -1,6 +1,6 @@
 import {SET_GAME_USERNAME, SET_GAMENAME, SET_USERNAME} from '../actions/actions';
 
-const initialState = {
+export const initialState = {
   username: "",
   gamename: "",
 };
