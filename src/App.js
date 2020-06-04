@@ -1,10 +1,16 @@
 import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+
 import Testing from 'pages/testing'
 import MainPage from 'pages/MainPage/mainPage';
 import Games from 'pages/Games/games';
-import { Spyfall, WaitingRoom } from 'pages/Games/Spyfall';
+import { Spyfall } from 'pages/Games/Spyfall';
+import WaitingRoom from 'pages/Games/waitingRoom';
 import NavBar from 'components/NavBar/navbar';
+import rootReducer from 'pages/reducers';
 
 import './App.css';
 
@@ -23,6 +29,8 @@ const theme = createMuiTheme({
   },
 });
 
+const store = createStore(rootReducer)
+
 function ComebackGame(props) {
   const { match: {params}} = props;
   console.log(props);
@@ -36,7 +44,8 @@ function ComebackGame(props) {
 function App() {  
   return (
     <ThemeProvider theme={theme}>
-      <HashRouter basename="/">
+    <Provider store={store}>
+    <HashRouter basename="/">
         <Switch>
           <Route exact path="/" component={MainPage} />
           <Route path="/testing" component={Testing} /> 
@@ -51,7 +60,8 @@ function App() {
             <Redirect to="/" />
           </Route>
         </Switch>
-      </HashRouter>
+    </HashRouter>
+    </Provider>
     </ThemeProvider>
   );
 }
