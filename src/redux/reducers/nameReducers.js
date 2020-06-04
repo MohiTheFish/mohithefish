@@ -1,4 +1,4 @@
-import {SET_GAME_USERNAME} from '../actions/actions';
+import {SET_GAME_USERNAME, SET_GAMENAME, SET_USERNAME} from '../actions/actions';
 
 const initialState = {
   username: "",
@@ -7,11 +7,23 @@ const initialState = {
 
 export function gameSessionNameManager(state = initialState, action) {
   switch(action.type) {
-    case SET_GAME_USERNAME:
+    case SET_GAME_USERNAME: {
       return {
         username: action.username,
         gamename: action.gamename,
       }
+    }
+    case SET_GAMENAME: {
+      return {
+        gamename: action.gamename,
+      }
+    }
+    case SET_USERNAME: {
+      return {
+        username: action.username,
+      }
+    }
+
     default:
       return state;
   }

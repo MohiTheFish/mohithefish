@@ -2,11 +2,8 @@ import React from 'react';
 import io from 'socket.io-client';
 import Loading from 'components/Loading/loading';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
 
 import store from 'redux/store';
-
-import { connectToServer } from './socketHandlers';
 
 import './waitingRoom.scss';
 
@@ -52,7 +49,7 @@ function ConnectedChoices(props) {
 }
 
 function RoomInfo(props) {
-  const { connected, selectedChoice, name, host } = props;
+  const { connected, selectedChoice, name } = props;
   if (!connected || !selectedChoice) { return ""; }
 
   if (selectedChoice === "create") {

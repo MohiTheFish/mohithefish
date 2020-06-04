@@ -1,19 +1,19 @@
 export const SET_USERNAME = "SET_USERNAME";
-export const SET_GAME = "SET_GAME";
+export const SET_GAMENAME = "SET_GAME";
 export const SET_GAME_USERNAME = "SET_GAME_USERNAME";
 
 
 export function setUsername(name) {
   return {
     type: SET_USERNAME,
-    name,
+    username: name,
   };
 }
 
-export function setGame(name) {
+export function setGameName(name) {
   return {
-    type: SET_GAME,
-    name
+    type: SET_GAMENAME,
+    gamename: name
   };
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -48,6 +49,9 @@ export default function Games() {
       username: name,
       gamename: redirectPage
     }));
+
+    localStorage.setItem('username', name);
+    localStorage.setItem('gamename', redirectPage);
    return (
      <Redirect push to={{
         pathname: `/games/${redirectPage}`,
