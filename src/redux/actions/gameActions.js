@@ -5,6 +5,7 @@ export const SET_IS_LOADINGROOM = 'SET_IS_LOADINGROOM';
 export const SET_SELECTED_CHOICE = 'SET_SELECTED_CHOICE';
 
 export function setIsConnected(isConnected) {
+  console.log('now connected');
   return {
     type: SET_IS_CONNECTED,
     isConnected,

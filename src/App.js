@@ -6,7 +6,7 @@ import Testing from 'pages/testing'
 import MainPage from 'pages/MainPage/mainPage';
 import Games from 'pages/Games/games';
 import { Spyfall } from 'pages/Games/Spyfall';
-import WaitingRoom from 'pages/Games/waitingRoom';
+import WaitingRoom from 'pages/Games/WaitingRoom/waitingRoom';
 import NavBar from 'components/NavBar/navbar';
 import store from 'redux/store';
 

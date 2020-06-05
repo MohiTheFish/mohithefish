@@ -11,15 +11,23 @@ import {
 
 var socket = null;
 
-export function connectToServer(endpoint, initialData) {
-  socket = io.connect(endpoint, {
+export function connectToServer() {
+  console.log('connecting...')
+  const {username, gamename, uuid} = store.getState().gameCredentials;
+  socket = io.connect(`http://localhost:5000/${gamename}`, {
     reconnection: true,
   });
+
 
   socket.on('connect', function() {
     console.log('The client connected');
 
-    socket.emit('initialConnection', initialData);
+    socket.emit('initialConnection', {
+      username,
+      gamename,
+      uuid,
+    });
+    console.log('now connected');
     store.dispatch(setIsConnected(true));
   });
 
