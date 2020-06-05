@@ -12,3 +12,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ## Learn about me
 
 This webpage is a personal website/blog about some of the stuff I have accomplished. Look forward to it.
+
+## Enjoy!
+
+I didn't really wanna do the blog. I'm developing some classic party games so stay tuned. 
