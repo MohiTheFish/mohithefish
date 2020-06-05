@@ -40,9 +40,10 @@ export function connectToServer() {
     console.log(data);
   });
   
-  newSocket.on('createdRoom', function(host){
+  newSocket.on('createdRoom', function(roomInfo){
     store.dispatch(roomCreated({
-      host: host,
+      host: roomInfo.host,
+      sharingCode: roomInfo.hostID,
     }));
   })
   newSocket.on('disconnect', function() {

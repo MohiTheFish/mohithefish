@@ -4,6 +4,7 @@ import {
   SET_IS_LOADINGROOM,
   SET_SELECTED_CHOICE,
   SET_HOST_NAME,
+  ROOM_CREATED,
 } from '../actions/gameActions';
 
 export const initialState = {
@@ -36,7 +37,11 @@ export function gameData(state = initialState, action) {
       return Object.assign({}, state, {
         host: action.host
       });
+    case ROOM_CREATED:
+      console.log(action.data);
+      return Object.assign({}, state, {
 
+      })
     default:
       return state;
   } 
