@@ -1,35 +1,42 @@
 import { createStore } from 'redux'
 import MohiApp from '../reducers';
-import {initialState as initalGameSessionNameState} from '../reducers/nameReducers';
+import {initialState as initialGameData} from '../reducers/gameReducers';
+import {initialState as initialGameCredentialState} from '../reducers/nameReducers';
 
 const defaultState = {
-  gameSessionNameManager: initalGameSessionNameState,
+  gameCredentials: initialGameCredentialState,
+  gameData: initialGameData,
 };
+console.log(defaultState);
+const storageType = localStorage;
 
 function loadState() {
-  const username = localStorage.getItem('username');
-  const gamename = localStorage.getItem('gamename');
+  const username = storageType.getItem('username');
+  const gamename = storageType.getItem('gamename');
+  const uuid = storageType.getItem('uuid');
 
-  console.log(username);
-  console.log(gamename);
-  if (!username && !gamename) {
-    return {
-        gameSessionNameManager: {
-        username,
-        gamename,
-      }
-    }
+  if (!username || !gamename || !uuid) {
+    return defaultState;
   }
 
-  return defaultState;
+  return {
+    gameData: initialGameData,
+    gameCredentials: {
+      username,
+      gamename,
+      uuid
+    }
+  };
 }
 
 const store = createStore(MohiApp, loadState());
+console.log(store.getState());
 
 export function saveState(state) {
-  const { username, gamename } = state.gameSessionNameManager;
-  localStorage.setItem('username', username);
-  localStorage.setItem('gamename', gamename);
+  const { username, gamename, uuid } = state.gameCredentials;
+  storageType.setItem('username', username);
+  storageType.setItem('gamename', gamename);
+  storageType.setItem('uuid', uuid);
 }
 
 export function saveCurrentState() {

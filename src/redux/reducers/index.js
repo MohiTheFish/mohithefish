@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { gameSessionNameManager } from './nameReducers';
+import { gameCredentials } from './nameReducers';
+import { gameData } from './gameReducers';
 
 export default combineReducers({
-  gameSessionNameManager
+  gameCredentials,
+  gameData,
 });

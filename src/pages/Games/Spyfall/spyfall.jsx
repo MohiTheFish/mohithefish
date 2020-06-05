@@ -1,5 +1,5 @@
 import React from 'react';
-// import io from 'socket.io-client';
+import store from 'redux/store';
 import './spyfall.scss';
 
 const locations = [
@@ -27,12 +27,9 @@ export default class Spyfall extends React.Component {
     super(props);
 
     /* Best way to keep track of the name after refreshing??? */
-    if(props.location.state) {
-      localStorage.setItem('username', props.location.state.username);
-      localStorage.setItem('gameName', props.location.state.gameName);
-    }
-    this.myName = localStorage.getItem('username');
-    this.gameName = localStorage.getItem('gameName');
+    const { username, gamename } = store.getState().gameCredentials;
+    this.myName = username;
+    this.gameName = gamename;
 
     this.state = {
       selectedLocations: new Set(),

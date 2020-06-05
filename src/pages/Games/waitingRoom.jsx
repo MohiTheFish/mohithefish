@@ -7,6 +7,11 @@ import store from 'redux/store';
 
 import './waitingRoom.scss';
 
+function setDisableProps(obj) {
+  obj.className += " disabled";
+  obj.variant = "outlined"
+}
+
 function ConnectedChoices(props) {
   const { selectedChoice, handleSelect } = props;
 
@@ -20,27 +25,21 @@ function ConnectedChoices(props) {
   };
 
 
-  let createClassName = "button";
-  let joinClassName = "button";
   if (selectedChoice === "create") {
-    joinButtonProps.className += " disabled";
-    joinButtonProps.variant = "outlined"
+    setDisableProps(joinButtonProps);
   }
   else if (selectedChoice === "join") {
-    createButtonProps.className += " disabled";
-    createButtonProps.variant = "outlined"
+    setDisableProps(createButtonProps);
   }
   return (
     <div className="connected-choices">
       <Button 
         disableFocusRipple={true}
-        className={createClassName}
         color="primary"
         {...createButtonProps}
         onClick={() => handleSelect('create')}>Create Room</Button>
       <Button 
         disableFocusRipple={true}
-        className={joinClassName} 
         color="primary"
         {...joinButtonProps}
         onClick={() => handleSelect('join')}>Join Room</Button>
@@ -79,11 +78,8 @@ export default class WaitingRoom extends React.Component {
   constructor(props) {
     super(props);
     
-    /* Best way to keep track of the name after refreshing??? */
-    if(props.location.state) {
-      localStorage.setItem('username', props.location.state.username);
-    }
-    this.myName = localStorage.getItem('username');
+    const { username } = store.getState().gameCredentials;
+    this.myName = username;
 
     this.state = {
       isConnected: false,
@@ -121,7 +117,6 @@ export default class WaitingRoom extends React.Component {
     });
 
     
-
     socket.on('print', function(data) {
       console.log(data);
     });

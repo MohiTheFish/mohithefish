@@ -1,13 +1,12 @@
-/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import store from 'redux/store';
+import store, { saveState } from 'redux/store';
 import {
   setGameUsername
-} from 'redux/actions/actions';
+} from 'redux/actions/nameActions';
 
 import './games.scss';
 
@@ -29,7 +28,7 @@ function validateName(name) {
 
 
 export default function Games() {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(store.getState().gameCredentials.username);
   const [redirectPage, setRedirectPage] = useState("");
 
   useEffect ( () => {
@@ -47,12 +46,11 @@ export default function Games() {
   if (Boolean(redirectPage) && !isInvalid) {
     store.dispatch(setGameUsername({
       username: name,
-      gamename: redirectPage
+      gamename: redirectPage,
     }));
 
-    localStorage.setItem('username', name);
-    localStorage.setItem('gamename', redirectPage);
-   return (
+    saveState(store.getState());
+    return (
      <Redirect push to={{
         pathname: `/games/${redirectPage}`,
         state: {
@@ -74,6 +72,7 @@ export default function Games() {
           id="filled-required"
           label="Required"
           variant="filled"
+          value={name}
           onChange={handleChange}
           helperText={msg}
         />
