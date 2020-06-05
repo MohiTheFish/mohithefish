@@ -3,6 +3,7 @@ import {
   SET_NUM_PLAYERS,
   SET_IS_LOADINGROOM,
   SET_SELECTED_CHOICE,
+  SET_HOST_NAME,
 } from '../actions/gameActions';
 
 export const initialState = {
@@ -10,6 +11,7 @@ export const initialState = {
   selectedChoice: "",
   isLoadingRoom: false,
   numPlayers: 1,
+  host: "",
 }
 
 export function gameData(state = initialState, action) {
@@ -29,6 +31,10 @@ export function gameData(state = initialState, action) {
     case SET_SELECTED_CHOICE:
       return Object.assign({}, state, {
         selectedChoice: action.selectedChoice
+      });
+    case SET_HOST_NAME:
+      return Object.assign({}, state, {
+        host: action.host
       });
 
     default:
