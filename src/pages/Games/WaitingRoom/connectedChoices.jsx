@@ -4,6 +4,10 @@ import Button from '@material-ui/core/Button';
 
 import Loading from 'components/Loading/loading';
 import { setSelectedChoice, setIsLoadingRoom } from 'redux/actions/gameActions';
+import { createRoom } from '../socketHandlers';
+
+const CREATE = 'create';
+const JOIN = 'join';
 
 function setDisableProps(obj) {
   obj.className += " disabled";
@@ -24,10 +28,10 @@ function ConnectedChoices(props) {
   };
 
 
-  if (selectedChoice === "create") {
+  if (selectedChoice === CREATE) {
     setDisableProps(joinButtonProps);
   }
-  else if (selectedChoice === "join") {
+  else if (selectedChoice === JOIN) {
     setDisableProps(createButtonProps);
   }
   return (
@@ -36,12 +40,12 @@ function ConnectedChoices(props) {
         disableFocusRipple={true}
         color="primary"
         {...createButtonProps}
-        onClick={() => handleSelect('create')}>Create Room</Button>
+        onClick={() => handleSelect(CREATE)}>Create Room</Button>
       <Button 
         disableFocusRipple={true}
         color="primary"
         {...joinButtonProps}
-        onClick={() => handleSelect('join')}>Join Room</Button>
+        onClick={() => handleSelect(JOIN)}>Join Room</Button>
     </div>
   );
 }
@@ -60,6 +64,9 @@ function mapDispatchToPropsCC(dispatch) {
       console.log(e);
       dispatch(setSelectedChoice(e));
       dispatch(setIsLoadingRoom(true));
+      if(e == CREATE) {
+        createRoom();
+      }
     }
   }
 }
