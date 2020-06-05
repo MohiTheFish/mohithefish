@@ -11,7 +11,7 @@ const JOIN = 'join';
 
 function setDisableProps(obj) {
   obj.className += " disabled";
-  obj.variant = "outlined"
+  obj.variant = "outlined";
 }
 
 function ConnectedChoices(props) {
@@ -21,18 +21,22 @@ function ConnectedChoices(props) {
   const createButtonProps = {
     variant: "contained",
     className: "button",
+    onClick: () => handleSelect(CREATE),
   };
   const joinButtonProps = {
     variant: "contained",
     className: "button",
+    onClick: () => handleSelect(JOIN),
   };
 
 
   if (selectedChoice === CREATE) {
     setDisableProps(joinButtonProps);
+    delete createButtonProps.onClick;
   }
   else if (selectedChoice === JOIN) {
     setDisableProps(createButtonProps);
+    delete joinButtonProps.onClick;
   }
   return (
     <div className="connected-choices">
@@ -40,12 +44,12 @@ function ConnectedChoices(props) {
         disableFocusRipple={true}
         color="primary"
         {...createButtonProps}
-        onClick={() => handleSelect(CREATE)}>Create Room</Button>
+        >Create Room</Button>
       <Button 
         disableFocusRipple={true}
         color="primary"
         {...joinButtonProps}
-        onClick={() => handleSelect(JOIN)}>Join Room</Button>
+        >Join Room</Button>
     </div>
   );
 }

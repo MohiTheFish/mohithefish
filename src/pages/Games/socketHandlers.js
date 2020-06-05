@@ -20,6 +20,9 @@ export function connectToServer() {
   
   const newSocket = io.connect(`http://localhost:5000/${gamename}`, {
     reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax : 5000,
+    reconnectionAttempts: 10,
   });
 
 
@@ -41,14 +44,17 @@ export function connectToServer() {
   });
   
   newSocket.on('createdRoom', function(roomInfo){
+    console.log(roomInfo);
     store.dispatch(roomCreated({
       host: roomInfo.host,
       sharingCode: roomInfo.hostID,
     }));
-  })
+  });
+
   newSocket.on('disconnect', function() {
     console.log('The client disconnected');
     socket = null;
+    store.dispatch(setIsConnected(false));
   });
 }
 
