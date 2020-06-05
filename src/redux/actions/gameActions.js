@@ -4,6 +4,7 @@ export const SET_NUM_PLAYERS = 'SET_NUM_PLAYERS';
 export const SET_IS_LOADINGROOM = 'SET_IS_LOADINGROOM';
 export const SET_SELECTED_CHOICE = 'SET_SELECTED_CHOICE';
 export const SET_HOST_NAME = "SET_HOST_NAME";
+export const ROOM_CREATED = "ROOM_CREATED";
 
 export function setIsConnected(isConnected) {
   console.log('now connected');
@@ -38,5 +39,12 @@ export function setHostName(host) {
   return {
     type: SET_HOST_NAME,
     host,
+  }
+}
+
+export function roomCreated(data) {
+  return {
+    type: ROOM_CREATED,
+    data,
   }
 }

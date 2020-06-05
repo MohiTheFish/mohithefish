@@ -7,6 +7,7 @@ import {
   setIsLoadingRoom,
   setSelectedChoice,
   setNumPlayers,
+  roomCreated,
 } from 'redux/actions/gameActions';
 
 var socket = null;
@@ -39,6 +40,11 @@ export function connectToServer() {
     console.log(data);
   });
   
+  newSocket.on('createdRoom', function(host){
+    store.dispatch(roomCreated({
+      host: host,
+    }));
+  })
   newSocket.on('disconnect', function() {
     console.log('The client disconnected');
     socket = null;

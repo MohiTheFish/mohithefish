@@ -64,7 +64,7 @@ function mapDispatchToPropsCC(dispatch) {
       console.log(e);
       dispatch(setSelectedChoice(e));
       dispatch(setIsLoadingRoom(true));
-      if(e == CREATE) {
+      if(e === CREATE) {
         createRoom();
       }
     }
