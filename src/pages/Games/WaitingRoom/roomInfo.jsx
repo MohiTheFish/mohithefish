@@ -27,7 +27,7 @@ function RoomInfo(props) {
       </div>
     );
   }
-  else {
+  else { //selectedChoice === "join"
     return (
       <div className="room-info">
         <div className="room-title">
