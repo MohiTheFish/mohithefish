@@ -20,4 +20,21 @@
       background-color: white;
     }
   }
+
+  .room-info {
+    .room-title {
+      h2 { 
+        font-size: 1.5rem;
+      }
+      .members {
+        margin-top: 10px;
+        .others {
+          text-decoration: underline;
+        }
+      }
+      .your-name {
+        font-weight: bold;
+      }
+    }
+  }
 }

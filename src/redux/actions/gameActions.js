@@ -43,6 +43,7 @@ export function setHostName(host) {
 }
 
 export function roomCreated(data) {
+  console.log(data);
   return {
     type: ROOM_CREATED,
     data,

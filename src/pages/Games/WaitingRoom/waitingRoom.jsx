@@ -25,7 +25,7 @@ function WaitingRoom(props) {
     <div className="wrapper waiting-room-wrapper">
       <div className="header-text">
         <h1>Play {gamename}</h1>
-        <h4>Your name is: {username}</h4>
+        <h3>Your name is: {username}</h3>
       </div>
       <ConnectedChoices />
 

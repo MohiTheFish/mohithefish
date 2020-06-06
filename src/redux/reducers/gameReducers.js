@@ -13,6 +13,8 @@ export const initialState = {
   isLoadingRoom: false,
   numPlayers: 1,
   host: "",
+  members: [],
+  roomname: "",
 }
 
 export function gameData(state = initialState, action) {
@@ -38,10 +40,13 @@ export function gameData(state = initialState, action) {
         host: action.host
       });
     case ROOM_CREATED:
+      const { hostname, members, roomname } = action.data;
       console.log(action.data);
       return Object.assign({}, state, {
-
-      })
+        host: hostname,
+        members: members,
+        roomname: roomname,
+      });
     default:
       return state;
   } 

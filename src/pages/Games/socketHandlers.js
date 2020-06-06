@@ -46,8 +46,9 @@ export function connectToServer() {
   newSocket.on('createdRoom', function(roomInfo){
     console.log(roomInfo);
     store.dispatch(roomCreated({
-      host: roomInfo.host,
-      sharingCode: roomInfo.hostID,
+      hostname: roomInfo.hostname,
+      roomname: roomInfo.roomname,
+      members: roomInfo.members,
     }));
   });
 
