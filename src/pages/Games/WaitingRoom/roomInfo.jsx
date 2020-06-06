@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 
 import Grid from "@material-ui/core/Grid";
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import { Paper } from '@material-ui/core';
 
 import Loading from 'components/Loading/loading';
 import MyInput from './RoomInfoComponents/myInput';
-import { joinRoom } from '../socketHandlers';
+import { joinRoom, getAvailableRooms } from '../socketHandlers';
 
 // eslint-disable-next-line
 const data = [
@@ -20,6 +22,30 @@ const data = [
     hostname: "MohiTheFish",
     members: [],
     roomname: "3c5e15dd-dc71-4199-8ee6-f916f3f51ddd",
+  },
+  
+  {
+    hostname: "MohiTheFish",
+    members: [],
+    roomname: "3c5e15dd-dc71-4199-8ee6-f916f3f51ddd",
+  },
+  
+  {
+    hostname: "MohiTheFish",
+    members: [],
+    roomname: "3c5e15aadd-dc71-4199-8ee6-f916f3f51ddd",
+  },
+  
+  {
+    hostname: "MohiTheFish",
+    members: [],
+    roomname: "3c5e15dd-wefdc71-4199-8ee6-f916f3f51ddd",
+  },
+  
+  {
+    hostname: "MohiTheFish",
+    members: [],
+    roomname: "3c5e15dd-efffdc71-4199-8ee6-f916f3f51ddd",
   }
 ]
 
@@ -48,9 +74,13 @@ function renderMembers(members, myIndex) {
   }
   return (
     <>
-      <Button variant="contained" className="host-control-panel">
-        Play
-      </Button>
+      {
+        myIndex === -1
+        ? <Button variant="contained" onClick={()=>{'start game!'}} className="host-control-panel">
+            Play
+          </Button>
+        : ''
+      }
       <div className="members">
         <h3 className="others">Other players</h3>
         {
@@ -120,7 +150,13 @@ function RoomInfo(props) {
           <MyInput />
         </div>
         <div>
-          <h4>Otherwise, click on one of the available rooms to join.</h4>
+          <div className="refresh-row">
+            <h4>Otherwise, click on one of the available rooms to join.</h4>
+            <IconButton color="primary" aria-label="refresh" 
+              onClick={getAvailableRooms}>
+              <RefreshIcon />
+            </IconButton>
+          </div>
           <Grid container spacing={3} className="rooms-wrapper">
             { renderAvailableRooms(rooms, isLoadingRoom) }
           </Grid>

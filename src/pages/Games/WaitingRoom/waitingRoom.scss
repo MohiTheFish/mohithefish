@@ -39,13 +39,17 @@
         width: 500px;
       }
     }
-
+    .refresh-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 500px;
+      margin: 0 auto;
+    }
     .rooms-wrapper {
-      margin-top: 0;
+      margin: 0 auto;
       width: 600px;
       box-sizing: border-box;
-      margin-left: auto;
-      margin-right: auto;
       text-align: center;
       .no-avail-rooms {
         margin-top: 15px;
@@ -61,7 +65,7 @@
           justify-content: space-between;
           width: 100%;
           box-shadow: none;
-          height: 75px;
+          height: 50px;
           background-color:#00bcd4;
           border-radius: 4px;
 
@@ -85,8 +89,10 @@
     .host-control-panel {
       background-color: #4db6ac;
       color: white;
+      margin-top: $section-divs;
     }
     .members {
+      margin-top: $section-divs;
       .others {
         text-decoration: underline;
       }
