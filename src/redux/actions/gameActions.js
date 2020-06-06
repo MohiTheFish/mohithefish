@@ -6,6 +6,7 @@ export const SET_SELECTED_CHOICE = 'SET_SELECTED_CHOICE';
 export const SET_HOST_NAME = "SET_HOST_NAME";
 export const ROOM_CREATED = "ROOM_CREATED";
 export const ROOM_UPDATED = "ROOM_UPDATED";
+export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
 
 export function setIsConnected(isConnected) {
   console.log('now connected');
@@ -52,9 +53,15 @@ export function roomCreated(data) {
 }
 
 export function roomUpdated(data) {
-  console.log(data);
   return {
     type: ROOM_UPDATED,
     data,
   };
+}
+
+export function visibleRooms(data) {
+  return {
+    type: VISIBLE_ROOMS,
+    data,
+  }
 }

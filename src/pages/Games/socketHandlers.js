@@ -9,6 +9,7 @@ import {
   setNumPlayers,
   roomCreated,
   roomUpdated,
+  visibleRooms,
 } from 'redux/actions/gameActions';
 
 var socket = null;
@@ -53,6 +54,12 @@ export function connectToServer() {
     }));
   });
 
+  newSocket.on('availableRooms', function(rooms) {
+    store.dispatch(visibleRooms({
+      rooms
+    }));
+  })
+
   newSocket.on('othersJoined', function(roomInfo){
     console.log(roomInfo);
     store.dispatch(roomUpdated({
@@ -79,4 +86,11 @@ export function forceDisconnect() {
   if (!socket) { throw new Error('Socket invalid!');}
 
   socket.emit('forceDisconnect');
+}
+
+export function getAvailableRooms() {
+  if (!socket) { throw new Error('Socket invalid!');}
+
+  store.dispatch(setIsLoadingRoom(true));
+  socket.emit('getAvailableRooms');
 }
