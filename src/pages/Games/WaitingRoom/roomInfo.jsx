@@ -7,9 +7,9 @@ import Button from '@material-ui/core/Button';
 import Loading from 'components/Loading/loading';
 
 import MyInput from './RoomInfoComponents/myInput';
-import store from 'redux/store';
 import { joinRoom } from '../socketHandlers';
 
+// eslint-disable-next-line
 const data = [
   {
     hostname: "wefwef",

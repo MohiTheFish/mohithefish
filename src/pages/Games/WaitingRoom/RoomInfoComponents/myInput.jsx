@@ -7,6 +7,10 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import ArrowForward from '@material-ui/icons/ArrowForward';
 
+import {joinRoom} from '../../socketHandlers';
+
+const ENTER_KEY = 13;
+
 export default function TextInput() {
   const [roomId, setRoomId] = useState("");
   const preventDefault = (e) => {
@@ -14,7 +18,12 @@ export default function TextInput() {
   }
 
   function submit() {
-    console.log('submit!');
+    joinRoom(roomId);
+  }
+  function handleKeyPress(e) {
+    if (e.which === ENTER_KEY || e.keyCode === ENTER_KEY) {
+      submit();
+    }
   }
   
   return (
@@ -24,6 +33,7 @@ export default function TextInput() {
         id="outlined-adornment-roomid"
         value={roomId}
         onChange={(e) => {setRoomId(e.target.value);}}
+        onKeyPress={handleKeyPress}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
