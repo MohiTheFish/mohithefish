@@ -51,14 +51,7 @@ export default function Games() {
 
     saveState(store.getState());
     return (
-     <Redirect push to={{
-        pathname: `/games/${redirectPage}`,
-        state: {
-          username: name,
-          gameName: redirectPage,
-        }
-      }}
-      />
+     <Redirect push to={`/games/${redirectPage}`}/>
    );
   }
   return (
