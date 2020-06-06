@@ -19,7 +19,7 @@ const defaultState = {
   gameCredentials: initialGameCredentialState,
 };
 console.log(defaultState);
-const storageType = localStorage;
+export const storageType = sessionStorage;
 
 function loadState() {
   const username = storageType.getItem('username');

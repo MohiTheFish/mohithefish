@@ -15,7 +15,7 @@ function mapStateToPropsRI(state) {
   };
 }
 
-function renderMembers(members) {
+function renderMembers(members, myIndex) {
   if (members.length === 0) {
     return (
       <div className="members">
@@ -28,7 +28,9 @@ function renderMembers(members) {
       <h3 className="others">Other players</h3>
       {
         members.map((m, index) => 
-          <h4 key={`${m}${index}`}>{m}</h4>
+          <h4 
+            className={index === myIndex ? "your-name" : ""}
+            key={`${m}${index}`}>{m}</h4>
         )
       }
     </div>
@@ -37,7 +39,7 @@ function renderMembers(members) {
 
 function RoomInfo(props) {
   console.log(props);
-  const { isConnected, selectedChoice, host, roomname, members} = props;
+  const { isConnected, selectedChoice, host, roomname, members, myIndex} = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
   if (selectedChoice === "create") {

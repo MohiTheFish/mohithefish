@@ -1,13 +1,15 @@
 import { SET_GAME_USERNAME } from '../actions/nameActions';
 import { v4 as uuid } from 'uuid';
 
+const storageType = sessionStorage;
+
 function existUUID() {
-  let a = localStorage.getItem('uuid');
+  let a = storageType.getItem('uuid');
 
   if(a) {return a;}
 
   a = uuid();
-  localStorage.setItem('uuid', a);
+  storageType.setItem('uuid', a);
   return a;
 }
 

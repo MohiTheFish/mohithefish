@@ -15,6 +15,7 @@ export const initialState = {
   host: "",
   members: [],
   roomname: "",
+  myIndex: -1,
 }
 
 export function gameData(state = initialState, action) {
@@ -39,14 +40,26 @@ export function gameData(state = initialState, action) {
       return Object.assign({}, state, {
         host: action.host
       });
-    case ROOM_CREATED:
+    case ROOM_CREATED: {
       const { hostname, members, roomname } = action.data;
       console.log(action.data);
       return Object.assign({}, state, {
         host: hostname,
         members: members,
         roomname: roomname,
+        myIndex: members.length-1,
       });
+    }
+    case ROOM_CREATED: {
+      const { hostname, members, roomname } = action.data;
+      console.log(action.data);
+      return Object.assign({}, state, {
+        host: hostname,
+        members: members,
+        roomname: roomname,
+        myIndex: state.myIndex,
+      });
+    }
     default:
       return state;
   } 

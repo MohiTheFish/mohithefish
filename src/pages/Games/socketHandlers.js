@@ -8,13 +8,14 @@ import {
   setSelectedChoice,
   setNumPlayers,
   roomCreated,
+  roomUpdated,
 } from 'redux/actions/gameActions';
 
 var socket = null;
 let uuid = null;
 
 export function connectToServer() {
-  console.log('connecting...')
+  console.log('connecting...');
   const {username, gamename, uuid: userId} = store.getState().gameCredentials;
   uuid = userId;
   
@@ -51,6 +52,15 @@ export function connectToServer() {
       members: roomInfo.members,
     }));
   });
+
+  newSocket.on('othersJoined', function(roomInfo){
+    console.log(roomInfo);
+    store.dispatch(roomUpdated({
+      hostname: roomInfo.hostname,
+      roomname: roomInfo.roomname, 
+      members: roomInfo.members,
+    }));
+  })
 
   newSocket.on('disconnect', function() {
     console.log('The client disconnected');
