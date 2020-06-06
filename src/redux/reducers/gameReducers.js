@@ -17,7 +17,7 @@ export const initialState = {
   members: [],
   roomname: "",
   myIndex: -1,
-  rooms: []
+  rooms: [],
 }
 
 export function gameData(state = initialState, action) {
@@ -58,8 +58,9 @@ export function gameData(state = initialState, action) {
       });
     }
     case VISIBLE_ROOMS: {
+      console.log(action.data.rooms);
       return Object.assign({}, state, {
-        rooms: state.rooms,
+        rooms: action.data.rooms,
         isLoadingRoom: false, 
       });
     }
