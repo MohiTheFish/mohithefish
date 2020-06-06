@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import ArrowForward from '@material-ui/icons/ArrowForward';
+import Button from '@material-ui/core/Button';
 
 import Loading from 'components/Loading/loading';
 
@@ -69,13 +70,13 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
   // if (isLoadingRoom) {
   //   return <Loading />;
   // }
-  return data.map(room => {
+  return rooms.map(room => {
     return (
       <Grid item key={room.roomname} xs={12} className="room">
-        <div className="data vertically-center-text left">
+        <Button className="data vertically-center-text left">
           <h3>Host: {room.hostname}</h3>
           <h4>Number of Players: {1 + room.members.length}</h4>
-        </div>
+        </Button>
       </Grid>
     )
   })
@@ -120,7 +121,7 @@ function RoomInfo(props) {
   const { isConnected, selectedChoice, host, roomname, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
-  if (false) {
+  if (selectedChoice === 'create') {
     return (
       <div className="room-info">
         <div className="room-title">
