@@ -75,7 +75,7 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
   }
   return rooms.map(room => {
     return (
-      <Grid item key={room.roomname} xs={12} className="room">
+      <Grid item key={room.hostname} xs={12} className="room">
         <Button className="data">
           <h3 className="left">
             Host: &nbsp;
@@ -83,7 +83,7 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
           </h3>
           <h3 className="right">
             Number of Players: &nbsp;
-            <span className="bold">{1 + room.members.length}</span>
+            <span className="bold">{1 + room.numPlayers}</span>
           </h3>
         </Button>
       </Grid>
