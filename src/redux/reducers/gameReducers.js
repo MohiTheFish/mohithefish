@@ -6,6 +6,7 @@ import {
   ROOM_CREATED,
   VISIBLE_ROOMS,
   ROOM_UPDATED,
+  ROOM_JOINED
 } from '../actions/gameActions';
 
 export const initialState = {
@@ -62,6 +63,16 @@ export function gameData(state = initialState, action) {
       return Object.assign({}, state, {
         rooms: action.data.rooms,
         isLoadingRoom: false, 
+      });
+    }
+    case ROOM_JOINED: {
+      const { hostname, members, roomname } = action.data;
+      console.log(action.data);
+      return Object.assign({}, state, {
+        host: hostname,
+        members: members,
+        roomname: roomname,
+        myIndex: members.length-1,
       });
     }
     default:

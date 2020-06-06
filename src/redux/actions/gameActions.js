@@ -6,6 +6,7 @@ export const SET_HOST_NAME = "SET_HOST_NAME";
 export const ROOM_CREATED = "ROOM_CREATED";
 export const ROOM_UPDATED = "ROOM_UPDATED";
 export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
+export const ROOM_JOINED = "ROOM_JOINED";
 
 export function setIsConnected(isConnected) {
   console.log('now connected');
@@ -54,6 +55,13 @@ export function roomUpdated(data) {
 export function visibleRooms(data) {
   return {
     type: VISIBLE_ROOMS,
+    data,
+  }
+}
+
+export function roomJoined(data) {
+  return {
+    type: ROOM_JOINED,
     data,
   }
 }

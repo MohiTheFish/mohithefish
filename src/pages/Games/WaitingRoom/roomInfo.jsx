@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Loading from 'components/Loading/loading';
 
 import MyInput from './RoomInfoComponents/myInput';
+import store from 'redux/store';
+import { joinRoom } from '../socketHandlers';
 
 const data = [
   {
@@ -70,7 +72,7 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
   return rooms.map(room => {
     return (
       <Grid item key={room.hostname} xs={12} className="room">
-        <Button className="data">
+        <Button className="data" onClick={()=>{joinRoom(room.roomname)}}>
           <h3 className="left">
             Host: &nbsp;
             <span className="bold">{room.hostname}</span>
@@ -90,7 +92,7 @@ function RoomInfo(props) {
   const { isConnected, selectedChoice, host, roomname, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
-  if (selectedChoice === 'create') {
+  if (selectedChoice === 'create' || myIndex >= 0) {
     return (
       <div className="room-info">
         <div className="room-title">
