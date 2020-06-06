@@ -15,11 +15,11 @@
     .button {
       padding: 10px;
       border-radius: 4px;
-      transition-duration: 0s;
     }
 
     .disabled {
-      background-color: white;
+      // background-color: white;
+      cursor: pointer;
     }
   }
 
@@ -28,63 +28,67 @@
       h2 { 
         font-size: 1.5rem;
       }
-      .members {
-        margin-top: 10px;
-        .others {
-          text-decoration: underline;
-        }
-      }
       .your-name {
         font-weight: bold;
       }
-
-      .input {
-        .form-wrapper {
-          margin: 8px;
-          width: 500px;
-        }
+    }
+    
+    .input {
+      .form-wrapper {
+        margin: 8px;
+        width: 500px;
       }
-      .rooms-wrapper {
-        margin-top: 0;
-        width: 600px;
-        box-sizing: border-box;
+    }
+
+    .rooms-wrapper {
+      margin-top: 0;
+      width: 600px;
+      box-sizing: border-box;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      .no-avail-rooms {
+        margin-top: 15px;
+        font-weight: bold;
         margin-left: auto;
         margin-right: auto;
-        text-align: center;
-        .no-avail-rooms {
-          margin-top: 15px;
-          font-weight: bold;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        .room {
+      }
+      .room {
+        width: 100%;
+        .data{
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
           width: 100%;
-          .data{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            width: 100%;
-            box-shadow: none;
-            height: 75px;
-            background-color:#00bcd4;
-            border-radius: 4px;
+          box-shadow: none;
+          height: 75px;
+          background-color:#00bcd4;
+          border-radius: 4px;
 
-            h3 {
-              width: 48%; //both will have some padding now.
-              height: 100%;
-            }
-            $border: 1 px solid #9e9e9e;
-            .left {
-              border-right: $border;
-            }
-            .right {
-              border-left: $border;
-            }
-            .bold {
-              font-weight: bold;
-            }
+          h3 {
+            width: 48%; //both will have some padding now.
+            height: 100%;
+          }
+          $border: 1 px solid #9e9e9e;
+          .left {
+            border-right: $border;
+          }
+          .right {
+            border-left: $border;
+          }
+          .bold {
+            font-weight: bold;
           }
         }
+      }
+    }
+    .host-control-panel {
+      background-color: #4db6ac;
+      color: white;
+    }
+    .members {
+      .others {
+        text-decoration: underline;
       }
     }
   }

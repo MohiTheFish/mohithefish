@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 import Grid from "@material-ui/core/Grid";
 import Button from '@material-ui/core/Button';
+import { Paper } from '@material-ui/core';
 
 import Loading from 'components/Loading/loading';
-
 import MyInput from './RoomInfoComponents/myInput';
 import { joinRoom } from '../socketHandlers';
 
@@ -44,19 +44,24 @@ function renderMembers(members, myIndex) {
       <div className="members">
         <h3>Share your room id to let others join!</h3>
       </div>
-    )
+    );
   }
   return (
-    <div className="members">
-      <h3 className="others">Other players</h3>
-      {
-        members.map((m, index) => 
-          <h4 
-            className={index === myIndex ? "my-name" : ""}
-            key={`${m}${index}`}>{m}</h4>
-        )
-      }
-    </div>
+    <>
+      <Button variant="contained" className="host-control-panel">
+        Play
+      </Button>
+      <div className="members">
+        <h3 className="others">Other players</h3>
+        {
+          members.map((m, index) => 
+            <h4 
+              className={index === myIndex ? "my-name" : ""}
+              key={`${m}${index}`}>{m}</h4>
+          )
+        }
+      </div>
+    </>
   )
 }
 
@@ -100,27 +105,25 @@ function RoomInfo(props) {
     return (
       <div className="room-info">
         <div className="room-title">
-          <h2 className={hostClass}>Host: {host}</h2>
+          <h2>Host: <span className={hostClass}>{host}</span></h2>
           <h2>Room id: {roomname}</h2>
-        {renderMembers(members, myIndex)}
         </div>
+          {renderMembers(members, myIndex)}
       </div>
     );
   }
   else { //selectedChoice === "join"
     return (
       <div className="room-info">
-        <div className="room-title">
-          <div className="input">
-            <h4>Enter the room id you would like to join:</h4>
-            <MyInput />
-          </div>
-          <div>
-            <h4>Otherwise, click on one of the available rooms to join.</h4>
-            <Grid container spacing={3} className="rooms-wrapper">
-              { renderAvailableRooms(rooms, isLoadingRoom) }
-            </Grid>
-          </div>
+        <div className="input">
+          <h4>Enter the room id you would like to join:</h4>
+          <MyInput />
+        </div>
+        <div>
+          <h4>Otherwise, click on one of the available rooms to join.</h4>
+          <Grid container spacing={3} className="rooms-wrapper">
+            { renderAvailableRooms(rooms, isLoadingRoom) }
+          </Grid>
         </div>
       </div>
     );

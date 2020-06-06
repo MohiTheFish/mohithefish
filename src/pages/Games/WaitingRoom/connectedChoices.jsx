@@ -33,21 +33,23 @@ function ConnectedChoices(props) {
   if (selectedChoice === CREATE) {
     setDisableProps(joinButtonProps);
     delete createButtonProps.onClick;
+    createButtonProps.disableRipple = true;
   }
   else if (selectedChoice === JOIN) {
     setDisableProps(createButtonProps);
     delete joinButtonProps.onClick;
+    joinButtonProps.disableRipple = true;
   }
   return (
     <div className="connected-choices">
       <Button 
-        disableFocusRipple={true}
         color="primary"
+        disableElevation
         {...createButtonProps}
         >Create Room</Button>
       <Button 
-        disableFocusRipple={true}
         color="primary"
+        disableElevation
         {...joinButtonProps}
         >Join Room</Button>
     </div>
