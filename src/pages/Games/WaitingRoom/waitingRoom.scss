@@ -45,10 +45,18 @@
         }
       }
       .rooms-wrapper {
+        margin-top: 0;
         width: 600px;
         box-sizing: border-box;
         margin-left: auto;
         margin-right: auto;
+        text-align: center;
+        .no-avail-rooms {
+          margin-top: 15px;
+          font-weight: bold;
+          margin-left: auto;
+          margin-right: auto;
+        }
         .room {
           width: 100%;
           .data{

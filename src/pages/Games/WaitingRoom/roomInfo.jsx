@@ -65,12 +65,15 @@ function renderMembers(members, myIndex) {
 }
 
 function renderAvailableRooms(rooms, isLoadingRoom) {
-  // console.log(rooms);
-  // console.log(isLoadingRoom);
-  // if (isLoadingRoom) {
-  //   return <Loading />;
-  // }
-  return data.map(room => {
+  console.log(rooms);
+  console.log(isLoadingRoom);
+  if (isLoadingRoom) {
+    return <Loading />;
+  }
+  if (rooms.length === 0) {
+    return <h3 className="no-avail-rooms">Sorry. No other rooms were found at this time.</h3>
+  }
+  return rooms.map(room => {
     return (
       <Grid item key={room.roomname} xs={12} className="room">
         <Button className="data">
@@ -98,7 +101,7 @@ function TextInput() {
   function submit() {
     console.log('submit!');
   }
-//margin 8px, width
+  
   return (
     <FormControl className="form-wrapper" variant="outlined">
       <InputLabel htmlFor="outlined-adornment-roomid">Room ID</InputLabel>
@@ -127,7 +130,7 @@ function RoomInfo(props) {
   const { isConnected, selectedChoice, host, roomname, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
-  if (false) {
+  if (selectedChoice === 'create') {
     return (
       <div className="room-info">
         <div className="room-title">
@@ -143,12 +146,15 @@ function RoomInfo(props) {
       <div className="room-info">
         <div className="room-title">
           <div className="input">
-            <h4>Enter room you would like to join:</h4>
+            <h4>Enter the room id you would like to join:</h4>
             <TextInput />
           </div>
-          <Grid container spacing={3} className="rooms-wrapper">
-            { renderAvailableRooms(rooms, isLoadingRoom) }
-          </Grid>
+          <div>
+            <h4>Otherwise, click on one of the available rooms to join.</h4>
+            <Grid container spacing={3} className="rooms-wrapper">
+              { renderAvailableRooms(rooms, isLoadingRoom) }
+            </Grid>
+          </div>
         </div>
       </div>
     );
