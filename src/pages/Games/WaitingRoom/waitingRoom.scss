@@ -52,11 +52,29 @@
         .room {
           width: 100%;
           .data{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
             width: 100%;
             box-shadow: none;
             height: 75px;
             background-color:#00bcd4;
             border-radius: 4px;
+
+            h3 {
+              width: 48%; //both will have some padding now.
+              height: 100%;
+            }
+            $border: 1 px solid #9e9e9e;
+            .left {
+              border-right: $border;
+            }
+            .right {
+              border-left: $border;
+            }
+            .bold {
+              font-weight: bold;
+            }
           }
         }
       }

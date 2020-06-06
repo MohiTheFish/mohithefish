@@ -70,12 +70,18 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
   // if (isLoadingRoom) {
   //   return <Loading />;
   // }
-  return rooms.map(room => {
+  return data.map(room => {
     return (
       <Grid item key={room.roomname} xs={12} className="room">
-        <Button className="data vertically-center-text left">
-          <h3>Host: {room.hostname}</h3>
-          <h4>Number of Players: {1 + room.members.length}</h4>
+        <Button className="data">
+          <h3 className="left">
+            Host: &nbsp;
+            <span className="bold">{room.hostname}</span>
+          </h3>
+          <h3 className="right">
+            Number of Players: &nbsp;
+            <span className="bold">{1 + room.members.length}</span>
+          </h3>
         </Button>
       </Grid>
     )
@@ -121,7 +127,7 @@ function RoomInfo(props) {
   const { isConnected, selectedChoice, host, roomname, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
-  if (selectedChoice === 'create') {
+  if (false) {
     return (
       <div className="room-info">
         <div className="room-title">
