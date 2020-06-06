@@ -7,6 +7,7 @@ export const ROOM_CREATED = "ROOM_CREATED";
 export const ROOM_UPDATED = "ROOM_UPDATED";
 export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
 export const ROOM_JOINED = "ROOM_JOINED";
+export const PLAYER_LEFT = "PLAYER_LEFT";
 
 export function setIsConnected(isConnected) {
   console.log('now connected');
@@ -64,4 +65,12 @@ export function roomJoined(data) {
     type: ROOM_JOINED,
     data,
   }
+}
+
+export function playerLeft(index) {
+  console.log(index);
+  return {
+    type: PLAYER_LEFT,
+    index,
+  };
 }

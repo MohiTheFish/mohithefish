@@ -6,7 +6,8 @@ import {
   ROOM_CREATED,
   VISIBLE_ROOMS,
   ROOM_UPDATED,
-  ROOM_JOINED
+  ROOM_JOINED,
+  PLAYER_LEFT,
 } from '../actions/gameActions';
 
 export const initialState = {
@@ -74,6 +75,30 @@ export function gameData(state = initialState, action) {
         roomname: roomname,
         myIndex: members.length-1,
       });
+    }
+    case PLAYER_LEFT: {
+      const { members, myIndex } = state;
+      const { index: deletedIndex } = action;
+      console.log(deletedIndex);
+      const newState = {
+        myIndex,
+        members: [],
+      };
+      if (deletedIndex === -1) {
+        newState.members = members.slice(1);
+        newState.myIndex -= 1;
+        if (newState.myIndex === -1) {
+          newState.selectedChoice = "create";
+        }
+        newState.host = members[0];
+      }
+      else {
+        if (deletedIndex < myIndex) {
+          newState.myIndex -= 1;
+        }
+        newState.members =  members.filter((m, index) => (index !== deletedIndex) );
+      }
+      return Object.assign({}, state, newState);
     }
     default:
       return state;

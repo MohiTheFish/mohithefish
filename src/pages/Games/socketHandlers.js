@@ -8,6 +8,7 @@ import {
   roomUpdated,
   visibleRooms,
   roomJoined,
+  playerLeft,
 } from 'redux/actions/gameActions';
 
 var socket = null;
@@ -77,6 +78,11 @@ export function connectToServer() {
     }));
   })
 
+  newSocket.on('playerLeft', function(index) {
+    console.log('PLAYER LEFT WUT');
+    store.dispatch(playerLeft(index));
+  });
+
   newSocket.on('disconnect', function() {
     console.log('The client disconnected');
     socket = null;
@@ -106,7 +112,7 @@ export function getAvailableRooms() {
 export function joinRoom(targetRoom) {
   if (!socket) { throw new Error('Socket invalid!');}
   const data = {
-    targetRoom,
+    targetRoom: targetRoom.trim(),
     userId,
   };
   console.log('joining Room');
