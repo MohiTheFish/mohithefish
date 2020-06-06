@@ -1,18 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import Grid from "@material-ui/core/Grid";
-import IconButton from '@material-ui/core/IconButton';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import ArrowForward from '@material-ui/icons/ArrowForward';
 import Button from '@material-ui/core/Button';
 
 import Loading from 'components/Loading/loading';
 
-
+import MyInput from './RoomInfoComponents/myInput';
 
 const data = [
   {
@@ -91,40 +85,6 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
   })
 }
 
-
-function TextInput() {
-  const [roomId, setRoomId] = useState("");
-  const preventDefault = (e) => {
-    e.preventDefault();
-  }
-
-  function submit() {
-    console.log('submit!');
-  }
-  
-  return (
-    <FormControl className="form-wrapper" variant="outlined">
-      <InputLabel htmlFor="outlined-adornment-roomid">Room ID</InputLabel>
-      <OutlinedInput
-        id="outlined-adornment-roomid"
-        value={roomId}
-        onChange={(e) => {setRoomId(e.target.value);}}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              children={<ArrowForward />}
-              onClick={submit}
-              onMouseDown={preventDefault}
-              edge="end"
-            />
-          </InputAdornment>
-        }
-        labelWidth={70}
-      />
-    </FormControl>
-  )
-}
-
 function RoomInfo(props) {
   console.log(props);
   const { isConnected, selectedChoice, host, roomname, members, myIndex, rooms, isLoadingRoom } = props;
@@ -147,7 +107,7 @@ function RoomInfo(props) {
         <div className="room-title">
           <div className="input">
             <h4>Enter the room id you would like to join:</h4>
-            <TextInput />
+            <MyInput />
           </div>
           <div>
             <h4>Otherwise, click on one of the available rooms to join.</h4>
