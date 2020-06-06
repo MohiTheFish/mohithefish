@@ -92,5 +92,5 @@ export function getAvailableRooms() {
 
   console.log('getting availablerooms');
   store.dispatch(setIsLoadingRoom(true));
-  socket.emit('getAvailableRooms');
+  socket.emit('getAvailableRooms', uuid);
 }
