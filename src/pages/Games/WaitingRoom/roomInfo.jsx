@@ -1,8 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
+
 import Grid from "@material-ui/core/Grid";
+import IconButton from '@material-ui/core/IconButton';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import ArrowForward from '@material-ui/icons/ArrowForward';
 
 import Loading from 'components/Loading/loading';
+
 
 
 const data = [
@@ -73,6 +81,40 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
   })
 }
 
+
+function TextInput() {
+  const [roomId, setRoomId] = useState("");
+  const preventDefault = (e) => {
+    e.preventDefault();
+  }
+
+  function submit() {
+    console.log('submit!');
+  }
+//margin 8px, width
+  return (
+    <FormControl className="form-wrapper" variant="outlined">
+      <InputLabel htmlFor="outlined-adornment-roomid">Room ID</InputLabel>
+      <OutlinedInput
+        id="outlined-adornment-roomid"
+        value={roomId}
+        onChange={(e) => {setRoomId(e.target.value);}}
+        endAdornment={
+          <InputAdornment position="end">
+            <IconButton
+              children={<ArrowForward />}
+              onClick={submit}
+              onMouseDown={preventDefault}
+              edge="end"
+            />
+          </InputAdornment>
+        }
+        labelWidth={70}
+      />
+    </FormControl>
+  )
+}
+
 function RoomInfo(props) {
   console.log(props);
   const { isConnected, selectedChoice, host, roomname, members, myIndex, rooms, isLoadingRoom } = props;
@@ -95,6 +137,7 @@ function RoomInfo(props) {
         <div className="room-title">
           <div className="input">
             <h4>Enter room you would like to join:</h4>
+            <TextInput />
           </div>
           <Grid container spacing={3} className="rooms-wrapper">
             { renderAvailableRooms(rooms, isLoadingRoom) }
