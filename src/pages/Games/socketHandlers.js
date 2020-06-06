@@ -52,6 +52,8 @@ export function connectToServer() {
   });
 
   newSocket.on('availableRooms', function(rooms) {
+    console.log('these are available rooms');
+    console.log(rooms);
     store.dispatch(visibleRooms({
       rooms
     }));
@@ -88,6 +90,7 @@ export function forceDisconnect() {
 export function getAvailableRooms() {
   if (!socket) { throw new Error('Socket invalid!');}
 
+  console.log('getting availablerooms');
   store.dispatch(setIsLoadingRoom(true));
   socket.emit('getAvailableRooms');
 }
