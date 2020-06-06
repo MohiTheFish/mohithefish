@@ -24,9 +24,9 @@ export const storageType = sessionStorage;
 function loadState() {
   const username = storageType.getItem('username');
   const gamename = storageType.getItem('gamename');
-  const uuid = storageType.getItem('uuid');
+  const userId = storageType.getItem('userId');
 
-  if (!username || !gamename || !uuid) {
+  if (!username || !gamename || !userId) {
     return defaultState;
   }
 
@@ -35,7 +35,7 @@ function loadState() {
     gameCredentials: {
       username,
       gamename,
-      uuid
+      userId,
     }
   };
 }
@@ -44,10 +44,10 @@ const store = createStore(MohiApp, loadState());
 console.log(store.getState());
 
 export function saveState(state) {
-  const { username, gamename, uuid } = state.gameCredentials;
+  const { username, gamename, userId } = state.gameCredentials;
   storageType.setItem('username', username);
   storageType.setItem('gamename', gamename);
-  storageType.setItem('uuid', uuid);
+  storageType.setItem('userId', userId);
 }
 
 export function saveCurrentState() {

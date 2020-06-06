@@ -52,7 +52,7 @@ function renderMembers(members, myIndex) {
       {
         members.map((m, index) => 
           <h4 
-            className={index === myIndex ? "your-name" : ""}
+            className={index === myIndex ? "my-name" : ""}
             key={`${m}${index}`}>{m}</h4>
         )
       }
@@ -93,12 +93,16 @@ function RoomInfo(props) {
   if (!isConnected || !selectedChoice) { return ""; }
 
   if (selectedChoice === 'create' || myIndex >= 0) {
+    let hostClass = "";
+    if (myIndex===-1){
+      hostClass = "my-name"
+    }
     return (
       <div className="room-info">
         <div className="room-title">
-          <h2>Host: {host}</h2>
+          <h2 className={hostClass}>Host: {host}</h2>
           <h2>Room id: {roomname}</h2>
-          {renderMembers(members)}
+        {renderMembers(members, myIndex)}
         </div>
       </div>
     );

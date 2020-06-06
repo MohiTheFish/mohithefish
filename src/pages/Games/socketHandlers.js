@@ -11,12 +11,12 @@ import {
 } from 'redux/actions/gameActions';
 
 var socket = null;
-let uuid = null;
+let userId = null;
 
 export function connectToServer() {
   console.log('connecting...');
-  const {username, gamename, uuid: userId} = store.getState().gameCredentials;
-  uuid = userId;
+  const {username, gamename, userId: uid} = store.getState().gameCredentials;
+  userId = uid;
   
   const newSocket = io.connect(`http://localhost:5000/${gamename}`, {
     reconnection: true,
@@ -33,7 +33,7 @@ export function connectToServer() {
     newSocket.emit('initialConnection', {
       username,
       gamename,
-      uuid,
+      userId,
     });
     console.log('now connected');
     store.dispatch(setIsConnected(true));
@@ -87,7 +87,7 @@ export function connectToServer() {
 export function createRoom() {
   if (!socket) { throw new Error('Socket invalid!');}
 
-  socket.emit('createRoom', uuid);
+  socket.emit('createRoom', userId);
 }
 
 export function forceDisconnect() {
@@ -100,14 +100,14 @@ export function getAvailableRooms() {
   if (!socket) { throw new Error('Socket invalid!');}
 
   store.dispatch(setIsLoadingRoom(true));
-  socket.emit('getAvailableRooms', uuid);
+  socket.emit('getAvailableRooms', userId);
 }
 
 export function joinRoom(targetRoom) {
   if (!socket) { throw new Error('Socket invalid!');}
   const data = {
     targetRoom,
-    uuid,
+    userId,
   };
   console.log('joining Room');
   socket.emit('joinRoom', data);

@@ -3,20 +3,20 @@ import { v4 as uuid } from 'uuid';
 
 const storageType = sessionStorage;
 
-function existUUID() {
-  let a = storageType.getItem('uuid');
+function existUserId() {
+  let a = storageType.getItem('userId');
 
   if(a) {return a;}
 
   a = uuid();
-  storageType.setItem('uuid', a);
+  storageType.setItem('userId', a);
   return a;
 }
 
 export const initialState = {
   username: "",
   gamename: "",
-  uuid: existUUID(),
+  userId: existUserId(),
 };
 
 export function gameCredentials(state = initialState, action) {
@@ -25,7 +25,7 @@ export function gameCredentials(state = initialState, action) {
       return {
         username: action.username,
         gamename: action.gamename,
-        uuid: state.uuid,
+        userId: state.userId,
       }
     }
     default:
