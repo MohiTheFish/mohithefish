@@ -1,11 +1,11 @@
 import {
   SET_IS_CONNECTED,
-  SET_NUM_PLAYERS,
   SET_IS_LOADINGROOM,
   SET_SELECTED_CHOICE,
   SET_HOST_NAME,
   ROOM_CREATED,
   VISIBLE_ROOMS,
+  ROOM_UPDATED,
 } from '../actions/gameActions';
 
 export const initialState = {
@@ -25,10 +25,6 @@ export function gameData(state = initialState, action) {
     case SET_IS_CONNECTED:
       return Object.assign({}, state, {
         isConnected: action.isConnected
-      });
-    case SET_NUM_PLAYERS:
-      return Object.assign({}, state, {
-        numPlayers: action.numPlayers
       });
     case SET_IS_LOADINGROOM:
       return Object.assign({}, state, {
@@ -51,7 +47,7 @@ export function gameData(state = initialState, action) {
         myIndex: members.length-1,
       });
     }
-    case ROOM_CREATED: {
+    case ROOM_UPDATED: {
       const { hostname, members, roomname } = action.data;
       console.log(action.data);
       return Object.assign({}, state, {

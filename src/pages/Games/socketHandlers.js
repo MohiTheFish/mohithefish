@@ -1,12 +1,9 @@
-/* eslint-disable */
 import io from 'socket.io-client';
 import store from 'redux/store';
 
 import {
   setIsConnected,
   setIsLoadingRoom,
-  setSelectedChoice,
-  setNumPlayers,
   roomCreated,
   roomUpdated,
   visibleRooms,
