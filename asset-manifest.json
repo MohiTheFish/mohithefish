@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/mohithefish/static/css/main.c01c07af.chunk.css",
-    "main.js": "/mohithefish/static/js/main.c6ce3129.chunk.js",
-    "main.js.map": "/mohithefish/static/js/main.c6ce3129.chunk.js.map",
+    "main.js": "/mohithefish/static/js/main.1aaa2336.chunk.js",
+    "main.js.map": "/mohithefish/static/js/main.1aaa2336.chunk.js.map",
     "runtime-main.js": "/mohithefish/static/js/runtime-main.a7b87382.js",
     "runtime-main.js.map": "/mohithefish/static/js/runtime-main.a7b87382.js.map",
     "static/js/2.4a173339.chunk.js": "/mohithefish/static/js/2.4a173339.chunk.js",
     "static/js/2.4a173339.chunk.js.map": "/mohithefish/static/js/2.4a173339.chunk.js.map",
     "index.html": "/mohithefish/index.html",
-    "precache-manifest.0a990c9e65d8f1ddf6b4eb5b2a5f1700.js": "/mohithefish/precache-manifest.0a990c9e65d8f1ddf6b4eb5b2a5f1700.js",
+    "precache-manifest.763b317e9862741162f1a2a2fa060050.js": "/mohithefish/precache-manifest.763b317e9862741162f1a2a2fa060050.js",
     "service-worker.js": "/mohithefish/service-worker.js",
     "static/css/main.c01c07af.chunk.css.map": "/mohithefish/static/css/main.c01c07af.chunk.css.map",
     "static/js/2.4a173339.chunk.js.LICENSE.txt": "/mohithefish/static/js/2.4a173339.chunk.js.LICENSE.txt",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.a7b87382.js",
     "static/js/2.4a173339.chunk.js",
     "static/css/main.c01c07af.chunk.css",
-    "static/js/main.c6ce3129.chunk.js"
+    "static/js/main.1aaa2336.chunk.js"
   ]
 }
