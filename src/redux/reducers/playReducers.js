@@ -32,7 +32,7 @@ export function playState(state = initialState, action) {
       };
     }
     case ADD_LOCATION_SPYFALL: {
-      const {selectedLocations, selectedNamesByIndex, spyIndex} = state.spyfall;
+      const {selectedLocations} = state.spyfall;
       const clonedLocations = new Set(selectedLocations);
       clonedLocations.add(action.data);
       return Object.assign({}, state, {
@@ -43,7 +43,7 @@ export function playState(state = initialState, action) {
       });
     }
     case REMOVE_LOCATION_SPYFALL: {
-      const {selectedLocations, selectedNamesByIndex, spyIndex} = state.spyfall;
+      const {selectedLocations} = state.spyfall;
       const clonedLocations = new Set(selectedLocations);
       clonedLocations.delete(action.data);
       return Object.assign({}, state, {
@@ -54,7 +54,7 @@ export function playState(state = initialState, action) {
       });
     }
     case ADD_NAME_SPYFALL: {
-      const {selectedLocations, selectedNamesByIndex, spyIndex} = state.spyfall;
+      const {selectedNamesByIndex} = state.spyfall;
       const clonedNames = new Set(selectedNamesByIndex);
       clonedNames.add(action.data);
       return Object.assign({}, state, {
@@ -65,7 +65,7 @@ export function playState(state = initialState, action) {
       });
     }
     case REMOVE_NAME_SPYFALL: {
-      const {selectedLocations, selectedNamesByIndex, spyIndex} = state.spyfall;
+      const {selectedNamesByIndex} = state.spyfall;
       const clonedNames = new Set(selectedNamesByIndex);
       clonedNames.delete(action.data);
       return Object.assign({}, state, {
