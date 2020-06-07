@@ -24,6 +24,7 @@ console.log(defaultState);
 export const storageType = sessionStorage;
 
 function loadState() {
+  // const 
   const username = storageType.getItem('username');
   const gamename = storageType.getItem('gamename');
   const userId = storageType.getItem('userId');
@@ -33,6 +34,7 @@ function loadState() {
   }
 
   return {
+    playState: initialPlayState,
     gameData: initialGameData,
     gameCredentials: {
       username,
