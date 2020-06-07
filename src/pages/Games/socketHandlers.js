@@ -24,7 +24,7 @@ export function connectToServer() {
   const {username, gamename, userId: uid} = store.getState().gameCredentials;
   userId = uid;
   
-  const newSocket = io.connect(`http://localhost:5000/${gamename}`, {
+  const newSocket = io.connect(`https://mohithefish.herokuapp.com/:5000/${gamename}`, {
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionDelayMax : 5000,
