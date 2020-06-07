@@ -8,6 +8,7 @@ export const ROOM_UPDATED = "ROOM_UPDATED";
 export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
 export const ROOM_JOINED = "ROOM_JOINED";
 export const PLAYER_LEFT = "PLAYER_LEFT";
+export const START_PLAYING = "START_PLAYING";
 
 export function setIsConnected(isConnected) {
   console.log('now connected');
@@ -73,4 +74,14 @@ export function playerLeft(index) {
     type: PLAYER_LEFT,
     index,
   };
+}
+
+export function startPlaying(time) {
+  return {
+    type: START_PLAYING,
+    isPlaying: true,
+    initialGameState: {
+      time,
+    }
+  }
 }

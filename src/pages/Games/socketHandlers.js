@@ -9,11 +9,8 @@ import {
   visibleRooms,
   roomJoined,
   playerLeft,
+  startPlaying,
 } from 'redux/actions/gameActions';
-
-import {
-  startSpyfall
-} from 'redux/actions/spyfallActions';
 
 var socket = null;
 let userId = null;
@@ -84,16 +81,7 @@ export function connectToServer() {
 
   newSocket.on('gameStarted', function(gameState){
     console.log(gameState);
-    const { gamename } = store.getState().gameCredentials;
-    switch (gamename) {
-      case 'spyfall': {
-        store.dispatch(startSpyfall(gameState));
-        break;
-      }
-      default: {
-        store.dispatch(startGame(gameState));
-      }
-    }
+    store.dispatch(startPlaying(gameState));
   });
 
   newSocket.on('playerLeft', function(index) {

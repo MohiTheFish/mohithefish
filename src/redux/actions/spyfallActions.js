@@ -1,8 +1,8 @@
 export const START_GAME_SPYFALL = "START_GAME_SPYFALL";
 export const ADD_LOCATION_SPYFALL = "ADD_LOCATION_SPYFALL";
 export const REMOVE_LOCATION_SPYFALL = "REMOVE_LOCATION_SPYFALL";
-export const ADD_NAME = "ADD_NAME";
-export const REMOVE_NAME = "REMOVE_NAME";
+export const ADD_NAME_SPYFALL = "ADD_NAME_SPYFALL";
+export const REMOVE_NAME_SPYFALL = "REMOVE_NAME_SPYFALL";
 
 export function startSpyfall(time) {
   console.log(time);
@@ -28,16 +28,16 @@ export function removeLocationSpyfall(name) {
   };
 }
 
-export function addName(index) {
+export function addNameSpyfall(index) {
   return {
-    type: ADD_NAME,
+    type: ADD_NAME_SPYFALL,
     data: index,
   };
 }
 
-export function removeName(index) {
+export function removeNameSpyfall(index) {
   return {
-    type: REMOVE_NAME,
+    type: REMOVE_NAME_SPYFALL,
     data: index,
   };
 }

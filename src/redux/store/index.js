@@ -24,7 +24,7 @@ console.log(defaultState);
 export const storageType = sessionStorage;
 
 function loadState() {
-  // const 
+  const gameData = JSON.parse(storageType.getItem('gameData'));
   const username = storageType.getItem('username');
   const gamename = storageType.getItem('gamename');
   const userId = storageType.getItem('userId');
@@ -32,16 +32,23 @@ function loadState() {
   if (!username || !gamename || !userId) {
     return defaultState;
   }
+  const myState = {};
+  myState.gameCredentials = {
+    username,
+    gamename,
+    userId,
+  }
 
-  return {
-    playState: initialPlayState,
-    gameData: initialGameData,
-    gameCredentials: {
-      username,
-      gamename,
-      userId,
-    }
-  };
+  if (gameData && gameData.isPlaying) {
+    myState.gameData = gameData;
+  }
+  else {
+    myState.gameData = initialGameData;
+  }
+
+  myState.playState = initialPlayState;
+
+  return myState;
 }
 
 const store = createStore(MohiApp, loadState());

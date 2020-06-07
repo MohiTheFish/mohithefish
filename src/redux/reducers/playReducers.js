@@ -1,14 +1,12 @@
 import {
-  START_GAME_SPYFALL,
   ADD_LOCATION_SPYFALL,
   REMOVE_LOCATION_SPYFALL,
-  ADD_NAME,
-  REMOVE_NAME,
+  ADD_NAME_SPYFALL,
+  REMOVE_NAME_SPYFALL,
 } from 'redux/actions/spyfallActions';
 
 export const initialState = {
   time: 0,
-  isPlaying: false,
   spyfall: {
     selectedLocations: new Set(),
     selectedNamesByIndex: new Set(),
@@ -18,10 +16,6 @@ export const initialState = {
 
 export function playState(state = initialState, action) {
   switch(action.type) {
-    case START_GAME_SPYFALL: return Object.assign({}, state, {
-      time: action.time,
-      isPlaying: true,
-    });
     case ADD_LOCATION_SPYFALL: {
       const {selectedLocations} = state.spyfall;
       selectedLocations.add(action.data);
@@ -40,7 +34,7 @@ export function playState(state = initialState, action) {
         }
       });
     }
-    case ADD_NAME: {
+    case ADD_NAME_SPYFALL: {
       const {selectedNamesByIndex} = state.spyfall;
       selectedNamesByIndex.add(action.data);
       return Object.assign({}, state, {
@@ -49,7 +43,7 @@ export function playState(state = initialState, action) {
         }
       });
     }
-    case REMOVE_NAME: {
+    case REMOVE_NAME_SPYFALL: {
       const {selectedNamesByIndex} = state.spyfall;
       selectedNamesByIndex.delete(action.data);
       return Object.assign({}, state, {

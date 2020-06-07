@@ -8,6 +8,7 @@ import {
   ROOM_UPDATED,
   ROOM_JOINED,
   PLAYER_LEFT,
+  START_PLAYING,
 } from '../actions/gameActions';
 
 export const initialState = {
@@ -20,6 +21,8 @@ export const initialState = {
   roomname: "",
   myIndex: -1,
   rooms: [],
+  isPlaying: false,
+  initialGameState: {},
 }
 
 export function gameData(state = initialState, action) {
@@ -99,6 +102,12 @@ export function gameData(state = initialState, action) {
         newState.members =  members.filter((m, index) => (index !== deletedIndex) );
       }
       return Object.assign({}, state, newState);
+    }
+    case START_PLAYING: {
+      return Object.assign({}, state, {
+        isPlaying: true,
+        initialGameState: action.initialGameState
+      });
     }
     default:
       return state;

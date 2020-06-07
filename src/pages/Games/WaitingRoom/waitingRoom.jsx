@@ -7,24 +7,32 @@ import './waitingRoom.scss';
 import RoomInfo from './roomInfo';
 import ConnectedChoices from './connectedChoices';
 import { connectToServer } from '../socketHandlers';
+import store from 'redux/store';
+
+const storageType = sessionStorage;
 
 function mapStateToPropsWR(state) {
+  const { gamename, username } = state.gameCredentials
   return {
-    gameCredentials: state.gameCredentials,
-    isPlaying: state.playState.isPlaying,
+    gamename,
+    username,
+    isPlaying: state.gameData.isPlaying,
   };
 }
 
 function WaitingRoom(props) {
-  const { gamename, username } = props.gameCredentials;
-  const { isPlaying, location } = props;
+  console.log('render waiting room');
+  const { gamename, username, isPlaying } = props;
+  const { location } = props;
 
   useEffect(() => {
     connectToServer();
     document.title= "Waiting Room";
   },[]);
 
+  console.log(isPlaying);
   if (isPlaying) {
+    storageType.setItem('gameData', JSON.stringify(store.getState().gameData));
     return (
       <Redirect to={`${location.pathname}/play`} />
     )
