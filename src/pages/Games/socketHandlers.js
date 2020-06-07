@@ -11,6 +11,10 @@ import {
   playerLeft,
 } from 'redux/actions/gameActions';
 
+import {
+  startSpyfall
+} from 'redux/actions/spyfallActions';
+
 var socket = null;
 let userId = null;
 
@@ -78,6 +82,20 @@ export function connectToServer() {
     }));
   })
 
+  newSocket.on('gameStarted', function(gameState){
+    console.log(gameState);
+    const { gamename } = store.getState().gameCredentials;
+    switch (gamename) {
+      case 'spyfall': {
+        store.dispatch(startSpyfall(gameState));
+        break;
+      }
+      default: {
+        store.dispatch(startGame(gameState));
+      }
+    }
+  });
+
   newSocket.on('playerLeft', function(index) {
     console.log('PLAYER LEFT WUT');
     store.dispatch(playerLeft(index));
@@ -117,4 +135,10 @@ export function joinRoom(targetRoom) {
   };
   console.log('joining Room');
   socket.emit('joinRoom', data);
+}
+
+export function startGame() {
+  if (!socket) { throw new Error('Socket invalid!');}
+
+  socket.emit('startGame', userId);
 }

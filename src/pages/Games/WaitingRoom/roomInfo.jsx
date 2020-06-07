@@ -5,11 +5,10 @@ import Grid from "@material-ui/core/Grid";
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import { Paper } from '@material-ui/core';
 
 import Loading from 'components/Loading/loading';
 import MyInput from './RoomInfoComponents/myInput';
-import { joinRoom, getAvailableRooms } from '../socketHandlers';
+import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 
 // eslint-disable-next-line
 const data = [
@@ -76,7 +75,7 @@ function renderMembers(members, myIndex) {
     <>
       {
         myIndex === -1
-        ? <Button variant="contained" onClick={()=>{'start game!'}} className="host-control-panel">
+        ? <Button variant="contained" onClick={startGame} className="host-control-panel">
             Play
           </Button>
         : ''

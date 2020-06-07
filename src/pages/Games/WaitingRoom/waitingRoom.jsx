@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
 import './waitingRoom.scss';
 
@@ -10,16 +11,24 @@ import { connectToServer } from '../socketHandlers';
 function mapStateToPropsWR(state) {
   return {
     gameCredentials: state.gameCredentials,
+    isPlaying: state.playState.isPlaying,
   };
 }
 
 function WaitingRoom(props) {
   const { gamename, username } = props.gameCredentials;
+  const { isPlaying, location } = props;
 
   useEffect(() => {
     connectToServer();
     document.title= "Waiting Room";
   },[]);
+
+  if (isPlaying) {
+    return (
+      <Redirect to={`${location.pathname}/play`} />
+    )
+  }
 
   return (
     <div className="wrapper waiting-room-wrapper">

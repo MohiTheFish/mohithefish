@@ -2,6 +2,7 @@ import { createStore } from 'redux'
 import MohiApp from '../reducers';
 import {initialState as initialGameData} from '../reducers/gameReducers';
 import {initialState as initialGameCredentialState} from '../reducers/nameReducers';
+import {initialState as initialPlayState} from '../reducers/playReducers';
 
 /**
  * REDUX WORK FLOW
@@ -17,6 +18,7 @@ import {initialState as initialGameCredentialState} from '../reducers/nameReduce
 const defaultState = {
   gameData: initialGameData,
   gameCredentials: initialGameCredentialState,
+  playState: initialPlayState,
 };
 console.log(defaultState);
 export const storageType = sessionStorage;

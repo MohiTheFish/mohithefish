@@ -12,10 +12,6 @@ import './games.scss';
 
 const allGames = [
   'spyfall',
-  'tictactoe',
-  'war',
-  'gare',
-  'idk fam'
 ];
 
 
