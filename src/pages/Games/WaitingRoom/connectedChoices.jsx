@@ -67,7 +67,6 @@ function mapStateToPropsCC(state) {
 function mapDispatchToPropsCC(dispatch) {
   return {
     handleSelect: (e) => {
-      console.log(e);
       dispatch(setSelectedChoice(e));
       dispatch(setIsLoadingRoom(true));
       if(e === CREATE) {

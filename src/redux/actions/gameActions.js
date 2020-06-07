@@ -11,7 +11,6 @@ export const PLAYER_LEFT = "PLAYER_LEFT";
 export const START_PLAYING = "START_PLAYING";
 
 export function setIsConnected(isConnected) {
-  console.log('now connected');
   return {
     type: SET_IS_CONNECTED,
     isConnected,
@@ -40,7 +39,6 @@ export function setHostName(host) {
 }
 
 export function roomCreated(data) {
-  console.log(data);
   return {
     type: ROOM_CREATED,
     data,
@@ -69,7 +67,6 @@ export function roomJoined(data) {
 }
 
 export function playerLeft(index) {
-  console.log(index);
   return {
     type: PLAYER_LEFT,
     index,

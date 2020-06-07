@@ -21,7 +21,6 @@ function mapStateToPropsWR(state) {
 }
 
 function WaitingRoom(props) {
-  console.log('render waiting room');
   const { gamename, username, isPlaying } = props;
   const { location } = props;
 
@@ -30,7 +29,6 @@ function WaitingRoom(props) {
     document.title= "Waiting Room";
   },[]);
 
-  console.log(isPlaying);
   if (isPlaying) {
     storageType.setItem('gameData', JSON.stringify(store.getState().gameData));
     return (

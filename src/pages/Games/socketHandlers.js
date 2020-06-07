@@ -37,16 +37,15 @@ export function connectToServer() {
       gamename,
       userId,
     });
-    console.log('now connected');
     store.dispatch(setIsConnected(true));
   });
 
-  newSocket.on('print', function(data) {
-    console.log(data);
-  });
+  // newSocket.on('print', function(data) {
+  //   console.log(data);
+  // });
   
   newSocket.on('createdRoom', function(roomInfo){
-    console.log(roomInfo);
+    // console.log(roomInfo);
     store.dispatch(roomCreated({
       hostname: roomInfo.hostname,
       roomname: roomInfo.roomname,
@@ -55,15 +54,15 @@ export function connectToServer() {
   });
 
   newSocket.on('availableRooms', function(rooms) {
-    console.log('these are available rooms');
-    console.log(rooms);
+    // console.log('these are available rooms');
+    // console.log(rooms);
     store.dispatch(visibleRooms({
       rooms
     }));
   });
 
   newSocket.on('youJoined', function(roomInfo){
-    console.log(roomInfo);
+    // console.log(roomInfo);
     store.dispatch(roomJoined({
       hostname: roomInfo.hostname,
       roomname: roomInfo.roomname, 
@@ -80,17 +79,17 @@ export function connectToServer() {
   })
 
   newSocket.on('gameStarted', function(gameState){
-    console.log(gameState);
+    // console.log(gameState);
     store.dispatch(startPlaying(gameState));
   });
 
   newSocket.on('playerLeft', function(index) {
-    console.log('PLAYER LEFT WUT');
+    // console.log('PLAYER LEFT WUT');
     store.dispatch(playerLeft(index));
   });
 
   newSocket.on('disconnect', function() {
-    console.log('The client disconnected');
+    // console.log('The client disconnected');
     socket = null;
     store.dispatch(setIsConnected(false));
   });
@@ -121,7 +120,7 @@ export function joinRoom(targetRoom) {
     targetRoom: targetRoom.trim(),
     userId,
   };
-  console.log('joining Room');
+  // console.log('joining Room');
   socket.emit('joinRoom', data);
 }
 

@@ -95,8 +95,6 @@ function renderMembers(members, myIndex) {
 }
 
 function renderAvailableRooms(rooms, isLoadingRoom) {
-  console.log(rooms);
-  console.log(isLoadingRoom);
   if (isLoadingRoom) {
     return <Loading />;
   }
@@ -122,7 +120,6 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
 }
 
 function RoomInfo(props) {
-  console.log(props);
   const { isConnected, selectedChoice, host, roomname, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 

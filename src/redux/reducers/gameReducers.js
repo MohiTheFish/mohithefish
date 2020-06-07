@@ -54,7 +54,6 @@ export function gameData(state = initialState, action) {
     }
     case ROOM_UPDATED: {
       const { hostname, members, roomname } = action.data;
-      console.log(action.data);
       return Object.assign({}, state, {
         host: hostname,
         members: members,
@@ -63,7 +62,6 @@ export function gameData(state = initialState, action) {
       });
     }
     case VISIBLE_ROOMS: {
-      console.log(action.data.rooms);
       return Object.assign({}, state, {
         rooms: action.data.rooms,
         isLoadingRoom: false, 
@@ -71,7 +69,6 @@ export function gameData(state = initialState, action) {
     }
     case ROOM_JOINED: {
       const { hostname, members, roomname } = action.data;
-      console.log(action.data);
       return Object.assign({}, state, {
         host: hostname,
         members: members,
@@ -82,7 +79,6 @@ export function gameData(state = initialState, action) {
     case PLAYER_LEFT: {
       const { members, myIndex } = state;
       const { index: deletedIndex } = action;
-      console.log(deletedIndex);
       const newState = {
         myIndex,
         members: [],
