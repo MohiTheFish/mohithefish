@@ -14,6 +14,7 @@ function mapStateToProps(state) {
   const gd = state.gameData;
   const ps = state.playState;
   const game = ps.spyfall;
+  // console.log(state);
   return {
     gameCredentials: state.gameCredentials,
     host: gd.host,
@@ -25,7 +26,7 @@ function mapStateToProps(state) {
     selectedNamesByIndex: game.selectedNamesByIndex,
     isSpy: game.spyIndex === gd.myIndex,
     locations: game.locations,
-    secretLocation: game.secreteLocation,
+    secretLocation: game.secretLocation,
   };
 }
 
@@ -95,17 +96,17 @@ function Spyfall(props) {
   const [selectClass, callback] = getSelectedClassN(-1, selectedNamesByIndex, addNameSpyfall, removeNameSpyfall);
   return (
     <div className="wrapper spyfall-page-wrapper">
-      <div className="header-text">
+      <div className="header">
         <h1>Play Spyfall</h1>
         <h4>Your name is: {gameCredentials.username}</h4>
           {
             isSpy 
-            ? <h4>You ARE the spy! <span role="img" aria-label="spy emoji">🕵️</span></h4>
-            : <h4>You are NOT the spy. <br/> The location is {secretLocation}</h4>
+            ? <h4>You ARE the spy! <span role="img" aria-label="spy emoji">🕵️</span> <br/> Figure out the secret location!</h4>
+            : <h4>You are NOT the spy. <br/> The location is <span className="secret-location">{secretLocation}</span></h4>
           }
       </div>
 
-      <div className="other-players">
+      <div className="players-list">
         <h2 className="header">Players</h2>
         <div className="names">
           <h4 key={host}

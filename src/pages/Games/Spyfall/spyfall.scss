@@ -2,15 +2,54 @@
 @import '../common';
 
 .spyfall-page-wrapper {
+  .players-list {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+
+    .header {
+      padding: 10px;
+    }
+    
+    .names {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+
+      h4 {
+        cursor: pointer;
+        background-color: #616161;
+        color: white;
+        box-sizing: border-box;
+        width: 30%;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .selected {
+        background-color: #424242;
+        color: #e0e0e0;
+        text-decoration: line-through;
+      }
+    }
+  }
   .location-section{
     .header {
       padding: 10px;
+
+      .secret-location {
+        font-size: 20px;
+      }
     }
     .location-wrapper {
       display: flex;
       flex-wrap: wrap;
       flex-grow: 1;
-      width: 500px;
+      width: 480px;
       margin-left: auto;
       margin-right: auto;
 
@@ -23,7 +62,7 @@
         background-color: #eeeeee;
         border-radius: 4px;
         width: 210px; // Make width + 2*margin = width of locationwrapper
-        margin: 0 20px; 
+        margin: 0 10px; 
         height: 40px;
         margin-bottom: 15px;
 
