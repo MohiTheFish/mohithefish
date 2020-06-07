@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5a7b968d8911552a3bb3a27fb23569fd",
+    "revision": "4e0fafec1175ccce3d02427003dd78c6",
     "url": "/mohithefish/index.html"
   },
   {
-    "revision": "6e0c2d8dac60cccab7b6",
-    "url": "/mohithefish/static/css/main.339de44c.chunk.css"
+    "revision": "3844d0a5ca083612bed4",
+    "url": "/mohithefish/static/css/main.c01c07af.chunk.css"
   },
   {
-    "revision": "4b6e48a5dfc045d8c2e4",
-    "url": "/mohithefish/static/js/2.8f1a3bdd.chunk.js"
+    "revision": "e2ff7597588d2a0772bf",
+    "url": "/mohithefish/static/js/2.4a173339.chunk.js"
   },
   {
     "revision": "3be25bf51018a491ef7f73dfd2dd74c4",
-    "url": "/mohithefish/static/js/2.8f1a3bdd.chunk.js.LICENSE.txt"
+    "url": "/mohithefish/static/js/2.4a173339.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "6e0c2d8dac60cccab7b6",
-    "url": "/mohithefish/static/js/main.49c292c3.chunk.js"
+    "revision": "3844d0a5ca083612bed4",
+    "url": "/mohithefish/static/js/main.c6ce3129.chunk.js"
   },
   {
     "revision": "7e980584c8107d96e38a",
