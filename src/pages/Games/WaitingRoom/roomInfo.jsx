@@ -10,44 +10,6 @@ import Loading from 'components/Loading/loading';
 import MyInput from './RoomInfoComponents/myInput';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 
-// eslint-disable-next-line
-const data = [
-  {
-    hostname: "wefwef",
-    members: [],
-    roomname: "867517ab-2bb8-4839-975d-3adfc50daf16",
-  },
-  {
-    hostname: "MohiTheFish",
-    members: [],
-    roomname: "3c5e15dd-dc71-4199-8ee6-f916f3f51ddd",
-  },
-  
-  {
-    hostname: "MohiTheFish",
-    members: [],
-    roomname: "3c5e15dd-dc71-4199-8ee6-f916f3f51ddd",
-  },
-  
-  {
-    hostname: "MohiTheFish",
-    members: [],
-    roomname: "3c5e15aadd-dc71-4199-8ee6-f916f3f51ddd",
-  },
-  
-  {
-    hostname: "MohiTheFish",
-    members: [],
-    roomname: "3c5e15dd-wefdc71-4199-8ee6-f916f3f51ddd",
-  },
-  
-  {
-    hostname: "MohiTheFish",
-    members: [],
-    roomname: "3c5e15dd-efffdc71-4199-8ee6-f916f3f51ddd",
-  }
-]
-
 function mapStateToPropsRI(state) {
   const gd = state.gameData;
   return {

@@ -10,18 +10,6 @@ import {
 } from 'redux/actions/spyfallActions';
 import store from 'redux/store';
 
-const locations = [
-  'Desert',
-  'Swamp',
-  'Forest',
-  'City',
-  'Boat',
-  'Crusader Army',
-  'World War II Squad',
-  'Polar Station',
-  'Space Station'
-];
-
 function mapStateToProps(state) {
   const gd = state.gameData;
   const ps = state.playState;
@@ -35,7 +23,9 @@ function mapStateToProps(state) {
     time: ps.time,
     selectedLocations: game.selectedLocations,
     selectedNamesByIndex: game.selectedNamesByIndex,
-    isSpy: game.isSpy
+    isSpy: game.spyIndex === gd.myIndex,
+    locations: game.locations,
+    secretLocation: game.secreteLocation,
   };
 }
 
@@ -48,7 +38,9 @@ function Spyfall(props) {
     time,
     selectedLocations,
     selectedNamesByIndex,
-    isSpy
+    isSpy,
+    locations,
+    secretLocation,
   } = props;
 
   function getSelectedClassL(val, set, addCall, removeCall) {
@@ -106,17 +98,15 @@ function Spyfall(props) {
       <div className="header-text">
         <h1>Play Spyfall</h1>
         <h4>Your name is: {gameCredentials.username}</h4>
-        <h4>
           {
-            true 
-            ? "You ARE the spy! 🕵️" 
-            : "You are NOT the spy."
+            isSpy 
+            ? <h4>You ARE the spy! <span role="img" aria-label="spy emoji">🕵️</span></h4>
+            : <h4>You are NOT the spy. <br/> The location is {secretLocation}</h4>
           }
-        </h4>
       </div>
 
       <div className="other-players">
-        <h2 className="header">Other Players</h2>
+        <h2 className="header">Players</h2>
         <div className="names">
           <h4 key={host}
             className={selectClass}

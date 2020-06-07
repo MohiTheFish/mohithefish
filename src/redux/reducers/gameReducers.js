@@ -22,7 +22,6 @@ export const initialState = {
   myIndex: -1,
   rooms: [],
   isPlaying: false,
-  initialGameState: {},
 }
 
 export function gameData(state = initialState, action) {

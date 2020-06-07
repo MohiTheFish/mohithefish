@@ -20,7 +20,7 @@ const defaultState = {
   gameCredentials: initialGameCredentialState,
   playState: initialPlayState,
 };
-console.log(defaultState);
+// console.log(defaultState);
 export const storageType = sessionStorage;
 
 function loadState() {
@@ -52,7 +52,7 @@ function loadState() {
 }
 
 const store = createStore(MohiApp, loadState());
-console.log(store.getState());
+// console.log(store.getState());
 
 export function saveState(state) {
   const { username, gamename, userId } = state.gameCredentials;
@@ -66,7 +66,7 @@ export function saveCurrentState() {
 }
 
 
-store.subscribe(() => {
-  console.log(store.getState());
-})
+// store.subscribe(() => {
+//   console.log(store.getState());
+// })
 export default store;

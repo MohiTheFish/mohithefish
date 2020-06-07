@@ -12,6 +12,10 @@ import {
   startPlaying,
 } from 'redux/actions/gameActions';
 
+import {
+  startSpyfall,
+} from 'redux/actions/spyfallActions';
+
 var socket = null;
 let userId = null;
 
@@ -80,6 +84,7 @@ export function connectToServer() {
 
   newSocket.on('gameStarted', function(gameState){
     // console.log(gameState);
+    store.dispatch(startSpyfall(gameState));
     store.dispatch(startPlaying(gameState));
   });
 

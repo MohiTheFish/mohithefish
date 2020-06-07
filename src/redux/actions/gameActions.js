@@ -73,12 +73,9 @@ export function playerLeft(index) {
   };
 }
 
-export function startPlaying(time) {
+export function startPlaying() {
   return {
     type: START_PLAYING,
     isPlaying: true,
-    initialGameState: {
-      time,
-    }
   }
 }

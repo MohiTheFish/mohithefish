@@ -3,6 +3,7 @@ import {
   REMOVE_LOCATION_SPYFALL,
   ADD_NAME_SPYFALL,
   REMOVE_NAME_SPYFALL,
+  START_GAME_SPYFALL,
 } from 'redux/actions/spyfallActions';
 
 export const initialState = {
@@ -10,57 +11,67 @@ export const initialState = {
   spyfall: {
     selectedLocations: new Set(),
     selectedNamesByIndex: new Set(),
-    isSpy: false,
+    spyIndex: 0,
+    locations: [],
+    secretLocation: "",
   },
 };
 
 export function playState(state = initialState, action) {
   switch(action.type) {
+    case START_GAME_SPYFALL: {
+      return {
+        time: action.gameState.time,
+        spyfall: {
+          spyIndex: action.gameState.spyIndex,
+          selectedLocations: state.spyfall.selectedLocations,
+          selectedNamesByIndex: state.spyfall.selectedNamesByIndex,
+          locations: action.gameState.locations,
+          secretLocation: action.gameState.secretLocation,
+        }
+      };
+    }
     case ADD_LOCATION_SPYFALL: {
-      const {selectedLocations, selectedNamesByIndex, isSpy} = state.spyfall;
+      const {selectedLocations, selectedNamesByIndex, spyIndex} = state.spyfall;
       const clonedLocations = new Set(selectedLocations);
       clonedLocations.add(action.data);
       return Object.assign({}, state, {
         spyfall: {
+          ...state.spyfall,
           selectedLocations: clonedLocations,
-          selectedNamesByIndex,
-          isSpy
         }
       });
     }
     case REMOVE_LOCATION_SPYFALL: {
-      const {selectedLocations, selectedNamesByIndex, isSpy} = state.spyfall;
+      const {selectedLocations, selectedNamesByIndex, spyIndex} = state.spyfall;
       const clonedLocations = new Set(selectedLocations);
       clonedLocations.delete(action.data);
       return Object.assign({}, state, {
         spyfall: {
+          ...state.spyfall,
           selectedLocations: clonedLocations,
-          selectedNamesByIndex,
-          isSpy
         }
       });
     }
     case ADD_NAME_SPYFALL: {
-      const {selectedLocations, selectedNamesByIndex, isSpy} = state.spyfall;
+      const {selectedLocations, selectedNamesByIndex, spyIndex} = state.spyfall;
       const clonedNames = new Set(selectedNamesByIndex);
       clonedNames.add(action.data);
       return Object.assign({}, state, {
         spyfall: {
-          selectedLocations,
+          ...state.spyfall,
           selectedNamesByIndex: clonedNames,
-          isSpy
         }
       });
     }
     case REMOVE_NAME_SPYFALL: {
-      const {selectedLocations, selectedNamesByIndex, isSpy} = state.spyfall;
+      const {selectedLocations, selectedNamesByIndex, spyIndex} = state.spyfall;
       const clonedNames = new Set(selectedNamesByIndex);
       clonedNames.delete(action.data);
       return Object.assign({}, state, {
         spyfall: {
-          selectedLocations,
+          ...state.spyfall,
           selectedNamesByIndex: clonedNames,
-          isSpy
         }
       });
     }

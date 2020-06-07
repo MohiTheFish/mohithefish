@@ -4,10 +4,10 @@ export const REMOVE_LOCATION_SPYFALL = "REMOVE_LOCATION_SPYFALL";
 export const ADD_NAME_SPYFALL = "ADD_NAME_SPYFALL";
 export const REMOVE_NAME_SPYFALL = "REMOVE_NAME_SPYFALL";
 
-export function startSpyfall(time) {
+export function startSpyfall(gameState) {
   return {
     type: START_GAME_SPYFALL,
-    time, 
+    gameState, 
   };
 }
 

@@ -30,7 +30,6 @@ const theme = createMuiTheme({
 
 // function ComebackGame(props) {
 //   const { match: {params}} = props;
-//   console.log(props);
 //   return <div>
 //     <h1>
 //       <span style={{textTransform: "uppercase"}}>{params.name}</span> is not yet built. Come back soon.
