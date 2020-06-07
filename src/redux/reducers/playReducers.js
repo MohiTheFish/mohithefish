@@ -17,38 +17,50 @@ export const initialState = {
 export function playState(state = initialState, action) {
   switch(action.type) {
     case ADD_LOCATION_SPYFALL: {
-      const {selectedLocations} = state.spyfall;
-      selectedLocations.add(action.data);
+      const {selectedLocations, selectedNamesByIndex, isSpy} = state.spyfall;
+      const clonedLocations = new Set(selectedLocations);
+      clonedLocations.add(action.data);
       return Object.assign({}, state, {
         spyfall: {
-          selectedLocations,
+          selectedLocations: clonedLocations,
+          selectedNamesByIndex,
+          isSpy
         }
       });
     }
     case REMOVE_LOCATION_SPYFALL: {
-      const {selectedLocations} = state.spyfall;
-      selectedLocations.delete(action.data);
+      const {selectedLocations, selectedNamesByIndex, isSpy} = state.spyfall;
+      const clonedLocations = new Set(selectedLocations);
+      clonedLocations.delete(action.data);
       return Object.assign({}, state, {
         spyfall: {
-          selectedLocations,
+          selectedLocations: clonedLocations,
+          selectedNamesByIndex,
+          isSpy
         }
       });
     }
     case ADD_NAME_SPYFALL: {
-      const {selectedNamesByIndex} = state.spyfall;
-      selectedNamesByIndex.add(action.data);
+      const {selectedLocations, selectedNamesByIndex, isSpy} = state.spyfall;
+      const clonedNames = new Set(selectedNamesByIndex);
+      clonedNames.add(action.data);
       return Object.assign({}, state, {
         spyfall: {
-          selectedNamesByIndex,
+          selectedLocations,
+          selectedNamesByIndex: clonedNames,
+          isSpy
         }
       });
     }
     case REMOVE_NAME_SPYFALL: {
-      const {selectedNamesByIndex} = state.spyfall;
-      selectedNamesByIndex.delete(action.data);
+      const {selectedLocations, selectedNamesByIndex, isSpy} = state.spyfall;
+      const clonedNames = new Set(selectedNamesByIndex);
+      clonedNames.delete(action.data);
       return Object.assign({}, state, {
         spyfall: {
-          selectedNamesByIndex,
+          selectedLocations,
+          selectedNamesByIndex: clonedNames,
+          isSpy
         }
       });
     }

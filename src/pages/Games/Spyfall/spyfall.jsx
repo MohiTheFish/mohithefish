@@ -1,6 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import './spyfall.scss';
+
+import { 
+  addLocationSpyfall,
+  removeLocationSpyfall,
+  addNameSpyfall,
+  removeNameSpyfall,
+} from 'redux/actions/spyfallActions';
+import store from 'redux/store';
 
 const locations = [
   'Desert',
@@ -15,60 +23,58 @@ const locations = [
 ];
 
 function mapStateToProps(state) {
-  console.log(state);
   const gd = state.gameData;
+  const ps = state.playState;
+  const game = ps.spyfall;
   return {
     gameCredentials: state.gameCredentials,
     host: gd.host,
     members: gd.members,
     myIndex: gd.myIndex,
-    playState: state.playState,
+    
+    time: ps.time,
+    selectedLocations: game.selectedLocations,
+    selectedNamesByIndex: game.selectedNamesByIndex,
+    isSpy: game.isSpy
   };
 }
 
 function Spyfall(props) {
-  const { gameCredentials, playState, host, members, myIndex } = props;
-  console.log(playState);
-  const [selectedLocations, setSelectedLocations] = useState(new Set());
-  const [selectedNamesByIndex, setSelectedNamesByIndex] = useState(new Set());
+  const {
+    gameCredentials,
+    host,
+    members,
+    myIndex,
+    time,
+    selectedLocations,
+    selectedNamesByIndex,
+    isSpy
+  } = props;
 
-  function selectName(index) {
-    selectedNamesByIndex.add(index);
-    setSelectedNamesByIndex(selectedNamesByIndex);
-  }
-
-  function deselectName(index) {
-    selectedNamesByIndex.delete(index);
-    setSelectedNamesByIndex(selectedNamesByIndex);
-  }
-
-  function selectLocation(e) {
-    console.log(selectedLocations);
-    selectedLocations.add(e.target.textContent);
-    console.log(selectedLocations);
-    console.log(e.target.textContent);
-    setSelectedLocations(selectedLocations);
-  }
-
-  function deselectLocation(e) {
-    selectedLocations.delete(e.target.textContent);
-    setSelectedLocations(selectedLocations);
-  }
-
-  function selectedClass(index) {
-    const isSelected = selectedNamesByIndex.has(index);
-    let callback = selectName;
+  function getSelectedClassL(val, set, addCall, removeCall) {
+    const isSelected = set.has(val);
+    let callback = addCall;
     let selectClass = "";
     if (isSelected) {
-      callback = deselectName;
+      callback = removeCall;
       selectClass = "selected";
     }
-    return [selectClass, () => callback(index)];
+    return [selectClass, (data) => store.dispatch(callback(data))];
   }
 
+  function getSelectedClassN(val, set, addCall, removeCall) {
+    const isSelected = set.has(val);
+    let callback = addCall;
+    let selectClass = "";
+    if (isSelected) {
+      callback = removeCall;
+      selectClass = "selected";
+    }
+    return [selectClass, (data) => store.dispatch(callback(val))];
+  }
   function renderNames() {
     return members.map( (name, index) => {
-      const [selectClass, callback] = selectedClass(index);
+      const [selectClass, callback] = getSelectedClassN(index, selectedNamesByIndex, addNameSpyfall, removeNameSpyfall);
       return (
         <h4 key={name}
          className={selectClass}
@@ -80,9 +86,8 @@ function Spyfall(props) {
   }
 
   function renderLocations() {
-    console.log(locations);
     return locations.map( (value, index) => {
-      const [selectClass, callback] = selectedClass(index);
+      const [selectClass, callback] = getSelectedClassL(value, selectedLocations, addLocationSpyfall, removeLocationSpyfall);
       return (
         <div
           key={value} 
@@ -95,7 +100,7 @@ function Spyfall(props) {
     });
   }
 
-  const [selectClass, callback] = selectedClass(-1);
+  const [selectClass, callback] = getSelectedClassN(-1, selectedNamesByIndex, addNameSpyfall, removeNameSpyfall);
   return (
     <div className="wrapper spyfall-page-wrapper">
       <div className="header-text">
