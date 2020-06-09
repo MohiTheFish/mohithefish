@@ -24,6 +24,12 @@
   }
 
   .room-info {
+    height: 100px;
+    .switch-wrapper {
+      display: flex;
+      width: 100px;
+      align-items: center;
+    }
     .room-title {
       h2 { 
         font-size: 1.5rem;

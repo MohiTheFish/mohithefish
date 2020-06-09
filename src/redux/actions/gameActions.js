@@ -9,6 +9,7 @@ export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
 export const ROOM_JOINED = "ROOM_JOINED";
 export const PLAYER_LEFT = "PLAYER_LEFT";
 export const START_PLAYING = "START_PLAYING";
+export const SET_IS_PRIVATE = "SET_IS_PRIVATE";
 
 export function setIsConnected(isConnected) {
   return {
@@ -78,4 +79,11 @@ export function startPlaying() {
     type: START_PLAYING,
     isPlaying: true,
   }
+}
+
+export function roomPrivacyToggled(newState) {
+  return {
+    type: SET_IS_PRIVATE,
+    isPrivate: newState,
+  };
 }

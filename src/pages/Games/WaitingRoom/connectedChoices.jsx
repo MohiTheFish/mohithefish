@@ -70,7 +70,8 @@ function mapDispatchToPropsCC(dispatch) {
       dispatch(setSelectedChoice(e));
       dispatch(setIsLoadingRoom(true));
       if(e === CREATE) {
-        createRoom();
+        
+        // createRoom();
       }
       else if(e === JOIN) {
         getAvailableRooms();

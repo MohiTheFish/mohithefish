@@ -9,6 +9,7 @@ import {
   ROOM_JOINED,
   PLAYER_LEFT,
   START_PLAYING,
+  SET_IS_PRIVATE,
 } from '../actions/gameActions';
 
 export const initialState = {
@@ -18,9 +19,10 @@ export const initialState = {
   numPlayers: 1,
   host: "",
   members: [],
-  roomname: "",
+  roomId: "",
   myIndex: -1,
   rooms: [],
+  isPrivate: false,
   isPlaying: false,
 }
 
@@ -43,20 +45,20 @@ export function gameData(state = initialState, action) {
         host: action.host
       });
     case ROOM_CREATED: {
-      const { hostname, members, roomname } = action.data;
+      const { hostname, members, roomId } = action.data;
       return Object.assign({}, state, {
         host: hostname,
         members: members,
-        roomname: roomname,
+        roomId: roomId,
         myIndex: members.length-1,
       });
     }
     case ROOM_UPDATED: {
-      const { hostname, members, roomname } = action.data;
+      const { hostname, members, roomId } = action.data;
       return Object.assign({}, state, {
         host: hostname,
         members: members,
-        roomname: roomname,
+        roomId: roomId,
         myIndex: state.myIndex,
       });
     }
@@ -67,11 +69,11 @@ export function gameData(state = initialState, action) {
       });
     }
     case ROOM_JOINED: {
-      const { hostname, members, roomname } = action.data;
+      const { hostname, members, roomId } = action.data;
       return Object.assign({}, state, {
         host: hostname,
         members: members,
-        roomname: roomname,
+        roomId: roomId,
         myIndex: members.length-1,
       });
     }
@@ -97,6 +99,11 @@ export function gameData(state = initialState, action) {
         newState.members =  members.filter((m, index) => (index !== deletedIndex) );
       }
       return Object.assign({}, state, newState);
+    }
+    case SET_IS_PRIVATE: {
+      return Object.assign({}, state, {
+        isPrivate: action.isPrivate
+      });
     }
     case START_PLAYING: {
       return Object.assign({}, state, {

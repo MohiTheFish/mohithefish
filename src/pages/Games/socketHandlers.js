@@ -10,6 +10,7 @@ import {
   roomJoined,
   playerLeft,
   startPlaying,
+  roomPrivacyToggled,
 } from 'redux/actions/gameActions';
 
 import {
@@ -24,8 +25,7 @@ export function connectToServer() {
   const {username, gamename, userId: uid} = store.getState().gameCredentials;
   userId = uid;
   
-  let a = `https://mohithefish.herokuapp.com/${gamename}`;
-  console.log(`using: ${a}`);
+  let a = `http://localhost:5000/${gamename}`;
   const newSocket = io.connect(a, {
     reconnection: true,
     reconnectionDelay: 1000,
@@ -51,13 +51,18 @@ export function connectToServer() {
   // });
   
   newSocket.on('createdRoom', function(roomInfo){
-    // console.log(roomInfo);
+    console.log(roomInfo);
     store.dispatch(roomCreated({
       hostname: roomInfo.hostname,
-      roomname: roomInfo.roomname,
+      roomId: roomInfo.roomId,
       members: roomInfo.members,
+      isPrivate: roomInfo.isPrivate,
     }));
   });
+  
+  newSocket.on('togglePrivate', function(newState){
+    store.dispatch(roomPrivacyToggled(newState));
+  })
 
   newSocket.on('availableRooms', function(rooms) {
     // console.log('these are available rooms');
@@ -67,19 +72,22 @@ export function connectToServer() {
     }));
   });
 
+  newSocket.on('needId', function() {
+    console.log('you need an id to access this room!'); 
+  })
   newSocket.on('youJoined', function(roomInfo){
     // console.log(roomInfo);
     store.dispatch(roomJoined({
       hostname: roomInfo.hostname,
-      roomname: roomInfo.roomname, 
+      roomId: roomInfo.roomId, 
       members: roomInfo.members,
     }))
-  }) 
+  });
 
   newSocket.on('othersJoined', function(roomInfo){
     store.dispatch(roomUpdated({
       hostname: roomInfo.hostname,
-      roomname: roomInfo.roomname, 
+      roomId: roomInfo.roomId, 
       members: roomInfo.members,
     }));
   })
@@ -87,7 +95,7 @@ export function connectToServer() {
   newSocket.on('gameStarted', function(gameState){
     // console.log(gameState);
     store.dispatch(startSpyfall(gameState));
-    store.dispatch(startPlaying(gameState));
+    // store.dispatch(startPlaying(gameState));
   });
 
   newSocket.on('playerLeft', function(index) {

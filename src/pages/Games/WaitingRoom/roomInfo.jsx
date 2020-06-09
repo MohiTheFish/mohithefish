@@ -9,17 +9,19 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import Loading from 'components/Loading/loading';
 import MyInput from './RoomInfoComponents/myInput';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
+import SpyfallSettings from '../Spyfall/spyfallSettings';
 
 function mapStateToPropsRI(state) {
   const gd = state.gameData;
   return {
     username: state.gameCredentials.username,
+    gamename: state.gameCredentials.gamename,
     host: gd.host,
     selectedChoice: gd.selectedChoice,
     isConnected: gd.isConnected,
     isLoadingRoom: gd.isLoadingRoom,
     members: gd.members,
-    roomname: gd.roomname,
+    roomId: gd.roomId,
     myIndex: gd.myIndex,
     rooms: gd.rooms,
   };
@@ -66,7 +68,7 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
   return rooms.map(room => {
     return (
       <Grid item key={room.hostname} xs={12} className="room">
-        <Button className="data" onClick={()=>{joinRoom(room.roomname)}}>
+        <Button className="data" onClick={()=>{joinRoom(room.roomId)}}>
           <h3 className="left">
             Host: &nbsp;
             <span className="bold">{room.hostname}</span>
@@ -82,19 +84,27 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
 }
 
 function RoomInfo(props) {
-  const { isConnected, selectedChoice, host, roomname, members, myIndex, rooms, isLoadingRoom } = props;
+  const { isConnected, selectedChoice, gamename, host, roomId, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
-  if (selectedChoice === 'create' || myIndex >= 0) {
+
+  if (selectedChoice === 'create') {
+    return (
+      <div className="room-info">
+        <SpyfallSettings />
+      </div>
+    );
+  }
+  else if (selectedChoice === 'creation' || myIndex >= 0) {
     let hostClass = "";
     if (myIndex===-1){
-      hostClass = "my-name"
+      hostClass = "my-name";
     }
     return (
       <div className="room-info">
         <div className="room-title">
           <h2>Host: <span className={hostClass}>{host}</span></h2>
-          <h2>Room id: {roomname}</h2>
+          <h2>Room id: {roomId}</h2>
         </div>
           {renderMembers(members, myIndex)}
       </div>

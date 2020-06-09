@@ -32,7 +32,7 @@ function WaitingRoom(props) {
   if (isPlaying) {
     storageType.setItem('gameData', JSON.stringify(store.getState().gameData));
     return (
-      <Redirect to={`${location.pathname}/play`} />
+      <Redirect push to={`${location.pathname}/play`} />
     )
   }
 

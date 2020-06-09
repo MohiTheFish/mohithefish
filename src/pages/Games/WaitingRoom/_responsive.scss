@@ -1,8 +1,16 @@
 @media only screen and (max-width: 480px) {
-  body .waiting-room-wrapper .room-info .input .form-wrapper {
-    width: 90%;
-  }
-  body .waiting-room-wrapper .room-info .rooms-wrapper {
-    width: 100%;
+  body {
+    .waiting-room-wrapper {
+      .room-info {
+        .input {
+          .form-wrapper {
+            width: 90%;
+          }
+        }
+        .rooms-wrapper {
+          width: 100%;
+        }
+      }
+    }
   }
 }
