@@ -1,0 +1,21 @@
+.waiting-room-wrapper{
+  .connected-choices {
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-bottom: 20px;
+
+    .button {
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    .disabled {
+      // background-color: white;
+      cursor: pointer;
+    }
+  }
+}
