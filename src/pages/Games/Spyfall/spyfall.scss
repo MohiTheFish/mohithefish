@@ -3,6 +3,7 @@
     width: 60%;
     margin-left: auto;
     margin-right: auto;
+    min-width: 500px;
 
     .header {
       padding: 10px;
@@ -34,6 +35,19 @@
       }
     }
   }
+  @media only screen and (max-width: 480px) {
+    .players-list {
+      width: 100%;
+      min-width: 0;
+      .names {
+        width: 100%;
+        h4 {
+          width: 48%;
+          margin: 0 1%;
+        }
+      }
+    }
+  }
   .location-section {
     .header {
       padding: 10px;
@@ -58,7 +72,7 @@
         transition-property: background-color;
         background-color: #eeeeee;
         border-radius: 4px;
-        width: 210px; // Make width + 2*margin = width of locationwrapper
+        width: 220px; // Make width + 2*margin = width of locationwrapper
         margin: 0 10px; 
         height: 40px;
         margin-bottom: 15px;
@@ -96,11 +110,11 @@
     }
     @media only screen and (max-width: 480px) {
       .location-wrapper {
-        width: 300px;
+        width: 100%;
 
         .location {
-          width: 130px;
-          margin: 0 10px;
+          width: 48%;
+          margin: 0 1%;
           margin-bottom: 10px;
         }
       }

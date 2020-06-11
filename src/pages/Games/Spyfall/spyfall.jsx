@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import './spyfall.scss';
 
@@ -17,9 +17,6 @@ function mapStateToProps(state) {
   // console.log(state);
   return {
     gameCredentials: state.gameCredentials,
-    host: gd.host,
-    members: gd.members,
-    myIndex: gd.myIndex,
     
     time: ps.time,
     selectedLocations: game.selectedLocations,
@@ -33,9 +30,6 @@ function mapStateToProps(state) {
 function Spyfall(props) {
   const {
     gameCredentials,
-    host,
-    members,
-    myIndex,
     time,
     selectedLocations,
     selectedNamesByIndex,
@@ -43,6 +37,11 @@ function Spyfall(props) {
     locations,
     secretLocation,
   } = props;
+  
+  const [host, ] = useState(store.getState().gameData.host);
+  const [members, ] = useState(store.getState().gameData.members);
+
+
 
   function getSelectedClassL(val, set, addCall, removeCall) {
     const isSelected = set.has(val);
