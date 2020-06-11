@@ -4,6 +4,7 @@ import {
   ADD_NAME_SPYFALL,
   REMOVE_NAME_SPYFALL,
   START_GAME_SPYFALL,
+  UPDATE_SPYFALL_TIME,
 } from 'redux/actions/spyfallActions';
 
 export const initialState = {
@@ -29,6 +30,12 @@ export function playState(state = initialState, action) {
           locations: action.gameState.locations,
           secretLocation: action.gameState.secretLocation,
         }
+      };
+    }
+    case UPDATE_SPYFALL_TIME: {
+      return {
+        time: action.time,
+        spyfall: state.spyfall,
       };
     }
     case ADD_LOCATION_SPYFALL: {

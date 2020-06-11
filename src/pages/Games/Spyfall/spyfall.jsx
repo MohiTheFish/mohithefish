@@ -14,7 +14,6 @@ function mapStateToProps(state) {
   const gd = state.gameData;
   const ps = state.playState;
   const game = ps.spyfall;
-  // console.log(state);
   return {
     gameCredentials: state.gameCredentials,
     
@@ -92,6 +91,13 @@ function Spyfall(props) {
     });
   }
 
+  function renderTime() {
+    const minutes = Math.floor(time / 60); 
+    const seconds = time % 60;
+
+    return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
+  }
+
   const [selectClass, callback] = getSelectedClassN(-1, selectedNamesByIndex, addNameSpyfall, removeNameSpyfall);
   return (
     <div className="wrapper spyfall-page-wrapper">
@@ -103,6 +109,9 @@ function Spyfall(props) {
             ? <h4>You ARE the spy! <span role="img" aria-label="spy emoji">🕵️</span> <br/> Figure out the secret location!</h4>
             : <h4>You are NOT the spy. <br/> The location is <span className="secret-location">{secretLocation}</span></h4>
           }
+      </div>
+      <div className="time-wrapper">
+        {renderTime()}
       </div>
 
       <div className="players-list">

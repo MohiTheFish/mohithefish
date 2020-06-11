@@ -1,4 +1,5 @@
 export const START_GAME_SPYFALL = "START_GAME_SPYFALL";
+export const UPDATE_SPYFALL_TIME = "UDPATE_SPYFALL_TIME";
 export const ADD_LOCATION_SPYFALL = "ADD_LOCATION_SPYFALL";
 export const REMOVE_LOCATION_SPYFALL = "REMOVE_LOCATION_SPYFALL";
 export const ADD_NAME_SPYFALL = "ADD_NAME_SPYFALL";
@@ -8,6 +9,13 @@ export function startSpyfall(gameState) {
   return {
     type: START_GAME_SPYFALL,
     gameState, 
+  };
+}
+
+export function updateSpyfallTime(time) {
+  return {
+    type: UPDATE_SPYFALL_TIME,
+    time,
   };
 }
 

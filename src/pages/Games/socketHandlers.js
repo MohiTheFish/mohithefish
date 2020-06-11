@@ -15,7 +15,17 @@ import {
 
 import {
   startSpyfall,
+  updateSpyfallTime,
 } from 'redux/actions/spyfallActions';
+
+function addSpyfallEventListeners(newSocket) {
+  console.log('spyfall event listener');
+  newSocket.on('timeUpdate', function(time) {
+    console.log('fired!');
+    console.log(time);
+    store.dispatch(updateSpyfallTime(time));
+  });
+}
 
 var socket = null;
 let userId = null;
@@ -32,6 +42,10 @@ export function connectToServer() {
     reconnectionDelayMax : 5000,
     reconnectionAttempts: 10,
   });
+
+  if(gamename === 'spyfall') {
+    addSpyfallEventListeners(newSocket);
+  }
 
 
   newSocket.on('connect', function() {
@@ -74,7 +88,8 @@ export function connectToServer() {
 
   newSocket.on('needId', function() {
     console.log('you need an id to access this room!'); 
-  })
+  });
+
   newSocket.on('youJoined', function(roomInfo){
     // console.log(roomInfo);
     store.dispatch(roomJoined({
@@ -95,7 +110,7 @@ export function connectToServer() {
   newSocket.on('gameStarted', function(gameState){
     // console.log(gameState);
     store.dispatch(startSpyfall(gameState));
-    // store.dispatch(startPlaying(gameState));
+    store.dispatch(startPlaying(gameState));
   });
 
   newSocket.on('playerLeft', function(index) {
