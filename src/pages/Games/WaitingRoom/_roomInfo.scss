@@ -9,7 +9,19 @@
         font-weight: bold;
       }
     }
-    
+    .settings-wrapper {
+      display: flex;
+      width: 600px;
+      margin: 0 auto;
+      .setting{
+        width: 300px;
+        .time-input {
+          width: 70px;
+          margin: 0 auto;
+        }
+      }
+
+    }
     .input {
       .form-wrapper {
         margin: 8px;

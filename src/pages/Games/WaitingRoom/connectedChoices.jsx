@@ -69,7 +69,7 @@ function mapDispatchToPropsCC(dispatch) {
     handleSelect: (e) => {
       dispatch(setSelectedChoiceAndLoadingRoom(e));
       if(e === CREATE) {
-        
+        // @TODO uncomment meeeeee
         // createRoom();
       }
       else if(e === JOIN) {

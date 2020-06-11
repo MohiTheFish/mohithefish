@@ -12,6 +12,10 @@ import {
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
 } from '../actions/gameActions';
 
+import {
+  SET_SPYFALL_TIME
+} from '../actions/SpecificGameActions/spyfallGameActions';
+
 export const initialState = {
   isConnected: false,
   selectedChoice: "",
@@ -24,14 +28,34 @@ export const initialState = {
   rooms: [],
   isPlaying: false,
   settings: {
-    isPrivate: false,
+    isPrivate: true,
     spyfall: {
-      time: 8, // minutes
+      time: "8", // minutes
+    }
+  }
+}
+
+function spyfallGameDataReducer(state, action) {
+  switch(action.type) {
+    case SET_SPYFALL_TIME: {
+      return Object.assign({}, state, {
+        settings: {
+          ...state.settings,
+          spyfall: {
+            ...state.settings.spyfall,
+            time: action.time,
+          }
+        }
+      })
     }
   }
 }
 
 export function gameData(state = initialState, action) {
+  switch(action.game) {
+    case 'spyfall': return spyfallGameDataReducer(state, action);
+    default: break;
+  }
   switch(action.type) {
     case SET_IS_CONNECTED:
       return Object.assign({}, state, {

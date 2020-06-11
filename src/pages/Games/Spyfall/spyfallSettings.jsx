@@ -1,47 +1,66 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
-import PrivateSwitch from '../WaitingRoom/RoomInfoComponents/privateSwitch';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
 
-const mapStateToProps = (state) => {
-  const {settings} = state.gameData;
+
+import PrivateSwitch from '../WaitingRoom/RoomInfoComponents/privateSwitch';
+import {
+  isValidTime,
+  setSpyfallTime,
+} from 'redux/actions/SpecificGameActions/spyfallGameActions';
+import { InputAdornment } from '@material-ui/core';
+const mapStateToPropsTL = (state) => {
+  const {time} = state.gameData.settings[state.gameCredentials.gamename];
   return {
-    time: settings.chosenTime
+    time,
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToPropsTL = (dispatch) => {
   return {
     handleSpyfallTime: (e) => {
-      dispatch()
+      dispatch(setSpyfallTime(e.target.value));
     }
-  }
+  };
 }
 
 function TimeLimit(props) {
-  const { time } = props;
+  console.log(props);
+  const { time, handleSpyfallTime } = props;
+  let error = !isValidTime(time);
   return (
     <div className="setting">
-      <h3>Decide how many minutes a game should last for.</h3>
-      <TextField
-        required
-        id="outlined-required"
-        label="Required"
-        defaultValue="8"
-        variant="outlined"
-        value={time}
-      />
+      <h3>How long is the game?</h3>
+      <FormControl error={error}>
+        <Input
+          className="time-input"
+          id="standard"
+          label="Time"
+          value={time}
+          onChange={handleSpyfallTime}
+          endAdornment={<InputAdornment position="end">min</InputAdornment>}
+        />
+        {
+          error
+          ? <FormHelperText id="component-error-text">Must be an integer less than 10</FormHelperText>
+          : ''
+        }
+      </FormControl>
+      
     </div>
   );
 }
 
-const SubscribedTimeLimit = connect(mapStateToProps, mapDispatchToProps)(TimeLimit);
+const SubscribedTimeLimit = connect(mapStateToPropsTL, mapDispatchToPropsTL)(TimeLimit);
 
 export default function SpyfallSettings() {
   return (
-    <>
-    <PrivateSwitch />
-    {/* <SubscribedTimeLimit /> */}
-    </>
+    <div className="settings-wrapper">
+      <PrivateSwitch />
+      <SubscribedTimeLimit />
+    </div>
   )
 }
