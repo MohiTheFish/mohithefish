@@ -120,6 +120,13 @@ export function createRoom() {
   socket.emit('createRoom', userId);
 }
 
+export function createRoomWithSettings(settings) {
+  if (!socket) { throw new Error('Socket invalid!');}
+
+  socket.emit('createRoom', [userId, settings]);
+}
+
+
 export function forceDisconnect() {
   if (!socket) { throw new Error('Socket invalid!');}
 

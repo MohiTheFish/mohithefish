@@ -5,9 +5,7 @@ import Button from '@material-ui/core/Button';
 import Loading from 'components/Loading/loading';
 import { setSelectedChoiceAndLoadingRoom } from 'redux/actions/gameActions';
 import { getAvailableRooms } from '../socketHandlers';
-
-const CREATE = 'create';
-const JOIN = 'join';
+import { lobbyStates } from 'redux/actions/gameActions';
 
 function setDisableProps(obj) {
   obj.className += " disabled";
@@ -21,21 +19,21 @@ function ConnectedChoices(props) {
   const createButtonProps = {
     variant: "contained",
     className: "button",
-    onClick: () => handleSelect(CREATE),
+    onClick: () => handleSelect(lobbyStates.CREATE),
   };
   const joinButtonProps = {
     variant: "contained",
     className: "button",
-    onClick: () => handleSelect(JOIN),
+    onClick: () => handleSelect(lobbyStates.JOIN),
   };
 
 
-  if (selectedChoice === CREATE) {
+  if (selectedChoice === lobbyStates.CREATE || selectedChoice === lobbyStates.CREATED) {
     setDisableProps(joinButtonProps);
     delete createButtonProps.onClick;
     createButtonProps.disableRipple = true;
   }
-  else if (selectedChoice === JOIN) {
+  else if (selectedChoice === lobbyStates.JOIN || selectedChoice === lobbyStates.JOINED) {
     setDisableProps(createButtonProps);
     delete joinButtonProps.onClick;
     joinButtonProps.disableRipple = true;
@@ -68,7 +66,7 @@ function mapDispatchToPropsCC(dispatch) {
   return {
     handleSelect: (e) => {
       dispatch(setSelectedChoiceAndLoadingRoom(e));
-      if(e === JOIN) {
+      if(e === lobbyStates.JOIN) {
         getAvailableRooms();
       }
     }

@@ -10,6 +10,13 @@ export const PLAYER_LEFT = "PLAYER_LEFT";
 export const START_PLAYING = "START_PLAYING";
 export const SET_IS_PRIVATE = "SET_IS_PRIVATE";
 
+export const lobbyStates = {
+  CREATE: "create",
+  JOIN: "join",
+  CREATED: "created",
+  JOINED: "joined",
+};
+
 export function setIsConnected(isConnected) {
   return {
     type: SET_IS_CONNECTED,

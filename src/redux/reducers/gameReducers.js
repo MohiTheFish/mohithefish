@@ -10,6 +10,7 @@ import {
   START_PLAYING,
   SET_IS_PRIVATE,
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
+  lobbyStates
 } from '../actions/gameActions';
 
 import {
@@ -83,6 +84,7 @@ export function gameData(state = initialState, action) {
         members: members,
         roomId: roomId,
         myIndex: members.length-1,
+        selectedChoice: lobbyStates.CREATED,
       });
     }
     case ROOM_UPDATED: {
@@ -107,6 +109,7 @@ export function gameData(state = initialState, action) {
         members: members,
         roomId: roomId,
         myIndex: members.length-1,
+        selectedChoice: lobbyStates.JOINED,
       });
     }
     case PLAYER_LEFT: {

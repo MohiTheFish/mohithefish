@@ -12,6 +12,8 @@ import SubmitSettings from './RoomInfoComponents/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 import SpyfallSettings from '../Spyfall/spyfallSettings';
 
+import { lobbyStates } from 'redux/actions/gameActions';
+
 import './_roomInfo.scss';
 
 function mapStateToPropsRI(state) {
@@ -91,7 +93,7 @@ function RoomInfo(props) {
   if (!isConnected || !selectedChoice) { return ""; }
 
 
-  if (selectedChoice === 'create') {
+  if (selectedChoice === lobbyStates.CREATE) {
     return (
       <div className="room-info">
         <SpyfallSettings />
@@ -99,22 +101,7 @@ function RoomInfo(props) {
       </div>
     );
   }
-  else if (selectedChoice === 'creation' || myIndex >= 0) {
-    let hostClass = "";
-    if (myIndex===-1){
-      hostClass = "my-name";
-    }
-    return (
-      <div className="room-info">
-        <div className="room-title">
-          <h2>Host: <span className={hostClass}>{host}</span></h2>
-          <h2>Room id: {roomId}</h2>
-        </div>
-        {renderMembers(members, myIndex)}
-      </div>
-    );
-  }
-  else { //selectedChoice === "join"
+  else if(selectedChoice === lobbyStates.JOIN) {
     return (
       <div className="room-info">
         <div className="input">
@@ -133,6 +120,21 @@ function RoomInfo(props) {
             { renderAvailableRooms(rooms, isLoadingRoom) }
           </Grid>
         </div>
+      </div>
+    );
+  }
+  else {
+    let hostClass = "";
+    if (myIndex===-1){
+      hostClass = "my-name";
+    }
+    return (
+      <div className="room-info">
+        <div className="room-title">
+          <h2>Host: <span className={hostClass}>{host}</span></h2>
+          <h2>Room id: {roomId}</h2>
+        </div>
+        {renderMembers(members, myIndex)}
       </div>
     );
   }
