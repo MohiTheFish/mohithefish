@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 
 import Loading from 'components/Loading/loading';
 import { setSelectedChoiceAndLoadingRoom } from 'redux/actions/gameActions';
-import { createRoom, getAvailableRooms } from '../socketHandlers';
+import { getAvailableRooms } from '../socketHandlers';
 
 const CREATE = 'create';
 const JOIN = 'join';
@@ -68,11 +68,7 @@ function mapDispatchToPropsCC(dispatch) {
   return {
     handleSelect: (e) => {
       dispatch(setSelectedChoiceAndLoadingRoom(e));
-      if(e === CREATE) {
-        // @TODO uncomment meeeeee
-        // createRoom();
-      }
-      else if(e === JOIN) {
+      if(e === JOIN) {
         getAvailableRooms();
       }
     }

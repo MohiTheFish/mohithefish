@@ -11,16 +11,17 @@
     }
     .settings-wrapper {
       display: flex;
-      width: 600px;
+      width: 500px;
+      height: 85px;
+      box-sizing: border-box;
       margin: 0 auto;
       .setting{
-        width: 300px;
+        width: 250px;
         .time-input {
           width: 70px;
           margin: 0 auto;
         }
       }
-
     }
     .input {
       .form-wrapper {

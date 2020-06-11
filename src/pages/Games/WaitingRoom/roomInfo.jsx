@@ -8,6 +8,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 
 import Loading from 'components/Loading/loading';
 import MyInput from './RoomInfoComponents/myInput';
+import SubmitSettings from './RoomInfoComponents/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 import SpyfallSettings from '../Spyfall/spyfallSettings';
 
@@ -92,6 +93,7 @@ function RoomInfo(props) {
     return (
       <div className="room-info">
         <SpyfallSettings />
+        <SubmitSettings />
       </div>
     );
   }
@@ -106,7 +108,7 @@ function RoomInfo(props) {
           <h2>Host: <span className={hostClass}>{host}</span></h2>
           <h2>Room id: {roomId}</h2>
         </div>
-          {renderMembers(members, myIndex)}
+        {renderMembers(members, myIndex)}
       </div>
     );
   }

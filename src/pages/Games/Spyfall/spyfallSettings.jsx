@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
@@ -10,6 +9,7 @@ import PrivateSwitch from '../WaitingRoom/RoomInfoComponents/privateSwitch';
 import {
   isValidTime,
   setSpyfallTime,
+  MAX_SPYFALL_TIME,
 } from 'redux/actions/SpecificGameActions/spyfallGameActions';
 import { InputAdornment } from '@material-ui/core';
 const mapStateToPropsTL = (state) => {
@@ -28,7 +28,6 @@ const mapDispatchToPropsTL = (dispatch) => {
 }
 
 function TimeLimit(props) {
-  console.log(props);
   const { time, handleSpyfallTime } = props;
   let error = !isValidTime(time);
   return (
@@ -45,7 +44,7 @@ function TimeLimit(props) {
         />
         {
           error
-          ? <FormHelperText id="component-error-text">Must be an integer less than 10</FormHelperText>
+          ? <FormHelperText id="component-error-text">Must be an integer less than {MAX_SPYFALL_TIME}</FormHelperText>
           : ''
         }
       </FormControl>
