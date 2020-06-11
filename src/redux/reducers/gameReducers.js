@@ -1,7 +1,6 @@
 import {
   SET_IS_CONNECTED,
   SET_IS_LOADINGROOM,
-  SET_SELECTED_CHOICE,
   SET_HOST_NAME,
   ROOM_CREATED,
   VISIBLE_ROOMS,
@@ -10,6 +9,7 @@ import {
   PLAYER_LEFT,
   START_PLAYING,
   SET_IS_PRIVATE,
+  SET_IS_LOADING_ROOM_SELECTED_CHOICE,
 } from '../actions/gameActions';
 
 export const initialState = {
@@ -22,8 +22,13 @@ export const initialState = {
   roomId: "",
   myIndex: -1,
   rooms: [],
-  isPrivate: false,
   isPlaying: false,
+  settings: {
+    isPrivate: false,
+    spyfall: {
+      time: 8, // minutes
+    }
+  }
 }
 
 export function gameData(state = initialState, action) {
@@ -32,13 +37,15 @@ export function gameData(state = initialState, action) {
       return Object.assign({}, state, {
         isConnected: action.isConnected
       });
+    case SET_IS_LOADING_ROOM_SELECTED_CHOICE: {
+      return Object.assign({}, state, {
+        isConnected: action.isConnected,
+        selectedChoice: action.selectedChoice,
+      });
+    }
     case SET_IS_LOADINGROOM:
       return Object.assign({}, state, {
         isLoadingRoom: action.isLoadingRoom
-      });
-    case SET_SELECTED_CHOICE:
-      return Object.assign({}, state, {
-        selectedChoice: action.selectedChoice
       });
     case SET_HOST_NAME:
       return Object.assign({}, state, {
@@ -100,15 +107,18 @@ export function gameData(state = initialState, action) {
       }
       return Object.assign({}, state, newState);
     }
-    case SET_IS_PRIVATE: {
-      return Object.assign({}, state, {
-        isPrivate: action.isPrivate
-      });
-    }
     case START_PLAYING: {
       return Object.assign({}, state, {
         isPlaying: true,
         initialGameState: action.initialGameState
+      });
+    }
+    case SET_IS_PRIVATE: {
+      return Object.assign({}, state, {
+        settings: {
+          ...state.settings,
+          isPrivate: !state.settings.isPrivate
+        }
       });
     }
     default:

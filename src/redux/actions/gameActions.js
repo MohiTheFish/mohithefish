@@ -1,7 +1,6 @@
-export const GET_AVAILABLE_GAMES = 'GET_AVAILABLE_GAMES';
 export const SET_IS_CONNECTED = 'SET_IS_CONNECTED'; 
 export const SET_IS_LOADINGROOM = 'SET_IS_LOADINGROOM';
-export const SET_SELECTED_CHOICE = 'SET_SELECTED_CHOICE';
+export const SET_IS_LOADING_ROOM_SELECTED_CHOICE = "SET_IS_LOADING_ROOM_SELECTED_CHOICE";
 export const SET_HOST_NAME = "SET_HOST_NAME";
 export const ROOM_CREATED = "ROOM_CREATED";
 export const ROOM_UPDATED = "ROOM_UPDATED";
@@ -18,11 +17,12 @@ export function setIsConnected(isConnected) {
   };
 }
 
-export function setSelectedChoice(selectedChoice) {
+export function setSelectedChoiceAndLoadingRoom(selectedChoice) {
   return {
-    type: SET_SELECTED_CHOICE,
+    type: SET_IS_LOADING_ROOM_SELECTED_CHOICE,
+    isConnected: true,
     selectedChoice,
-  };
+  }
 }
 
 export function setIsLoadingRoom(isLoadingRoom) {
@@ -81,9 +81,8 @@ export function startPlaying() {
   }
 }
 
-export function roomPrivacyToggled(newState) {
+export function roomPrivacyToggled() {
   return {
     type: SET_IS_PRIVATE,
-    isPrivate: newState,
   };
 }

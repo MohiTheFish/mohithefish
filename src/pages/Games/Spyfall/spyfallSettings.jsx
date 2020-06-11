@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
+
 function TimeLimit(props) {
   const { time } = props;
   return (
@@ -40,7 +41,7 @@ export default function SpyfallSettings() {
   return (
     <>
     <PrivateSwitch />
-    <SubscribedTimeLimit />
+    {/* <SubscribedTimeLimit /> */}
     </>
   )
 }

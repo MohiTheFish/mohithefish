@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Switch from '@material-ui/core/Switch';
+
+import { roomPrivacyToggled } from "redux/actions/gameActions";
 
 const mapStateToProps = (state) => {
   const {settings} = state.gameData;
@@ -8,18 +11,23 @@ const mapStateToProps = (state) => {
   };
 }
 
-export default function PrivateSwitch(props) {
-  const {isPrivate} = props;
-
-  function handleChange(e) { 
-    console.log(!isPrivate);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleSwitch: (e) => {
+      dispatch(roomPrivacyToggled());
+    }
   }
+}
+
+function PrivateSwitch(props) {
+  const {isPrivate, handleSwitch} = props;
+
   return (
     <div className="switch-wrapper">
       <p>Public</p>
       <Switch
         checked={isPrivate}
-        onChange={handleChange}
+        onChange={handleSwitch}
         color="primary"
         name="checked"
         inputProps={{ 'aria-label': 'primary checkbox' }}
@@ -28,3 +36,6 @@ export default function PrivateSwitch(props) {
     </div>
   );
 }
+
+const SubscribedPrivateSwitch = connect(mapStateToProps, mapDispatchToProps)(PrivateSwitch);
+export default SubscribedPrivateSwitch;

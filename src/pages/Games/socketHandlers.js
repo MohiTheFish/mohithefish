@@ -110,6 +110,10 @@ export function connectToServer() {
   });
 }
 
+export function isConnected() {
+  return !socket;
+}
+
 export function createRoom() {
   if (!socket) { throw new Error('Socket invalid!');}
 

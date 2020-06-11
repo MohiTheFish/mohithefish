@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
 import Loading from 'components/Loading/loading';
-import { setSelectedChoice, setIsLoadingRoom } from 'redux/actions/gameActions';
+import { setSelectedChoiceAndLoadingRoom } from 'redux/actions/gameActions';
 import { createRoom, getAvailableRooms } from '../socketHandlers';
 
 const CREATE = 'create';
@@ -67,8 +67,7 @@ function mapStateToPropsCC(state) {
 function mapDispatchToPropsCC(dispatch) {
   return {
     handleSelect: (e) => {
-      dispatch(setSelectedChoice(e));
-      dispatch(setIsLoadingRoom(true));
+      dispatch(setSelectedChoiceAndLoadingRoom(e));
       if(e === CREATE) {
         
         // createRoom();
