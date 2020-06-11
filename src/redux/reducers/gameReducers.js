@@ -48,6 +48,7 @@ function spyfallGameDataReducer(state, action) {
         }
       })
     }
+    default: return state;
   }
 }
 

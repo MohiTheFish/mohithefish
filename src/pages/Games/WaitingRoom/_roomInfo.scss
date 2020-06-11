@@ -1,3 +1,7 @@
+@use "../common" as *;
+@use "connectedChoices";
+@use "./RoomInfoComponents/privateSwitch";
+
 .waiting-room-wrapper {
   .room-info {
     height: 100px;
@@ -9,6 +13,8 @@
         font-weight: bold;
       }
     }
+
+    // @TODO move this to its own file
     .settings-wrapper {
       display: flex;
       width: 500px;
@@ -18,11 +24,13 @@
       .setting{
         width: 250px;
         .time-input {
-          width: 70px;
+          width: 55px;
           margin: 0 auto;
         }
       }
     }
+
+
     .input {
       .form-wrapper {
         margin: 8px;
@@ -89,5 +97,3 @@
     }
   }
 }
-
-@import "./RoomInfoComponents/privateSwitch";

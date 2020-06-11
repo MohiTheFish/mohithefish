@@ -12,6 +12,8 @@ import SubmitSettings from './RoomInfoComponents/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 import SpyfallSettings from '../Spyfall/spyfallSettings';
 
+import './_roomInfo.scss';
+
 function mapStateToPropsRI(state) {
   const gd = state.gameData;
   return {
@@ -85,7 +87,7 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
 }
 
 function RoomInfo(props) {
-  const { isConnected, selectedChoice, gamename, host, roomId, members, myIndex, rooms, isLoadingRoom } = props;
+  const { isConnected, selectedChoice, host, roomId, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
 

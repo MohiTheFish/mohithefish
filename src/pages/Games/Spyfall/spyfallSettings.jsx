@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
-
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import PrivateSwitch from '../WaitingRoom/RoomInfoComponents/privateSwitch';
 import {
@@ -11,14 +11,14 @@ import {
   setSpyfallTime,
   MAX_SPYFALL_TIME,
 } from 'redux/actions/SpecificGameActions/spyfallGameActions';
-import { InputAdornment } from '@material-ui/core';
+
+
 const mapStateToPropsTL = (state) => {
   const {time} = state.gameData.settings[state.gameCredentials.gamename];
   return {
     time,
   };
 }
-
 const mapDispatchToPropsTL = (dispatch) => {
   return {
     handleSpyfallTime: (e) => {
