@@ -19,10 +19,7 @@ import {
 } from 'redux/actions/spyfallActions';
 
 function addSpyfallEventListeners(newSocket) {
-  console.log('spyfall event listener');
   newSocket.on('timeUpdate', function(time) {
-    console.log('fired!');
-    console.log(time);
     store.dispatch(updateSpyfallTime(time));
   });
 }
@@ -60,12 +57,7 @@ export function connectToServer() {
     store.dispatch(setIsConnected(true));
   });
 
-  // newSocket.on('print', function(data) {
-  //   console.log(data);
-  // });
-  
   newSocket.on('createdRoom', function(roomInfo){
-    console.log(roomInfo);
     store.dispatch(roomCreated({
       hostname: roomInfo.hostname,
       roomId: roomInfo.roomId,
@@ -79,8 +71,6 @@ export function connectToServer() {
   })
 
   newSocket.on('availableRooms', function(rooms) {
-    // console.log('these are available rooms');
-    // console.log(rooms);
     store.dispatch(visibleRooms({
       rooms
     }));
@@ -91,7 +81,6 @@ export function connectToServer() {
   });
 
   newSocket.on('youJoined', function(roomInfo){
-    // console.log(roomInfo);
     store.dispatch(roomJoined({
       hostname: roomInfo.hostname,
       roomId: roomInfo.roomId, 
@@ -108,18 +97,15 @@ export function connectToServer() {
   })
 
   newSocket.on('gameStarted', function(gameState){
-    // console.log(gameState);
     store.dispatch(startSpyfall(gameState));
     store.dispatch(startPlaying(gameState));
   });
 
   newSocket.on('playerLeft', function(index) {
-    // console.log('PLAYER LEFT WUT');
     store.dispatch(playerLeft(index));
   });
 
   newSocket.on('disconnect', function() {
-    // console.log('The client disconnected');
     socket = null;
     store.dispatch(setIsConnected(false));
   });
@@ -155,7 +141,6 @@ export function joinRoom(targetRoom) {
     targetRoom: targetRoom.trim(),
     userId,
   };
-  // console.log('joining Room');
   socket.emit('joinRoom', data);
 }
 
