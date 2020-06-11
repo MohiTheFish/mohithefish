@@ -32,7 +32,7 @@ export function connectToServer() {
   const {username, gamename, userId: uid} = store.getState().gameCredentials;
   userId = uid;
   
-  let a = `https://mohithefish.herokuapp.com/${gamename}`;
+  let a = `http://localhost:5000/${gamename}`;
   const newSocket = io.connect(a, {
     reconnection: true,
     reconnectionDelay: 1000,
@@ -133,6 +133,12 @@ export function getAvailableRooms() {
 
   store.dispatch(setIsLoadingRoom(true));
   socket.emit('getAvailableRooms', userId);
+}
+
+export function informOtherRoomMembers() {
+  if (!socket) { throw new Error('Socket invalid!');}
+  // console.log('other room members');
+  socket.emit('nowCreatingRoom', userId);
 }
 
 export function joinRoom(targetRoom) {
