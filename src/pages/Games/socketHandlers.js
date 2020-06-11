@@ -11,7 +11,7 @@ import {
   playerLeft,
   startPlaying,
   roomPrivacyToggled,
-} from 'redux/actions/gameActions';
+} from 'redux/actions/gameSetupActions';
 
 import {
   startSpyfall,

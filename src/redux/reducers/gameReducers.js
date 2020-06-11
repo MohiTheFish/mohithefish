@@ -11,7 +11,7 @@ import {
   SET_IS_PRIVATE,
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
   lobbyStates
-} from '../actions/gameActions';
+} from '../actions/gameSetupActions';
 
 import {
   SET_SPYFALL_TIME

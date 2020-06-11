@@ -102,6 +102,7 @@ function Spyfall(props) {
   return (
     <div className="wrapper spyfall-page-wrapper">
       <div className="header">
+        
         <h1>Play Spyfall</h1>
         <h4>Your name is: {gameCredentials.username}</h4>
           {

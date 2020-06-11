@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Switch from '@material-ui/core/Switch';
 
-import { roomPrivacyToggled } from "redux/actions/gameActions";
+import { roomPrivacyToggled } from "redux/actions/gameSetupActions";
 
 const mapStateToProps = (state) => {
   const {settings} = state.gameData;

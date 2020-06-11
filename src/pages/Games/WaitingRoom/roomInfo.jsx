@@ -12,7 +12,7 @@ import SubmitSettings from './RoomInfoComponents/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 import SpyfallSettings from '../Spyfall/spyfallSettings';
 
-import { lobbyStates } from 'redux/actions/gameActions';
+import { lobbyStates } from 'redux/actions/gameSetupActions';
 
 import './_roomInfo.scss';
 

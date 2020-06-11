@@ -7,7 +7,7 @@ import MainPage from 'pages/MainPage/mainPage';
 import Games from 'pages/Games/games';
 import { Spyfall } from 'pages/Games/Spyfall';
 import WaitingRoom from 'pages/Games/WaitingRoom/waitingRoom';
-import NavBar from 'components/NavBar/navbar';
+import BackToLobby from 'components/BackToLobby/backToLobby';
 import store from 'redux/store';
 
 import './App.css';
@@ -45,7 +45,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={MainPage} />
           <Route path="/testing" component={Testing} /> 
-          <Route path="/testcomponent" component={NavBar} />
+          <Route path="/testcomponent" component={BackToLobby} />
 
           <Route path="/games/spyfall/play" component={Spyfall} />
           <Route path="/games/:name" component={WaitingRoom} />
