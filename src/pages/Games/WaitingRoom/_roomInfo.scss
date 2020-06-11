@@ -9,9 +9,31 @@
       h2 { 
         font-size: 1.5rem;
       }
-      .your-name {
-        font-weight: bold;
+      .roomId {
+        position: relative;
+        text-decoration: underline;
+        cursor: pointer;
       }
+      .roomId::after {
+        content: 'Click to Copy';
+        position: absolute;
+        font-size: 12px;
+        right: 0;
+        top: -30px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 4px;
+        color: white;
+        width: 50px;
+        height: 30px;
+        opacity: 0;
+        transition-duration: .3s;
+      }
+      .roomId:hover.roomId::after {
+        opacity: 1;
+      }
+    }
+    .my-name {
+      font-weight: bold;
     }
 
     // @TODO move this to its own file

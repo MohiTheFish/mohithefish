@@ -92,6 +92,11 @@ function RoomInfo(props) {
   const { isConnected, selectedChoice, host, roomId, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
+  function copyToClipboard(e) {
+    navigator.clipboard.writeText(roomId).then(() => {
+      console.log('copied');
+    })
+  }
 
   if (selectedChoice === lobbyStates.CREATE) {
     return (
@@ -132,7 +137,7 @@ function RoomInfo(props) {
       <div className="room-info">
         <div className="room-title">
           <h2>Host: <span className={hostClass}>{host}</span></h2>
-          <h2>Room id: {roomId}</h2>
+          <h2>Room id: <span className="roomId" onClick={copyToClipboard}>{roomId}</span></h2>
         </div>
         {renderMembers(members, myIndex)}
       </div>
