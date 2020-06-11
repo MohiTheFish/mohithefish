@@ -119,11 +119,13 @@ export function gameData(state = initialState, action) {
         myIndex,
         members: [],
       };
+      // If host left
       if (deletedIndex === -1) {
         newState.members = members.slice(1);
         newState.myIndex -= 1;
+        // If I am now the host
         if (newState.myIndex === -1) {
-          newState.selectedChoice = "create";
+          newState.selectedChoice = lobbyStates.CREATED;
         }
         newState.host = members[0];
       }
