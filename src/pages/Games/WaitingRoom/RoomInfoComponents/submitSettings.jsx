@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import {isValidTime} from 'redux/actions/SpecificGameActions/spyfallGameActions';
-// import { createRoom } from 'pages/Games/socketHandlers';
 import { createRoomWithSettings } from 'pages/Games/socketHandlers';
 
 function mapStateToProps(state) {
