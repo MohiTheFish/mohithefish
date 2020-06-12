@@ -30,7 +30,6 @@ function mapStateToProps(state) {
   };
 }
 function getValues() {
-  console.log(store.getState());
   const gd = store.getState().gameData;
   return {
     host: gd.host,
@@ -115,8 +114,7 @@ function Spyfall(props) {
   }
 
   const [selectClass, callback] = getSelectedClassN(-1, selectedNamesByIndex, addNameSpyfall, removeNameSpyfall);
-  console.log(myIndex);
-
+  
   const headerRow = myIndex === -1
   ? <div className="header-row">
       <BackToLobby />

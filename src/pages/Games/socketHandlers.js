@@ -137,7 +137,7 @@ export function getAvailableRooms() {
 
 export function informOtherRoomMembers() {
   if (!socket) { throw new Error('Socket invalid!');}
-  // console.log('other room members');
+  
   socket.emit('nowCreatingRoom', userId);
 }
 
