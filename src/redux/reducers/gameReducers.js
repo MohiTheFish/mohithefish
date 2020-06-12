@@ -10,6 +10,7 @@ import {
   START_PLAYING,
   SET_IS_PRIVATE,
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
+  GO_BACK_TO_LOBBY,
   lobbyStates
 } from '../actions/gameSetupActions';
 
@@ -141,6 +142,11 @@ export function gameData(state = initialState, action) {
       return Object.assign({}, state, {
         isPlaying: true,
         initialGameState: action.initialGameState
+      });
+    }
+    case GO_BACK_TO_LOBBY: {
+      return Object.assign({}, state, {
+        isPlaying: false,
       });
     }
     case SET_IS_PRIVATE: {

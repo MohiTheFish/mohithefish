@@ -1,11 +1,25 @@
 .spyfall-page-wrapper {
+  width: 100%;
+  .header {
+    width: 100%;
+    .header-row {
+      height: 48px; // Height of the IconButtons
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      h1 {
+        width: fit-content;
+      }
+    }
+  }
   .players-list {
     width: 60%;
     margin-left: auto;
     margin-right: auto;
     min-width: 500px;
 
-    .header {
+    .title {
       padding: 10px;
     }
     

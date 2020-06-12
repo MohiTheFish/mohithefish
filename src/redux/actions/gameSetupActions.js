@@ -9,6 +9,8 @@ export const ROOM_JOINED = "ROOM_JOINED";
 export const PLAYER_LEFT = "PLAYER_LEFT";
 export const START_PLAYING = "START_PLAYING";
 export const SET_IS_PRIVATE = "SET_IS_PRIVATE";
+export const GO_BACK_TO_LOBBY = "GO_BACK_TO_LOBBY";
+
 
 export const lobbyStates = {
   CREATE: "create",
@@ -91,5 +93,11 @@ export function startPlaying() {
 export function roomPrivacyToggled() {
   return {
     type: SET_IS_PRIVATE,
+  };
+}
+
+export function goBackToLobby() {
+  return {
+    type: GO_BACK_TO_LOBBY,
   };
 }
