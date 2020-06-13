@@ -36,6 +36,7 @@ function PrivateSwitch(props) {
         />
         <p>Private</p>
       </div>
+      <h6>*At this time, this setting cannot be later changed.</h6>
     </div>
   );
 }

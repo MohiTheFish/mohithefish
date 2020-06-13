@@ -7,7 +7,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import PrivateSwitch from './privateSwitch';
 import {
-  isValidTime,
   setSpyfallTime,
   MAX_SPYFALL_TIME,
 } from 'redux/actions/SpecificGameActions/spyfallGameActions';
@@ -27,6 +26,12 @@ const mapDispatchToPropsTL = (dispatch) => {
     }
   };
 }
+
+
+export function isValidTime(time) {
+  return /^\d+$/.test(time) && Number.parseInt(time) < MAX_SPYFALL_TIME;
+}
+
 
 function TimeLimit(props) {
   const { time, handleSpyfallTime } = props;
