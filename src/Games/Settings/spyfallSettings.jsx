@@ -12,6 +12,7 @@ import {
   MAX_SPYFALL_TIME,
 } from 'redux/actions/SpecificGameActions/spyfallGameActions';
 
+import './spyfallSettings.scss';
 
 const mapStateToPropsTL = (state) => {
   const {time} = state.gameData.settings[state.gameCredentials.gamename];
