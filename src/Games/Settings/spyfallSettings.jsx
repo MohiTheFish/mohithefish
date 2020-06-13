@@ -5,7 +5,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
-import PrivateSwitch from '../WaitingRoom/RoomInfoComponents/privateSwitch';
+import PrivateSwitch from './privateSwitch';
 import {
   isValidTime,
   setSpyfallTime,

@@ -10,11 +10,10 @@ import Loading from 'components/Loading/loading';
 import MyInput from './RoomInfoComponents/myInput';
 import SubmitSettings from './RoomInfoComponents/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
-import SpyfallSettings from '../Spyfall/spyfallSettings';
+import SpyfallSettings from 'Games/Settings/spyfallSettings';
 
 import { lobbyStates } from 'redux/actions/gameSetupActions';
 
-import './_roomInfo.scss';
 
 function mapStateToPropsRI(state) {
   const gd = state.gameData;

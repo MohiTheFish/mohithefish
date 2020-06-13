@@ -4,7 +4,9 @@
 
 .waiting-room-wrapper {
   .room-info {
-    height: 100px;
+    // display: grid;
+    // grid-template-rows: 1fr 1fr;
+    // grid-template-columns: 1fr 400px 1fr;
     .room-title {
       h2 { 
         font-size: 1.5rem;
@@ -111,6 +113,7 @@
       background-color: #4db6ac;
       color: white;
       margin-top: $section-divs;
+      width: 45px;
     }
     .members {
       margin-top: $section-divs;

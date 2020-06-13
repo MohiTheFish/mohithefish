@@ -1,5 +1,6 @@
 @use "../common" as *;
 @use "./responsive" as *;
+@use "roomInfo" as *;
 
 .wrapper {
   padding: 20px;
