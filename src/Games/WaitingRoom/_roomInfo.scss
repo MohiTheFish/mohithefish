@@ -1,6 +1,5 @@
 @use "../common" as *;
 @use "connectedChoices";
-@use "./RoomInfoComponents/privateSwitch";
 
 .waiting-room-wrapper {
   .room-info {
@@ -37,24 +36,6 @@
     .my-name {
       font-weight: bold;
     }
-
-    // @TODO move this to its own file
-    .settings-wrapper {
-      display: flex;
-      width: 500px;
-      box-sizing: border-box;
-      margin: 0 auto;
-      .setting{
-        width: 250px;
-        height: 85px;
-        .time-input {
-          box-sizing: border-box;
-          width: 55px;
-          margin: 0 auto;
-        }
-      }
-    }
-
 
     .input {
       .form-wrapper {

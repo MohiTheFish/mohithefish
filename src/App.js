@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import Testing from 'pages/testing'
 import MainPage from 'pages/MainPage/mainPage';
-import Games from 'Games/games';
+import Games from 'pages/games';
 import Spyfall from 'Games/Spyfall';
 import WaitingRoom from 'Games/WaitingRoom/waitingRoom';
 import BackToLobby from 'components/BackToLobby/backToLobby';

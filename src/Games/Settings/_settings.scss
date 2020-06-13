@@ -1,0 +1,17 @@
+// @TODO move this to its own file
+.settings-wrapper {
+  display: flex;
+  width: 500px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  .setting {
+    width: 250px;
+    height: 85px;
+    .switch-wrapper {
+      display: flex;
+      width: fit-content;
+      align-items: center;
+      margin: 0 auto;
+    }
+  }
+}

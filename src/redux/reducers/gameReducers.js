@@ -22,7 +22,7 @@ console.log(process.env);
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
 ? {
   isConnected: true,
-  selectedChoice: lobbyStates.CREATED,
+  selectedChoice: lobbyStates.CREATE,
   isLoadingRoom: false,
   numPlayers: 1,
   host: "",
@@ -38,7 +38,6 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
     }
   }
 }
-
 : {
   isConnected: false,
   selectedChoice: "",
