@@ -7,6 +7,14 @@
             width: 90%;
           }
         }
+        .settings-wrapper {
+          width: 100%;
+          flex-wrap: wrap;
+          .setting {
+            width: 100%;
+
+          }
+        }
         .refresh-row {
           display: block;
           width: 100%;

@@ -40,12 +40,13 @@
     .settings-wrapper {
       display: flex;
       width: 500px;
-      height: 85px;
       box-sizing: border-box;
       margin: 0 auto;
       .setting{
         width: 250px;
+        height: 85px;
         .time-input {
+          box-sizing: border-box;
           width: 55px;
           margin: 0 auto;
         }

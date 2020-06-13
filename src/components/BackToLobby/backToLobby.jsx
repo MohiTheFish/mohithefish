@@ -1,17 +1,16 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import store from 'redux/store';
 
-import { goBackToLobby } from 'redux/actions/gameSetupActions';
+import { returnToLobby } from 'pages/Games/socketHandlers';
 
 import './backToLobby.scss';
 
 function goBack() {
-  store.dispatch(goBackToLobby());
+  returnToLobby();
 }
 
-function BackToLobby(props) {
+function BackToLobby() {
   return (
     <div className="backToLobby-wrapper">
       <IconButton aria-label="go-back" color="primary" onClick={goBack}>

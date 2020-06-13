@@ -11,6 +11,7 @@ import {
   playerLeft,
   startPlaying,
   roomPrivacyToggled,
+  goBackToLobby,
 } from 'redux/actions/gameSetupActions';
 
 import {
@@ -32,7 +33,7 @@ export function connectToServer() {
   const {username, gamename, userId: uid} = store.getState().gameCredentials;
   userId = uid;
   
-  let a = `https://mohithefish.herokuapp.com/${gamename}`;
+  let a = `http://localhost:5000/${gamename}`;
   const newSocket = io.connect(a, {
     reconnection: true,
     reconnectionDelay: 1000,
@@ -101,6 +102,10 @@ export function connectToServer() {
     store.dispatch(startPlaying(gameState));
   });
 
+  newSocket.on('sentBackToLobby', function(){
+    store.dispatch(goBackToLobby());
+  });
+
   newSocket.on('playerLeft', function(index) {
     store.dispatch(playerLeft(index));
   });
@@ -148,6 +153,12 @@ export function joinRoom(targetRoom) {
     userId,
   };
   socket.emit('joinRoom', data);
+}
+
+export function returnToLobby() {
+  if (!socket) { throw new Error('Socket invalid!');}
+
+  socket.emit('returnToLobby', userId);
 }
 
 export function startGame() {
