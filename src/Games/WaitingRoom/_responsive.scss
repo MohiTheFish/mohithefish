@@ -1,18 +1,18 @@
 @media only screen and (max-width: 480px) {
   body {
     .waiting-room-wrapper {
+      .settings-wrapper {
+        width: 100%;
+        flex-wrap: wrap;
+        .setting {
+          width: 100%;
+        }
+      }
+      
       .room-info {
         .input {
           .form-wrapper {
             width: 90%;
-          }
-        }
-        .settings-wrapper {
-          width: 100%;
-          flex-wrap: wrap;
-          .setting {
-            width: 100%;
-
           }
         }
         .refresh-row {

@@ -18,17 +18,16 @@ import {
   SET_SPYFALL_TIME
 } from '../actions/SpecificGameActions/spyfallGameActions';
 
-console.log(process.env);
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
 ? {
   isConnected: true,
-  selectedChoice: lobbyStates.CREATE,
+  selectedChoice: lobbyStates.JOIN,
   isLoadingRoom: false,
-  numPlayers: 1,
+  numPlayers: 4,
   host: "",
   members: ["other guy", "nobody"],
   roomId: "",
-  myIndex: -1,
+  myIndex: 2,
   rooms: [],
   isPlaying: false,
   settings: {

@@ -99,7 +99,7 @@ function RoomInfo(props) {
 
   if (selectedChoice === lobbyStates.CREATE) {
     return (
-      <div className="room-info">
+      <div className="room-settings">
         <SpyfallSettings />
         <SubmitSettings />
       </div>
@@ -107,23 +107,21 @@ function RoomInfo(props) {
   }
   else if(selectedChoice === lobbyStates.JOIN) {
     return (
-      <div className="room-info">
+      <div className="room-list">
         <div className="input">
           <h4>Enter the room id you would like to join:</h4>
           <MyInput />
         </div>
-        <div>
-          <div className="refresh-row">
-            <h4>Otherwise, click on one of the available rooms to join.</h4>
-            <IconButton color="primary" aria-label="refresh" 
-              onClick={getAvailableRooms}>
-              <RefreshIcon />
-            </IconButton>
-          </div>
-          <Grid container spacing={3} className="rooms-wrapper">
-            { renderAvailableRooms(rooms, isLoadingRoom) }
-          </Grid>
+        <div className="refresh-row">
+          <h4>Otherwise, click on one of the available rooms to join.</h4>
+          <IconButton color="primary" aria-label="refresh" 
+            onClick={getAvailableRooms}>
+            <RefreshIcon />
+          </IconButton>
         </div>
+        <Grid container spacing={3} className="rooms-wrapper">
+          { renderAvailableRooms(rooms, isLoadingRoom) }
+        </Grid>
       </div>
     );
   }

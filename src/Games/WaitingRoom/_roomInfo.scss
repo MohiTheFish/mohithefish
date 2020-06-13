@@ -3,9 +3,9 @@
 
 .waiting-room-wrapper {
   .room-info {
-    // display: grid;
-    // grid-template-rows: 1fr 1fr;
-    // grid-template-columns: 1fr 400px 1fr;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 200px 1fr;
     .room-title {
       h2 { 
         font-size: 1.5rem;
@@ -37,6 +37,22 @@
       font-weight: bold;
     }
 
+    .host-control-panel {
+      background-color: #4db6ac;
+      color: white;
+      margin-top: $section-divs;
+      height: 36px;
+      width: 45px;
+    }
+    .members {
+      margin-top: $section-divs;
+      .others {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .room-list {
     .input {
       .form-wrapper {
         margin: 8px;
@@ -88,18 +104,6 @@
             font-weight: bold;
           }
         }
-      }
-    }
-    .host-control-panel {
-      background-color: #4db6ac;
-      color: white;
-      margin-top: $section-divs;
-      width: 45px;
-    }
-    .members {
-      margin-top: $section-divs;
-      .others {
-        text-decoration: underline;
       }
     }
   }
