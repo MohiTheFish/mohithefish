@@ -25,7 +25,9 @@ function WaitingRoom(props) {
   const { location } = props;
 
   useEffect(() => {
-    connectToServer();
+    if (process.env.REACT_APP_DESIGN !== "true") {
+      connectToServer();
+    }
     document.title= "Waiting Room";
   },[]);
 
