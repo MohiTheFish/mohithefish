@@ -2,7 +2,7 @@ import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { returnToLobby } from 'pages/Games/socketHandlers';
+import { returnToLobby } from 'Games/socketHandlers';
 
 import './backToLobby.scss';
 

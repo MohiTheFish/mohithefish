@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import {isValidTime} from 'redux/actions/SpecificGameActions/spyfallGameActions';
-import { createRoomWithSettings } from 'pages/Games/socketHandlers';
+import { createRoomWithSettings } from 'Games/socketHandlers';
 
 function mapStateToProps(state) {
   const gamename = state.gameCredentials.gamename;
