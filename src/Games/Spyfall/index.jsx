@@ -1,4 +1,4 @@
 import Spyfall from './spyfall';
 
 
-export { Spyfall };
+export default Spyfall;
