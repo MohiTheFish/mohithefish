@@ -11,6 +11,7 @@ import MyInput from './RoomInfoComponents/myInput';
 import SubmitSettings from './RoomInfoComponents/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 import SpyfallSettings from 'Games/Settings/spyfallSettings';
+import SettingsBoard from 'Games/Settings/settingsBoard';
 
 import { lobbyStates } from 'redux/actions/gameSetupActions';
 
@@ -123,6 +124,7 @@ function RoomInfo(props) {
     }
     return (
       <div className="room-info">
+        <SettingsBoard />
         <div className="room-title">
           <h2>Host: <span className={hostClass}>{host}</span></h2>
           <h2>Room id: <span className="roomId" onClick={copyToClipboard}>{roomId}</span></h2>
