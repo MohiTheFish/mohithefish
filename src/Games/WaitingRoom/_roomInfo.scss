@@ -6,9 +6,17 @@
     display: grid;
     grid-template-rows: 60px 45px 1fr;
     grid-template-columns: 1fr 200px 1fr;
+
+    .settings-board-wrapper{
+      grid-row: 2 / 4;
+      grid-column: 1 / 2;
+      .settings-board {
+        
+      }
+    }
     .room-title {
       grid-row: 1 / 2;
-      grid-column: 2 / 3;
+      grid-column: 1 / 4;
       place-self: center;
       h2 {
         font-size: 1.5rem;
