@@ -4,8 +4,12 @@
     .settings-board-wrapper{
       grid-row: 2 / 4;
       grid-column: 1 / 2;
-      .settings-board {
-        
+      padding: 10px;
+      .room-settings {
+        .settings-wrapper {
+          width: 100%;
+          justify-content: center;
+        }
       }
     }
 

@@ -15,28 +15,24 @@ function renderCurrentSettings() {
 }
 
 export function renderEditSettings(GameSettings, showPrivacy) {
-  return (
-    <div className="room-settings">
-      <GameSettings showPrivacy={showPrivacy}/>
-      <SubmitSettings />
-    </div>
-  );
+  return <GameSettings showPrivacy={showPrivacy}/>;
 }
 
 export default function SettingsBoard() {
   const canEdit = true;
   return (
     <Paper className="settings-board-wrapper">
-      <div className="settings-board">
-        <div className="settings-header">
-          <h1>Game Settings</h1>
-        </div>
-        {
-          canEdit 
-          ? renderEditSettings(SpyfallSettings, false)
-          : renderCurrentSettings()
-        }
+      <div className="settings-header">
+        <h1>Game Settings</h1>
       </div>
+      {
+        canEdit 
+        ? <div className="room-settings">
+            {renderEditSettings(SpyfallSettings, false)}
+            <SubmitSettings />
+          </div>
+        : renderCurrentSettings()
+      }
     </Paper>
   );
 }

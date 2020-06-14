@@ -61,10 +61,11 @@ function TimeLimit(props) {
 
 const SubscribedTimeLimit = connect(mapStateToPropsTL, mapDispatchToPropsTL)(TimeLimit);
 
-export default function SpyfallSettings() {
+export default function SpyfallSettings(props) {
+  const { showPrivacy } = props;
   return (
     <div className="settings-wrapper">
-      <PrivateSwitch />
+      { showPrivacy ? <PrivateSwitch /> : ''}
       <SubscribedTimeLimit />
     </div>
   )

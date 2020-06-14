@@ -90,7 +90,12 @@ function RoomInfo(props) {
   }
 
   if (selectedChoice === lobbyStates.CREATE) {
-    return renderEditSettings(SpyfallSettings, true);
+    return (
+      <div className="room-settings">
+        {renderEditSettings(SpyfallSettings, true)}
+        <SubmitSettings />
+      </div>
+    );
   }
   else if(selectedChoice === lobbyStates.JOIN) {
     return (
