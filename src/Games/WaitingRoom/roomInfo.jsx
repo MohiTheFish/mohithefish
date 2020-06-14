@@ -11,7 +11,7 @@ import MyInput from './RoomInfoComponents/myInput';
 import SubmitSettings from './RoomInfoComponents/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 import SpyfallSettings from 'Games/Settings/spyfallSettings';
-import SettingsBoard from 'Games/Settings/settingsBoard';
+import SettingsBoard, {renderEditSettings} from 'Games/Settings/settingsBoard';
 
 import { lobbyStates } from 'redux/actions/gameSetupActions';
 
@@ -90,12 +90,7 @@ function RoomInfo(props) {
   }
 
   if (selectedChoice === lobbyStates.CREATE) {
-    return (
-      <div className="room-settings">
-        <SpyfallSettings />
-        <SubmitSettings />
-      </div>
-    );
+    return renderEditSettings(SpyfallSettings, true);
   }
   else if(selectedChoice === lobbyStates.JOIN) {
     return (
@@ -119,7 +114,7 @@ function RoomInfo(props) {
   }
   else {
     let hostClass = "";
-    if (myIndex===-1){
+    if (myIndex===-1) {
       hostClass = "my-name";
     }
     return (

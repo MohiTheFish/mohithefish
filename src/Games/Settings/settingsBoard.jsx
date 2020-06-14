@@ -1,6 +1,10 @@
 import React from 'react';
-
 import Paper from '@material-ui/core/Paper';
+
+import SpyfallSettings from './spyfallSettings';
+import SubmitSettings from 'Games/WaitingRoom/RoomInfoComponents/submitSettings';
+
+import './settingsBoard.scss';
 
 function renderCurrentSettings() {
   return (
@@ -10,16 +14,17 @@ function renderCurrentSettings() {
   );
 }
 
-function renderEditingSettings() {
+export function renderEditSettings(GameSettings, showPrivacy) {
   return (
-    <div>
-      You can edit the game settings.
+    <div className="room-settings">
+      <GameSettings showPrivacy={showPrivacy}/>
+      <SubmitSettings />
     </div>
-  )
+  );
 }
 
 export default function SettingsBoard() {
-  const canEdit = false;
+  const canEdit = true;
   return (
     <Paper className="settings-board-wrapper">
       <div className="settings-board">
@@ -28,7 +33,7 @@ export default function SettingsBoard() {
         </div>
         {
           canEdit 
-          ? renderEditingSettings()
+          ? renderEditSettings(SpyfallSettings, false)
           : renderCurrentSettings()
         }
       </div>
