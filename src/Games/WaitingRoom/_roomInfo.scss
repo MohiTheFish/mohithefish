@@ -4,10 +4,13 @@
 .waiting-room-wrapper {
   .room-info {
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 60px 45px 1fr;
     grid-template-columns: 1fr 200px 1fr;
     .room-title {
-      h2 { 
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+      place-self: center;
+      h2 {
         font-size: 1.5rem;
       }
       .roomId {
@@ -36,19 +39,27 @@
     .my-name {
       font-weight: bold;
     }
-
-    .host-control-panel {
-      background-color: #4db6ac;
-      color: white;
-      margin-top: $section-divs;
-      height: 36px;
-      width: 45px;
-    }
     .members {
-      margin-top: $section-divs;
+      grid-row: 3 / 4;
+      grid-column: 2 / 3;
       .others {
         text-decoration: underline;
       }
+    }
+
+    .ask-host {
+      grid-row: 2 / 3;
+      grid-column: 2 / 3;
+      place-self: center;
+    }
+    .host-control-panel {
+      grid-row: 2 / 3;
+      grid-column: 2 / 3;
+      background-color: #4db6ac;
+      color: white;
+      place-self: center;
+      height: 36px;
+      width: 45px;
     }
   }
 

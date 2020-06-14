@@ -40,26 +40,17 @@ function renderMembers(members, myIndex) {
     );
   }
   return (
-    <>
+    <div className="members">
+      <h3 className="others">Other players</h3>
       {
-        myIndex === -1
-        ? <Button variant="contained" onClick={startGame} className="host-control-panel">
-            Play
-          </Button>
-        : ''
+        members.map((m, index) => 
+          <h4 
+            className={index === myIndex ? "my-name" : ""}
+            key={`${m}${index}`}>{m}</h4>
+        )
       }
-      <div className="members">
-        <h3 className="others">Other players</h3>
-        {
-          members.map((m, index) => 
-            <h4 
-              className={index === myIndex ? "my-name" : ""}
-              key={`${m}${index}`}>{m}</h4>
-          )
-        }
-      </div>
-    </>
-  )
+    </div>
+  );
 }
 
 function renderAvailableRooms(rooms, isLoadingRoom) {
@@ -136,6 +127,13 @@ function RoomInfo(props) {
           <h2>Host: <span className={hostClass}>{host}</span></h2>
           <h2>Room id: <span className="roomId" onClick={copyToClipboard}>{roomId}</span></h2>
         </div>
+        {
+          myIndex === -1
+          ? <Button variant="contained" onClick={startGame} className="host-control-panel">
+              Play
+            </Button>
+          : <h4 className="ask-host">Ask the host to start the game!</h4>
+        }
         {renderMembers(members, myIndex)}
       </div>
     );
