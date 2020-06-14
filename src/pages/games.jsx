@@ -3,10 +3,10 @@ import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import store, { saveState } from 'redux/store';
+import store, { saveState } from 'redux-store';
 import {
   setGameUsername
-} from 'redux/actions/nameActions';
+} from 'redux-store/actions/nameActions';
 
 import './games.scss';
 

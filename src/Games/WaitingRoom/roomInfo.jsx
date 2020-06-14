@@ -10,10 +10,10 @@ import Loading from 'components/Loading/loading';
 import MyInput from './RoomInfoComponents/myInput';
 import SubmitSettings from './RoomInfoComponents/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
-import SpyfallSettings from 'Games/Settings/spyfallSettings';
+import PrivateSwitch from 'Games/Settings/privateSwitch';
 import SettingsBoard, {renderEditSettings} from 'Games/Settings/settingsBoard';
 
-import { lobbyStates } from 'redux/actions/gameSetupActions';
+import { lobbyStates } from 'redux-store/actions/gameSetupActions';
 
 
 function mapStateToPropsRI(state) {
@@ -92,7 +92,9 @@ function RoomInfo(props) {
   if (selectedChoice === lobbyStates.CREATE) {
     return (
       <div className="room-settings">
-        {renderEditSettings(SpyfallSettings, true)}
+        <div className="settings-wrapper">
+          <PrivateSwitch />
+        </div>
         <SubmitSettings />
       </div>
     );

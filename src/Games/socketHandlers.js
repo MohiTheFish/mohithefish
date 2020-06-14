@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import store from 'redux/store';
+import store from 'redux-store';
 
 import {
   setIsConnected,
@@ -12,12 +12,12 @@ import {
   startPlaying,
   roomPrivacyToggled,
   goBackToLobby,
-} from 'redux/actions/gameSetupActions';
+} from 'redux-store/actions/gameSetupActions';
 
 import {
   startSpyfall,
   updateSpyfallTime,
-} from 'redux/actions/spyfallActions';
+} from 'redux-store/actions/spyfallActions';
 
 function addSpyfallEventListeners(newSocket) {
   newSocket.on('timeUpdate', function(time) {

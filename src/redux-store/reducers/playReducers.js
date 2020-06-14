@@ -5,7 +5,7 @@ import {
   REMOVE_NAME_SPYFALL,
   START_GAME_SPYFALL,
   UPDATE_SPYFALL_TIME,
-} from 'redux/actions/spyfallActions';
+} from 'redux-store/actions/spyfallActions';
 
 export const initialState = {
   time: 0,

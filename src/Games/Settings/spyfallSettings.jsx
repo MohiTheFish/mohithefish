@@ -9,7 +9,7 @@ import PrivateSwitch from './privateSwitch';
 import {
   setSpyfallTime,
   MAX_SPYFALL_TIME,
-} from 'redux/actions/SpecificGameActions/spyfallGameActions';
+} from 'redux-store/actions/SpecificGameActions/spyfallGameActions';
 
 import './spyfallSettings.scss';
 

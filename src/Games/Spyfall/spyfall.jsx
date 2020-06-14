@@ -10,8 +10,8 @@ import {
   removeLocationSpyfall,
   addNameSpyfall,
   removeNameSpyfall,
-} from 'redux/actions/spyfallActions';
-import store from 'redux/store';
+} from 'redux-store/actions/spyfallActions';
+import store from 'redux-store';
 
 function mapStateToProps(state) {
   const gd = state.gameData;

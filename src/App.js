@@ -8,7 +8,7 @@ import Games from 'pages/games';
 import Spyfall from 'Games/Spyfall';
 import WaitingRoom from 'Games/WaitingRoom/waitingRoom';
 import BackToLobby from 'components/BackToLobby/backToLobby';
-import store from 'redux/store';
+import store from 'redux-store';
 
 import './App.css';
 

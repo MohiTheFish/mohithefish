@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
 import Loading from 'components/Loading/loading';
-import { setSelectedChoiceAndLoadingRoom } from 'redux/actions/gameSetupActions';
+import { setSelectedChoiceAndLoadingRoom } from 'redux-store/actions/gameSetupActions';
 import { getAvailableRooms, informOtherRoomMembers } from '../socketHandlers';
-import { lobbyStates } from 'redux/actions/gameSetupActions';
+import { lobbyStates } from 'redux-store/actions/gameSetupActions';
 
 function setDisableProps(obj) {
   obj.className += " disabled";

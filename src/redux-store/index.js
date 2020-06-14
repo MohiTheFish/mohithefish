@@ -1,8 +1,8 @@
-import { createStore } from 'redux'
-import MohiApp from '../reducers';
-import {initialState as initialGameData} from '../reducers/gameReducers';
-import {initialState as initialGameCredentialState} from '../reducers/nameReducers';
-import {initialState as initialPlayState} from '../reducers/playReducers';
+import { createStore } from 'redux';
+import MohiApp from './reducers';
+import {initialState as initialGameData} from './reducers/gameReducers';
+import {initialState as initialGameCredentialState} from './reducers/nameReducers';
+import {initialState as initialPlayState} from './reducers/playReducers';
 
 /**
  * REDUX WORK FLOW

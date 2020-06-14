@@ -7,7 +7,7 @@ import './waitingRoom.scss';
 import RoomInfo from './roomInfo';
 import ConnectedChoices from './connectedChoices';
 import { connectToServer } from '../socketHandlers';
-import store from 'redux/store';
+import store from 'redux-store';
 
 const storageType = sessionStorage;
 
