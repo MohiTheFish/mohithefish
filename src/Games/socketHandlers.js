@@ -126,6 +126,11 @@ export function createRoomWithSettings(settings) {
   socket.emit('createRoom', [userId, settings]);
 }
 
+export function updateRoomSettings(settings) {
+  if (!socket) { throw new Error('Socket invalid!');}
+
+  socket.emit('updateSettings', [userId, settings]);
+}
 
 export function forceDisconnect() {
   if (!socket) { throw new Error('Socket invalid!');}

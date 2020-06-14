@@ -4,6 +4,8 @@ import Switch from '@material-ui/core/Switch';
 
 import { roomPrivacyToggled } from "redux-store/actions/gameSetupActions";
 
+import './aloneSwitch.scss';
+
 const mapStateToProps = (state) => {
   const {settings} = state.gameData;
   return {

@@ -21,7 +21,7 @@ import {
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
 ? {
   isConnected: true,
-  selectedChoice: lobbyStates.CREATED,
+  selectedChoice: lobbyStates.JOINED,
   isLoadingRoom: false,
   numPlayers: 4,
   host: "Mohitheifhs",

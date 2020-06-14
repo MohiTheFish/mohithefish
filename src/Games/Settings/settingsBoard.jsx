@@ -1,7 +1,7 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 
-import SpyfallSettings from './spyfallSettings';
+import SpyfallSettings from './SpyfallSettings/spyfallSettings';
 import SubmitSettings from 'Games/WaitingRoom/RoomInfoComponents/submitSettings';
 
 import './settingsBoard.scss';
@@ -27,10 +27,10 @@ export default function SettingsBoard() {
       </div>
       {
         canEdit 
-        ? <div className="room-settings">
-            {renderEditSettings(SpyfallSettings, false)}
-            <SubmitSettings />
-          </div>
+        ?   <div className="room-settings">
+              {renderEditSettings(SpyfallSettings, false)}
+              <SubmitSettings />
+            </div>
         : renderCurrentSettings()
       }
     </Paper>

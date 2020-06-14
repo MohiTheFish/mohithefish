@@ -11,7 +11,7 @@ import MyInput from './RoomInfoComponents/myInput';
 import SubmitSettings from './RoomInfoComponents/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 import PrivateSwitch from 'Games/Settings/privateSwitch';
-import SettingsBoard, {renderEditSettings} from 'Games/Settings/settingsBoard';
+import SettingsBoard from 'Games/Settings/settingsBoard';
 
 import { lobbyStates } from 'redux-store/actions/gameSetupActions';
 
@@ -94,8 +94,8 @@ function RoomInfo(props) {
       <div className="room-settings">
         <div className="settings-wrapper">
           <PrivateSwitch />
+          <SubmitSettings />
         </div>
-        <SubmitSettings />
       </div>
     );
   }

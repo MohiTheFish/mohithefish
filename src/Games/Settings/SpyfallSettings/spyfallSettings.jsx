@@ -5,7 +5,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
-import PrivateSwitch from './privateSwitch';
+import PrivateSwitch from '../privateSwitch';
 import {
   setSpyfallTime,
   MAX_SPYFALL_TIME,
