@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state) {
-  console.log(state);
   const {settings} = state.gameData;
   return {
     isPrivate: settings.isPrivate,
@@ -10,8 +9,7 @@ function mapStateToProps(state) {
   };
 }
 function SpyfallView(props) {
-  const { isPrivate, time} = props;
-  console.log(props);
+  const { time } = props;
   return (
     <div className="settings-list">
       <div className="settings-item">

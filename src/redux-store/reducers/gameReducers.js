@@ -120,7 +120,6 @@ export function gameData(state = initialState, action) {
     case ROOM_SETTINGS_UPDATED: {
       const newSettings = action.settings.settings;
 
-      console.log(newSettings);
       return Object.assign({}, state, {
         settings: newSettings,
       });

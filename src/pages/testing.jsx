@@ -23,7 +23,6 @@ export default function MainPage() {
       .then(res => {
         setImageName(res.image);
       });
-      console.log(response);
       
     }
     fetchData();
