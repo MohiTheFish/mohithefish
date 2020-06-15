@@ -26,7 +26,9 @@ function WaitingRoom(props) {
 
   useEffect(() => {
     if (process.env.REACT_APP_DESIGN !== "true") {
-      connectToServer();
+      if (!store.getState().gameData.isConnected){
+        connectToServer();
+      }
     }
     document.title= "Waiting Room";
   },[]);
