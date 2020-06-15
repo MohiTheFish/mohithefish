@@ -1,0 +1,34 @@
+.waiting-room-wrapper{
+  .room-info {
+    .settings-board-wrapper{
+      grid-row: 2 / 4;
+      grid-column: 1 / 2;
+      padding: 10px;
+      .room-settings {
+        .settings-wrapper {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+        .settings-list {
+          width: 100%;
+          .settings-item {
+            display: flex;
+            margin-top: 5px;
+            .item-name {
+              width: 30%;
+              h3 {
+                font-weight: bold;
+              }
+            }
+            .item-value {
+              width: 70%;
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

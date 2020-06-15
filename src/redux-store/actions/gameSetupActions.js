@@ -3,7 +3,8 @@ export const SET_IS_LOADINGROOM = 'SET_IS_LOADINGROOM';
 export const SET_IS_LOADING_ROOM_SELECTED_CHOICE = "SET_IS_LOADING_ROOM_SELECTED_CHOICE";
 export const SET_HOST_NAME = "SET_HOST_NAME";
 export const ROOM_CREATED = "ROOM_CREATED";
-export const ROOM_UPDATED = "ROOM_UPDATED";
+export const ROOM_MEMBERS_UPDATED = "ROOM_MEMBERS_UPDATED";
+export const ROOM_SETTINGS_UPDATED = "ROOM_SETTINGS_UPDATED";
 export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
 export const ROOM_JOINED = "ROOM_JOINED";
 export const PLAYER_LEFT = "PLAYER_LEFT";
@@ -57,8 +58,15 @@ export function roomCreated(data) {
 
 export function roomUpdated(data) {
   return {
-    type: ROOM_UPDATED,
+    type: ROOM_MEMBERS_UPDATED,
     data,
+  };
+}
+
+export function roomSettingsUpdated(settings) {
+  return {
+    type: ROOM_SETTINGS_UPDATED,
+    settings,
   };
 }
 

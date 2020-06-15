@@ -12,6 +12,7 @@ import {
   startPlaying,
   roomPrivacyToggled,
   goBackToLobby,
+  roomSettingsUpdated,
 } from 'redux-store/actions/gameSetupActions';
 
 import {
@@ -66,6 +67,13 @@ export function connectToServer() {
       isPrivate: roomInfo.isPrivate,
     }));
   });
+
+  newSocket.on('settingsUpdated', function(settings){
+    console.log(settings);
+    store.dispatch(roomSettingsUpdated({
+      settings,
+    }));
+  });
   
   newSocket.on('togglePrivate', function(newState){
     store.dispatch(roomPrivacyToggled(newState));
@@ -86,6 +94,7 @@ export function connectToServer() {
       hostname: roomInfo.hostname,
       roomId: roomInfo.roomId, 
       members: roomInfo.members,
+      settings: roomInfo.settings
     }))
   });
 

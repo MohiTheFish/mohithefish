@@ -4,14 +4,15 @@ import {
   SET_HOST_NAME,
   ROOM_CREATED,
   VISIBLE_ROOMS,
-  ROOM_UPDATED,
+  ROOM_MEMBERS_UPDATED,
   ROOM_JOINED,
   PLAYER_LEFT,
   START_PLAYING,
   SET_IS_PRIVATE,
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
   GO_BACK_TO_LOBBY,
-  lobbyStates
+  lobbyStates,
+  ROOM_SETTINGS_UPDATED
 } from '../actions/gameSetupActions';
 
 import {
@@ -21,7 +22,7 @@ import {
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
 ? {
   isConnected: true,
-  selectedChoice: lobbyStates.JOINED,
+  selectedChoice: lobbyStates.CREATED,
   isLoadingRoom: false,
   numPlayers: 4,
   host: "Mohitheifhs",
@@ -107,13 +108,21 @@ export function gameData(state = initialState, action) {
         selectedChoice: lobbyStates.CREATED,
       });
     }
-    case ROOM_UPDATED: {
+    case ROOM_MEMBERS_UPDATED: {
       const { hostname, members, roomId } = action.data;
       return Object.assign({}, state, {
         host: hostname,
         members: members,
         roomId: roomId,
         myIndex: state.myIndex,
+      });
+    }
+    case ROOM_SETTINGS_UPDATED: {
+      const newSettings = action.settings.settings;
+
+      console.log(newSettings);
+      return Object.assign({}, state, {
+        settings: newSettings,
       });
     }
     case VISIBLE_ROOMS: {
@@ -123,13 +132,14 @@ export function gameData(state = initialState, action) {
       });
     }
     case ROOM_JOINED: {
-      const { hostname, members, roomId } = action.data;
+      const { hostname, members, roomId, settings: newSettings } = action.data;
       return Object.assign({}, state, {
         host: hostname,
         members: members,
         roomId: roomId,
         myIndex: members.length-1,
         selectedChoice: lobbyStates.JOINED,
+        settings: newSettings,
       });
     }
     case PLAYER_LEFT: {

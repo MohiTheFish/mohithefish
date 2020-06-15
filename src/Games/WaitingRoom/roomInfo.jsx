@@ -79,6 +79,24 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
   })
 }
 
+function renderStartButton(canEdit, numMembers) {
+  if (canEdit) {
+    if (numMembers > 0) {
+      return (
+        <Button variant="contained" onClick={startGame} className="host-control-panel">
+          Play
+        </Button>
+      );
+    }
+    else {
+      return <h4 className="ask-host">Invite friends to your lobby to start!</h4>;
+    }
+  }
+  else {
+    return <h4 className="ask-host">Ask the host to start the game!</h4>;
+  }
+}
+
 function RoomInfo(props) {
   const { isConnected, selectedChoice, host, roomId, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
@@ -121,23 +139,18 @@ function RoomInfo(props) {
   }
   else {
     let hostClass = "";
-    if (myIndex===-1) {
+    let canEdit = selectedChoice === lobbyStates.CREATED;
+    if (canEdit) {
       hostClass = "my-name";
     }
     return (
       <div className="room-info">
-        <SettingsBoard />
+        <SettingsBoard canEdit={canEdit}/>
         <div className="room-title">
           <h2>Host: <span className={hostClass}>{host}</span></h2>
           <h2>Room id: <span className="roomId" onClick={copyToClipboard}>{roomId}</span></h2>
         </div>
-        {
-          myIndex === -1
-          ? <Button variant="contained" onClick={startGame} className="host-control-panel">
-              Play
-            </Button>
-          : <h4 className="ask-host">Ask the host to start the game!</h4>
-        }
+        {renderStartButton(canEdit, members.length)}
         {renderMembers(members, myIndex)}
       </div>
     );
