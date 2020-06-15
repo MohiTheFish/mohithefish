@@ -23,7 +23,7 @@ export default function MainPage() {
       .then(res => {
         setImageName(res.image);
       });
-      
+      return response;
     }
     fetchData();
   }, [])
