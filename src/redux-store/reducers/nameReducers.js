@@ -1,4 +1,7 @@
-import { SET_GAME_USERNAME } from '../actions/nameActions';
+import {
+  SET_GAME_USERNAME,
+  RETURN_TO_GAME_SELECT
+} from '../actions/nameActions';
 import { v4 as uuid } from 'uuid';
 
 const storageType = sessionStorage;
@@ -27,6 +30,13 @@ export function gameCredentials(state = initialState, action) {
         gamename: action.gamename,
         userId: state.userId,
       }
+    }
+    case RETURN_TO_GAME_SELECT: {
+      return {
+        gamename: "",
+        username: state.username,
+        userId: state.userId,
+      };
     }
     default:
       return state;
