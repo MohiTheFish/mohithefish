@@ -20,28 +20,28 @@ import {
 import {
   SET_SPYFALL_TIME
 } from '../actions/SpecificGameActions/spyfallGameActions';
-// process.env.REACT_APP_DESIGN === 'true' 
-// ? {
-//   isConnected: true,
-//   selectedChoice: lobbyStates.CREATED,
-//   isLoadingRoom: false,
-//   numPlayers: 4,
-//   host: "Mohitheifhs",
-//   members: ["other guy", "nobody"],
-//   roomId: "fwef98c09we-89w-efcab-aew-9gfw",
-//   myIndex: -1,
-//   rooms: [],
-//   isPlaying: false,
-//   isUpdating: false,
-//   settings: {
-//     isPrivate: true,
-//     spyfall: {
-//       time: "8", // minutes
-//     }
-//   }
-// }
-// : 
-export const initialState = {
+
+export const initialState = process.env.REACT_APP_DESIGN === 'true' 
+? {
+  isConnected: true,
+  selectedChoice: lobbyStates.CREATED,
+  isLoadingRoom: false,
+  numPlayers: 4,
+  host: "Mohitheifhs",
+  members: ["other guy", "nobody"],
+  roomId: "fwef98c09we-89w-efcab-aew-9gfw",
+  myIndex: -1,
+  rooms: [],
+  isPlaying: false,
+  isUpdating: false,
+  settings: {
+    isPrivate: true,
+    spyfall: {
+      time: "8", // minutes
+    }
+  }
+}
+: {
   isConnected: false,
   selectedChoice: "",
   isLoadingRoom: false,
