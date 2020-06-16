@@ -1,0 +1,137 @@
+.spyfall-page-wrapper {
+  width: 100%;
+  .header {
+    width: 100%;
+    .header-row {
+      height: 48px; // Height of the IconButtons
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      h1 {
+        width: fit-content;
+      }
+    }
+  }
+  .players-list {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 500px;
+
+    .title {
+      padding: 10px;
+    }
+    
+    .names {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+
+      h4 {
+        cursor: pointer;
+        background-color: #616161;
+        color: white;
+        box-sizing: border-box;
+        width: 30%;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .selected {
+        background-color: #424242;
+        color: #e0e0e0;
+        text-decoration: line-through;
+      }
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    .players-list {
+      width: 100%;
+      min-width: 0;
+      .names {
+        width: 100%;
+        h4 {
+          width: 48%;
+          margin: 0 1%;
+        }
+      }
+    }
+  }
+  .location-section {
+    .header {
+      padding: 10px;
+
+      .secret-location {
+        font-size: 20px;
+      }
+    }
+    .location-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      flex-grow: 1;
+      width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+
+      .location {
+        cursor: pointer;
+        position: relative;
+        transition-duration: .25s;
+        transition-property: color;
+        transition-property: background-color;
+        background-color: #eeeeee;
+        border-radius: 4px;
+        width: 220px; // Make width + 2*margin = width of locationwrapper
+        margin: 0 10px; 
+        height: 40px;
+        margin-bottom: 15px;
+
+        p {
+          height: 100%;
+          line-height: 40px;
+        }
+
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+        }
+
+        box-shadow: 
+          0px 2px 1px -1px rgba(0,0,0,0.2), 
+          0px 1px 1px 0px rgba(0,0,0,0.14), 
+          0px 1px 3px 0px rgba(0,0,0,0.12);
+      }
+
+      .location:hover {
+        background-color: #bdbdbd;
+      }
+
+      .selected {
+        background-color: #424242;
+        color: #e0e0e0;
+        text-decoration: line-through;
+      }
+      .selected:hover {
+        background-color: #616161;
+      }
+    }
+    @media only screen and (max-width: 480px) {
+      .location-wrapper {
+        width: 100%;
+
+        .location {
+          width: 48%;
+          margin: 0 1%;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
