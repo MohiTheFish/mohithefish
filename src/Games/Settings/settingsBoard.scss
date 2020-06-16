@@ -1,1 +1,72 @@
-@use "common" as *;
+.waiting-room-wrapper{
+  .room-info {
+    .settings-board-wrapper{
+      grid-row: 2 / 4;
+      grid-column: 1 / 2;
+      padding: 10px;
+      position: relative;
+      .status {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        cursor: default;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none; 
+        -ms-user-select: none; 
+        user-select: none; 
+      }
+      .hidden {
+        display: none;
+      }
+      .fade-out {
+        opacity: 1;
+        animation-name: fadeOut;
+        animation-duration: 3s;
+        animation-fill-mode: forwards;
+      }
+      .room-settings {
+        .settings-wrapper {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+        .settings-list {
+          width: 100%;
+          .settings-item {
+            display: flex;
+            margin-top: 5px;
+            .item-name {
+              width: 30%;
+              h3 {
+                font-weight: bold;
+              }
+            }
+            .item-value {
+              width: 70%;
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1
+  }
+  25% {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}

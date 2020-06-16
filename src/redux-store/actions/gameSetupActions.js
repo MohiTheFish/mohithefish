@@ -4,6 +4,7 @@ export const SET_IS_LOADING_ROOM_SELECTED_CHOICE = "SET_IS_LOADING_ROOM_SELECTED
 export const SET_HOST_NAME = "SET_HOST_NAME";
 export const ROOM_CREATED = "ROOM_CREATED";
 export const ROOM_MEMBERS_UPDATED = "ROOM_MEMBERS_UPDATED";
+export const SET_SETTINGS_IS_UPDATING = "SET_SETTINGS_IS_UPDATING";
 export const ROOM_SETTINGS_UPDATED = "ROOM_SETTINGS_UPDATED";
 export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
 export const ROOM_JOINED = "ROOM_JOINED";
@@ -60,6 +61,12 @@ export function roomUpdated(data) {
   return {
     type: ROOM_MEMBERS_UPDATED,
     data,
+  };
+}
+
+export function setSettingsIsUpdating() {
+  return {
+    type: SET_SETTINGS_IS_UPDATING,
   };
 }
 

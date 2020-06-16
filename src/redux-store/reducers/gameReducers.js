@@ -12,7 +12,8 @@ import {
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
   GO_BACK_TO_LOBBY,
   lobbyStates,
-  ROOM_SETTINGS_UPDATED
+  ROOM_SETTINGS_UPDATED,
+  SET_SETTINGS_IS_UPDATING,
 } from '../actions/gameSetupActions';
 
 import {
@@ -31,6 +32,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
   myIndex: -1,
   rooms: [],
   isPlaying: false,
+  isUpdating: false,
   settings: {
     isPrivate: true,
     spyfall: {
@@ -49,6 +51,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
   myIndex: -1,
   rooms: [],
   isPlaying: false,
+  isUpdating: false,
   settings: {
     isPrivate: true,
     spyfall: {
@@ -122,6 +125,12 @@ export function gameData(state = initialState, action) {
 
       return Object.assign({}, state, {
         settings: newSettings,
+        isUpdating: false,
+      });
+    }
+    case SET_SETTINGS_IS_UPDATING: {
+      return Object.assign({}, state, {
+        isUpdating: true,
       });
     }
     case VISIBLE_ROOMS: {

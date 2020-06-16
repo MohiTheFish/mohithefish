@@ -7,6 +7,7 @@ import SubmitSettings from 'Games/WaitingRoom/RoomInfoComponents/submitSettings'
 import store from 'redux-store';
 
 import './settingsBoard.scss';
+import { connect } from 'react-redux';
 
 function renderCurrentSettings() {
   return <SpyfallView />
@@ -16,13 +17,27 @@ function renderEditSettings(GameSettings, showPrivacy) {
   return <GameSettings showPrivacy={showPrivacy}/>;
 }
 
-export default function SettingsBoard(props) {
-  const { canEdit } = props;
+function mapStateToProps(state) {
+  
+  const isUpdating = state.gameData.isUpdating;
+  return {
+    isUpdating,
+  };
+}
+
+function SettingsBoard(props) {
+  const { canEdit, isUpdating } = props;
   const { gamename } = store.getState().gameCredentials;
+  console.log(isUpdating);
   return (
     <Paper className="settings-board-wrapper">
       <div className="settings-header">
         <h1>Game Settings</h1>
+        {
+          isUpdating
+          ? <h3 className="status">Updating...</h3>
+          : <h3 className="status fade-out">Updated</h3>
+        }
       </div>
       {
         canEdit 
@@ -37,3 +52,6 @@ export default function SettingsBoard(props) {
     </Paper>
   );
 }
+
+const SubscribedSettingsBoard = connect(mapStateToProps)(SettingsBoard);
+export default SubscribedSettingsBoard;
