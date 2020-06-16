@@ -25,19 +25,24 @@ function mapStateToProps(state) {
   };
 }
 
+function renderStatusMessage(isUpdating, canEdit) {
+  if (canEdit) {
+    if(isUpdating) {
+      return <h3 className="status">Updating...</h3>;
+    }
+    return <h3 className="status fade-out">Updated</h3>;
+  }
+  return '';
+}
+
 function SettingsBoard(props) {
   const { canEdit, isUpdating } = props;
   const { gamename } = store.getState().gameCredentials;
-  console.log(isUpdating);
   return (
     <Paper className="settings-board-wrapper">
       <div className="settings-header">
         <h1>Game Settings</h1>
-        {
-          isUpdating
-          ? <h3 className="status">Updating...</h3>
-          : <h3 className="status fade-out">Updated</h3>
-        }
+        {renderStatusMessage(isUpdating, canEdit)}
       </div>
       {
         canEdit 
