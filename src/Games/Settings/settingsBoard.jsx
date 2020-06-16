@@ -9,8 +9,8 @@ import store from 'redux-store';
 import './settingsBoard.scss';
 import { connect } from 'react-redux';
 
-function renderCurrentSettings() {
-  return <SpyfallView />
+function renderCurrentSettings(GameView) {
+  return <GameView />
 }
 
 function renderEditSettings(GameSettings, showPrivacy) {
@@ -51,7 +51,7 @@ function SettingsBoard(props) {
             <SubmitSettings />
           </div>
         : <div className="room-settings">
-            {renderCurrentSettings()}
+            {renderCurrentSettings(SpyfallView)}
           </div>
       }
     </Paper>
