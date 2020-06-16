@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 
 import Loading from 'components/Loading/loading';
 import { setSelectedChoiceAndLoadingRoom } from 'redux-store/actions/gameSetupActions';
-import { getAvailableRooms, informOtherRoomMembers } from '../socketHandlers';
+import { getAvailableRooms, ejectFromRoom } from '../socketHandlers';
 import { lobbyStates } from 'redux-store/actions/gameSetupActions';
 
 function setDisableProps(obj) {
@@ -66,7 +66,7 @@ function mapDispatchToPropsCC(dispatch) {
   return {
     handleSelect: (e) => {
       if(e === lobbyStates.CREATE) {
-        informOtherRoomMembers();
+        ejectFromRoom();
       }
       if(e === lobbyStates.JOIN) {
         getAvailableRooms();

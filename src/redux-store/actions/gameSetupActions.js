@@ -12,7 +12,7 @@ export const PLAYER_LEFT = "PLAYER_LEFT";
 export const START_PLAYING = "START_PLAYING";
 export const SET_IS_PRIVATE = "SET_IS_PRIVATE";
 export const GO_BACK_TO_LOBBY = "GO_BACK_TO_LOBBY";
-
+export const CLEAR_ROOM_INFO = "CLEAR_ROOM_INFO";
 
 export const lobbyStates = {
   CREATE: "create",
@@ -114,5 +114,11 @@ export function roomPrivacyToggled() {
 export function goBackToLobby() {
   return {
     type: GO_BACK_TO_LOBBY,
+  };
+}
+
+export function clearRoomInfo() {
+  return {
+    type: CLEAR_ROOM_INFO,
   };
 }

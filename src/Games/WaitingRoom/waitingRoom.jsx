@@ -7,7 +7,8 @@ import './waitingRoom.scss';
 import BackToGameSelect from 'components/BackToGameSelect/backToGameSelect';
 import RoomInfo from './roomInfo';
 import ConnectedChoices from './connectedChoices';
-import { connectToServer } from '../socketHandlers';
+import {clearRoomInfo } from 'redux-store/actions/gameSetupActions';
+import { connectToServer, ejectFromRoom } from '../socketHandlers';
 import store from 'redux-store';
 
 const storageType = sessionStorage;
@@ -35,6 +36,8 @@ function WaitingRoom(props) {
   },[]);
 
   if(!gamename) {
+    ejectFromRoom();
+    store.dispatch(clearRoomInfo());
     return <Redirect to="/games" />;
   }
 

@@ -14,6 +14,7 @@ import {
   lobbyStates,
   ROOM_SETTINGS_UPDATED,
   SET_SETTINGS_IS_UPDATING,
+  CLEAR_ROOM_INFO,
 } from '../actions/gameSetupActions';
 
 import {
@@ -193,6 +194,27 @@ export function gameData(state = initialState, action) {
           isPrivate: !state.settings.isPrivate
         }
       });
+    }
+    case CLEAR_ROOM_INFO: {
+      return Object.assign({}, state, {
+        isConnected: state.isConnected,
+        selectedChoice: "",
+        isLoadingRoom: false,
+        numPlayers: 1,
+        host: "",
+        members: [],
+        roomId: "",
+        myIndex: -1,
+        rooms: [],
+        isPlaying: false,
+        isUpdating: false,
+        settings: {
+          isPrivate: true,
+          spyfall: {
+            time: "8", // minutes
+          }
+        }
+      })
     }
     default:
       return state;

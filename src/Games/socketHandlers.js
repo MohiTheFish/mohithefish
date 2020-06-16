@@ -154,10 +154,10 @@ export function getAvailableRooms() {
   socket.emit('getAvailableRooms', userId);
 }
 
-export function informOtherRoomMembers() {
+export function ejectFromRoom() {
   if (!socket) { throw new Error('Socket invalid!');}
   
-  socket.emit('nowCreatingRoom', userId);
+  socket.emit('ejectPlayerFromRoom', userId);
 }
 
 export function joinRoom(targetRoom) {
