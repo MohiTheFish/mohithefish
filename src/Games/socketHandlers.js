@@ -130,16 +130,24 @@ export function isConnected() {
   return !socket;
 }
 
+function getSpecificGameSettings(settings) {
+  const smallSettings = {
+    time: settings.time,
+  };
+  const gamename = store.getState().gameCredentials.gamename;
+  smallSettings[gamename] = settings[gamename];
+  return smallSettings;
+}
 export function createRoomWithSettings(settings) {
   if (!socket) { throw new Error('Socket invalid!');}
 
-  socket.emit('createRoom', [userId, settings]);
+  socket.emit('createRoom', [userId, getSpecificGameSettings(settings)]);
 }
 
 export function updateRoomSettings(settings) {
   if (!socket) { throw new Error('Socket invalid!');}
-
-  socket.emit('updateSettings', [userId, settings]);
+  
+  socket.emit('updateSettings', [userId, getSpecificGameSettings(settings)]);
 }
 
 export function forceDisconnect() {
