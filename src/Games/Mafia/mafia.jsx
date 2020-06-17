@@ -1,110 +1,32 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
-import './spyfall.scss';
 
 import BackToLobby from 'components/BackToLobby/backToLobby';
-
-import { 
-  addLocationSpyfall,
-  removeLocationSpyfall,
-  addNameSpyfall,
-  removeNameSpyfall,
-} from 'redux-store/actions/spyfallActions';
 import store from 'redux-store';
+
+import './mafia.scss';
 
 function mapStateToProps(state) {
   const gd = state.gameData;
   const ps = state.playState;
-  const game = ps.spyfall;
+  const game = ps.mafia;
   return {
     gameCredentials: state.gameCredentials,
     
     time: ps.time,
     isPlaying: gd.isPlaying,
-    selectedLocations: game.selectedLocations,
-    selectedNamesByIndex: game.selectedNamesByIndex,
-    isSpy: game.spyIndex === gd.myIndex,
-    locations: game.locations,
-    secretLocation: game.secretLocation,
+    game,
   };
 }
-function getValues() {
-  const gd = store.getState().gameData;
-  return {
-    host: gd.host,
-    members: gd.members,
-    myIndex: gd.myIndex,
-  };
-}
-function Spyfall(props) {
-  const {
-    gameCredentials,
-    time,
-    selectedLocations,
-    selectedNamesByIndex,
-    isSpy,
-    locations,
-    secretLocation,
-    isPlaying,
-  } = props;
-  
-  const [obj, ] = useState(getValues());
-  const {
-    host, 
-    members, 
-    myIndex
-  } = obj;
 
-
-  function getSelectedClassL(val, set, addCall, removeCall) {
-    const isSelected = set.has(val);
-    let callback = addCall;
-    let selectClass = "";
-    if (isSelected) {
-      callback = removeCall;
-      selectClass = "selected";
-    }
-    return [selectClass, (data) => store.dispatch(callback(data))];
-  }
-
-  function getSelectedClassN(val, set, addCall, removeCall) {
-    const isSelected = set.has(val);
-    let callback = addCall;
-    let selectClass = "";
-    if (isSelected) {
-      callback = removeCall;
-      selectClass = "selected";
-    }
-    return [selectClass, (data) => store.dispatch(callback(val))];
-  }
-  function renderNames() {
-    return members.map( (name, index) => {
-      const [selectClass, callback] = getSelectedClassN(index, selectedNamesByIndex, addNameSpyfall, removeNameSpyfall);
-      return (
-        <h4 key={name}
-         className={selectClass}
-         onClick={callback}>
-          {name}
-        </h4>
-      )
-    })
-  }
-
-  function renderLocations() {
-    return locations.map( (value, index) => {
-      const [selectClass, callback] = getSelectedClassL(value, selectedLocations, addLocationSpyfall, removeLocationSpyfall);
-      return (
-        <div
-          key={value} 
-          className={`location vertically-center-text ${selectClass}`}
-          onClick={callback}
-        > 
-          <p>{value}</p>
-        </div>
-      );
-    });
-  }
+function Mafia(props) {
+  // const {
+  //   gameCredentials,
+  //   time,
+  //   isPlaying,
+  //   game
+  // } = props;
 
   function renderTime() {
     const minutes = Math.floor(time / 60); 
@@ -113,26 +35,24 @@ function Spyfall(props) {
     return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
   }
 
-  const [selectClass, callback] = getSelectedClassN(-1, selectedNamesByIndex, addNameSpyfall, removeNameSpyfall);
   
   const headerRow = myIndex === -1
   ? <div className="header-row">
       <BackToLobby />
-      <h1>Play Spyfall</h1>
+      <h1>Play Mafia</h1>
       {/* <BackToLobby /> */}
     </div>
   : <div className="header-row">
-      <h1>Play Spyfall</h1>
+      <h1>Play Mafia</h1>
     </div>
 
   if(!isPlaying) {
     return (
-      <Redirect to="/games/spyfall" />
+      <Redirect to="/games/mafia" />
     );
-
   }
   return (
-    <div className="wrapper spyfall-page-wrapper">
+    <div className="games-wrapper mafia-page-wrapper">
       <div className="header">
         {headerRow}
         <h4>Your name is: {gameCredentials.username}</h4>

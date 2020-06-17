@@ -1,4 +1,4 @@
-import Spyfall from './spyfall';
+import Mafia from './mafia';
 
 
-export default Spyfall;
+export default Mafia;
