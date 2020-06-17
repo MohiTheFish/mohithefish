@@ -2,6 +2,21 @@
 @use "connectedChoices";
 
 .waiting-room-wrapper {
+  
+  .header {
+    width: 100%;
+    .header-row {
+      height: 48px; // Height of the IconButtons
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      h1 {
+        width: fit-content;
+      }
+    }
+  }
+
   .room-info {
     display: grid;
     grid-template-rows: 70px 45px 1fr;

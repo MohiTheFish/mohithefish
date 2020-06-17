@@ -50,8 +50,8 @@ function WaitingRoom(props) {
 
   return (
     <div className="wrapper waiting-room-wrapper">
-      <div className="header-text">
-        <div className="same-row">
+      <div className="header">
+        <div className="header-row">
           <BackToGameSelect/>
           <h1>Play {gamename}</h1>
         </div>
