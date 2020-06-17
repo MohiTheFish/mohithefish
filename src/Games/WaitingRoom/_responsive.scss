@@ -1,3 +1,4 @@
+@use "../common" as *;
 @media only screen and (max-width: 480px) {
   body {
     .waiting-room-wrapper {
@@ -9,7 +10,7 @@
         }
       }
       
-      .room-info {
+      .room-list {
         .input {
           .form-wrapper {
             width: 90%;
@@ -22,6 +23,15 @@
         .rooms-wrapper {
           width: 100%;
         }
+      }
+
+      .room-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .room-info > * {
+        margin-top: $section-divs;
       }
     }
   }
