@@ -214,6 +214,7 @@ export function gameData(state = initialState, action) {
           isPrivate: true,
           spyfall: {
             time: "8", // minutes
+            gameType: "Locations",
           }
         }
       })

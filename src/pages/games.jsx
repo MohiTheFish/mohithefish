@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import store, { saveState } from 'redux-store';
+import {updateMyName} from '../Games/socketHandlers';
 import {
   setGameUsername
 } from 'redux-store/actions/nameActions';
@@ -40,11 +41,15 @@ export default function Games() {
    */
   const [isInvalid, msg] = validateName(name);
   if (Boolean(redirectPage) && !isInvalid) {
+    const isConnected = store.getState().gameData.isConnected;
+    if (isConnected) {
+      updateMyName(name);
+    }
     store.dispatch(setGameUsername({
       username: name,
       gamename: redirectPage,
     }));
-
+    
     saveState(store.getState());
     return (
      <Redirect push to={`/games/${redirectPage}`}/>

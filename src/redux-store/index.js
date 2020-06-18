@@ -52,8 +52,11 @@ function loadState() {
 }
 
 const store = createStore(MohiApp, loadState());
-// console.log(store.getState());
 
+/**
+ * Saves a piece of the state that will be useful in cases of refresh or disconnects.
+ * @param {any} state The total state object kept track of by redux
+ */
 export function saveState(state) {
   const { username, gamename, userId } = state.gameCredentials;
   storageType.setItem('username', username);
@@ -66,7 +69,7 @@ export function saveCurrentState() {
 }
 
 
-// store.subscribe(() => {
-//   console.log(store.getState());
-// })
+store.subscribe(() => {
+  console.log(store.getState());
+})
 export default store;
