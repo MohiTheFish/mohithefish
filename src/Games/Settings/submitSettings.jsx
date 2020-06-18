@@ -35,8 +35,9 @@ function validateSettings(context, settings) {
   }
 }
 function SubmitSettings(props) {
-  const {gamename, settings, selectedChoice, isUpdating, setIsUpdating} = props;
-  let isValid = validateSettings(gamename, settings);
+  const {gamename, settings, selectedChoice, isUpdating, setIsUpdating, isValid} = props;
+  console.log(isValid);
+  let isValidS = validateSettings(gamename, settings);
   const isCreating = selectedChoice === lobbyStates.CREATE;
 
   function createRoom() {
@@ -50,7 +51,7 @@ function SubmitSettings(props) {
   }
 
   return(
-    <Button disabled={!isValid || (!isCreating && isUpdating)} variant="contained" onClick={createRoom}>
+    <Button disabled={!isValidS || (!isCreating && isUpdating)} variant="contained" onClick={createRoom}>
       {isCreating ? 'Create' : 'Save'} 
     </Button>
   );

@@ -35,6 +35,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
   isPlaying: false,
   isUpdating: false,
   settings: {
+    erroredStates: new Set(),
     isPrivate: true,
     spyfall: {
       time: "8", // minutes
@@ -54,6 +55,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
   isPlaying: false,
   isUpdating: false,
   settings: {
+    erroredStates: new Set(),
     isPrivate: true,
     spyfall: {
       time: "8", // minutes

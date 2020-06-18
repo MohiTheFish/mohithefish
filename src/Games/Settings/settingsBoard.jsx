@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 
 import SpyfallView from './SpyfallSettings/spyfallView';
 import SpyfallSettings from './SpyfallSettings/spyfallSettings';
-import SubmitSettings from 'Games/WaitingRoom/RoomInfoComponents/submitSettings';
+import SubmitSettings from 'Games/Settings/submitSettings';
 import store from 'redux-store';
 
 import './settingsBoard.scss';

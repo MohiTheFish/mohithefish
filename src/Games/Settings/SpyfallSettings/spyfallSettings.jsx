@@ -13,6 +13,11 @@ import {
 
 import './spyfallSettings.scss';
 
+
+
+export function isValidTime(time) {
+  return /^\d+$/.test(time) && Number.parseInt(time) < MAX_SPYFALL_TIME;
+}
 const mapStateToPropsTL = (state) => {
   const {time} = state.gameData.settings[state.gameCredentials.gamename];
   return {
@@ -22,16 +27,11 @@ const mapStateToPropsTL = (state) => {
 const mapDispatchToPropsTL = (dispatch) => {
   return {
     handleSpyfallTime: (e) => {
-      dispatch(setSpyfallTime(e.target.value));
+      const time = e.target.value;
+      dispatch(setSpyfallTime(e.target.value, isValidTime(time)));
     }
   };
 }
-
-
-export function isValidTime(time) {
-  return /^\d+$/.test(time) && Number.parseInt(time) < MAX_SPYFALL_TIME;
-}
-
 
 function TimeLimit(props) {
   const { time, handleSpyfallTime } = props;

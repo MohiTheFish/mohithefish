@@ -8,7 +8,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 
 import Loading from 'components/Loading/loading';
 import MyInput from './RoomInfoComponents/myInput';
-import SubmitSettings from './RoomInfoComponents/submitSettings';
+import SubmitSettings from '../Settings/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 import PrivateSwitch from 'Games/Settings/privateSwitch';
 import SettingsBoard from 'Games/Settings/settingsBoard';
@@ -112,7 +112,7 @@ function RoomInfo(props) {
       <div className="room-settings">
         <div className="settings-wrapper">
           <PrivateSwitch />
-          <SubmitSettings />
+          <SubmitSettings isValid />
         </div>
       </div>
     );
