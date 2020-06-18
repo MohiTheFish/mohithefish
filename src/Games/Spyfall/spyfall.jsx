@@ -21,6 +21,7 @@ function mapStateToProps(state) {
     gameCredentials: state.gameCredentials,
     
     time: ps.time,
+    gameType: gd.settings.spyfall.gameType,
     isPlaying: gd.isPlaying,
     selectedLocations: game.selectedLocations,
     selectedNamesByIndex: game.selectedNamesByIndex,
@@ -37,10 +38,20 @@ function getValues() {
     myIndex: gd.myIndex,
   };
 }
+
+function getDescriptor(gameType) {
+  switch(gameType) {
+    case 'Foods': {
+      return 'food';
+    }
+    default: return 'location';
+  }
+}
 function Spyfall(props) {
   const {
     gameCredentials,
     time,
+    gameType,
     selectedLocations,
     selectedNamesByIndex,
     isSpy,
@@ -147,8 +158,8 @@ function Spyfall(props) {
         <h4>Your name is: {gameCredentials.username}</h4>
           {
             isSpy 
-            ? <h4>You ARE the spy! <span role="img" aria-label="spy emoji">🕵️</span> <br/> Figure out the secret location!</h4>
-            : <h4>You are NOT the spy. <br/> The location is <span className="secret-location">{secretLocation}</span></h4>
+            ? <h4>You ARE the spy! <span role="img" aria-label="spy emoji">🕵️</span> <br/> Figure out the secret {getDescriptor(gameType)}!</h4>
+            : <h4>You are NOT the spy. <br/> The {getDescriptor(gameType)} is <span className="secret-location">{secretLocation}</span></h4>
           }
       </div>
       <div className="time-wrapper">
@@ -170,7 +181,7 @@ function Spyfall(props) {
       </div>
 
       <div className="location-section">
-        <h2 className="header">Locations</h2>
+        <h2 className="header">{gameType}</h2>
         <div className="location-wrapper">
           {
             renderLocations()

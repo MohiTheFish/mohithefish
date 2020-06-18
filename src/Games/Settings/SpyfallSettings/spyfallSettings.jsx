@@ -26,12 +26,10 @@ const mapStateToPropsTL = (state, ownProps) => {
 }
 
 function TimeLimit(props) {
-  console.log(props);
   const { time, validTime, setTime } = props;
   let error = !validTime;
 
   function handleChange(e) {
-    console.log(e.target.value);
     setTime(e.target.value);
   }
   return (
@@ -62,7 +60,6 @@ function mapStateToPropsGTS(state, ownProps) {
   return {...ownProps};
 }
 function GameTypeSelector(props) {
-  console.log(props);
   const { gameType, setGameType } = props;
   function handleChange(e) {
     setGameType(e.target.value);

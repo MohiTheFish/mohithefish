@@ -20,7 +20,6 @@ const defaultState = {
   gameCredentials: initialGameCredentialState,
   playState: initialPlayState,
 };
-// console.log(defaultState);
 export const storageType = sessionStorage;
 
 function loadState() {
@@ -52,8 +51,11 @@ function loadState() {
 }
 
 const store = createStore(MohiApp, loadState());
-// console.log(store.getState());
 
+/**
+ * Saves a piece of the state that will be useful in cases of refresh or disconnects.
+ * @param {any} state The total state object kept track of by redux
+ */
 export function saveState(state) {
   const { username, gamename, userId } = state.gameCredentials;
   storageType.setItem('username', username);

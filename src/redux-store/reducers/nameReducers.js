@@ -1,6 +1,7 @@
 import {
   SET_GAME_USERNAME,
-  RETURN_TO_GAME_SELECT
+  RETURN_TO_GAME_SELECT,
+  NAME_UPDATED
 } from '../actions/nameActions';
 import { v4 as uuid } from 'uuid';
 
@@ -36,6 +37,13 @@ export function gameCredentials(state = initialState, action) {
         gamename: "",
         username: state.username,
         userId: state.userId,
+      };
+    }
+    case NAME_UPDATED: {
+      return {
+        ...state,
+        username: action.username,
+        gamename: action.gamename,
       };
     }
     default:

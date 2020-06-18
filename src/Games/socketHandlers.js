@@ -2,6 +2,10 @@ import io from 'socket.io-client';
 import store from 'redux-store';
 
 import {
+  myNameUpdated
+} from 'redux-store/actions/nameActions';
+
+import {
   setIsConnected,
   setIsLoadingRoom,
   roomCreated,
@@ -70,6 +74,12 @@ export function connectToServer() {
     }));
   });
 
+  newSocket.on('nameUpdated', function([username, gamename]){
+    store.dispatch(myNameUpdated({
+      username, 
+      gamename,
+    }))
+  })
   newSocket.on('settingsUpdated', function(settings){
     console.log(settings);
     store.dispatch(roomSettingsUpdated({
@@ -110,7 +120,7 @@ export function connectToServer() {
 
   newSocket.on('gameStarted', function(gameState){
     store.dispatch(startSpyfall(gameState));
-    store.dispatch(startPlaying(gameState));
+    store.dispatch(startPlaying());
   });
 
   newSocket.on('sentBackToLobby', function(){
@@ -129,6 +139,12 @@ export function connectToServer() {
 
 export function isConnected() {
   return !socket;
+}
+
+export function updateMyName(name) {
+  if (!socket) { throw new Error('Socket invalid!');}
+  
+  socket.emit('updateMyName', [userId, name]);
 }
 
 function getSpecificGameSettings(settings) {

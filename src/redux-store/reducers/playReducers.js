@@ -80,11 +80,13 @@ export function playState(state = initialState, action) {
     }
     case CLEAR_SPYFALL_BOARD: {
       return Object.assign({}, state, {
-        selectedLocations: new Map(),
-        selectedNamesByIndex: new Set(),
-        locations: [],
-        spyIndex: 0,
-        secretLocation: "",
+        spyfall: {
+          selectedLocations: new Map(),
+          selectedNamesByIndex: new Set(),
+          locations: [],
+          spyIndex: 0,
+          secretLocation: "",
+        }
       });
     }
     default:

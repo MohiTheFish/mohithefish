@@ -18,7 +18,7 @@ import {
 } from '../actions/gameSetupActions';
 
 import {
-  SET_SPYFALL_TIME
+  SET_SPYFALL_TIME,
 } from '../actions/SpecificGameActions/spyfallGameActions';
 
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
@@ -181,7 +181,6 @@ export function gameData(state = initialState, action) {
     case START_PLAYING: {
       return Object.assign({}, state, {
         isPlaying: true,
-        initialGameState: action.initialGameState
       });
     }
     case GO_BACK_TO_LOBBY: {
@@ -214,6 +213,7 @@ export function gameData(state = initialState, action) {
           isPrivate: true,
           spyfall: {
             time: "8", // minutes
+            gameType: "Locations",
           }
         }
       })
