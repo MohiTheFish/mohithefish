@@ -1,9 +1,9 @@
 export const START_GAME_SPYFALL = "START_GAME_SPYFALL";
 export const UPDATE_SPYFALL_TIME = "UDPATE_SPYFALL_TIME";
-export const ADD_LOCATION_SPYFALL = "ADD_LOCATION_SPYFALL";
-export const REMOVE_LOCATION_SPYFALL = "REMOVE_LOCATION_SPYFALL";
+export const HANDLE_LOCATION_SPYFALL = "HANDLE_LOCATION_SPYFALL";
 export const ADD_NAME_SPYFALL = "ADD_NAME_SPYFALL";
 export const REMOVE_NAME_SPYFALL = "REMOVE_NAME_SPYFALL";
+export const CLEAR_SPYFALL_BOARD = "CLEAR_SPYFALL_BOARD";
 
 export function startSpyfall(gameState) {
   return {
@@ -19,17 +19,10 @@ export function updateSpyfallTime(time) {
   };
 }
 
-export function addLocationSpyfall(e) {
+export function handleLocationSpyfall(e) {
   return {
-    type: ADD_LOCATION_SPYFALL,
-    data: e.target.innerHTML,
-  };
-}
-
-export function removeLocationSpyfall(e) {
-  return {
-    type: REMOVE_LOCATION_SPYFALL,
-    data: e.target.innerHTML,
+    type: HANDLE_LOCATION_SPYFALL,
+    data: e.target.textContent,
   };
 }
 
@@ -45,4 +38,10 @@ export function removeNameSpyfall(index) {
     type: REMOVE_NAME_SPYFALL,
     data: index,
   };
+}
+
+export function clearSpyfallBoard() {
+  return {
+    type: CLEAR_SPYFALL_BOARD,
+  }
 }

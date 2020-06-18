@@ -50,14 +50,14 @@
       display: flex;
       flex-wrap: wrap;
       flex-grow: 1;
-      width: 480px;
+      width: 960px;
       margin-left: auto;
       margin-right: auto;
 
       .location {
         cursor: pointer;
         position: relative;
-        transition-duration: .25s;
+        transition-duration: .2s;
         transition-property: color;
         transition-property: background-color;
         background-color: #eeeeee;
@@ -66,10 +66,12 @@
         margin: 0 10px; 
         height: 40px;
         margin-bottom: 15px;
+        box-sizing: border-box;
+        display: flex;
 
         p {
-          height: 100%;
-          line-height: 40px;
+          align-self: center;
+          width: 100%;
         }
 
         img {
@@ -86,15 +88,22 @@
       }
 
       .location:hover {
-        background-color: #bdbdbd;
+        background-color: #e0e0e0;
       }
 
-      .selected {
+      .accept {
+        border: 2px solid #424242;
+        p {
+          font-weight: bolder;
+        }
+      }
+      
+      .ignore {
         background-color: #424242;
         color: #e0e0e0;
         text-decoration: line-through;
       }
-      .selected:hover {
+      .ignore:hover {
         background-color: #616161;
       }
     }
@@ -107,6 +116,13 @@
           margin: 0 1%;
           margin-bottom: 10px;
         }
+        .location:hover {
+          background-color: #eeeeee;
+        }
+        .ignore:hover {
+          background-color: #424242;
+        }
+
       }
     }
   }

@@ -4,6 +4,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import PrivateSwitch from '../privateSwitch';
 import {
@@ -58,8 +60,42 @@ function TimeLimit(props) {
     </div>
   );
 }
-
 const SubscribedTimeLimit = connect(mapStateToPropsTL, mapDispatchToPropsTL)(TimeLimit);
+
+function mapStateToPropsGTS(state, ownProps) {
+  console.log(ownProps);
+  return {
+    gametype: "Locations",
+  };
+}
+function mapDispatchToPropsGTS(dispatch) {
+  return {
+    handleChange: (e) => {
+      dispatch()
+    }
+  }
+}
+function GameTypeSelector(props) {
+  const { gametype, handleChange } = props;
+  return (
+    <div className="setting">
+      <h3>What category are the options?</h3>
+      <FormControl>
+        <Select
+          className="game-type-input"
+          value={gametype}
+          onChange={handleChange}
+          inputProps={{ 'aria-label': 'Game Type' }}
+        >
+          <MenuItem value="Locations">Locations</MenuItem>
+          <MenuItem value="Foods">Foods</MenuItem>
+        </Select>
+        <FormHelperText>Game Type</FormHelperText>
+      </FormControl>
+    </div>
+  )
+}
+const SubscribedGameTypeSelector = connect(mapStateToPropsGTS, mapDispatchToPropsGTS)(GameTypeSelector);
 
 export default function SpyfallSettings(props) {
   const { showPrivacy } = props;
@@ -67,6 +103,7 @@ export default function SpyfallSettings(props) {
     <div className="settings-wrapper">
       { showPrivacy ? <PrivateSwitch /> : ''}
       <SubscribedTimeLimit />
+      <SubscribedGameTypeSelector />
     </div>
   )
 }

@@ -12,6 +12,7 @@ import SubmitSettings from '../Settings/submitSettings';
 import { joinRoom, getAvailableRooms, startGame } from '../socketHandlers';
 import PrivateSwitch from 'Games/Settings/privateSwitch';
 import SettingsBoard from 'Games/Settings/settingsBoard';
+import RulesBoard from 'Games/Rules/rulesBoard';
 
 import { lobbyStates } from 'redux-store/actions/gameSetupActions';
 
@@ -150,6 +151,7 @@ function RoomInfo(props) {
           <h2>Host: <span className={hostClass}>{host}</span></h2>
           <h2>Room id: <span className="roomId" onClick={copyToClipboard}>{roomId}</span></h2>
         </div>
+        <RulesBoard />
         {renderStartButton(canEdit, members.length)}
         {renderMembers(members, myIndex)}
       </div>

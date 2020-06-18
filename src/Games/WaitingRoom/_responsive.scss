@@ -1,15 +1,23 @@
 @use "../common" as *;
+@media only screen and (max-width: 1100px) {
+  body {
+    .waiting-room-wrapper {
+      .room-info {
+        grid-template-columns: 1fr 200px 1fr;
+        .settings-wrapper {
+          width: 100%;
+          flex-wrap: wrap;
+          .setting {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
 @media only screen and (max-width: 480px) {
   body {
     .waiting-room-wrapper {
-      .settings-wrapper {
-        width: 100%;
-        flex-wrap: wrap;
-        .setting {
-          width: 100%;
-        }
-      }
-      
       .room-list {
         .input {
           .form-wrapper {

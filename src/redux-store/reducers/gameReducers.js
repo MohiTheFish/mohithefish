@@ -28,7 +28,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
   isLoadingRoom: false,
   numPlayers: 4,
   host: "Mohitheifhs",
-  members: ["other guy", "nobody"],
+  members: ["other guy", "nobody", 'zendaya', 'is', 'my', 'queen', "other guy", "nobody", 'zendaya', 'is', 'my', 'queen'],
   roomId: "fwef98c09we-89w-efcab-aew-9gfw",
   myIndex: -1,
   rooms: [],
