@@ -35,6 +35,8 @@
           .settings-item {
             display: flex;
             margin-top: 5px;
+            justify-content: space-between;
+            align-items: center;
             .item-name {
               width: 30%;
               h3 {
@@ -42,7 +44,7 @@
               }
             }
             .item-value {
-              width: 70%;
+              width: 65%;
               text-align: left;
             }
           }

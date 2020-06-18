@@ -24,8 +24,8 @@ import {
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
 ? {
   isConnected: true,
-  selectedChoice: lobbyStates.JOINED,
-  myIndex: 4,
+  selectedChoice: lobbyStates.CREATED,
+  myIndex: -1,
   isLoadingRoom: false,
   numPlayers: 4,
   host: "Mohitheifhs",
@@ -45,12 +45,12 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
 : {
   isConnected: false,
   selectedChoice: "",
+  myIndex: -1,
   isLoadingRoom: false,
   numPlayers: 1,
   host: "",
   members: [],
   roomId: "",
-  myIndex: -1,
   rooms: [],
   isPlaying: false,
   isUpdating: false,

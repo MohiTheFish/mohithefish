@@ -4,17 +4,21 @@ import {SettingsItem, SettingsName, SettingsValue} from '../settingsView';
 function mapStateToProps(state) {
   const {settings} = state.gameData;
   return {
-    isPrivate: settings.isPrivate,
     time: settings.spyfall.time,
+    gameType: settings.spyfall.gameType,
   };
 }
 function SpyfallView(props) {
-  const { time } = props;
+  const { time, gameType } = props;
   return (
     <div className="settings-list">
       <SettingsItem>
         <SettingsName>Time Length</SettingsName>
         <SettingsValue>{`${time} minutes`}</SettingsValue>
+      </SettingsItem>
+      <SettingsItem>
+        <SettingsName>Game Type</SettingsName>
+        <SettingsValue>{gameType}</SettingsValue>
       </SettingsItem>
     </div>
   )
