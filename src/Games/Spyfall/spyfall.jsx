@@ -10,6 +10,7 @@ import {
   removeLocationSpyfall,
   addNameSpyfall,
   removeNameSpyfall,
+  clearSpyfallBoard
 } from 'redux-store/actions/spyfallActions';
 import store from 'redux-store';
 
@@ -126,6 +127,7 @@ function Spyfall(props) {
     </div>
 
   if(process.env.REACT_APP_DESIGN === 'false' && !isPlaying) {
+    store.dispatch(clearSpyfallBoard());
     return (
       <Redirect to="/games/spyfall" />
     );

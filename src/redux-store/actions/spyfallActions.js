@@ -4,6 +4,7 @@ export const ADD_LOCATION_SPYFALL = "ADD_LOCATION_SPYFALL";
 export const REMOVE_LOCATION_SPYFALL = "REMOVE_LOCATION_SPYFALL";
 export const ADD_NAME_SPYFALL = "ADD_NAME_SPYFALL";
 export const REMOVE_NAME_SPYFALL = "REMOVE_NAME_SPYFALL";
+export const CLEAR_SPYFALL_BOARD = "CLEAR_SPYFALL_BOARD";
 
 export function startSpyfall(gameState) {
   return {
@@ -45,4 +46,10 @@ export function removeNameSpyfall(index) {
     type: REMOVE_NAME_SPYFALL,
     data: index,
   };
+}
+
+export function clearSpyfallBoard() {
+  return {
+    type: CLEAR_SPYFALL_BOARD,
+  }
 }

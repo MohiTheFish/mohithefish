@@ -5,6 +5,7 @@ import {
   REMOVE_NAME_SPYFALL,
   START_GAME_SPYFALL,
   UPDATE_SPYFALL_TIME,
+  CLEAR_SPYFALL_BOARD
 } from 'redux-store/actions/spyfallActions';
 
 export const initialState = {
@@ -110,6 +111,15 @@ export function playState(state = initialState, action) {
           ...state.spyfall,
           selectedNamesByIndex: clonedNames,
         }
+      });
+    }
+    case CLEAR_SPYFALL_BOARD: {
+      return Object.assign({}, state, {
+        selectedLocations: new Set(),
+        selectedNamesByIndex: new Set(),
+        locations: [],
+        spyIndex: 0,
+        secretLocation: "",
       });
     }
     default:
