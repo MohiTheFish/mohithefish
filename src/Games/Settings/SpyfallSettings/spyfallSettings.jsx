@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -7,11 +7,13 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
+import SubmitSettings from 'Games/Settings/submitSettings';
 import PrivateSwitch from '../privateSwitch';
 import {
   setSpyfallTime,
   MAX_SPYFALL_TIME,
 } from 'redux-store/actions/SpecificGameActions/spyfallGameActions';
+import store from 'redux-store';
 
 import './spyfallSettings.scss';
 
@@ -20,24 +22,19 @@ import './spyfallSettings.scss';
 export function isValidTime(time) {
   return /^\d+$/.test(time) && Number.parseInt(time) < MAX_SPYFALL_TIME;
 }
-const mapStateToPropsTL = (state) => {
-  const {time} = state.gameData.settings[state.gameCredentials.gamename];
-  return {
-    time,
-  };
-}
-const mapDispatchToPropsTL = (dispatch) => {
-  return {
-    handleSpyfallTime: (e) => {
-      const time = e.target.value;
-      dispatch(setSpyfallTime(e.target.value, isValidTime(time)));
-    }
-  };
+const mapStateToPropsTL = (state, ownProps) => {
+  return {...ownProps};
 }
 
 function TimeLimit(props) {
-  const { time, handleSpyfallTime } = props;
-  let error = !isValidTime(time);
+  console.log(props);
+  const { time, validTime, setTime } = props;
+  let error = !validTime;
+
+  function handleChange(e) {
+    console.log(e.target.value);
+    setTime(e.target.value);
+  }
   return (
     <div className="setting">
       <h3>How long is the game?</h3>
@@ -47,7 +44,7 @@ function TimeLimit(props) {
           id="standard"
           label="Time"
           value={time}
-          onChange={handleSpyfallTime}
+          onChange={handleChange}
           endAdornment={<InputAdornment position="end">min</InputAdornment>}
         />
         {
@@ -60,30 +57,24 @@ function TimeLimit(props) {
     </div>
   );
 }
-const SubscribedTimeLimit = connect(mapStateToPropsTL, mapDispatchToPropsTL)(TimeLimit);
+const SubscribedTimeLimit = connect(mapStateToPropsTL)(TimeLimit);
 
 function mapStateToPropsGTS(state, ownProps) {
-  console.log(ownProps);
-  return {
-    gametype: "Locations",
-  };
-}
-function mapDispatchToPropsGTS(dispatch) {
-  return {
-    handleChange: (e) => {
-      dispatch()
-    }
-  }
+  return {...ownProps};
 }
 function GameTypeSelector(props) {
-  const { gametype, handleChange } = props;
+  console.log(props);
+  const { gameType, setGameType } = props;
+  function handleChange(e) {
+    setGameType(e.target.value);
+  }
   return (
     <div className="setting">
       <h3>What category are the options?</h3>
       <FormControl>
         <Select
           className="game-type-input"
-          value={gametype}
+          value={gameType}
           onChange={handleChange}
           inputProps={{ 'aria-label': 'Game Type' }}
         >
@@ -95,15 +86,29 @@ function GameTypeSelector(props) {
     </div>
   )
 }
-const SubscribedGameTypeSelector = connect(mapStateToPropsGTS, mapDispatchToPropsGTS)(GameTypeSelector);
+const SubscribedGameTypeSelector = connect(mapStateToPropsGTS)(GameTypeSelector);
 
 export default function SpyfallSettings(props) {
-  const { showPrivacy } = props;
+  const { showPrivacy, isLobbyPrivate } = props;
+  const [time, setTime] = useState(store.getState().gameData.settings.spyfall.time);
+  const [gameType, setGameType] = useState(store.getState().gameData.settings.spyfall.gameType);
+  let validTime = isValidTime(time);
+
+  const settings = {
+    isPrivate: isLobbyPrivate,
+    spyfall: {
+      time,
+      gameType,
+    },
+  };
   return (
-    <div className="settings-wrapper">
-      { showPrivacy ? <PrivateSwitch /> : ''}
-      <SubscribedTimeLimit />
-      <SubscribedGameTypeSelector />
-    </div>
+    <>
+      <div className="settings-wrapper">
+        { showPrivacy ? <PrivateSwitch /> : ''}
+        <SubscribedTimeLimit time={time} setTime={setTime} validTime={validTime}/>
+        <SubscribedGameTypeSelector gameType={gameType} setGameType={setGameType}/>
+      </div>
+      <SubmitSettings isValid={validTime} settings={settings}/>
+    </> 
   )
 }

@@ -13,7 +13,7 @@ export const initialState = {
     selectedLocations: new Map(),
     selectedNamesByIndex: new Set(),
     spyIndex: 0,
-    locations: [],
+    locations: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
     secretLocation: "",
   },
 };

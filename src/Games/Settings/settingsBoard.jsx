@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper';
 
 import SpyfallView from './SpyfallSettings/spyfallView';
 import SpyfallSettings from './SpyfallSettings/spyfallSettings';
-import SubmitSettings from 'Games/Settings/submitSettings';
 import store from 'redux-store';
 
 import './settingsBoard.scss';
@@ -14,11 +13,10 @@ function renderCurrentSettings(GameView) {
 }
 
 function renderEditSettings(GameSettings, showPrivacy) {
-  return <GameSettings showPrivacy={showPrivacy}/>;
+  return <GameSettings showPrivacy={showPrivacy} isLobbyPrivate={store.getState().gameData.settings.isPrivate} />;
 }
 
 function mapStateToProps(state) {
-  
   const isUpdating = state.gameData.isUpdating;
   return {
     isUpdating,
@@ -44,16 +42,13 @@ function SettingsBoard(props) {
         <h1>Game Settings</h1>
         {renderStatusMessage(isUpdating, canEdit)}
       </div>
-      {
-        canEdit 
-        ? <div className="room-settings">
-            {renderEditSettings(SpyfallSettings, false)}
-            <SubmitSettings />
-          </div>
-        : <div className="room-settings">
-            {renderCurrentSettings(SpyfallView)}
-          </div>
-      }
+      <div className="room-settings">
+        {
+          canEdit 
+          ? renderEditSettings(SpyfallSettings, false)
+          : renderCurrentSettings(SpyfallView)
+        }
+      </div>
     </Paper>
   );
 }

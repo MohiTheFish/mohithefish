@@ -5,14 +5,11 @@ import { isValidTime as isValidSpyfall } from 'Games/Settings/SpyfallSettings/sp
 import { createRoomWithSettings, updateRoomSettings } from 'Games/socketHandlers';
 import { setSettingsIsUpdating, lobbyStates } from 'redux-store/actions/gameSetupActions';
 
-function mapStateToProps(state) {
-  const gamename = state.gameCredentials.gamename;
+function mapStateToProps(state, ownProps) {
   const selectedChoice = state.gameData.selectedChoice;
-  const settings = state.gameData.settings;
   const isUpdating = state.gameData.isUpdatings;
   return {
-    gamename,
-    settings,
+    ...ownProps,
     selectedChoice,
     isUpdating,
   };
@@ -26,18 +23,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function validateSettings(context, settings) {
-  switch(context) {
-    case 'spyfall': {
-      return isValidSpyfall(settings[context].time);
-    }
-    default: return true;
-  }
-}
 function SubmitSettings(props) {
-  const {gamename, settings, selectedChoice, isUpdating, setIsUpdating, isValid} = props;
-  console.log(isValid);
-  let isValidS = validateSettings(gamename, settings);
+  console.log(props);
+  const {settings, selectedChoice, isUpdating, setIsUpdating, isValid} = props;
   const isCreating = selectedChoice === lobbyStates.CREATE;
 
   function createRoom() {
@@ -51,7 +39,7 @@ function SubmitSettings(props) {
   }
 
   return(
-    <Button disabled={!isValidS || (!isCreating && isUpdating)} variant="contained" onClick={createRoom}>
+    <Button disabled={!isValid || (!isCreating && isUpdating)} variant="contained" onClick={createRoom}>
       {isCreating ? 'Create' : 'Save'} 
     </Button>
   );
