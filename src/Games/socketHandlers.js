@@ -75,7 +75,6 @@ export function connectToServer() {
   });
 
   newSocket.on('nameUpdated', function([username, gamename]){
-    console.log(gamename);
     store.dispatch(myNameUpdated({
       username, 
       gamename,

@@ -20,7 +20,6 @@ const defaultState = {
   gameCredentials: initialGameCredentialState,
   playState: initialPlayState,
 };
-// console.log(defaultState);
 export const storageType = sessionStorage;
 
 function loadState() {
@@ -69,7 +68,7 @@ export function saveCurrentState() {
 }
 
 
-store.subscribe(() => {
-  console.log(store.getState());
-})
+// store.subscribe(() => {
+//   console.log(store.getState());
+// })
 export default store;

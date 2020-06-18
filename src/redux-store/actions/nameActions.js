@@ -17,7 +17,6 @@ export function returnToGameSelect() {
 }
 
 export function myNameUpdated(data) {
-  console.log(data);
   return {
     type: NAME_UPDATED,
     username: data.username,
