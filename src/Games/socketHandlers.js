@@ -120,7 +120,7 @@ export function connectToServer() {
 
   newSocket.on('gameStarted', function(gameState){
     store.dispatch(startSpyfall(gameState));
-    store.dispatch(startPlaying(gameState));
+    store.dispatch(startPlaying());
   });
 
   newSocket.on('sentBackToLobby', function(){
