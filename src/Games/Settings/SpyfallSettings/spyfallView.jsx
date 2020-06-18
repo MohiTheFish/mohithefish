@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import {SettingsItem, SettingsName, SettingsValue} from '../settingsView';
 function mapStateToProps(state) {
   const {settings} = state.gameData;
   return {
@@ -12,14 +12,10 @@ function SpyfallView(props) {
   const { time } = props;
   return (
     <div className="settings-list">
-      <div className="settings-item">
-        <div className="item-name">
-          <h3>Time Length</h3>
-        </div>
-        <div className="item-value">
-          <h3>{time} minutes</h3>
-        </div>
-      </div>
+      <SettingsItem>
+        <SettingsName>Time Length</SettingsName>
+        <SettingsValue>{`${time} minutes`}</SettingsValue>
+      </SettingsItem>
     </div>
   )
 }

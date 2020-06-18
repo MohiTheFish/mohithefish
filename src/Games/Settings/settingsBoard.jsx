@@ -36,6 +36,18 @@ function renderStatusMessage(isUpdating, canEdit) {
 function SettingsBoard(props) {
   const { canEdit, isUpdating } = props;
   const { gamename } = store.getState().gameCredentials;
+  let GameSettings = undefined;
+  let GameView = undefined; 
+  switch(gamename) {
+    case 'spyfall': {
+      GameSettings = SpyfallSettings;
+      GameView = SpyfallView; 
+      break;
+    }
+    default: {
+      throw new Error('Not accepted game type');
+    }
+  }
   return (
     <Paper className="board-wrapper settings-board-wrapper">
       <div className="settings-header">
@@ -45,8 +57,8 @@ function SettingsBoard(props) {
       <div className="room-settings">
         {
           canEdit 
-          ? renderEditSettings(SpyfallSettings, false)
-          : renderCurrentSettings(SpyfallView)
+          ? renderEditSettings(GameSettings, false)
+          : renderCurrentSettings(GameView)
         }
       </div>
     </Paper>

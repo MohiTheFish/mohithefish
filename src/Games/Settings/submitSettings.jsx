@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { isValidTime as isValidSpyfall } from 'Games/Settings/SpyfallSettings/spyfallSettings';
+
+import store from 'redux-store';
 import { createRoomWithSettings, updateRoomSettings } from 'Games/socketHandlers';
 import { setSettingsIsUpdating, lobbyStates } from 'redux-store/actions/gameSetupActions';
 
@@ -30,7 +31,7 @@ function SubmitSettings(props) {
 
   function createRoom() {
     if (isCreating) {
-      createRoomWithSettings(settings);
+      createRoomWithSettings(store.getState().gameData.settings);
     }
     else {
       setIsUpdating();

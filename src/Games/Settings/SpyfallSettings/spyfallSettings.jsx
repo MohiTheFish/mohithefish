@@ -10,7 +10,6 @@ import Select from '@material-ui/core/Select';
 import SubmitSettings from 'Games/Settings/submitSettings';
 import PrivateSwitch from '../privateSwitch';
 import {
-  setSpyfallTime,
   MAX_SPYFALL_TIME,
 } from 'redux-store/actions/SpecificGameActions/spyfallGameActions';
 import store from 'redux-store';

@@ -147,7 +147,7 @@ export function createRoomWithSettings(settings) {
 export function updateRoomSettings(settings) {
   if (!socket) { throw new Error('Socket invalid!');}
   
-  socket.emit('updateSettings', [userId, getSpecificGameSettings(settings)]);
+  socket.emit('updateSettings', [userId, settings]);
 }
 
 export function forceDisconnect() {
