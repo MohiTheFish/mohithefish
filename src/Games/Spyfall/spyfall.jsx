@@ -125,7 +125,7 @@ function Spyfall(props) {
       <h1>Play Spyfall</h1>
     </div>
 
-  if(!isPlaying) {
+  if(process.env.REACT_APP_DESIGN === 'false' && !isPlaying) {
     return (
       <Redirect to="/games/spyfall" />
     );

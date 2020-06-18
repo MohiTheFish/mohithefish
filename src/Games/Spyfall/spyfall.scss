@@ -50,7 +50,7 @@
       display: flex;
       flex-wrap: wrap;
       flex-grow: 1;
-      width: 480px;
+      width: 960px;
       margin-left: auto;
       margin-right: auto;
 
@@ -107,6 +107,13 @@
           margin: 0 1%;
           margin-bottom: 10px;
         }
+        .location:hover {
+          background-color: #eeeeee;
+        }
+        .selected:hover {
+          background-color: #424242;
+        }
+
       }
     }
   }
