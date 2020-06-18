@@ -39,7 +39,7 @@ function SettingsBoard(props) {
   const { canEdit, isUpdating } = props;
   const { gamename } = store.getState().gameCredentials;
   return (
-    <Paper className="settings-board-wrapper">
+    <Paper className="board-wrapper settings-board-wrapper">
       <div className="settings-header">
         <h1>Game Settings</h1>
         {renderStatusMessage(isUpdating, canEdit)}

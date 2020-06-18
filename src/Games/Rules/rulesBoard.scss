@@ -1,0 +1,16 @@
+.rules-board-wrapper {
+  grid-column: 3 / 4;
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: unset;
+
+  ul {
+    box-sizing: border-box;
+    height: 100%;
+    padding-left: 20px;
+
+    li {
+      margin-top: 5px;
+    }
+  }
+}
