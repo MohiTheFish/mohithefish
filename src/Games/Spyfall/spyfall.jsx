@@ -6,8 +6,7 @@ import './spyfall.scss';
 import BackToLobby from 'components/BackToLobby/backToLobby';
 
 import { 
-  addLocationSpyfall,
-  removeLocationSpyfall,
+  handleLocationSpyfall,
   addNameSpyfall,
   removeNameSpyfall,
   clearSpyfallBoard
@@ -57,17 +56,11 @@ function Spyfall(props) {
     myIndex
   } = obj;
 
-
-  function getSelectedClassL(val, set, addCall, removeCall) {
-    const isSelected = set.has(val);
-    let callback = addCall;
-    let selectClass = "";
-    if (isSelected) {
-      callback = removeCall;
-      selectClass = "selected";
-    }
-    return [selectClass, (data) => store.dispatch(callback(data))];
+  if(process.env.REACT_APP_DESIGN === 'false' && !isPlaying) {
+    store.dispatch(clearSpyfallBoard());
+    return <Redirect to="/games/spyfall" />;
   }
+
 
   function getSelectedClassN(val, set, addCall, removeCall) {
     const isSelected = set.has(val);
@@ -79,11 +72,12 @@ function Spyfall(props) {
     }
     return [selectClass, (data) => store.dispatch(callback(val))];
   }
+
   function renderNames() {
     return members.map( (name, index) => {
       const [selectClass, callback] = getSelectedClassN(index, selectedNamesByIndex, addNameSpyfall, removeNameSpyfall);
       return (
-        <h4 key={name}
+        <h4 key={`${name}${index}`}
          className={selectClass}
          onClick={callback}>
           {name}
@@ -92,14 +86,34 @@ function Spyfall(props) {
     })
   }
 
+  function locationSelectHandler(data) {
+    store.dispatch(handleLocationSpyfall(data));
+  }
+  function getSelectedClassL(val) {
+    const state = selectedLocations.get(val);
+    switch(state) {
+      case 0: {
+        return "";
+      }
+      case 1: {
+        return "accept";
+      }
+      case 2: {
+        return "ignore";
+      }
+      default: {
+        return "";
+      }
+    }
+  }
   function renderLocations() {
     return locations.map( (value, index) => {
-      const [selectClass, callback] = getSelectedClassL(value, selectedLocations, addLocationSpyfall, removeLocationSpyfall);
+      const selectClass = getSelectedClassL(value);
       return (
         <div
           key={value} 
           className={`location vertically-center-text ${selectClass}`}
-          onClick={callback}
+          onClick={locationSelectHandler}
         > 
           <p>{value}</p>
         </div>
@@ -126,13 +140,6 @@ function Spyfall(props) {
       <h1>Play Spyfall</h1>
     </div>
 
-  if(process.env.REACT_APP_DESIGN === 'false' && !isPlaying) {
-    store.dispatch(clearSpyfallBoard());
-    return (
-      <Redirect to="/games/spyfall" />
-    );
-
-  }
   return (
     <div className="wrapper spyfall-page-wrapper play-games-wrapper">
       <div className="header">
