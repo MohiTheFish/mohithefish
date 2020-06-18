@@ -81,7 +81,6 @@ export function connectToServer() {
     }))
   })
   newSocket.on('settingsUpdated', function(settings){
-    console.log(settings);
     store.dispatch(roomSettingsUpdated({
       settings,
     }));
