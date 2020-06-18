@@ -3,6 +3,9 @@
     .settings-board-wrapper{
       grid-column: 1 / 2;
       height: fit-content;
+      .settings-header {
+        text-align: center;
+      }
       .status {
         position: absolute;
         right: 10px;
@@ -38,13 +41,14 @@
             justify-content: space-between;
             align-items: center;
             .item-name {
-              width: 30%;
+              width: 47.5%;
+              text-align: right;
               h3 {
                 font-weight: bold;
               }
             }
             .item-value {
-              width: 65%;
+              width: 47.5%;
               text-align: left;
             }
           }

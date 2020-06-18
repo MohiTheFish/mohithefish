@@ -9,6 +9,7 @@ function mapStateToProps(state) {
   };
 }
 function SpyfallView(props) {
+  console.log(props);
   const { time, gameType } = props;
   return (
     <div className="settings-list">
