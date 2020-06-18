@@ -25,7 +25,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function SubmitSettings(props) {
-  console.log(props);
   const {settings, selectedChoice, isUpdating, setIsUpdating, isValid} = props;
   const isCreating = selectedChoice === lobbyStates.CREATE;
 
