@@ -10,7 +10,6 @@ import {
   START_PLAYING,
   SET_IS_PRIVATE,
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
-  GO_BACK_TO_LOBBY,
   lobbyStates,
   ROOM_SETTINGS_UPDATED,
   SET_SETTINGS_IS_UPDATING,
@@ -20,6 +19,10 @@ import {
 import {
   SET_SPYFALL_TIME,
 } from '../actions/SpecificGameActions/spyfallGameActions';
+
+import {
+  CLEAR_SPYFALL_BOARD,
+} from 'redux-store/actions/spyfallActions';
 
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
 ? {
@@ -183,7 +186,7 @@ export function gameData(state = initialState, action) {
         isPlaying: true,
       });
     }
-    case GO_BACK_TO_LOBBY: {
+    case CLEAR_SPYFALL_BOARD: {
       return Object.assign({}, state, {
         isPlaying: false,
       });

@@ -15,13 +15,13 @@ import {
   playerLeft,
   startPlaying,
   roomPrivacyToggled,
-  goBackToLobby,
   roomSettingsUpdated,
 } from 'redux-store/actions/gameSetupActions';
 
 import {
   startSpyfall,
   updateSpyfallTime,
+  clearSpyfallBoard,
 } from 'redux-store/actions/spyfallActions';
 
 function addSpyfallEventListeners(newSocket) {
@@ -123,7 +123,9 @@ export function connectToServer() {
   });
 
   newSocket.on('sentBackToLobby', function(){
-    store.dispatch(goBackToLobby());
+    if(store.getState().gameCredentials.gamename === 'spyfall') {
+      store.dispatch(clearSpyfallBoard());
+    }
   });
 
   newSocket.on('playerLeft', function(index) {
