@@ -66,7 +66,7 @@ function Spyfall(props) {
     myIndex
   } = obj;
 
-  if(process.env.REACT_APP_DESIGN === 'false' && !isPlaying) {
+  if(!isPlaying) {
     return <Redirect to="/games/spyfall" />;
   }
 
