@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3ed671b8c20a801b4ac65341588576ae",
+    "revision": "dd2479069dc0d8a1c2ca61080e89f414",
     "url": "/mohithefish/index.html"
   },
   {
-    "revision": "c34f33f9129c228fce47",
+    "revision": "3799b688436fca5df8e9",
     "url": "/mohithefish/static/css/main.7caeb88b.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mohithefish/static/js/2.9cbecafd.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "c34f33f9129c228fce47",
-    "url": "/mohithefish/static/js/main.d04d2be8.chunk.js"
+    "revision": "3799b688436fca5df8e9",
+    "url": "/mohithefish/static/js/main.26cf1a6e.chunk.js"
   },
   {
     "revision": "7e980584c8107d96e38a",
