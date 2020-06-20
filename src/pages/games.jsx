@@ -42,7 +42,7 @@ export default function Games() {
   const [isInvalid, msg] = validateName(name);
   if (Boolean(redirectPage) && !isInvalid) {
     const isConnected = store.getState().gameData.isConnected;
-    if (isConnected) {
+    if (isConnected && ((process.env.NODE_ENV === "development" && process.env.REACT_APP_DESIGN === 'false') || process.env.NODE_ENV==="production")) {
       updateMyName(name);
     }
     store.dispatch(setGameUsername({

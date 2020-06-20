@@ -6,6 +6,7 @@ import Testing from 'pages/testing'
 import MainPage from 'pages/MainPage/mainPage';
 import Games from 'pages/games';
 import Spyfall from 'Games/Spyfall';
+import Mafia from 'Games/Mafia';
 import WaitingRoom from 'Games/WaitingRoom/waitingRoom';
 import BackToLobby from 'components/BackToLobby/backToLobby';
 import store from 'redux-store';
@@ -47,6 +48,7 @@ function App() {
           <Route path="/testing" component={Testing} /> 
           <Route path="/testcomponent" component={BackToLobby} />
 
+          <Route path="/games/mafia/play" component={Mafia} />
           <Route path="/games/spyfall/play" component={Spyfall} />
           <Route path="/games/:name" component={WaitingRoom} />
           

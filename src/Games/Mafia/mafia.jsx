@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
 import BackToLobby from 'components/BackToLobby/backToLobby';
+import {PlayerCard} from './components/card';
 import store from 'redux-store';
 
 import './mafia.scss';
@@ -21,12 +22,14 @@ function mapStateToProps(state) {
 }
 
 function Mafia(props) {
-  // const {
-  //   gameCredentials,
-  //   time,
-  //   isPlaying,
-  //   game
-  // } = props;
+  const {
+    gameCredentials,
+    time,
+    isPlaying,
+    myIndex,
+    host,
+    game
+  } = props;
 
   function renderTime() {
     const minutes = Math.floor(time / 60); 
@@ -46,51 +49,26 @@ function Mafia(props) {
       <h1>Play Mafia</h1>
     </div>
 
-  if(!isPlaying) {
+  if(!isPlaying && (process.env.NODE_ENV === 'production' || (process.env.NODE_ENV === 'development' && process.env.REACT_APP_DESIGN === 'false'))) {
     return (
       <Redirect to="/games/mafia" />
     );
   }
   return (
-    <div className="games-wrapper mafia-page-wrapper">
+    <div className="wrapper play-games-wrapper mafia-page-wrapper day">
       <div className="header">
         {headerRow}
         <h4>Your name is: {gameCredentials.username}</h4>
-          {
-            isSpy 
-            ? <h4>You ARE the spy! <span role="img" aria-label="spy emoji">🕵️</span> <br/> Figure out the secret location!</h4>
-            : <h4>You are NOT the spy. <br/> The location is <span className="secret-location">{secretLocation}</span></h4>
-          }
       </div>
       <div className="time-wrapper">
         {renderTime()}
       </div>
-
-      <div className="players-list">
-        <h2 className="title">Players</h2>
-        <div className="names">
-          <h4 key={host}
-            className={selectClass}
-            onClick={callback}>
-              {host}
-          </h4>
-          {
-            renderNames()
-          }
-        </div>
-      </div>
-
-      <div className="location-section">
-        <h2 className="header">Locations</h2>
-        <div className="location-wrapper">
-          {
-            renderLocations()
-          }
-        </div>
+      <div className="mafia-game-info">
+        <PlayerCard />
       </div>
     </div>
   );
 
 }
-const SubscribedSpyfall = connect(mapStateToProps)(Spyfall);
-export default SubscribedSpyfall;
+const SubscribedMafia = connect(mapStateToProps)(Mafia);
+export default SubscribedMafia;
