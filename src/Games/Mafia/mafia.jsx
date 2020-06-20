@@ -8,11 +8,42 @@ import BackToLobby from 'components/BackToLobby/backToLobby';
 import {RoleCard} from './components/card';
 import {PlayerCard} from './components/player';
 import {EventRecap} from './components/eventRecap';
+import RoleCount from './components/roleCount';
 import store from 'redux-store';
 
 import './mafia.scss';
 import { useState } from 'react';
+// window.onscroll = function(ev) {
+//   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+//       // you're at the bottom of the page
+//   }
+// };
 
+
+function Column3({isDay}) {
+  return (
+    <div className="column3">
+      
+      <div className="day-night-time">
+        <div className="row">
+          <h1>{isDay ? 'Day' : 'Night '}</h1>
+          {isDay ? <Brightness7Icon/> : <Brightness2Icon/>}
+        </div>
+      </div>
+
+      <RoleCard />
+      <RoleCount />
+
+    </div>
+  )
+}
+function Column1() {
+  return (
+    <div className="column1">
+      <EventRecap />
+    </div>
+  )
+}
 function mapStateToProps(state) {
   const gd = state.gameData;
   const ps = state.playState;
@@ -53,10 +84,14 @@ function Mafia(props) {
   
   function renderMembers() {
     return members.map( (member, index) => {
+      let onClickfn = null;
+      if (index !== myIndex) {
+        onClickfn = ()=>handlePlayerClick(index);
+      }
       return <PlayerCard 
         key={`${member}${index}`} 
         member={member} 
-        onClick={()=>handlePlayerClick(index)}
+        onClick={onClickfn}
         isAlive={index%2 === 0 ? true : false}
       />
     });
@@ -89,19 +124,14 @@ function Mafia(props) {
     <div className={`wrapper play-games-wrapper mafia-page-wrapper ${theme}`}>
       <div className="header">
         {headerRow}
-        
         <div className="time-wrapper">
           {renderTime()}
         </div>
       </div>
+
       <div className="mafia-game-info">
 
-        <div className="day-night-time">
-          <div className="row">
-            <h1>{isDay ? 'Day' : 'Night'}</h1>
-            {isDay ? <Brightness7Icon/> : <Brightness2Icon/>}
-          </div>
-        </div>
+        <Column1 />
         <div className="player-list">
           <PlayerCard 
             member={host} 
@@ -110,8 +140,7 @@ function Mafia(props) {
           />
           {renderMembers()}
         </div>
-        <RoleCard />
-        <EventRecap />
+        <Column3 isDay={isDay}/>
       </div>
     </div>
   );

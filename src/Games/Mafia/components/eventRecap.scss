@@ -1,0 +1,40 @@
+.event-recap {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  height: 70%;
+  overflow-y: scroll;
+  overflow-x: unset;
+
+  .description {
+    color: gray;
+  }
+
+  ul {
+    box-sizing: border-box;
+    padding: 5px;
+    list-style-position: inside;
+
+    li {
+      margin-top: 5px;
+      width: fit-content;
+    }
+  }
+}
+#event-recap-input {
+  width: 100%;
+  
+  .event-input, .icon-color {
+    transition-duration: 1s;
+    transition-property: color;
+  }
+}
+.night {
+  #event-recap-input {
+    .event-input {
+      color: white;
+    }
+    .icon-color {
+      color: white;
+    }
+  }
+}
