@@ -66,9 +66,9 @@ function Spyfall(props) {
     myIndex
   } = obj;
 
-  // if(!isPlaying) {
-  //   return <Redirect to="/games/spyfall" />;
-  // }
+  if(!isPlaying) {
+    return <Redirect to="/games/spyfall" />;
+  }
 
 
   function getSelectedClassN(val, set, addCall, removeCall) {
