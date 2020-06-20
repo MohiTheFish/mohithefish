@@ -66,9 +66,9 @@ function Spyfall(props) {
     myIndex
   } = obj;
 
-  if(!isPlaying) {
-    return <Redirect to="/games/spyfall" />;
-  }
+  // if(!isPlaying) {
+  //   return <Redirect to="/games/spyfall" />;
+  // }
 
 
   function getSelectedClassN(val, set, addCall, removeCall) {
@@ -159,9 +159,10 @@ function Spyfall(props) {
             ? <h4>You ARE the spy! <span role="img" aria-label="spy emoji">🕵️</span> <br/> Figure out the secret {getDescriptor(gameType)}!</h4>
             : <h4>You are NOT the spy. <br/> The {getDescriptor(gameType)} is <span className="secret-location">{secretLocation}</span></h4>
           }
-      </div>
-      <div className="time-wrapper">
-        {renderTime()}
+        
+        <div className="time-wrapper">
+          {renderTime()}
+        </div>
       </div>
 
       <div className="players-list">

@@ -1,12 +1,17 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
+import Brightness2Icon from '@material-ui/icons/Brightness2';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import BackToLobby from 'components/BackToLobby/backToLobby';
-import {PlayerCard} from './components/card';
+import {RoleCard} from './components/card';
+import {PlayerCard} from './components/player';
+import {EventRecap} from './components/eventRecap';
 import store from 'redux-store';
 
 import './mafia.scss';
+import { useState } from 'react';
 
 function mapStateToProps(state) {
   const gd = state.gameData;
@@ -20,7 +25,6 @@ function mapStateToProps(state) {
     game,
   };
 }
-
 function Mafia(props) {
   const {
     gameCredentials,
@@ -37,16 +41,43 @@ function Mafia(props) {
 
     return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
   }
+  const [theme, setTheme] = useState('day');
+  const isDay = theme === 'day';
 
+
+  const members = store.getState().gameData.members;
+
+  function handlePlayerClick(index) {
+    console.log('voting for ' + index);
+  }
   
+  function renderMembers() {
+    return members.map( (member, index) => {
+      return <PlayerCard 
+        key={`${member}${index}`} 
+        member={member} 
+        onClick={()=>handlePlayerClick(index)}
+        isAlive={index%2 === 0 ? true : false}
+      />
+    });
+  }
+
+  function myClick() {
+    if (theme === 'day') {
+      setTheme('night');
+    }
+    else {
+      setTheme('day');
+    }
+  }
   const headerRow = myIndex === -1
   ? <div className="header-row">
       <BackToLobby />
-      <h1>Play Mafia</h1>
+      <h1 onClick={myClick}>Play Mafia</h1>
       {/* <BackToLobby /> */}
     </div>
   : <div className="header-row">
-      <h1>Play Mafia</h1>
+      <h1 onClick={myClick}>Play Mafia</h1>
     </div>
 
   if(!isPlaying && (process.env.NODE_ENV === 'production' || (process.env.NODE_ENV === 'development' && process.env.REACT_APP_DESIGN === 'false'))) {
@@ -55,16 +86,28 @@ function Mafia(props) {
     );
   }
   return (
-    <div className="wrapper play-games-wrapper mafia-page-wrapper day">
+    <div className={`wrapper play-games-wrapper mafia-page-wrapper ${theme}`}>
       <div className="header">
         {headerRow}
-        <h4>Your name is: {gameCredentials.username}</h4>
-      </div>
-      <div className="time-wrapper">
-        {renderTime()}
+        
+        <div className="time-wrapper">
+          {renderTime()}
+        </div>
       </div>
       <div className="mafia-game-info">
-        <PlayerCard />
+
+        <div className="day-night-time">
+          <div className="row">
+            <h1>{isDay ? 'Day' : 'Night'}</h1>
+            {isDay ? <Brightness7Icon/> : <Brightness2Icon/>}
+          </div>
+        </div>
+        <div className="player-list">
+          <div key={host} className="player">{host}</div>
+          {renderMembers()}
+        </div>
+        <RoleCard />
+        <EventRecap />
       </div>
     </div>
   );
