@@ -31,7 +31,6 @@ function Mafia(props) {
     time,
     isPlaying,
     myIndex,
-    host,
     game
   } = props;
 
@@ -45,6 +44,7 @@ function Mafia(props) {
   const isDay = theme === 'day';
 
 
+  const host = store.getState().gameData.host;
   const members = store.getState().gameData.members;
 
   function handlePlayerClick(index) {
@@ -103,7 +103,11 @@ function Mafia(props) {
           </div>
         </div>
         <div className="player-list">
-          <div key={host} className="player">{host}</div>
+          <PlayerCard 
+            member={host} 
+            onClick={()=>handlePlayerClick(-1)}
+            isAlive={-1%2 === 0 ? true : false}
+          />
           {renderMembers()}
         </div>
         <RoleCard />

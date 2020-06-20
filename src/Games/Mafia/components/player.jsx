@@ -1,12 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 const aliveStatus = <h4 className="alive">Alive</h4>
 const deadStatus = <h4 className="dead">Dead</h4>
 
-
-
-export function PlayerCard(props) {
+function PlayerCard(props) {
   const { member, isAlive } = props;
   return (
     <div className="player">
@@ -15,3 +14,13 @@ export function PlayerCard(props) {
     </div>
   )
 }
+
+
+
+PlayerCard.propTypes = {
+  member: PropTypes.string.isRequired,
+  isAlive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+}
+
+export { PlayerCard };
