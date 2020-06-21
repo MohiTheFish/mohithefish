@@ -5,7 +5,7 @@ import Brightness2Icon from '@material-ui/icons/Brightness2';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import BackToLobby from 'components/BackToLobby/backToLobby';
-import {RoleCard} from './components/card';
+import {RoleCard} from './components/role';
 import {PlayerCard} from './components/player';
 import {EventRecap} from './components/eventRecap';
 import RoleCount from './components/roleCount';

@@ -35,10 +35,6 @@ export default function RoleCount(props) {
         <RoleName>Village</RoleName>
         <RoleValue>7</RoleValue>
       </RoleItem>
-      <RoleItem>
-        <RoleName>Serial Killer</RoleName>
-        <RoleValue>1</RoleValue>
-      </RoleItem>
     </Paper>
   )
 }

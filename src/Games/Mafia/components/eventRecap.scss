@@ -9,9 +9,17 @@
     color: gray;
   }
 
+  .new-phase {
+    margin: 0 auto;
+    border-bottom: 1px solid #c0c0c0;
+    width: 80%;
+    h4 {
+      color: #c0c0c0;
+    }
+  }
   ul {
     box-sizing: border-box;
-    padding: 5px;
+    padding: 0 5px;
     list-style-position: inside;
 
     li {

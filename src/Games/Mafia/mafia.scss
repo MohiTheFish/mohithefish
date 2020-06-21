@@ -1,5 +1,4 @@
-@use './components/roleCount' as *;
-$transition-time: 5s;
+@use "variables" as *;
 .mafia-page-wrapper {
   display: flex;
   flex-direction: column;
@@ -43,46 +42,6 @@ $transition-time: 5s;
       }
     }
     
-    .role-wrapper {
-      color: inherit;
-      background-color: #a5d6a7;
-      height: 220px;
-      position: relative;
-      overflow: hidden;
-      transition-duration: $transition-time, .2s;
-      transition-property: background-color, height;
-      .role-info {
-        height: 50px;
-        cursor: pointer;
-        display: flex;
-
-        display: grid;
-        grid-template-columns: 1fr 25px;
-        grid-template-rows: 28px 22px;
-        
-        .team {
-          grid-column: 1/2;
-          grid-row: 1/2;
-        }
-        .role {
-          grid-column: 1/2;
-          grid-row: 2/3;
-        }
-        .icon {
-          grid-column: 2/3;
-          grid-row: 1/3;
-          width: 25px;
-          height: 50px;
-        }
-      }
-      .power-info, .win-condition {
-        margin-top: 10px;
-      }
-    }
-    .role-wrapper.mini {
-      height: 50px;
-    }
-    
     .player-list {
       display: flex;
       flex-wrap: wrap;
@@ -99,23 +58,6 @@ $transition-time: 5s;
           text-align: left;
         }
       }
-    }
-  }
-}
-
-
-.night {
-  background-color: #37474f;
-  color: white;
-
-  .mafia-game-info{
-    .role-wrapper {
-      background-color: #2e7d32;
-    }
-
-    .role-count-wrapper {
-      background-color: #37474f;
-      color: white;
     }
   }
 }

@@ -3,6 +3,8 @@ import Paper from '@material-ui/core/Paper';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
+
+import './role.scss';
 export function RoleCard(props) {
   const [isMini, setIsMini] = useState(true);
   console.log(isMini);
