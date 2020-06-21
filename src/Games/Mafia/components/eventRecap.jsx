@@ -30,7 +30,75 @@ export function EventRecap(props) {
         <li>
           nobody was lynched!
         </li>
+        
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
+        <li>
+          zendaya voted for nobody
+        </li>
+        <li>
+          nobody was lynched!
+        </li>
       </ul>
+      
     </Paper>
     <EventInput />
     </>

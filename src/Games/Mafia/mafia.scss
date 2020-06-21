@@ -9,23 +9,25 @@
     margin-bottom: 5px;
   }
   .mafia-game-info {
-    height: 100%;
+    max-height: 100%;
     display: grid;
     grid-template-columns: 2fr 3fr 1fr;
-
+    
     > * {
       margin: 5px;
     }
-    .column1 {
+
+    .column1, .column2, .column3 {
       flex-direction: column;
+    }
+    .column1 {
       grid-column: 1/2;
-      justify-content: flex-start;
+    }
+    .column2 {
+      grid-column: 2/3;
     }
     .column3 {
-      flex-direction: column;
       grid-column: 3/4;
-      
-      justify-content: flex-start;
 
       > * {
         margin-bottom: 10px;
@@ -46,9 +48,9 @@
       display: flex;
       flex-wrap: wrap;
       grid-column: 2 / 3;
+      height: 100%;
 
       .player {
-        background-color: red;
         width: 33.33333%;
         height: 60px;
         text-align: left;

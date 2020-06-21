@@ -42,7 +42,6 @@ export default function TextInput() {
             />
           </InputAdornment>
         }
-        labelWidth={70}
       />
     </FormControl>
   )

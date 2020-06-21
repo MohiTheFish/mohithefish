@@ -1,7 +1,8 @@
+
 .event-recap {
   grid-column: 1/2;
   grid-row: 1/2;
-  height: 70%;
+  max-height: 550px;
   overflow-y: scroll;
   overflow-x: unset;
 
@@ -36,6 +37,7 @@
     transition-property: color;
   }
 }
+
 .night {
   #event-recap-input {
     .event-input {

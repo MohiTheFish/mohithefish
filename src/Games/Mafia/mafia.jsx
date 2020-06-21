@@ -44,6 +44,8 @@ function Column1() {
     </div>
   )
 }
+
+
 function mapStateToProps(state) {
   const gd = state.gameData;
   const ps = state.playState;
@@ -132,13 +134,20 @@ function Mafia(props) {
       <div className="mafia-game-info">
 
         <Column1 />
-        <div className="player-list">
-          <PlayerCard 
-            member={host} 
-            onClick={()=>handlePlayerClick(-1)}
-            isAlive={-1%2 === 0 ? true : false}
-          />
-          {renderMembers()}
+        <div className="column2">
+          <div className="player-list">
+            <PlayerCard 
+              member={host} 
+              onClick={()=>handlePlayerClick(-1)}
+              isAlive={-1%2 === 0 ? true : false}
+            />
+            {renderMembers()}
+          </div>
+          <div className="judge-panel">
+            <div className="defendant">
+              <h3>JAMES BAXTER</h3>
+            </div>
+          </div>
         </div>
         <Column3 isDay={isDay}/>
       </div>
