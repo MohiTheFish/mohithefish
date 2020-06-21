@@ -9,7 +9,7 @@ const deadStatus = <h4 className="dead">Dead</h4>
 
 function PlayerCard(props) {
   const { member, isAlive, onClick, isMe } = props;
-  const isDay = true;
+  const isDay = false;
 
   function renderInteraction() {
     if (!isAlive) {
@@ -29,6 +29,15 @@ function PlayerCard(props) {
           </div>
         </div>
       );
+    } 
+    else {
+      return (
+        <div className="interact-button-wrapper">
+          <div className="interact-button">
+            <h2>Use Ability</h2>
+          </div>
+        </div>
+      )
     }
   }
 

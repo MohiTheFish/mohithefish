@@ -87,9 +87,23 @@
             margin: 0 auto;
           }
         }
-
         .my-player{
           border: 2px solid black;
+        }
+
+        .interact-button-wrapper {
+          height: 45px;
+          cursor: pointer;
+          .interact-button {
+            width: 100%;
+            height: 100%;
+            background-color: #1565c0;
+            h2 {
+              color: white;
+              text-align: center;
+              line-height: 45px;
+            }
+          }
         }
 
         .vote-button-wrapper {
@@ -99,12 +113,17 @@
           .vote-button {
             width: 100%;
             height: 100%;
-            background-color: orange;
+            background-color: #64b5f6;
             border-radius: 4px;
+            transition-duration: .2s;
+            cursor: pointer;
             h2 {
               text-align: center;
               line-height: 45px;
             }
+          }
+          .vote-button:hover {
+            background-color: #ef9a9a;
           }
           .vote-count {
             text-align: center;
