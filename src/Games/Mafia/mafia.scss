@@ -14,7 +14,7 @@
     grid-template-columns: 2fr 3fr 1fr;
     
     > * {
-      margin: 5px;
+      // margin: 5px;
     }
 
     .column1, .column2, .column3 {
@@ -45,14 +45,19 @@
     }
     
     .player-list {
+      
       display: flex;
       flex-wrap: wrap;
       grid-column: 2 / 3;
-      height: 100%;
+      max-height: 380px;
+      padding: 5px;
+      overflow-y: auto;
+
 
       .player {
-        width: 33.33333%;
-        height: 60px;
+        margin: 0 1%;
+        width: 31%;
+        height: 90px;
         text-align: left;
         padding: 5px;
         display: flex;

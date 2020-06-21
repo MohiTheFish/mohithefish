@@ -1,7 +1,7 @@
 .rules-board-wrapper {
   grid-column: 3 / 4;
   max-height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: unset;
 
   ul {
