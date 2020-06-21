@@ -1,8 +1,8 @@
+@use "../variables" as *;
+
 .mafia-game-info{
 .role-count-wrapper {
   padding: 5px;
-  transition-property: background-color, color;
-  transition-duration: 5s, 5s;
   .role-item {
     display: flex;
     width: 100%;
@@ -32,7 +32,7 @@
 
 .night {
   .role-count-wrapper {
-    background-color: #37474f;
+    background-color: $night-bg;
     color: white;
   }
 }

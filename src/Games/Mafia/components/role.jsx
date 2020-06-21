@@ -9,9 +9,9 @@ export function RoleCard(props) {
   const [isMini, setIsMini] = useState(true);
   console.log(isMini);
   const Icon = isMini ? ExpandMoreIcon : ExpandLessIcon;
-  const rwclass = `role-wrapper ${isMini ? 'mini' : ''}`;
+  const rwclass = `papermui role-wrapper ${isMini ? 'mini' : ''}`;
   return (
-    <Paper className={rwclass}>
+    <div className={rwclass}>
       <div className="role-info" onClick={
         isMini
         ? () => setIsMini(false)
@@ -23,6 +23,6 @@ export function RoleCard(props) {
       </div>
       <p className="power-info">Power: At night, you can check a player as to whether or not they are mafia.</p>
       <h3 className="win-condition">Winning Condition: All Non-Villagers are eliminated.</h3>
-    </Paper>
+    </div>
   );
 }

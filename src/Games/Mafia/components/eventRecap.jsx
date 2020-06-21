@@ -6,7 +6,7 @@ import './eventRecap.scss';
 export function EventRecap(props) {
   return (
     <>
-    <Paper className="event-recap">
+    <div className="papermui event-recap">
       <h3 className="description">Event Recap: Recorded here will be all the game actions (votes made, time of murders).</h3>
       <div className="new-phase">
         <h4>Day 0</h4>
@@ -99,7 +99,7 @@ export function EventRecap(props) {
         </li>
       </ul>
       
-    </Paper>
+    </div>
     <EventInput />
     </>
   )

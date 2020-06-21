@@ -1,13 +1,12 @@
 @use "../variables" as *;
-.mafia-game-info{
+
 .role-wrapper {
   color: inherit;
   background-color: #a5d6a7;
   height: 220px;
   position: relative;
   overflow: hidden;
-  transition-duration: $transition-time, .2s;
-  transition-property: background-color, height;
+
   .role-info {
     height: 50px;
     cursor: pointer;
@@ -40,13 +39,10 @@
   height: 50px;
 }
 
-}
-
 
 .night {
-  background-color: #37474f;
-  color: white;
   .role-wrapper {
     background-color: #2e7d32;
+    color: white;
   }
 }

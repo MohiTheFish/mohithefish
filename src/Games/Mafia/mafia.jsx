@@ -9,6 +9,7 @@ import {RoleCard} from './components/role';
 import {PlayerCard} from './components/player';
 import {EventRecap} from './components/eventRecap';
 import RoleCount from './components/roleCount';
+import Court from './components/court';
 import store from 'redux-store';
 
 import './mafia.scss';
@@ -148,11 +149,8 @@ function Mafia(props) {
             />
             {renderMembers()}
           </div>
-          <div className="judge-panel">
-            <div className="defendant">
-              <h3>JAMES BAXTER</h3>
-            </div>
-          </div>
+          
+          <Court />
         </div>
         <Column3 isDay={isDay}/>
       </div>

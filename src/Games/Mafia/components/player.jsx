@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 
 import deadimg from 'assets/images/dead.png';
+import './player.scss';
 
 const aliveStatus = <h4 className="alive">Alive</h4>
 const deadStatus = <h4 className="dead">Dead</h4>
@@ -34,22 +35,22 @@ function PlayerCard(props) {
       return (
         <div className="interact-button-wrapper">
           <div className="interact-button">
-            <h2>Use Ability</h2>
+            <h2>Interact</h2>
           </div>
         </div>
       )
     }
   }
 
-  const playerClass = `player${isMe ? ' my-player' : ''}`;
+  const playerClass = `papermui player${isMe ? ' my-player' : ''}`;
   return (
-    <Paper className={playerClass}>
+    <div className={playerClass}>
       <div className="info">
         <h3 className="name">{member}</h3>
         {isAlive ? aliveStatus : deadStatus}
       </div>
       {renderInteraction()}
-    </Paper>
+    </div>
   )
 }
 

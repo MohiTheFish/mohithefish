@@ -25,7 +25,7 @@ function RoleItem(props) {
 
 export default function RoleCount(props) {
   return (
-    <Paper className="role-count-wrapper">
+    <div className="papermui role-count-wrapper">
       <h2>Role Distribution</h2>
       <RoleItem>
         <RoleName>Mafia</RoleName>
@@ -35,6 +35,6 @@ export default function RoleCount(props) {
         <RoleName>Village</RoleName>
         <RoleValue>7</RoleValue>
       </RoleItem>
-    </Paper>
+    </div>
   )
 }
