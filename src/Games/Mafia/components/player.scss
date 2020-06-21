@@ -18,6 +18,8 @@
       justify-content: space-between;
       border-bottom: 1px solid black;
       margin-bottom: 5px;
+
+      transition: border-color $transition-time;
       .name {
         width: 60%;
         white-space: nowrap;

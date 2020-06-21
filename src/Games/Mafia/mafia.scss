@@ -6,14 +6,10 @@
   flex-direction: column;
   height: 100vh;
   
-  transition: background-color $transition-time,
-  color $transition-time;
+  transition: all $transition-time, height 0s, width 0s;
 
   .papermui {
-    transition: 
-      background-color $transition-time,
-      color $transition-time,
-      box-shadow $transition-time;
+    transition: all $transition-time, height 0s, width 0s;
   }
   .header {
     margin-bottom: 5px;

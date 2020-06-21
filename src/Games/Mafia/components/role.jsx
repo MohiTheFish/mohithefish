@@ -1,17 +1,15 @@
 import React, {useState} from 'react';
-import Paper from '@material-ui/core/Paper';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-
 
 import './role.scss';
 export function RoleCard(props) {
   const [isMini, setIsMini] = useState(true);
   console.log(isMini);
   const Icon = isMini ? ExpandMoreIcon : ExpandLessIcon;
-  const rwclass = `papermui role-wrapper ${isMini ? 'mini' : ''}`;
+  const rwclass = `papermui ${isMini ? 'mini' : ''}`;
   return (
-    <div className={rwclass}>
+    <div id="role-wrapper" className={rwclass}>
       <div className="role-info" onClick={
         isMini
         ? () => setIsMini(false)
