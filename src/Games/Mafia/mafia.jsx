@@ -63,7 +63,6 @@ function Mafia(props) {
     gameCredentials,
     time,
     isPlaying,
-    myIndex,
     game
   } = props;
 
@@ -74,11 +73,14 @@ function Mafia(props) {
     return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
   }
   const [theme, setTheme] = useState('day');
+  const [gameObj, ] = useState(store.getState().gameData)
   const isDay = theme === 'day';
 
-
-  const host = store.getState().gameData.host;
-  const members = store.getState().gameData.members;
+  const {
+    host,
+    members, 
+    myIndex
+  } = gameObj;
 
   function handlePlayerClick(index) {
     console.log('voting for ' + index);
@@ -95,6 +97,7 @@ function Mafia(props) {
         member={member} 
         onClick={onClickfn}
         isAlive={index%2 === 0 ? true : false}
+        isMe={myIndex===index}
       />
     });
   }
@@ -122,6 +125,7 @@ function Mafia(props) {
       <Redirect to="/games/mafia" />
     );
   }
+
   return (
     <div className={`wrapper play-games-wrapper mafia-page-wrapper ${theme}`}>
       <div className="header">
@@ -140,6 +144,7 @@ function Mafia(props) {
               member={host} 
               onClick={()=>handlePlayerClick(-1)}
               isAlive={-1%2 === 0 ? true : false}
+              isMe={myIndex===-1}
             />
             {renderMembers()}
           </div>
