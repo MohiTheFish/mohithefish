@@ -10,8 +10,10 @@
   color $transition-time;
 
   .papermui {
-    transition: background-color $transition-time,
-    color $transition-time;
+    transition: 
+      background-color $transition-time,
+      color $transition-time,
+      box-shadow $transition-time;
   }
   .header {
     margin-bottom: 5px;
@@ -68,7 +70,7 @@
 .night {
   background-color: $night-bg;
   color: white;
-  .mafia-page-wrapper {
+  .mafia-game-info {
     .papermui {
       box-shadow: 0px 2px 1px -1px rgba(255,255,255,0.8),
       0px 1px 1px 0px rgba(255,255,255,0.86),
