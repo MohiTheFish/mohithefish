@@ -45,11 +45,19 @@ function renderMembers(members, myIndex) {
     <div className="members">
       <h3 className="others">Other players</h3>
       {
-        members.map((m, index) => 
-          <h4 
-            className={index === myIndex ? "my-name" : ""}
-            key={`${m}${index}`}>{m}</h4>
-        )
+        members.map((m, index) => {
+          if (index === 0) {
+            return '';
+          }
+          else {
+            return (
+              <h4 
+                className={index === myIndex ? "my-name" : ""}
+                key={`${m}${index}`}>{m}
+              </h4>
+            );
+          }
+        })
       }
     </div>
   );
@@ -72,7 +80,7 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
           </h3>
           <h3 className="right">
             Number of Players: &nbsp;
-            <span className="bold">{1 + room.numPlayers}</span>
+            <span className="bold">{room.numPlayers}</span>
           </h3>
         </Button>
       </Grid>
@@ -82,7 +90,7 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
 
 function renderStartButton(canEdit, numMembers) {
   if (canEdit) {
-    if (numMembers > 0) {
+    if (numMembers > 1) {
       return (
         <Button variant="contained" onClick={startGame} className="host-control-panel">
           Play
@@ -99,7 +107,7 @@ function renderStartButton(canEdit, numMembers) {
 }
 
 function RoomInfo(props) {
-  const { isConnected, selectedChoice, host, roomId, members, myIndex, rooms, isLoadingRoom } = props;
+  const { isConnected, selectedChoice, roomId, members, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
   function copyToClipboard(e) {
@@ -148,7 +156,7 @@ function RoomInfo(props) {
       <div className="room-info">
         <SettingsBoard canEdit={canEdit}/>
         <div className="room-title">
-          <h2>Host: <span className={hostClass}>{host}</span></h2>
+          <h2>Host: <span className={hostClass}>{members[0]}</span></h2>
           <h2>Room id: <span className="roomId" onClick={copyToClipboard}>{roomId}</span></h2>
         </div>
         <RulesBoard />

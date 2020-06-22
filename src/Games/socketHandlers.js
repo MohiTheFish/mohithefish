@@ -150,7 +150,7 @@ export function updateMyName(name) {
 
 function getSpecificGameSettings(settings) {
   const smallSettings = {
-    time: settings.time,
+    isPrivate: settings.isPrivate,
   };
   const gamename = store.getState().gameCredentials.gamename;
   smallSettings[gamename] = settings[gamename];

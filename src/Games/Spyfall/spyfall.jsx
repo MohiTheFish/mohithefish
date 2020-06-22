@@ -16,6 +16,7 @@ function mapStateToProps(state) {
   const gd = state.gameData;
   const ps = state.playState;
   const game = ps.spyfall;
+  
   return {
     gameCredentials: state.gameCredentials,
     
@@ -32,7 +33,6 @@ function mapStateToProps(state) {
 function getValues() {
   const gd = store.getState().gameData;
   return {
-    host: gd.host,
     members: gd.members,
     myIndex: gd.myIndex,
   };
@@ -61,7 +61,6 @@ function Spyfall(props) {
   
   const [obj, ] = useState(getValues());
   const {
-    host, 
     members, 
     myIndex
   } = obj;
@@ -136,10 +135,8 @@ function Spyfall(props) {
 
     return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
   }
-
-  const [selectClass, callback] = getSelectedClassN(-1, selectedNamesByIndex, addNameSpyfall, removeNameSpyfall);
   
-  const headerRow = myIndex === -1
+  const headerRow = myIndex === 0
   ? <div className="header-row">
       <BackToLobby />
       <h1>Play Spyfall</h1>
@@ -168,11 +165,6 @@ function Spyfall(props) {
       <div className="players-list">
         <h2 className="title">Players</h2>
         <div className="names">
-          <h4 key={host}
-            className={selectClass}
-            onClick={callback}>
-              {host}
-          </h4>
           {
             renderNames()
           }

@@ -1,7 +1,6 @@
 import {
   SET_IS_CONNECTED,
   SET_IS_LOADINGROOM,
-  SET_HOST_NAME,
   ROOM_CREATED,
   VISIBLE_ROOMS,
   ROOM_MEMBERS_UPDATED,
@@ -28,11 +27,10 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
 ? {
   isConnected: true,
   selectedChoice: lobbyStates.CREATED,
-  myIndex: -1,
+  myIndex: 0,
   isLoadingRoom: false,
   numPlayers: 4,
-  host: "Mohitheifhs",
-  members: ["other guy", "nobody", 'zendaya', 'is', 'my', 'queen', 'zendaya', 'is', 'my', 'queen'],
+  members: ["Mohitheifhs", "other guy", "nobody", 'zendaya', 'is', 'my', 'queen', 'zendaya', 'is', 'my', 'queen'],
   roomId: "fwef98c09we-89w-efcab-aew-9gfw",
   rooms: [],
   isPlaying: false,
@@ -56,10 +54,9 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
 : {
   isConnected: false,
   selectedChoice: "",
-  myIndex: -1,
+  myIndex: 0,
   isLoadingRoom: false,
   numPlayers: 1,
-  host: "",
   members: [],
   roomId: "",
   rooms: [],
@@ -119,14 +116,9 @@ export function gameData(state = initialState, action) {
       return Object.assign({}, state, {
         isLoadingRoom: action.isLoadingRoom
       });
-    case SET_HOST_NAME:
-      return Object.assign({}, state, {
-        host: action.host
-      });
     case ROOM_CREATED: {
-      const { hostname, members, roomId } = action.data;
+      const { members, roomId } = action.data;
       return Object.assign({}, state, {
-        host: hostname,
         members: members,
         roomId: roomId,
         myIndex: members.length-1,
@@ -134,9 +126,8 @@ export function gameData(state = initialState, action) {
       });
     }
     case ROOM_MEMBERS_UPDATED: {
-      const { hostname, members, roomId } = action.data;
+      const { members, roomId } = action.data;
       return Object.assign({}, state, {
-        host: hostname,
         members: members,
         roomId: roomId,
         myIndex: state.myIndex,
@@ -162,9 +153,8 @@ export function gameData(state = initialState, action) {
       });
     }
     case ROOM_JOINED: {
-      const { hostname, members, roomId, settings: newSettings } = action.data;
+      const { members, roomId, settings: newSettings } = action.data;
       return Object.assign({}, state, {
-        host: hostname,
         members: members,
         roomId: roomId,
         myIndex: members.length-1,
@@ -179,22 +169,14 @@ export function gameData(state = initialState, action) {
         myIndex,
         members: [],
       };
-      // If host left
-      if (deletedIndex === -1) {
-        newState.members = members.slice(1);
+
+      if (deletedIndex < myIndex ) {
         newState.myIndex -= 1;
-        // If I am now the host
-        if (newState.myIndex === -1) {
+        if (newState.myIndex === 0) {
           newState.selectedChoice = lobbyStates.CREATED;
         }
-        newState.host = members[0];
       }
-      else {
-        if (deletedIndex < myIndex) {
-          newState.myIndex -= 1;
-        }
-        newState.members =  members.filter((m, index) => (index !== deletedIndex) );
-      }
+      newState.members =  members.filter((m, index) => (index !== deletedIndex) );
       return Object.assign({}, state, newState);
     }
     case START_PLAYING: {
@@ -221,7 +203,6 @@ export function gameData(state = initialState, action) {
         selectedChoice: "",
         isLoadingRoom: false,
         numPlayers: 1,
-        host: "",
         members: [],
         roomId: "",
         myIndex: -1,

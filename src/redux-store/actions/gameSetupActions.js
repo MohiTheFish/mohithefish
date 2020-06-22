@@ -1,7 +1,6 @@
 export const SET_IS_CONNECTED = 'SET_IS_CONNECTED'; 
 export const SET_IS_LOADINGROOM = 'SET_IS_LOADINGROOM';
 export const SET_IS_LOADING_ROOM_SELECTED_CHOICE = "SET_IS_LOADING_ROOM_SELECTED_CHOICE";
-export const SET_HOST_NAME = "SET_HOST_NAME";
 export const ROOM_CREATED = "ROOM_CREATED";
 export const ROOM_MEMBERS_UPDATED = "ROOM_MEMBERS_UPDATED";
 export const SET_SETTINGS_IS_UPDATING = "SET_SETTINGS_IS_UPDATING";
@@ -41,13 +40,6 @@ export function setIsLoadingRoom(isLoadingRoom) {
     type: SET_IS_LOADINGROOM,
     isLoadingRoom,
   };
-}
-
-export function setHostName(host) {
-  return {
-    type: SET_HOST_NAME,
-    host,
-  }
 }
 
 export function roomCreated(data) {
