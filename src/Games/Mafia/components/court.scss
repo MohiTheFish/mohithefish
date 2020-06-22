@@ -1,0 +1,45 @@
+.empty-court {
+
+  .abstain {
+    padding: 5px;
+    width: 200px;
+    margin: 5px auto;
+    cursor: pointer;
+  }
+  .papermui.abstain {
+    background-color: #b2ebf2;
+    transition: background-color .2s;
+  }
+  .abstain:hover, .abstain.active {
+    background-color: #4dd0e1;
+    cursor: unset;
+  }
+}
+.flex {
+  flex: 1;
+}
+.court {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  .not-guilty-wrapper {
+    grid-column: 1 / 2;
+    grid-row: 1/2;
+  }
+  .guilty-wrapper {
+    grid-column: 3 / 4;
+    grid-row: 1/2;
+  }
+  .on-trial {
+    grid-column: 2 / 3;
+    grid-row: 1/2;
+  }
+
+  .court-decision {
+    .voters {
+      max-height: 200px;
+      overflow-y: auto;
+      margin: 0 10px;
+    }
+  }
+}
