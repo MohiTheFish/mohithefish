@@ -42,6 +42,14 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
     spyfall: {
       time: "8", // minutes
       gameType: "Locations",
+    },
+    mafia: {
+      dayTimeLimit: 300, //seconds
+      nightTimeLimit: 60, //seconds
+      defenseTimeLimit: 25, //seconds
+      numMafia: 2,
+      allowSK: false,
+      allowJoker: false,
     }
   }
 }
@@ -62,6 +70,14 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
     spyfall: {
       time: "8", // minutes
       gameType: "Locations"
+    },
+    mafia: {
+      dayTimeLimit: 300, //seconds
+      nightTimeLimit: 60, //seconds
+      defenseTimeLimit: 25, //seconds
+      numMafia: 2,
+      allowSK: false,
+      allowJoker: false,
     }
   }
 }

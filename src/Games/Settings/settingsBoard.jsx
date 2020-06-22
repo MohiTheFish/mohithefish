@@ -1,6 +1,7 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 
+import MafiaSettings from './MafiaSettings/mafiaSettings';
 import SpyfallView from './SpyfallSettings/spyfallView';
 import SpyfallSettings from './SpyfallSettings/spyfallSettings';
 import store from 'redux-store';
@@ -42,6 +43,11 @@ function SettingsBoard(props) {
     case 'spyfall': {
       GameSettings = SpyfallSettings;
       GameView = SpyfallView; 
+      break;
+    }
+    case 'mafia': {
+      GameSettings = MafiaSettings;
+      GameView = SpyfallView;
       break;
     }
     default: {

@@ -11,8 +11,12 @@ import {
 
 import './games.scss';
 
+/**
+ * List of all games available to play. Make sure this matches up with the server
+ */
 const allGames = [
   'spyfall',
+  'mafia',
 ];
 
 

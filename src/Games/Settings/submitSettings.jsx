@@ -8,7 +8,7 @@ import { setSettingsIsUpdating, lobbyStates } from 'redux-store/actions/gameSetu
 
 function mapStateToProps(state, ownProps) {
   const selectedChoice = state.gameData.selectedChoice;
-  const isUpdating = state.gameData.isUpdatings;
+  const isUpdating = state.gameData.isUpdating;
   return {
     ...ownProps,
     selectedChoice,

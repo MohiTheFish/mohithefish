@@ -9,22 +9,18 @@ import Select from '@material-ui/core/Select';
 
 import SubmitSettings from 'Games/Settings/submitSettings';
 import PrivateSwitch from '../privateSwitch';
-import {
-  MAX_SPYFALL_TIME,
-} from 'redux-store/actions/SpecificGameActions/spyfallGameActions';
 import store from 'redux-store';
 
 import './spyfallSettings.scss';
 
-
-
+const MAX_SPYFALL_TIME = 100;
 export function isValidTime(time) {
   return /^\d+$/.test(time) && Number.parseInt(time) < MAX_SPYFALL_TIME;
 }
+
 const mapStateToPropsTL = (state, ownProps) => {
   return {...ownProps};
 }
-
 function TimeLimit(props) {
   const { time, validTime, setTime } = props;
   let error = !validTime;
@@ -99,7 +95,7 @@ export default function SpyfallSettings(props) {
   };
   return (
     <>
-      <div className="settings-wrapper">
+      <div className="settings-wrapper spyfall-settings">
         { showPrivacy ? <PrivateSwitch /> : ''}
         <SubscribedTimeLimit time={time} setTime={setTime} validTime={validTime}/>
         <SubscribedGameTypeSelector gameType={gameType} setGameType={setGameType}/>
