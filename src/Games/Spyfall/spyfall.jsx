@@ -43,6 +43,9 @@ function getDescriptor(gameType) {
     case 'Foods': {
       return 'food';
     }
+    case 'Animals' : {
+      return 'animal';
+    }
     default: return 'location';
   }
 }
