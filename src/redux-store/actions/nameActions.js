@@ -1,7 +1,8 @@
 export const SET_IS_CONNECTED = 'SET_IS_CONNECTED'; 
-export const SET_GAME_USERNAME = "SET_GAME_USERNAME";
+export const SET_GAMENAME = "SET_GAMENAME";
+export const SET_USERNAME = "SET_USERNAME";
+export const SET_IS_UPDATING_NAME = "SET_IS_UPDATING_NAME";
 export const RETURN_TO_GAME_SELECT = "RETURN_TO_GAME_SELECT"; 
-export const NAME_UPDATED = "NAME_UPDATED";
 
 
 export function setIsConnected(isConnected) {
@@ -11,24 +12,28 @@ export function setIsConnected(isConnected) {
   };
 }
 
-export function setGameUsername(data) {
+export function setIsUpdatingName(isUpdating) {
   return {
-    type: SET_GAME_USERNAME,
-    username: data.username,
-    gamename: data.gamename,
+    type: SET_IS_UPDATING_NAME,
+    isUpdating,
   };
+}
+
+export function setGameName(game) {
+  return {
+    type: SET_GAMENAME,
+    game,
+  };
+}
+export function setUserName(name) {
+  return {
+    type: SET_USERNAME,
+    name,
+  }
 }
 
 export function returnToGameSelect() {
   return {
     type: RETURN_TO_GAME_SELECT
-  };
-}
-
-export function myNameUpdated(data) {
-  return {
-    type: NAME_UPDATED,
-    username: data.username,
-    gamename: data.gamename,
   };
 }

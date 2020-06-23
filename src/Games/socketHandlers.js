@@ -3,7 +3,7 @@ import store from 'redux-store';
 
 import {
   setIsConnected,
-  myNameUpdated
+  setIsUpdatingName,
 } from 'redux-store/actions/nameActions';
 
 import {
@@ -13,7 +13,6 @@ import {
   visibleRooms,
   roomJoined,
   playerLeft,
-  startPlaying,
   roomPrivacyToggled,
   roomSettingsUpdated,
 } from 'redux-store/actions/gameSetupActions';
@@ -35,7 +34,7 @@ let userId = null;
 
 export function connectToServer() {
   console.log('connecting...');
-  const {username, gamename, userId: uid} = store.getState().gameCredentials;
+  const {userId: uid} = store.getState().gameCredentials;
   userId = uid;
   let a = `https://mohithefish.herokuapp.com`;
   if (process.env.NODE_ENV === 'development') {
@@ -48,16 +47,16 @@ export function connectToServer() {
     reconnectionAttempts: 10,
   });
 
-  if(gamename === 'spyfall') {
-    addSpyfallEventListeners(newSocket);
-  }
-
-
   newSocket.on('connect', function() {
     console.log('The client connected');
     socket = newSocket;
 
     store.dispatch(setIsConnected(true));
+    socket.emit('initialConnection', userId);
+  });
+
+  newSocket.on('nameUpdated', function(){
+    store.dispatch(setIsUpdatingName(false));
   });
 
   newSocket.on('createdRoom', function(roomInfo){
@@ -69,12 +68,6 @@ export function connectToServer() {
     }));
   });
 
-  newSocket.on('nameUpdated', function([username, gamename]){
-    store.dispatch(myNameUpdated({
-      username, 
-      gamename,
-    }))
-  })
   newSocket.on('settingsUpdated', function(settings){
     store.dispatch(roomSettingsUpdated({
       settings,
@@ -114,7 +107,6 @@ export function connectToServer() {
 
   newSocket.on('gameStarted', function(gameState){
     store.dispatch(startSpyfall(gameState));
-    store.dispatch(startPlaying());
   });
 
   newSocket.on('sentBackToLobby', function(){
@@ -139,7 +131,7 @@ export function isConnected() {
 
 export function updateMyName(name) {
   if (!socket) { throw new Error('Socket invalid!');}
-  
+  console.log('updating my name');
   socket.emit('updateMyName', [userId, name]);
 }
 

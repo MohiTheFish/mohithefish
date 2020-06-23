@@ -7,7 +7,6 @@ export const ROOM_SETTINGS_UPDATED = "ROOM_SETTINGS_UPDATED";
 export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
 export const ROOM_JOINED = "ROOM_JOINED";
 export const PLAYER_LEFT = "PLAYER_LEFT";
-export const START_PLAYING = "START_PLAYING";
 export const SET_IS_PRIVATE = "SET_IS_PRIVATE";
 export const GO_BACK_TO_LOBBY = "GO_BACK_TO_LOBBY";
 export const CLEAR_ROOM_INFO = "CLEAR_ROOM_INFO";
@@ -79,13 +78,6 @@ export function playerLeft(index) {
     type: PLAYER_LEFT,
     index,
   };
-}
-
-export function startPlaying() {
-  return {
-    type: START_PLAYING,
-    isPlaying: true,
-  }
 }
 
 export function roomPrivacyToggled() {

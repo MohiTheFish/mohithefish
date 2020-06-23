@@ -5,7 +5,6 @@ import {
   ROOM_MEMBERS_UPDATED,
   ROOM_JOINED,
   PLAYER_LEFT,
-  START_PLAYING,
   SET_IS_PRIVATE,
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
   lobbyStates,
@@ -19,7 +18,7 @@ import {
 } from '../actions/SpecificGameActions/spyfallGameActions';
 
 import {
-  CLEAR_SPYFALL_BOARD,
+  CLEAR_SPYFALL_BOARD, START_GAME_SPYFALL,
 } from 'redux-store/actions/spyfallActions';
 
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
@@ -171,7 +170,7 @@ export function gameData(state = initialState, action) {
       newState.members =  members.filter((m, index) => (index !== deletedIndex) );
       return Object.assign({}, state, newState);
     }
-    case START_PLAYING: {
+    case START_GAME_SPYFALL: {
       return Object.assign({}, state, {
         isPlaying: true,
       });

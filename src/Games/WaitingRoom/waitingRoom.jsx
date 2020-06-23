@@ -8,7 +8,7 @@ import BackToGameSelect from 'components/BackToGameSelect/backToGameSelect';
 import RoomInfo from './roomInfo';
 import ConnectedChoices from './connectedChoices';
 import { clearRoomInfo } from 'redux-store/actions/gameSetupActions';
-import { ejectFromRoom } from '../socketHandlers';
+import { ejectFromRoom, connectToServer } from '../socketHandlers';
 import store from 'redux-store';
 
 const storageType = sessionStorage;
@@ -31,6 +31,12 @@ function WaitingRoom(props) {
     store.dispatch(clearRoomInfo());
     return <Redirect to="/games" />;
   }
+
+  // useEffect(() => {
+  //   if(!store.getState().gameCredentials.isConnected) {
+  //     connectToServer();
+  //   }
+  // }, [])
 
   if (isPlaying) {
     storageType.setItem('gameData', JSON.stringify(store.getState().gameData));

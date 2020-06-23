@@ -1,8 +1,9 @@
 import {
   SET_IS_CONNECTED,
-  SET_GAME_USERNAME,
+  SET_GAMENAME,
+  SET_USERNAME,
   RETURN_TO_GAME_SELECT,
-  NAME_UPDATED
+  SET_IS_UPDATING_NAME,
 } from '../actions/nameActions';
 import { v4 as uuid } from 'uuid';
 
@@ -22,6 +23,7 @@ export const initialState = {
   isConnected: false,
   username: "",
   gamename: "",
+  isUpdatingName: false,
   userId: existUserId(),
 };
 
@@ -31,25 +33,27 @@ export function gameCredentials(state = initialState, action) {
       return Object.assign({}, state, {
         isConnected: action.isConnected
       });
-    case SET_GAME_USERNAME: {
-      return {
-        username: action.username,
-        gamename: action.gamename,
-        userId: state.userId,
-      }
+    case SET_IS_UPDATING_NAME: {
+      return Object.assign({}, state, {
+        isUpdatingName: action.isUpdatingName,
+      });
+    }
+    case SET_GAMENAME: {
+      return Object.assign({}, state, {
+        gamename: action.game,
+        isUpdatingName: true,
+      });
+    }
+    case SET_USERNAME: {
+      return Object.assign({}, state, {
+        username: action.name,
+      });
     }
     case RETURN_TO_GAME_SELECT: {
       return {
         gamename: "",
         username: state.username,
         userId: state.userId,
-      };
-    }
-    case NAME_UPDATED: {
-      return {
-        ...state,
-        username: action.username,
-        gamename: action.gamename,
       };
     }
     default:
