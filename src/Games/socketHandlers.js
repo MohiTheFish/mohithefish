@@ -101,8 +101,8 @@ export function connectToServer() {
   });
 
   newSocket.on('youJoined', function(roomInfo){
+    console.log(roomInfo);
     store.dispatch(roomJoined({
-      hostname: roomInfo.hostname,
       roomId: roomInfo.roomId, 
       members: roomInfo.members,
       settings: roomInfo.settings
