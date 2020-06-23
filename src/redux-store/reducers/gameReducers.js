@@ -1,5 +1,4 @@
 import {
-  SET_IS_CONNECTED,
   SET_IS_LOADINGROOM,
   ROOM_CREATED,
   VISIBLE_ROOMS,
@@ -25,7 +24,6 @@ import {
 
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
 ? {
-  isConnected: true,
   selectedChoice: lobbyStates.CREATED,
   myIndex: 0,
   isLoadingRoom: false,
@@ -52,7 +50,6 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
   }
 }
 : {
-  isConnected: false,
   selectedChoice: "",
   myIndex: 0,
   isLoadingRoom: false,
@@ -102,13 +99,8 @@ export function gameData(state = initialState, action) {
     default: break;
   }
   switch(action.type) {
-    case SET_IS_CONNECTED:
-      return Object.assign({}, state, {
-        isConnected: action.isConnected
-      });
     case SET_IS_LOADING_ROOM_SELECTED_CHOICE: {
       return Object.assign({}, state, {
-        isConnected: action.isConnected,
         selectedChoice: action.selectedChoice,
       });
     }

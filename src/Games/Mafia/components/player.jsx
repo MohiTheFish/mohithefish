@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -15,7 +16,7 @@ function PlayerCard(props) {
     if (!isAlive) {
       return (
         <div className="dead-img-wrapper">
-          <img className="dead-img" src={deadimg} />
+          <img className="dead-img" alt="dead" src={deadimg} />
         </div>
       );
     }

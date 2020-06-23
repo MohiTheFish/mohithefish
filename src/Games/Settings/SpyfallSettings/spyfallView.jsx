@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {SettingsItem, SettingsName, SettingsValue} from '../settingsView';
 function mapStateToProps(state) {
   const {settings} = state.gameData;
+  console.log(settings);
   return {
     time: settings.spyfall.time,
     gameType: settings.spyfall.gameType,

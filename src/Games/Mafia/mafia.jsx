@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
@@ -111,7 +112,7 @@ function Mafia(props) {
       setTheme('day');
     }
   }
-  const headerRow = myIndex === -1
+  const headerRow = myIndex === 0
   ? <div className="header-row">
       <BackToLobby />
       <h1 onClick={myClick}>Play Mafia</h1>
@@ -141,12 +142,6 @@ function Mafia(props) {
         <Column1 />
         <div className="column2">
           <div className="player-list">
-            <PlayerCard 
-              member={host} 
-              onClick={()=>handlePlayerClick(-1)}
-              isAlive={-1%2 === 0 ? true : false}
-              isMe={myIndex===-1}
-            />
             {renderMembers()}
           </div>
           

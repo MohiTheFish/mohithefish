@@ -4,12 +4,14 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import store, { saveState } from 'redux-store';
-import {updateMyName} from '../Games/socketHandlers';
+import {connectToServer, updateMyName} from '../Games/socketHandlers';
 import {
   setGameUsername
 } from 'redux-store/actions/nameActions';
 
 import './games.scss';
+import { gameCredentials } from 'redux-store/reducers/nameReducers';
+import { connect } from 'react-redux';
 
 /**
  * List of all games available to play. Make sure this matches up with the server
@@ -19,33 +21,32 @@ const allGames = [
   'mafia',
 ];
 
-
-function validateName(name) {
-  if (!name) {
-    return [true, 'Name cannot be empty.'];
-  }
-  return [false, ""];
+function mapStateToProps(state, ownProps) {
+  return {
+    isConnected: state.gameCredentials.isConnected,
+    ...ownProps,
+  };
 }
-
-
-export default function Games() {
+function Games({isConnected, ...ownProps}) {
+  console.log(isConnected);
   const [name, setName] = useState(store.getState().gameCredentials.username);
   const [redirectPage, setRedirectPage] = useState("");
 
   useEffect ( () => {
     document.title = "Games";
+    
+    if (process.env.REACT_APP_DESIGN !== "true") {
+      if (!store.getState().gameData.isConnected) {
+        connectToServer();
+      }
+    }
   }, []);
 
   function handleChange(e) {
     setName(e.target.value);
   }
 
-  /**
-   * @todo Look into creating the component as soon as the link is pressed.
-   */
-  const [isInvalid, msg] = validateName(name);
-  if (Boolean(redirectPage) && !isInvalid) {
-    const isConnected = store.getState().gameData.isConnected;
+  if (Boolean(redirectPage) && isConnected) {
     if (isConnected && ((process.env.NODE_ENV === "development" && process.env.REACT_APP_DESIGN === 'false') || process.env.NODE_ENV==="production")) {
       updateMyName(name);
     }
@@ -65,14 +66,12 @@ export default function Games() {
       <h3 className="input-message">Please create your username before continuing.</h3>
       <div className="input">
         <TextField
-          error={isInvalid}
-          required
           id="filled-required"
           label="Required"
           variant="filled"
           value={name}
           onChange={handleChange}
-          helperText={msg}
+          helperText="If no name is given, a default one will be generated"
         />
       </div>
 
@@ -84,7 +83,7 @@ export default function Games() {
               key={val}
               variant="contained"
               color="primary"
-              disabled={isInvalid}
+              disabled={!isConnected}
               onClick={() => setRedirectPage(val)}
             >
               {val}
@@ -95,3 +94,6 @@ export default function Games() {
     </div>
   );
 }
+
+const SubscribedGames = connect(mapStateToProps)(Games);
+export default SubscribedGames;

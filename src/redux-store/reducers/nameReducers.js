@@ -1,4 +1,5 @@
 import {
+  SET_IS_CONNECTED,
   SET_GAME_USERNAME,
   RETURN_TO_GAME_SELECT,
   NAME_UPDATED
@@ -18,6 +19,7 @@ function existUserId() {
 }
 
 export const initialState = {
+  isConnected: false,
   username: "",
   gamename: "",
   userId: existUserId(),
@@ -25,6 +27,10 @@ export const initialState = {
 
 export function gameCredentials(state = initialState, action) {
   switch(action.type) {
+    case SET_IS_CONNECTED:
+      return Object.assign({}, state, {
+        isConnected: action.isConnected
+      });
     case SET_GAME_USERNAME: {
       return {
         username: action.username,

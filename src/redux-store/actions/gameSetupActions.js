@@ -1,4 +1,3 @@
-export const SET_IS_CONNECTED = 'SET_IS_CONNECTED'; 
 export const SET_IS_LOADINGROOM = 'SET_IS_LOADINGROOM';
 export const SET_IS_LOADING_ROOM_SELECTED_CHOICE = "SET_IS_LOADING_ROOM_SELECTED_CHOICE";
 export const ROOM_CREATED = "ROOM_CREATED";
@@ -20,17 +19,9 @@ export const lobbyStates = {
   JOINED: "joined",
 };
 
-export function setIsConnected(isConnected) {
-  return {
-    type: SET_IS_CONNECTED,
-    isConnected,
-  };
-}
-
 export function setSelectedChoiceAndLoadingRoom(selectedChoice) {
   return {
     type: SET_IS_LOADING_ROOM_SELECTED_CHOICE,
-    isConnected: true,
     selectedChoice,
   }
 }

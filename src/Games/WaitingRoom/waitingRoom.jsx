@@ -7,8 +7,8 @@ import './waitingRoom.scss';
 import BackToGameSelect from 'components/BackToGameSelect/backToGameSelect';
 import RoomInfo from './roomInfo';
 import ConnectedChoices from './connectedChoices';
-import {clearRoomInfo } from 'redux-store/actions/gameSetupActions';
-import { connectToServer, ejectFromRoom } from '../socketHandlers';
+import { clearRoomInfo } from 'redux-store/actions/gameSetupActions';
+import { ejectFromRoom } from '../socketHandlers';
 import store from 'redux-store';
 
 const storageType = sessionStorage;
@@ -25,15 +25,6 @@ function mapStateToPropsWR(state) {
 function WaitingRoom(props) {
   const { gamename, username, isPlaying } = props;
   const { location } = props;
-
-  useEffect(() => {
-    if (process.env.REACT_APP_DESIGN !== "true") {
-      if (!store.getState().gameData.isConnected){
-        connectToServer();
-      }
-    }
-    document.title= "Waiting Room";
-  },[]);
 
   if(!gamename) {
     ejectFromRoom();

@@ -2,11 +2,11 @@ import io from 'socket.io-client';
 import store from 'redux-store';
 
 import {
+  setIsConnected,
   myNameUpdated
 } from 'redux-store/actions/nameActions';
 
 import {
-  setIsConnected,
   setIsLoadingRoom,
   roomCreated,
   roomUpdated,
@@ -37,9 +37,9 @@ export function connectToServer() {
   console.log('connecting...');
   const {username, gamename, userId: uid} = store.getState().gameCredentials;
   userId = uid;
-  let a = `https://mohithefish.herokuapp.com/${gamename}`;
+  let a = `https://mohithefish.herokuapp.com`;
   if (process.env.NODE_ENV === 'development') {
-    a = `http://localhost:5000/${gamename}`;
+    a = `http://localhost:5000`;
   }
   const newSocket = io.connect(a, {
     reconnection: true,
@@ -57,11 +57,6 @@ export function connectToServer() {
     console.log('The client connected');
     socket = newSocket;
 
-    newSocket.emit('initialConnection', {
-      username,
-      gamename,
-      userId,
-    });
     store.dispatch(setIsConnected(true));
   });
 
@@ -148,18 +143,19 @@ export function updateMyName(name) {
   socket.emit('updateMyName', [userId, name]);
 }
 
-function getSpecificGameSettings(settings) {
+function getSpecificGameSettings(settings, gamename) {
   const smallSettings = {
     isPrivate: settings.isPrivate,
   };
-  const gamename = store.getState().gameCredentials.gamename;
   smallSettings[gamename] = settings[gamename];
   return smallSettings;
 }
+
 export function createRoomWithSettings(settings) {
   if (!socket) { throw new Error('Socket invalid!');}
 
-  socket.emit('createRoom', [userId, getSpecificGameSettings(settings)]);
+  const gamename = store.getState().gameCredentials.gamename;
+  socket.emit('createRoom', [userId, gamename, getSpecificGameSettings(settings, gamename)]);
 }
 
 export function updateRoomSettings(settings) {
@@ -178,7 +174,7 @@ export function getAvailableRooms() {
   if (!socket) { throw new Error('Socket invalid!');}
 
   store.dispatch(setIsLoadingRoom(true));
-  socket.emit('getAvailableRooms', userId);
+  socket.emit('getAvailableRooms', store.getState().gameCredentials.gamename);
 }
 
 export function ejectFromRoom() {
