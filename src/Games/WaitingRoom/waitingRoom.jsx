@@ -48,7 +48,7 @@ function WaitingRoom(props) {
     storageType.setItem('gameData', JSON.stringify(store.getState().gameData));
     return (
       <Redirect push to={`/games/${gamename}/play`} />
-    )
+    );
   }
 
   return (

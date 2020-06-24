@@ -50,6 +50,7 @@ export function gameCredentials(state = initialState, action) {
         username: state.username,
         userId: state.userId,
         isUpdatingName: state.isUpdatingName,
+        isConnected: state.isConnected,
       };
     }
     default:

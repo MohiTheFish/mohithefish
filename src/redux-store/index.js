@@ -20,6 +20,7 @@ const defaultState = {
   gameCredentials: initialGameCredentialState,
   playState: initialPlayState,
 };
+
 export const storageType = sessionStorage;
 
 function loadState() {
@@ -36,6 +37,8 @@ function loadState() {
     username,
     gamename,
     userId,
+    isConnected: false,
+    isUpdatingName: false,
   }
 
   if (gameData && gameData.isPlaying) {

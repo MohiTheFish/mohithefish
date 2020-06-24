@@ -1,6 +1,7 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 
+import MafiaView from './MafiaSettings/mafiaView';
 import MafiaSettings from './MafiaSettings/mafiaSettings';
 import SpyfallView from './SpyfallSettings/spyfallView';
 import SpyfallSettings from './SpyfallSettings/spyfallSettings';
@@ -47,7 +48,7 @@ function SettingsBoard(props) {
     }
     case 'mafia': {
       GameSettings = MafiaSettings;
-      GameView = SpyfallView;
+      GameView = MafiaView;
       break;
     }
     default: {
