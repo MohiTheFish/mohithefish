@@ -19,12 +19,12 @@ import { lobbyStates } from 'redux-store/actions/gameSetupActions';
 
 function mapStateToPropsRI(state) {
   const gd = state.gameData;
+  const gc = state.gameCredentials;
   return {
-    username: state.gameCredentials.username,
-    gamename: state.gameCredentials.gamename,
-    host: gd.host,
+    username: gc.username,
+    gamename: gc.gamename,
+    isConnected: gc.isConnected,
     selectedChoice: gd.selectedChoice,
-    isConnected: gd.isConnected,
     isLoadingRoom: gd.isLoadingRoom,
     members: gd.members,
     roomId: gd.roomId,

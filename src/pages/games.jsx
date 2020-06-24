@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import store, { saveState } from 'redux-store';
+import store from 'redux-store';
 import {connectToServer, updateMyName} from '../Games/socketHandlers';
 import {
   setGameName

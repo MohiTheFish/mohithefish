@@ -1,7 +1,6 @@
 export const SET_IS_CONNECTED = 'SET_IS_CONNECTED'; 
 export const SET_GAMENAME = "SET_GAMENAME";
 export const SET_USERNAME = "SET_USERNAME";
-export const SET_IS_UPDATING_NAME = "SET_IS_UPDATING_NAME";
 export const RETURN_TO_GAME_SELECT = "RETURN_TO_GAME_SELECT"; 
 
 
@@ -9,13 +8,6 @@ export function setIsConnected(isConnected) {
   return {
     type: SET_IS_CONNECTED,
     isConnected,
-  };
-}
-
-export function setIsUpdatingName(isUpdating) {
-  return {
-    type: SET_IS_UPDATING_NAME,
-    isUpdating,
   };
 }
 

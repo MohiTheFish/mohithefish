@@ -9,7 +9,7 @@ import RoomInfo from './roomInfo';
 import ConnectedChoices from './connectedChoices';
 import { clearRoomInfo } from 'redux-store/actions/gameSetupActions';
 import { ejectFromRoom, connectToServer } from '../socketHandlers';
-import store from 'redux-store';
+import store, { saveState } from 'redux-store';
 
 const storageType = sessionStorage;
 
@@ -23,8 +23,14 @@ function mapStateToPropsWR(state) {
 }
 
 function WaitingRoom(props) {
+  console.log(props);
   const { gamename, username, isPlaying } = props;
-  const { location } = props;
+  console.log(`games/${gamename}/play`);
+
+  useEffect(() => {
+    connectToServer();
+    saveState(store.getState());
+  }, [username]);
 
   if(!gamename) {
     ejectFromRoom();
@@ -41,7 +47,7 @@ function WaitingRoom(props) {
   if (isPlaying) {
     storageType.setItem('gameData', JSON.stringify(store.getState().gameData));
     return (
-      <Redirect push to={`${location.pathname}/play`} />
+      <Redirect push to={`/games/${gamename}/play`} />
     )
   }
 

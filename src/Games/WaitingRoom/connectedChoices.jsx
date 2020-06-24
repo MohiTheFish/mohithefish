@@ -55,10 +55,9 @@ function ConnectedChoices(props) {
 }
 
 function mapStateToPropsCC(state) {
-  const gd = state.gameData;
   return {
-    isConnected: gd.isConnected,
-    selectedChoice: gd.selectedChoice
+    isConnected: state.gameCredentials.isConnected,
+    selectedChoice: state.gameData.selectedChoice,
   }
 }
 

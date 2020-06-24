@@ -3,7 +3,7 @@ import store from 'redux-store';
 
 import {
   setIsConnected,
-  setIsUpdatingName,
+  setUserName,
 } from 'redux-store/actions/nameActions';
 
 import {
@@ -55,8 +55,9 @@ export function connectToServer() {
     socket.emit('initialConnection', userId);
   });
 
-  newSocket.on('nameUpdated', function(){
-    store.dispatch(setIsUpdatingName(false));
+  newSocket.on('nameUpdated', function(name){
+    console.log('nameUpdated to: '+ name);
+    store.dispatch(setUserName(name));
   });
 
   newSocket.on('createdRoom', function(roomInfo){

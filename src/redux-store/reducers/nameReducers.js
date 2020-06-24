@@ -3,7 +3,6 @@ import {
   SET_GAMENAME,
   SET_USERNAME,
   RETURN_TO_GAME_SELECT,
-  SET_IS_UPDATING_NAME,
 } from '../actions/nameActions';
 import { v4 as uuid } from 'uuid';
 
@@ -33,11 +32,6 @@ export function gameCredentials(state = initialState, action) {
       return Object.assign({}, state, {
         isConnected: action.isConnected
       });
-    case SET_IS_UPDATING_NAME: {
-      return Object.assign({}, state, {
-        isUpdatingName: action.isUpdatingName,
-      });
-    }
     case SET_GAMENAME: {
       return Object.assign({}, state, {
         gamename: action.game,
@@ -46,6 +40,7 @@ export function gameCredentials(state = initialState, action) {
     }
     case SET_USERNAME: {
       return Object.assign({}, state, {
+        isUpdatingName: false,
         username: action.name,
       });
     }
@@ -54,6 +49,7 @@ export function gameCredentials(state = initialState, action) {
         gamename: "",
         username: state.username,
         userId: state.userId,
+        isUpdatingName: state.isUpdatingName,
       };
     }
     default:
