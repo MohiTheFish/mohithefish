@@ -72,6 +72,7 @@ function GameTypeSelector(props) {
         >
           <MenuItem value="Locations">Locations</MenuItem>
           <MenuItem value="Foods">Foods</MenuItem>
+          <MenuItem value="Animals">Animals</MenuItem>
         </Select>
         <FormHelperText>Game Type</FormHelperText>
       </FormControl>
