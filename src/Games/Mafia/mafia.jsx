@@ -56,14 +56,17 @@ function mapStateToProps(state) {
     gameCredentials: state.gameCredentials,
     
     time: ps.time,
+    theme: game.timeOfDay,
     isPlaying: gd.isPlaying,
     game,
   };
 }
+
 function Mafia(props) {
   const {
     gameCredentials,
     time,
+    theme, 
     isPlaying,
     game
   } = props;
@@ -74,12 +77,11 @@ function Mafia(props) {
 
     return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
   }
-  const [theme, setTheme] = useState('day');
+
   const [gameObj, ] = useState(store.getState().gameData)
   const isDay = theme === 'day';
 
   const {
-    host,
     members, 
     myIndex
   } = gameObj;
@@ -104,22 +106,14 @@ function Mafia(props) {
     });
   }
 
-  function myClick() {
-    if (theme === 'day') {
-      setTheme('night');
-    }
-    else {
-      setTheme('day');
-    }
-  }
   const headerRow = myIndex === 0
   ? <div className="header-row">
       <BackToLobby />
-      <h1 onClick={myClick}>Play Mafia</h1>
+      <h1>Play Mafia</h1>
       {/* <BackToLobby /> */}
     </div>
   : <div className="header-row">
-      <h1 onClick={myClick}>Play Mafia</h1>
+      <h1>Play Mafia</h1>
     </div>
 
   if(!isPlaying && (process.env.NODE_ENV === 'production' || (process.env.NODE_ENV === 'development' && process.env.REACT_APP_DESIGN === 'false'))) {

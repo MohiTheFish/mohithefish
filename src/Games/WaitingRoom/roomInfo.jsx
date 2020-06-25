@@ -90,7 +90,7 @@ function renderAvailableRooms(rooms, isLoadingRoom) {
 
 function renderStartButton(canEdit, numMembers) {
   if (canEdit) {
-    if (numMembers > 1) {
+    if (numMembers > 0) {
       return (
         <Button variant="contained" onClick={startGame} className="host-control-panel">
           Play

@@ -14,12 +14,14 @@ import {
 } from '../actions/gameSetupActions';
 
 import {
-  SET_SPYFALL_TIME,
-} from '../actions/SpecificGameActions/spyfallGameActions';
+  START_GAME_SPYFALL,
+  CLEAR_SPYFALL_BOARD, 
+} from 'redux-store/actions/spyfallActions';
 
 import {
-  CLEAR_SPYFALL_BOARD, START_GAME_SPYFALL,
-} from 'redux-store/actions/spyfallActions';
+  START_GAME_MAFIA,
+  CLEAR_MAFIA_BOARD,
+} from 'redux-store/actions/mafiaActions';
 
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
 ? {
@@ -75,28 +77,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
   }
 }
 
-function spyfallGameDataReducer(state, action) {
-  switch(action.type) {
-    case SET_SPYFALL_TIME: {
-      return Object.assign({}, state, {
-        settings: {
-          ...state.settings,
-          spyfall: {
-            ...state.settings.spyfall,
-            time: action.time,
-          }
-        }
-      })
-    }
-    default: return state;
-  }
-}
-
 export function gameData(state = initialState, action) {
-  switch(action.game) {
-    case 'spyfall': return spyfallGameDataReducer(state, action);
-    default: break;
-  }
   switch(action.type) {
     case SET_IS_LOADING_ROOM_SELECTED_CHOICE: {
       return Object.assign({}, state, {
@@ -170,11 +151,13 @@ export function gameData(state = initialState, action) {
       newState.members =  members.filter((m, index) => (index !== deletedIndex) );
       return Object.assign({}, state, newState);
     }
-    case START_GAME_SPYFALL: {
+    case START_GAME_SPYFALL: 
+    case START_GAME_MAFIA : {
       return Object.assign({}, state, {
         isPlaying: true,
       });
     }
+    case CLEAR_MAFIA_BOARD:
     case CLEAR_SPYFALL_BOARD: {
       return Object.assign({}, state, {
         isPlaying: false,
@@ -205,6 +188,14 @@ export function gameData(state = initialState, action) {
           spyfall: {
             time: "8", // minutes
             gameType: "Locations",
+          },
+          mafia: {
+            dayTimeLimit: 300, //seconds
+            nightTimeLimit: 60, //seconds
+            defenseTimeLimit: 25, //seconds
+            numMafia: 2,
+            allowSK: false,
+            allowJoker: false,
           }
         }
       })

@@ -3,9 +3,13 @@ import {
   ADD_NAME_SPYFALL,
   REMOVE_NAME_SPYFALL,
   START_GAME_SPYFALL,
-  UPDATE_SPYFALL_TIME,
+  UPDATE_MAIN_TIME,
   CLEAR_SPYFALL_BOARD
 } from 'redux-store/actions/spyfallActions';
+
+import {
+  START_GAME_MAFIA,
+} from 'redux-store/actions/mafiaActions';
 
 export const initialState = {
   time: 0,
@@ -16,11 +20,52 @@ export const initialState = {
     locations: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
     secretLocation: "",
   },
+  mafia: {
+
+  }
 };
 
 const NUM_STATES_LOCATIONS = 3;
 
-export function playState(state = initialState, action) {
+function mafiaReducers(state, action) {
+  switch(action.type) {
+    case START_GAME_MAFIA: {
+      return {
+        ...state,
+        time: 0,
+        mafia: {
+          timeOfDay: 'day',
+        }
+      }
+    }
+    case UPDATE_MAIN_TIME: {
+      const oldTimeOfDay = state.mafia.timeOfDay;
+      const oldTimeOfDayIsDay = oldTimeOfDay === 'day';
+      let newTimeOfDay = oldTimeOfDay;
+      const newTime = action.time;
+      if (newTime === 0) {
+        if (oldTimeOfDayIsDay) {
+          newTimeOfDay = 'night';
+        }
+        else {
+          newTimeOfDay = 'day';
+        }
+      }
+      console.log(newTimeOfDay);
+      return {
+        ...state,
+        time: newTime,
+        mafia: {
+          ...state.mafia,
+          timeOfDay: newTimeOfDay,
+        }
+      };
+    }
+    default: return state;
+  }
+}
+
+function spyfallReducers(state, action) {
   switch(action.type) {
     case START_GAME_SPYFALL: {
       return {
@@ -31,13 +76,14 @@ export function playState(state = initialState, action) {
           selectedNamesByIndex: state.spyfall.selectedNamesByIndex,
           locations: action.gameState.locations,
           secretLocation: action.gameState.secretLocation,
-        }
+        },
+        mafia: state.mafia,
       };
     }
-    case UPDATE_SPYFALL_TIME: {
+    case UPDATE_MAIN_TIME: {
       return {
+        ...state,
         time: action.time,
-        spyfall: state.spyfall,
       };
     }
     case ADD_NAME_SPYFALL: {
@@ -91,5 +137,16 @@ export function playState(state = initialState, action) {
     }
     default:
       return state;
+  }
+}
+
+export function playState(state = initialState, action) {
+  switch(action.game) {
+    case 'mafia': {
+      return mafiaReducers(state, action);
+    }
+    default: { // spyfall
+      return spyfallReducers(state, action);
+    }
   }
 }

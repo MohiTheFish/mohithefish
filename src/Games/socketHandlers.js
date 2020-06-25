@@ -23,14 +23,51 @@ import {
   clearSpyfallBoard,
 } from 'redux-store/actions/spyfallActions';
 
-function addSpyfallEventListeners(newSocket) {
-  newSocket.on('timeUpdate', function(time) {
-    store.dispatch(updateSpyfallTime(time));
-  });
-}
+import {
+  startMafia,
+  clearMafiaBoard,
+  updateMainMafiaTime,
+} from 'redux-store/actions/mafiaActions';
 
 var socket = null;
 let userId = null;
+let prevGame = "";
+
+const events = {
+  spyfall: ['timeUpdate'],
+  mafia: ['mainTimeUpdate'],
+};
+
+function removePrevEventListeners(newSocket) {
+  if (!prevGame) return;
+
+  const eventNames = events[prevGame];
+  eventNames.forEach(event => {
+    newSocket.off(event);
+  });
+}
+
+function addSpyfallEventListeners(newSocket) {
+  if (prevGame !== 'spyfall') {
+    removePrevEventListeners(newSocket);
+    prevGame = 'spyfall';
+
+    newSocket.on('mainTimeUpdate', function(time) {
+      store.dispatch(updateSpyfallTime(time));
+    });
+  }
+}
+
+function addMafiaEventListeners(newSocket) {
+  if (prevGame !== 'mafia') {
+    removePrevEventListeners(newSocket);
+    prevGame = 'mafia';
+    
+    newSocket.on('mainTimeUpdate', function(time){
+      store.dispatch(updateMainMafiaTime(time));
+    });
+  }
+}
 
 export function connectToServer() {
   console.log('connecting...');
@@ -107,12 +144,25 @@ export function connectToServer() {
   })
 
   newSocket.on('gameStarted', function(gameState){
-    store.dispatch(startSpyfall(gameState));
+    console.log(gameState);
+    const gamename = store.getState().gameCredentials.gamename;
+    if (gamename === 'spyfall') {
+      addSpyfallEventListeners(newSocket);
+      store.dispatch(startSpyfall(gameState));
+    }
+    else if (gamename === 'mafia') {
+      addMafiaEventListeners(newSocket);
+      store.dispatch(startMafia(gameState));
+    }
   });
 
   newSocket.on('sentBackToLobby', function(){
-    if(store.getState().gameCredentials.gamename === 'spyfall') {
+    const gamename = store.getState().gameCredentials.gamename;
+    if(gamename === 'spyfall') {
       store.dispatch(clearSpyfallBoard());
+    }
+    else if (gamename === 'mafia') {
+      store.dispatch(clearMafiaBoard());
     }
   });
 
@@ -148,6 +198,7 @@ export function createRoomWithSettings(settings) {
   if (!socket) { throw new Error('Socket invalid!');}
 
   const gamename = store.getState().gameCredentials.gamename;
+  console.log(getSpecificGameSettings(settings, gamename));
   socket.emit('createRoom', [userId, gamename, getSpecificGameSettings(settings, gamename)]);
 }
 
