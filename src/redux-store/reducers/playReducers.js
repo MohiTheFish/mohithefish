@@ -9,6 +9,7 @@ import {
 
 import {
   START_GAME_MAFIA,
+  CHAT_UPDATED,
 } from 'redux-store/actions/mafiaActions';
 
 export const initialState = {
@@ -24,6 +25,7 @@ export const initialState = {
     phase: 0,
     time: 0,
     roleCount: {},
+    chatHistory: [],
   }
 };
 
@@ -32,13 +34,30 @@ const NUM_STATES_LOCATIONS = 3;
 function mafiaReducers(state, action) {
   switch(action.type) {
     case START_GAME_MAFIA: {
-      console.log(action);
       return {
         ...state,
         time: 0,
         mafia: {
           roleCount: action.gameState.roleCount,
           phase: 0,
+        }
+      }
+    }
+    case CHAT_UPDATED: {
+      console.log(action);
+      const {audience, phase, message} = action;
+      const oldChatHistory =  state.mafia.chatHistory;
+      const newChatHistory = oldChatHistory.filter(item => item);
+      //Make sure that phase is valid index withing newChatHistory
+      while(newChatHistory.length <= phase) {
+        newChatHistory.push([]);
+      }
+      newChatHistory[phase].push({audience, message});
+      return {
+        ...state,
+        mafia: {
+          ...state.mafia, 
+          chatHistory: newChatHistory,
         }
       }
     }

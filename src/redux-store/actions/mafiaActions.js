@@ -2,6 +2,7 @@ import {UPDATE_MAIN_TIME} from './spyfallActions';
 
 export const START_GAME_MAFIA = 'START_GAME_MAFIA';
 export const CLEAR_MAFIA_BOARD = 'CLEAR_MAFIA_BOARD';
+export const CHAT_UPDATED = "CHAT_UPDATED";
 
 export function startMafia(gameState) {
   return {
@@ -26,4 +27,12 @@ export function clearMafiaBoard() {
     game: 'mafia',
     type: CLEAR_MAFIA_BOARD,
   };
+}
+
+export function chatUpdated(data) {
+  return {
+    game: 'mafia',
+    type: CHAT_UPDATED,
+    ...data,
+  }
 }

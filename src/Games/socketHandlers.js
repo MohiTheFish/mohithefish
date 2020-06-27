@@ -27,6 +27,7 @@ import {
   startMafia,
   clearMafiaBoard,
   updateMainMafiaTime,
+  chatUpdated,
 } from 'redux-store/actions/mafiaActions';
 
 var socket = null;
@@ -35,8 +36,12 @@ let prevGame = "";
 
 const events = {
   spyfall: ['timeUpdate'],
-  mafia: ['mainTimeUpdate'],
+  mafia: ['mainTimeUpdate', 'mafiaChatUpdated'],
 };
+
+function invalidSocket(socket) {
+  if (!socket) {throw new Error('Socket invalid!');}
+}
 
 function removePrevEventListeners(newSocket) {
   if (!prevGame) return;
@@ -66,6 +71,9 @@ function addMafiaEventListeners(newSocket) {
     newSocket.on('mainTimeUpdate', function(time){
       store.dispatch(updateMainMafiaTime(time));
     });
+    newSocket.on('mafiaChatUpdated', function (data) {
+      store.dispatch(chatUpdated(data));
+    })
   }
 }
 
@@ -181,7 +189,8 @@ export function isConnected() {
 }
 
 export function updateMyName(name) {
-  if (!socket) { throw new Error('Socket invalid!');}
+  invalidSocket(socket);
+
   console.log('updating my name');
   socket.emit('updateMyName', [userId, name]);
 }
@@ -195,7 +204,7 @@ function getSpecificGameSettings(settings, gamename) {
 }
 
 export function createRoomWithSettings(settings) {
-  if (!socket) { throw new Error('Socket invalid!');}
+  invalidSocket(socket);
 
   const gamename = store.getState().gameCredentials.gamename;
   console.log(getSpecificGameSettings(settings, gamename));
@@ -203,32 +212,32 @@ export function createRoomWithSettings(settings) {
 }
 
 export function updateRoomSettings(settings) {
-  if (!socket) { throw new Error('Socket invalid!');}
+  invalidSocket(socket);
   
   socket.emit('updateSettings', [userId, settings]);
 }
 
 export function forceDisconnect() {
-  if (!socket) { throw new Error('Socket invalid!');}
+  invalidSocket(socket);
 
   socket.emit('forceDisconnect');
 }
 
 export function getAvailableRooms() {
-  if (!socket) { throw new Error('Socket invalid!');}
+  invalidSocket(socket);
 
   store.dispatch(setIsLoadingRoom(true));
   socket.emit('getAvailableRooms', store.getState().gameCredentials.gamename);
 }
 
 export function ejectFromRoom() {
-  if (!socket) { throw new Error('Socket invalid!');}
+  invalidSocket(socket);
   
   socket.emit('ejectPlayerFromRoom', userId);
 }
 
 export function joinRoom(targetRoom) {
-  if (!socket) { throw new Error('Socket invalid!');}
+  invalidSocket(socket);
   const data = {
     targetRoom: targetRoom.trim(),
     userId,
@@ -237,13 +246,23 @@ export function joinRoom(targetRoom) {
 }
 
 export function returnToLobby() {
-  if (!socket) { throw new Error('Socket invalid!');}
+  invalidSocket(socket);
 
   socket.emit('returnToLobby', userId);
 }
 
 export function startGame() {
-  if (!socket) { throw new Error('Socket invalid!');}
+  invalidSocket(socket);
 
   socket.emit('startGame', userId);
+}
+
+export function sendMafiaMessage(message, myIndex) {
+  invalidSocket(socket);
+
+  socket.emit('sendMafiaMessage', {
+    userId,
+    message,
+    index: myIndex,
+  });
 }
