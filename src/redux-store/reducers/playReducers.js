@@ -21,7 +21,9 @@ export const initialState = {
     secretLocation: "",
   },
   mafia: {
-
+    phase: 0,
+    time: 0,
+    roleCount: {},
   }
 };
 
@@ -30,34 +32,23 @@ const NUM_STATES_LOCATIONS = 3;
 function mafiaReducers(state, action) {
   switch(action.type) {
     case START_GAME_MAFIA: {
+      console.log(action);
       return {
         ...state,
         time: 0,
         mafia: {
-          timeOfDay: 'day',
+          roleCount: action.gameState.roleCount,
+          phase: 0,
         }
       }
     }
     case UPDATE_MAIN_TIME: {
-      const oldTimeOfDay = state.mafia.timeOfDay;
-      const oldTimeOfDayIsDay = oldTimeOfDay === 'day';
-      let newTimeOfDay = oldTimeOfDay;
-      const newTime = action.time;
-      if (newTime === 0) {
-        if (oldTimeOfDayIsDay) {
-          newTimeOfDay = 'night';
-        }
-        else {
-          newTimeOfDay = 'day';
-        }
-      }
-      console.log(newTimeOfDay);
       return {
         ...state,
-        time: newTime,
+        time: action.time,
         mafia: {
           ...state.mafia,
-          timeOfDay: newTimeOfDay,
+          phase: action.phase,
         }
       };
     }

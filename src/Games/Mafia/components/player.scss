@@ -42,6 +42,12 @@
       border: 2px solid #0c0c0c;
     }
 
+    .empty-area-wrapper {
+      .empty-area {
+        margin: 0 auto;
+        width: 162px;
+      }
+    }
     .interact-button-wrapper {
       height: 45px;
       cursor: pointer;

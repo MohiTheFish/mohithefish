@@ -44,7 +44,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
       dayTimeLimit: 300, //seconds
       nightTimeLimit: 60, //seconds
       defenseTimeLimit: 25, //seconds
-      numMafia: 2,
+      numMafia: -1,
       allowSK: false,
       allowJoker: false,
     }
@@ -70,7 +70,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
       dayTimeLimit: 300, //seconds
       nightTimeLimit: 60, //seconds
       defenseTimeLimit: 25, //seconds
-      numMafia: 2,
+      numMafia: -1,
       allowSK: false,
       allowJoker: false,
     }

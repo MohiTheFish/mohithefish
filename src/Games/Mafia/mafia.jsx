@@ -15,12 +15,22 @@ import store from 'redux-store';
 
 import './mafia.scss';
 import { useState } from 'react';
+import { useEffect } from 'react';
 // window.onscroll = function(ev) {
 //   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
 //       // you're at the bottom of the page
 //   }
 // };
 
+function interpretPhase(phase) {
+  const isEven = phase % 2 === 0;
+  if (isEven) {
+    return `day`;
+  }
+  else {
+    return `night`;
+  }
+}
 
 function Column3({isDay}) {
   return (
@@ -48,63 +58,49 @@ function Column1() {
 }
 
 
-function mapStateToProps(state) {
-  const gd = state.gameData;
-  const ps = state.playState;
-  const game = ps.mafia;
-  return {
-    gameCredentials: state.gameCredentials,
-    
-    time: ps.time,
-    theme: game.timeOfDay,
-    isPlaying: gd.isPlaying,
-    game,
-  };
+function renderTime(time) {
+  const minutes = Math.floor(time / 60); 
+  const seconds = time % 60;
+
+  return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
+}
+
+function handlePlayerClick(index) {
+  console.log('voting for ' + index);
+}
+
+  
+function renderMembers(members, phase, myIndex) {
+  return members.map( (member, index) => {
+    let onClickfn = ()=>handlePlayerClick(index);
+    return <PlayerCard 
+      key={`${member}${index}`} 
+      phase={phase}
+      member={member} 
+      onClick={onClickfn}
+      isAlive={true}
+      isMe={myIndex===index}
+    />
+  });
 }
 
 function Mafia(props) {
+  useEffect(() => {
+    document.title = 'Mafia';
+  });
+  const [gameObj, ] = useState(store.getState().gameData);
   const {
     gameCredentials,
     time,
-    theme, 
+    phase,
     isPlaying,
-    game
   } = props;
-
-  function renderTime() {
-    const minutes = Math.floor(time / 60); 
-    const seconds = time % 60;
-
-    return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
-  }
-
-  const [gameObj, ] = useState(store.getState().gameData)
+  const theme = interpretPhase(phase);
   const isDay = theme === 'day';
-
   const {
     members, 
     myIndex
   } = gameObj;
-
-  function handlePlayerClick(index) {
-    console.log('voting for ' + index);
-  }
-  
-  function renderMembers() {
-    return members.map( (member, index) => {
-      let onClickfn = null;
-      if (index !== myIndex) {
-        onClickfn = ()=>handlePlayerClick(index);
-      }
-      return <PlayerCard 
-        key={`${member}${index}`} 
-        member={member} 
-        onClick={onClickfn}
-        isAlive={index%2 === 0 ? true : false}
-        isMe={myIndex===index}
-      />
-    });
-  }
 
   const headerRow = myIndex === 0
   ? <div className="header-row">
@@ -127,7 +123,7 @@ function Mafia(props) {
       <div className="header">
         {headerRow}
         <div className="time-wrapper">
-          {renderTime()}
+          {renderTime(time)}
         </div>
       </div>
 
@@ -136,7 +132,7 @@ function Mafia(props) {
         <Column1 />
         <div className="column2">
           <div className="player-list">
-            {renderMembers()}
+            {renderMembers(members, phase, myIndex)}
           </div>
           
           <Court />
@@ -145,7 +141,20 @@ function Mafia(props) {
       </div>
     </div>
   );
-
 }
+
+function mapStateToProps(state) {
+  const gd = state.gameData;
+  const ps = state.playState;
+  const game = ps.mafia;
+  return {
+    gameCredentials: state.gameCredentials,
+    
+    time: ps.time,
+    phase: game.phase,
+    isPlaying: gd.isPlaying,
+  };
+}
+
 const SubscribedMafia = connect(mapStateToProps)(Mafia);
 export default SubscribedMafia;

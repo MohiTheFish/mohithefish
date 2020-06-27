@@ -12,10 +12,12 @@ export function startMafia(gameState) {
 }
 
 export function updateMainMafiaTime(time) {
+  const [phase, mainTime] = time;
   return {
     game: 'mafia',
     type: UPDATE_MAIN_TIME,
-    time,
+    phase,
+    time: mainTime,
   };
 }
 

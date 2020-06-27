@@ -16,8 +16,16 @@ const MAX_TIME = 600;
 export function isValidTimeLimit(time) {
   return /^\d+$/.test(time) && Number.parseInt(time) <= MAX_TIME;
 }
-export function isValidNum(num) {
-  return /^\d+$/.test(num) && Number.parseInt(num) < store.getState().gameData.members.length/2;
+export function isValidMafia(num) {
+  const isInteger = /^(\+|-)?\d+$/.test(num);
+  if (!isInteger) {
+    return 'Must be an integer.';
+  }
+  const sizeMet = Number.parseInt(num) < store.getState().gameData.members.length;
+  if (!sizeMet) {
+    return 'Too large';
+  }
+  return '';
 }
 
 
@@ -25,6 +33,7 @@ function TimeLimit(props) {
   const { time, validTime, setTime, children, quantity } = props;
   const question = children[0];
   const errormsg = children[1];
+  const explanation = children[2];
   let error = !validTime;
 
   let inputProps = {
@@ -45,6 +54,7 @@ function TimeLimit(props) {
   return (
     <div className="setting">
       {question}
+      {explanation}
       <FormControl error={error}>
         <Input
           {...inputProps}
@@ -77,9 +87,11 @@ function MafiaSettings(props) {
   const isValidDayTime = isValidTimeLimit(dayTimeLimit);
   const isValidNightTime = isValidTimeLimit(nightTimeLimit);
   const isValidDefenseTime = isValidTimeLimit(defenseTimeLimit);
-  const isValidMafia = isValidNum(numMafia);
+  const mafiaMessage = isValidMafia(numMafia);
 
-  const allValid = isValidDayTime && isValidNightTime && isValidDefenseTime && isValidMafia;
+  const allValid = isValidDayTime && isValidNightTime && isValidDefenseTime && !mafiaMessage;
+  console.log(mafiaMessage);
+  console.log(!mafiaMessage);
   const settings = {
     isPrivate: isLobbyPrivate, 
     mafia: {
@@ -111,9 +123,10 @@ function MafiaSettings(props) {
           <FormHelperText>Must be an integer at most {MAX_TIME}</FormHelperText>
         </TimeLimit>
 
-        <TimeLimit time={numMafia} setTime={setNumMafia} validTime={isValidMafia} quantity>
+        <TimeLimit time={numMafia} setTime={setNumMafia} validTime={!mafiaMessage} quantity>
           <h3>How many mafia are there?</h3>
-          <FormHelperText>Must be an integer at most half the number of players.</FormHelperText>
+          <FormHelperText>{mafiaMessage}</FormHelperText>
+          <h6>A negative value will have the server pick an optimal number of mafia.</h6>
         </TimeLimit>
       </div>
       <SubmitSettings isValid={allValid} settings={settings}/>
