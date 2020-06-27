@@ -72,6 +72,7 @@ function addMafiaEventListeners(newSocket) {
       store.dispatch(updateMainMafiaTime(time));
     });
     newSocket.on('mafiaChatUpdated', function (data) {
+      console.log('mafia chat updated!');
       store.dispatch(chatUpdated(data));
     })
   }

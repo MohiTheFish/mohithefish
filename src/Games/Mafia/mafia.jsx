@@ -8,7 +8,8 @@ import Brightness7Icon from '@material-ui/icons/Brightness7';
 import BackToLobby from 'components/BackToLobby/backToLobby';
 import {RoleCard} from './components/role';
 import {PlayerCard} from './components/player';
-import {EventRecap} from './components/eventRecap';
+import EventRecap from './components/eventRecap';
+import EventInput from './components/eventRecapInput';
 import RoleCount from './components/roleCount';
 import Court from './components/court';
 import store from 'redux-store';
@@ -53,6 +54,7 @@ function Column1() {
   return (
     <div className="column1">
       <EventRecap />
+      <EventInput />
     </div>
   )
 }

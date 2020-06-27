@@ -14,21 +14,26 @@ import store, { saveState } from 'redux-store';
 const storageType = sessionStorage;
 
 function mapStateToPropsWR(state) {
-  const { gamename, username } = state.gameCredentials
+  const { gamename, username, isConnected } = state.gameCredentials
   return {
     gamename,
     username,
+    isConnected,
     isPlaying: state.gameData.isPlaying,
   };
 }
 
 function WaitingRoom(props) {
   console.log(props);
-  const { gamename, username, isPlaying } = props;
-  console.log(`games/${gamename}/play`);
+  const { gamename, username, isConnected, isPlaying } = props;
+  
+  useEffect(() => {
+    if (!isConnected) {
+      connectToServer();
+    }
+  }, [isConnected, username]);
 
   useEffect(() => {
-    connectToServer();
     saveState(store.getState());
   }, [username]);
 
@@ -37,12 +42,6 @@ function WaitingRoom(props) {
     store.dispatch(clearRoomInfo());
     return <Redirect to="/games" />;
   }
-
-  // useEffect(() => {
-  //   if(!store.getState().gameCredentials.isConnected) {
-  //     connectToServer();
-  //   }
-  // }, [])
 
   if (isPlaying) {
     storageType.setItem('gameData', JSON.stringify(store.getState().gameData));

@@ -1,15 +1,69 @@
 /* eslint-disable */
-import React from 'react';
-import Paper from '@material-ui/core/Paper'
+import React, {useLayoutEffect} from 'react';
+import {connect} from 'react-redux';
 
-import EventInput from './eventRecapInput';
 import './eventRecap.scss';
-export function EventRecap(props) {
+
+function interpretPhase(phase) {
+  const isEven = phase % 2 === 0;
+  if (isEven) {
+    return `Day ${phase / 2}`;
+  }
+  return `Night ${(phase+1) / 2}`;
+}
+function EventRecap(props) {
+  const { chatHistory } = props;
+
+  useLayoutEffect(() => {
+    const element = document.getElementById("event-recap");
+    element.scrollTo(0, element.scrollHeight);
+  });
+  console.log(chatHistory);
   return (
-    <>
-    <div className="papermui event-recap">
+    <div id="event-recap" className="papermui">
       <h3 className="description">Event Recap: Recorded here will be all the game actions (votes made, time of murders).</h3>
-      <div className="new-phase">
+      {
+        chatHistory.map((messageList, phase) => {
+          const phaseText = interpretPhase(phase);
+          return (
+            <React.Fragment key={phaseText}>
+            <div className="new-phase">
+              {phaseText}
+            </div>
+            <ul>
+              {
+                messageList.map((messageItem, index) => {
+                  const {audience, message} = messageItem;
+                  const messageClass = `message-${audience}`;
+                  return (
+                    <li className={messageClass} key={`${message}${index}`}>{message}</li>
+                  )
+                })
+              }
+            </ul>
+            </React.Fragment>
+          );
+        })
+      }
+    </div>
+  )
+}
+
+
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    chatHistory: state.playState.mafia.chatHistory,
+  };
+}
+
+
+const SubscribedEventRecap = connect(mapStateToProps)(EventRecap);
+export default SubscribedEventRecap;
+
+
+
+{/* <div className="new-phase">
         <h4>Day 0</h4>
       </div>
       <ul>
@@ -98,10 +152,4 @@ export function EventRecap(props) {
         <li>
           nobody was lynched!
         </li>
-      </ul>
-      
-    </div>
-    <EventInput />
-    </>
-  )
-}
+      </ul> */}

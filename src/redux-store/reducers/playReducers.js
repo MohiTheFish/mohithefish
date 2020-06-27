@@ -25,7 +25,7 @@ export const initialState = {
     phase: 0,
     time: 0,
     roleCount: {},
-    chatHistory: [],
+    chatHistory: [[]],
   }
 };
 
@@ -38,6 +38,7 @@ function mafiaReducers(state, action) {
         ...state,
         time: 0,
         mafia: {
+          ...state.mafia,
           roleCount: action.gameState.roleCount,
           phase: 0,
         }
@@ -79,6 +80,7 @@ function spyfallReducers(state, action) {
   switch(action.type) {
     case START_GAME_SPYFALL: {
       return {
+        ...state,
         time: action.gameState.time,
         spyfall: {
           spyIndex: action.gameState.spyIndex,
@@ -87,7 +89,6 @@ function spyfallReducers(state, action) {
           locations: action.gameState.locations,
           secretLocation: action.gameState.secretLocation,
         },
-        mafia: state.mafia,
       };
     }
     case UPDATE_MAIN_TIME: {

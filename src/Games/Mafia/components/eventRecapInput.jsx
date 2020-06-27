@@ -1,22 +1,32 @@
 import React, {useState} from 'react';
-
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import ArrowForward from '@material-ui/icons/ArrowForward';
 
+import store from 'redux-store';
+import { sendMafiaMessage } from 'Games/socketHandlers';
+
 const ENTER_KEY = 13;
 
 export default function TextInput() {
-  const [roomId, setRoomId] = useState("");
+  const [message, setMessage] = useState("");
+  const [myIndex, ] = useState(store.getState().gameData.myIndex)
   const preventDefault = (e) => {
     e.preventDefault();
   }
 
   function handleKeyPress(e) {
     if (e.which === ENTER_KEY || e.keyCode === ENTER_KEY) {
-      // submit();
+      submit();
+    }
+  }
+
+  function submit() {
+    if(Boolean(message)) { //length greater than 0
+      sendMafiaMessage(message, myIndex);
+      setMessage("");
     }
   }
   
@@ -25,17 +35,15 @@ export default function TextInput() {
       <Input
         className="event-input"
         id="standard-basic"
-        multiline
-        
-        value={roomId}
-        onChange={(e) => {setRoomId(e.target.value);}}
+        value={message}
+        onChange={(e) => {setMessage(e.target.value);}}
         onKeyPress={handleKeyPress}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
               className="icon-color"
               children={<ArrowForward />}
-              // onClick={submit}
+              onClick={submit}
               size="small"
               onMouseDown={preventDefault}
               edge="end"
