@@ -5,7 +5,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import './role.scss';
 export function RoleCard(props) {
   const [isMini, setIsMini] = useState(true);
-  console.log(isMini);
+  
   const Icon = isMini ? ExpandMoreIcon : ExpandLessIcon;
   const rwclass = `papermui ${isMini ? 'mini' : ''}`;
   return (

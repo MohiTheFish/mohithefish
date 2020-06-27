@@ -45,7 +45,6 @@ function mafiaReducers(state, action) {
       }
     }
     case CHAT_UPDATED: {
-      console.log(action);
       const {audience, phase, message} = action;
       const oldChatHistory =  state.mafia.chatHistory;
       const newChatHistory = oldChatHistory.filter(item => item);

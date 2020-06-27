@@ -72,7 +72,6 @@ function addMafiaEventListeners(newSocket) {
       store.dispatch(updateMainMafiaTime(time));
     });
     newSocket.on('mafiaChatUpdated', function (data) {
-      console.log('mafia chat updated!');
       store.dispatch(chatUpdated(data));
     })
   }
@@ -102,7 +101,6 @@ export function connectToServer() {
   });
 
   newSocket.on('nameUpdated', function(name){
-    console.log('nameUpdated to: '+ name);
     store.dispatch(setUserName(name));
   });
 
@@ -136,7 +134,6 @@ export function connectToServer() {
   });
 
   newSocket.on('youJoined', function(roomInfo){
-    console.log(roomInfo);
     store.dispatch(roomJoined({
       roomId: roomInfo.roomId, 
       members: roomInfo.members,
@@ -153,7 +150,6 @@ export function connectToServer() {
   })
 
   newSocket.on('gameStarted', function(gameState){
-    console.log(gameState);
     const gamename = store.getState().gameCredentials.gamename;
     if (gamename === 'spyfall') {
       addSpyfallEventListeners(newSocket);
@@ -192,7 +188,6 @@ export function isConnected() {
 export function updateMyName(name) {
   invalidSocket(socket);
 
-  console.log('updating my name');
   socket.emit('updateMyName', [userId, name]);
 }
 
@@ -208,7 +203,6 @@ export function createRoomWithSettings(settings) {
   invalidSocket(socket);
 
   const gamename = store.getState().gameCredentials.gamename;
-  console.log(getSpecificGameSettings(settings, gamename));
   socket.emit('createRoom', [userId, gamename, getSpecificGameSettings(settings, gamename)]);
 }
 

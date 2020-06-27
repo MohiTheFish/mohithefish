@@ -90,8 +90,7 @@ function MafiaSettings(props) {
   const mafiaMessage = isValidMafia(numMafia);
 
   const allValid = isValidDayTime && isValidNightTime && isValidDefenseTime && !mafiaMessage;
-  console.log(mafiaMessage);
-  console.log(!mafiaMessage);
+  
   const settings = {
     isPrivate: isLobbyPrivate, 
     mafia: {

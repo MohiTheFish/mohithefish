@@ -54,12 +54,8 @@ function Games(props) {
     setName(e.target.value);
   }
 
-  console.log('redirectPage: ' + gamename);
-  console.log('isConnected: ' + isConnected);
-  console.log('!isUpdatingName: '+ isUpdatingName);
   if (Boolean(gamename) && isConnected && isUpdatingName) {
     if (((process.env.NODE_ENV === "development" && process.env.REACT_APP_DESIGN === 'false') || process.env.NODE_ENV==="production")) {
-      console.log('env: ' + (process.env.NODE_ENV === "development" && process.env.REACT_APP_DESIGN === 'false') );
       return (
         <Redirect push to={`/games/${gamename}`}/>
       );

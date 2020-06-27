@@ -24,7 +24,7 @@ function mapStateToPropsWR(state) {
 }
 
 function WaitingRoom(props) {
-  console.log(props);
+  
   const { gamename, username, isConnected, isPlaying } = props;
   
   useEffect(() => {

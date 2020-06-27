@@ -18,7 +18,7 @@ function EventRecap(props) {
     const element = document.getElementById("event-recap");
     element.scrollTo(0, element.scrollHeight);
   });
-  console.log(chatHistory);
+  
   return (
     <div id="event-recap" className="papermui">
       <h3 className="description">Event Recap: Recorded here will be all the game actions (votes made, time of murders).</h3>
@@ -51,7 +51,6 @@ function EventRecap(props) {
 
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     chatHistory: state.playState.mafia.chatHistory,
   };
