@@ -24,6 +24,7 @@ export const initialState = {
   mafia: {
     phase: 0,
     time: 0,
+    role: -1,
     roleCount: {},
     chatHistory: [[]],
   }
@@ -39,6 +40,7 @@ function mafiaReducers(state, action) {
         time: 0,
         mafia: {
           ...state.mafia,
+          role: action.gameState.role,
           roleCount: action.gameState.roleCount,
           phase: 0,
         }
