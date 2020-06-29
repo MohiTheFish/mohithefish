@@ -71,6 +71,14 @@ function handlePlayerClick(index) {
   console.log('voting for ' + index);
 }
 
+function PlayerList({phase, myIndex}) {
+  const [members,] = useState(store.getState().gameData.members);
+  return (
+    <div className="player-list">
+      {renderMembers(members, phase, myIndex)}
+    </div>
+  );
+}
   
 function renderMembers(members, phase, myIndex) {
   return members.map( (member, index) => {
@@ -90,19 +98,14 @@ function Mafia(props) {
   useEffect(() => {
     document.title = 'Mafia';
   });
-  const [gameObj, ] = useState(store.getState().gameData);
+  const [myIndex, ] = useState(store.getState().gameData.myIndex);
   const {
-    gameCredentials,
     time,
     phase,
     isPlaying,
   } = props;
   const theme = interpretPhase(phase);
   const isDay = theme === 'day';
-  const {
-    members, 
-    myIndex
-  } = gameObj;
 
   const headerRow = myIndex === 0
   ? <div className="header-row">
@@ -133,9 +136,9 @@ function Mafia(props) {
 
         <Column1 />
         <div className="column2">
-          <div className="player-list">
-            {renderMembers(members, phase, myIndex)}
-          </div>
+          <PlayerList
+          phase={phase}
+          myIndex={myIndex}/>
           
           <Court />
         </div>

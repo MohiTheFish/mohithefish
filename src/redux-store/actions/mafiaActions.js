@@ -3,6 +3,8 @@ import {UPDATE_MAIN_TIME} from './spyfallActions';
 export const START_GAME_MAFIA = 'START_GAME_MAFIA';
 export const CLEAR_MAFIA_BOARD = 'CLEAR_MAFIA_BOARD';
 export const CHAT_UPDATED = "CHAT_UPDATED";
+export const OTHER_PLAYER_VOTED = 'OTHER_PLAYER_VOTED';
+export const I_VOTED = 'I_VOTED';
 
 export function startMafia(gameState) {
   return {
@@ -35,4 +37,20 @@ export function chatUpdated(data) {
     type: CHAT_UPDATED,
     ...data,
   }
+}
+
+export function otherPlayerVotedMafia(data) {
+  return {
+    game: 'mafia',
+    type: OTHER_PLAYER_VOTED,
+    ...data,
+  }
+}
+
+export function iVotedMafia(data) {
+  return {
+    game: 'mafia',
+    type: I_VOTED,
+    ...data,
+  };
 }

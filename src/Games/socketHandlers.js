@@ -28,6 +28,8 @@ import {
   clearMafiaBoard,
   updateMainMafiaTime,
   chatUpdated,
+  otherPlayerVotedMafia,
+  iVotedMafia,
 } from 'redux-store/actions/mafiaActions';
 
 var socket = null;
@@ -36,7 +38,7 @@ let prevGame = "";
 
 const events = {
   spyfall: ['timeUpdate'],
-  mafia: ['mainTimeUpdate', 'mafiaChatUpdated'],
+  mafia: ['mainTimeUpdate', 'mafiaChatUpdated', 'otherPlayerVotedMafia', 'iVotedMafia'],
 };
 
 function invalidSocket(socket) {
@@ -68,12 +70,20 @@ function addMafiaEventListeners(newSocket) {
     removePrevEventListeners(newSocket);
     prevGame = 'mafia';
     
-    newSocket.on('mainTimeUpdate', function(time){
+    newSocket.on('mainTimeUpdate', function(time) {
       store.dispatch(updateMainMafiaTime(time));
     });
     newSocket.on('mafiaChatUpdated', function (data) {
       store.dispatch(chatUpdated(data));
-    })
+    });
+    newSocket.on('otherPlayerVotedMafia', function(data) {
+      console.log('other player voted');
+      store.dispatch(otherPlayerVotedMafia(data));
+    });
+    newSocket.on('iVotedMafia', function(data){
+      console.log('I voted');
+      store.dispatch(iVotedMafia(data));
+    });
   }
 }
 
@@ -259,5 +269,19 @@ export function sendMafiaMessage(message, myIndex) {
     userId,
     message,
     index: myIndex,
+  });
+}
+
+export function votePlayer(myIndex, targetIndex) {
+  // invalidSocket(socket);
+  console.log({
+    userId,
+    myIndex,
+    targetIndex,
+  });
+  socket.emit('voteMafiaPlayer', {
+    userId,
+    myIndex,
+    targetIndex,
   });
 }

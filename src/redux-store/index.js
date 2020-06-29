@@ -70,8 +70,9 @@ export function saveCurrentState() {
   saveState(store.getState());
 }
 
-
-// store.subscribe(() => {
-//   console.log(store.getState());
-// })
+if (process.env.NODE_ENV === 'development') {
+  store.subscribe(() => {
+    console.log(store.getState());
+  })
+}
 export default store;

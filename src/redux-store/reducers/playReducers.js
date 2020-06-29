@@ -10,6 +10,7 @@ import {
 import {
   START_GAME_MAFIA,
   CHAT_UPDATED,
+  OTHER_PLAYER_VOTED,
 } from 'redux-store/actions/mafiaActions';
 
 export const initialState = {
@@ -22,7 +23,7 @@ export const initialState = {
     secretLocation: "",
   },
   mafia: {
-    phase: 0,
+    phase: 2,
     time: 0,
     roleCount: {},
     chatHistory: [[]],
@@ -44,11 +45,35 @@ function mafiaReducers(state, action) {
         }
       }
     }
+    
+    case OTHER_PLAYER_VOTED: {
+      const {
+        audience,
+        phase,
+        message,
+      } = action;
+      const oldChatHistory =  state.mafia.chatHistory;
+      const newChatHistory = oldChatHistory.filter(item => item);
+      //Make sure that phase is valid index withing newChatHistory
+      //This will *hopefully* be handled by updating time
+      while(newChatHistory.length <= phase) {
+        newChatHistory.push([]);
+      }
+      newChatHistory[phase].push({audience, message});
+      return {
+        ...state,
+        mafia: {
+          ...state.mafia, 
+          chatHistory: newChatHistory,
+        }
+      }
+    }
     case CHAT_UPDATED: {
       const {audience, phase, message} = action;
       const oldChatHistory =  state.mafia.chatHistory;
       const newChatHistory = oldChatHistory.filter(item => item);
       //Make sure that phase is valid index withing newChatHistory
+      //This will *hopefully* be handled by updating time
       while(newChatHistory.length <= phase) {
         newChatHistory.push([]);
       }
@@ -62,11 +87,18 @@ function mafiaReducers(state, action) {
       }
     }
     case UPDATE_MAIN_TIME: {
+      const oldChatHistory =  state.mafia.chatHistory;
+      let newChatHistory = oldChatHistory;
+      if (action.phase !== state.mafia.phase) {
+        newChatHistory = oldChatHistory.filter(item => item);
+        newChatHistory.push([]);
+      }
       return {
         ...state,
         time: action.time,
         mafia: {
           ...state.mafia,
+          chatHistory: newChatHistory,
           phase: action.phase,
         }
       };
