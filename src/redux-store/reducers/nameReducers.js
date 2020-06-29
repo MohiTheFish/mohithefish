@@ -17,14 +17,21 @@ function existUserId() {
   storageType.setItem('userId', a);
   return a;
 }
-
-export const initialState = {
+export const initialState = process.env.REACT_APP_DESIGN === 'true'
+? {
+  isConnected: true,
+  username: "bob",
+  gamename: "mafia",
+  isUpdatingName: false,
+  userId: 'abc123...',
+}
+: {
   isConnected: false,
   username: "",
   gamename: "",
   isUpdatingName: false,
   userId: existUserId(),
-};
+}
 
 export function gameCredentials(state = initialState, action) {
   switch(action.type) {
