@@ -59,13 +59,22 @@ function Column1() {
   )
 }
 
-
-function renderTime(time) {
+function mapStateToPropsClock(state) {
+  return {
+    time: state.playState.time,
+  };
+}
+function Clock({time}) {
   const minutes = Math.floor(time / 60); 
   const seconds = time % 60;
 
-  return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
+  return (
+    <div className="time-wrapper">
+      <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
+    </div>
+  );
 }
+const SubscribedClock = connect(mapStateToPropsClock)(Clock);
 
 function handlePlayerClick(index) {
   console.log('voting for ' + index);
@@ -100,7 +109,6 @@ function Mafia(props) {
   });
   const [myIndex, ] = useState(store.getState().gameData.myIndex);
   const {
-    time,
     phase,
     isPlaying,
   } = props;
@@ -127,9 +135,7 @@ function Mafia(props) {
     <div className={`wrapper play-games-wrapper mafia-page-wrapper ${theme}`}>
       <div className="header">
         {headerRow}
-        <div className="time-wrapper">
-          {renderTime(time)}
-        </div>
+        <SubscribedClock />
       </div>
 
       <div className="mafia-game-info">
@@ -153,9 +159,6 @@ function mapStateToProps(state) {
   const ps = state.playState;
   const game = ps.mafia;
   return {
-    gameCredentials: state.gameCredentials,
-    
-    time: ps.time,
     phase: game.phase,
     isPlaying: gd.isPlaying,
   };

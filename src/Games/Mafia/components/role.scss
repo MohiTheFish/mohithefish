@@ -2,7 +2,6 @@
 
 #role-wrapper {
   color: inherit;
-  background-color: #a5d6a7;
   height: 220px;
   position: relative;
   overflow: hidden;
@@ -42,9 +41,17 @@
   height: 50px;
 }
 
-
+#role-wrapper.Village {
+  background-color: #a5d6a7;
+}
+#role-wrapper.Mafia {
+  background-color: #ef9a9a;
+}
 .night {
-  #role-wrapper {
+  #role-wrapper.Village {
     background-color: #2e7d32;
+  }
+  #role-wrapper.Mafia {
+    background-color: #c62828;
   }
 }
