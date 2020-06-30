@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 import deadimg from 'assets/images/dead.png';
 import './player.scss';
+import { votePlayer } from 'Games/socketHandlers';
 
 const aliveStatus = <h4 className="alive">Alive</h4>
 const deadStatus = <h4 className="dead">Dead</h4>
 
-function renderInteraction(isAlive, props) {
-  const {phase,  onClick} = props;
-  if (!isAlive) {
+function renderInteraction(profile, phase, index, myIndex) {
+  if (!profile.isAlive) {
     return (
       <div className="dead-img-wrapper">
         <img className="dead-img" alt="dead" src={deadimg} />
@@ -27,14 +27,17 @@ function renderInteraction(isAlive, props) {
     );
   }
   
-  const isDay = phase%2 === 0;
+  const isDay = phase % 2 === 0;
   if (isDay) {
+    function onClick() {
+      votePlayer(myIndex, index);
+    }
     return (
       <div className="vote-button-wrapper">
         <div className="vote-button" onClick={onClick}><h2>Vote</h2></div>
         <div className="vote-count">
           <h4>Total count</h4>
-          <h4 className="count">0</h4>
+          <h4 className="count">{profile.numVotes}</h4>
         </div>
       </div>
     );
@@ -51,16 +54,16 @@ function renderInteraction(isAlive, props) {
 }
 
 function PlayerCard(props) {
-  const { member, isMe, isAlive, ...otherProps } = props;
+  const { member, index, myIndex, profile, phase } = props;
 
-  const playerClass = `papermui player${isMe ? ' my-player' : ''}`;
+  const playerClass = `papermui player${index === myIndex ? ' my-player' : ''}`;
   return (
     <div className={playerClass}>
       <div className="info">
         <h3 className="name">{member}</h3>
-        {isAlive ? aliveStatus : deadStatus}
+        {profile.isAlive ? aliveStatus : deadStatus}
       </div>
-      {renderInteraction(isAlive, otherProps)}
+      {renderInteraction(profile, phase, index, myIndex)}
     </div>
   )
 }
@@ -70,7 +73,6 @@ function PlayerCard(props) {
 PlayerCard.propTypes = {
   member: PropTypes.string.isRequired,
   isAlive: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
 }
 
 export { PlayerCard };

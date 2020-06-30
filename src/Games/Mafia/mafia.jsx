@@ -79,29 +79,41 @@ const SubscribedClock = connect(mapStateToPropsClock)(Clock);
 function handlePlayerClick(index) {
   console.log('voting for ' + index);
 }
-
-function PlayerList({phase, myIndex}) {
-  const [members,] = useState(store.getState().gameData.members);
-  return (
-    <div className="player-list">
-      {renderMembers(members, phase, myIndex)}
-    </div>
-  );
-}
   
-function renderMembers(members, phase, myIndex) {
+function renderMembers(members, phase, myIndex, playerProfiles) {
   return members.map( (member, index) => {
-    let onClickfn = ()=>handlePlayerClick(index);
     return <PlayerCard 
       key={`${member}${index}`} 
       phase={phase}
       member={member} 
-      onClick={onClickfn}
-      isAlive={true}
-      isMe={myIndex===index}
+      profile={playerProfiles[index]}
+      index={index}
+      myIndex={myIndex}
     />
   });
 }
+
+function mapStateToPropsPL(state, ownProps) {
+  return {
+    ...ownProps,
+    playerProfiles: state.playState.mafia.playerProfiles,
+  }
+}
+function PlayerList(props) {
+  const {
+    phase,
+    myIndex,
+    playerProfiles,
+  } = props;
+
+  const [members,] = useState(store.getState().gameData.members);
+  return (
+    <div className="player-list">
+      {renderMembers(members, phase, myIndex, playerProfiles)}
+    </div>
+  );
+}
+const SubscribedPlayerList = connect(mapStateToPropsPL)(PlayerList);
 
 function Mafia(props) {
   useEffect(() => {
@@ -142,7 +154,7 @@ function Mafia(props) {
 
         <Column1 />
         <div className="column2">
-          <PlayerList
+          <SubscribedPlayerList
           phase={phase}
           myIndex={myIndex}/>
           

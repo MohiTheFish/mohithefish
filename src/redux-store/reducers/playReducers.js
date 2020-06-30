@@ -11,6 +11,8 @@ import {
   START_GAME_MAFIA,
   CHAT_UPDATED,
   OTHER_PLAYER_VOTED,
+  I_VOTED,
+  CLEAR_MAFIA_BOARD,
 } from 'redux-store/actions/mafiaActions';
 
 export const initialState = {
@@ -23,11 +25,13 @@ export const initialState = {
     secretLocation: "",
   },
   mafia: {
-    phase: 2,
+    phase: 0,
     time: 0,
     role: -1,
     roleCount: {},
     chatHistory: [[]],
+    playerProfiles: [],
+    myTarget: -1,
   }
 };
 
@@ -36,38 +40,65 @@ const NUM_STATES_LOCATIONS = 3;
 function mafiaReducers(state, action) {
   switch(action.type) {
     case START_GAME_MAFIA: {
+      const {
+        role, 
+        roleCount,
+        numPlayers,
+      } = action.gameState;
+      const playerProfiles = [];
+      for(var i=0; i<numPlayers; i++) {
+        playerProfiles.push({
+          numVotes: 0,
+          isAlive: true,
+        });
+      }
       return {
         ...state,
         time: 0,
         mafia: {
           ...state.mafia,
-          role: action.gameState.role,
-          roleCount: action.gameState.roleCount,
+          role,
+          roleCount,
           phase: 0,
+          playerProfiles,
         }
       }
     }
-    
+    case I_VOTED: //These two cases will be identical, apart from setting the myTarget field
     case OTHER_PLAYER_VOTED: {
       const {
         audience,
         phase,
         message,
+        newTarget,
+        oldTarget,
       } = action;
+
       const oldChatHistory =  state.mafia.chatHistory;
       const newChatHistory = oldChatHistory.filter(item => item);
-      //Make sure that phase is valid index withing newChatHistory
-      //This will *hopefully* be handled by updating time
-      while(newChatHistory.length <= phase) {
-        newChatHistory.push([]);
-      }
       newChatHistory[phase].push({audience, message});
+
+      const newProfiles = state.mafia.playerProfiles.filter(item => item);
+      if(oldTarget !== -1) {
+        newProfiles[oldTarget].numVotes--;
+      }
+      if(newTarget !== -1) {
+        newProfiles[newTarget].numVotes++;
+      }
+
+      const newMafiaState = {
+        ...state.mafia,
+        chatHistory: newChatHistory,
+        playerProfiles: newProfiles,
+      };
+
+      if (action.type === I_VOTED) {
+        newMafiaState.myTarget = newTarget;
+      }
+
       return {
         ...state,
-        mafia: {
-          ...state.mafia, 
-          chatHistory: newChatHistory,
-        }
+        mafia: newMafiaState,
       }
     }
     case CHAT_UPDATED: {
@@ -105,6 +136,21 @@ function mafiaReducers(state, action) {
         }
       };
     }
+    case CLEAR_MAFIA_BOARD: {
+      return {
+        ...state,
+        mafia: {
+          phase: 0,
+          time: 0,
+          role: -1,
+          roleCount: {},
+          chatHistory: [[]],
+          playerProfiles: [],
+          myTarget: -1,
+        }
+      };
+    }
+      
     default: return state;
   }
 }

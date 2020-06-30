@@ -273,12 +273,9 @@ export function sendMafiaMessage(message, myIndex) {
 }
 
 export function votePlayer(myIndex, targetIndex) {
-  // invalidSocket(socket);
-  console.log({
-    userId,
-    myIndex,
-    targetIndex,
-  });
+  invalidSocket(socket);
+  console.log('myIndex:' + myIndex);
+  console.log('targetIndex:' + targetIndex);
   socket.emit('voteMafiaPlayer', {
     userId,
     myIndex,

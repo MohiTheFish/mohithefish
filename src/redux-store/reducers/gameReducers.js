@@ -42,7 +42,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
     },
     mafia: {
       dayTimeLimit: 300, //seconds
-      nightTimeLimit: 60, //seconds
+      nightTimeLimit: 5, //seconds
       defenseTimeLimit: 25, //seconds
       numMafia: -1,
       allowSK: false,
@@ -68,7 +68,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
     },
     mafia: {
       dayTimeLimit: 300, //seconds
-      nightTimeLimit: 60, //seconds
+      nightTimeLimit: 1, //seconds
       defenseTimeLimit: 25, //seconds
       numMafia: -1,
       allowSK: false,
