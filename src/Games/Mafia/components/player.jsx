@@ -9,7 +9,7 @@ import { votePlayer } from 'Games/socketHandlers';
 const aliveStatus = <h4 className="alive">Alive</h4>
 const deadStatus = <h4 className="dead">Dead</h4>
 
-function renderInteraction(profile, phase, index, myIndex) {
+function renderInteraction(profile, phase, index, myIndex, isSelected) {
   if (!profile.isAlive) {
     return (
       <div className="dead-img-wrapper">
@@ -28,13 +28,14 @@ function renderInteraction(profile, phase, index, myIndex) {
   }
   
   const isDay = phase % 2 === 0;
+  const selectClass = `${isSelected ? ' selected' : ''}`;
   if (isDay) {
     function onClick() {
       votePlayer(myIndex, index);
     }
     return (
       <div className="vote-button-wrapper">
-        <div className="vote-button" onClick={onClick}><h2>Vote</h2></div>
+        <div className={`vote-button${selectClass}`} onClick={onClick}><h2>Vote</h2></div>
         <div className="vote-count">
           <h4>Total count</h4>
           <h4 className="count">{profile.numVotes}</h4>
@@ -45,7 +46,7 @@ function renderInteraction(profile, phase, index, myIndex) {
   else {
     return (
       <div className="interact-button-wrapper">
-        <div className="interact-button">
+        <div className={`interact-button${selectClass}`}>
           <h2>Interact</h2>
         </div>
       </div>
@@ -54,7 +55,7 @@ function renderInteraction(profile, phase, index, myIndex) {
 }
 
 function PlayerCard(props) {
-  const { member, index, myIndex, profile, phase } = props;
+  const { member, index, myIndex, profile, phase, isSelected, } = props;
 
   const playerClass = `papermui player${index === myIndex ? ' my-player' : ''}`;
   return (
@@ -63,7 +64,7 @@ function PlayerCard(props) {
         <h3 className="name">{member}</h3>
         {profile.isAlive ? aliveStatus : deadStatus}
       </div>
-      {renderInteraction(profile, phase, index, myIndex)}
+      {renderInteraction(profile, phase, index, myIndex, isSelected)}
     </div>
   )
 }

@@ -31,7 +31,9 @@ export const initialState = {
     roleCount: {},
     chatHistory: [[]],
     playerProfiles: [],
+    numAbstain: 0,
     myTarget: -1,
+    onTrial: '',
   }
 };
 
@@ -76,23 +78,33 @@ function mafiaReducers(state, action) {
 
       const oldChatHistory =  state.mafia.chatHistory;
       const newChatHistory = oldChatHistory.filter(item => item);
+      let numAbstain = state.mafia.numAbstain;
       newChatHistory[phase].push({audience, message});
 
       const newProfiles = state.mafia.playerProfiles.filter(item => item);
-      if(oldTarget !== -1) {
+      if(oldTarget >= 0) {
         newProfiles[oldTarget].numVotes--;
+      } 
+      else if(oldTarget === -2) {
+        numAbstain--;
       }
-      if(newTarget !== -1) {
+
+      if(newTarget >= 0) {
         newProfiles[newTarget].numVotes++;
+      }
+      else if(newTarget === -2) {
+        numAbstain++;
       }
 
       const newMafiaState = {
         ...state.mafia,
         chatHistory: newChatHistory,
         playerProfiles: newProfiles,
+        numAbstain,
       };
 
       if (action.type === I_VOTED) {
+        console.log('I Voted');
         newMafiaState.myTarget = newTarget;
       }
 
@@ -122,7 +134,16 @@ function mafiaReducers(state, action) {
     case UPDATE_MAIN_TIME: {
       const oldChatHistory =  state.mafia.chatHistory;
       let newChatHistory = oldChatHistory;
+      let newProfiles = state.mafia.playerProfiles;
       if (action.phase !== state.mafia.phase) {
+        if (action.phase % 2 === 0) {
+          newProfiles = state.mafia.playerProfiles.map((val) => {
+            return {
+              numVotes: 0,
+              isAlive: val.isAlive,
+            };
+          });
+        }
         newChatHistory = oldChatHistory.filter(item => item);
         newChatHistory.push([]);
       }
@@ -133,6 +154,7 @@ function mafiaReducers(state, action) {
           ...state.mafia,
           chatHistory: newChatHistory,
           phase: action.phase,
+          playerProfiles: newProfiles,
         }
       };
     }
@@ -147,10 +169,10 @@ function mafiaReducers(state, action) {
           chatHistory: [[]],
           playerProfiles: [],
           myTarget: -1,
+          onTrial: '',
         }
       };
     }
-      
     default: return state;
   }
 }

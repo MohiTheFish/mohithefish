@@ -1,18 +1,20 @@
 import React from 'react';
 
 import './court.scss';
+import { votePlayer } from 'Games/socketHandlers';
+
 export default function Court(props) {
-  const { onTrial } = props;
+  const { onTrial, myIndex, isSelected, numAbstain } = props;
   if (!onTrial) {
     return (
       <div className="flex vertically-center-text empty-court">
         <h2>You need to vote for someone to lynch!</h2>
         <h3>Or you can decide against voting today</h3>
-        <div className="abstain papermui">
+        <div className={ `abstain papermui${isSelected ? ' selected' : ''}`} onClick={() => {votePlayer(myIndex, -2)}}>
           <h2>Abstain</h2>
         </div>
         <h5>*Need a majority to abstain in order to pass the day.</h5>
-        <h2>Number of abstainees: 5</h2>
+        <h2>Number of abstainees: {numAbstain}</h2>
       </div>
     )
   }
@@ -20,8 +22,7 @@ export default function Court(props) {
     <div className="court">
       <div className="on-trial">
         <h2>On trial</h2>
-
-        <h1>Zendaya</h1>
+        <h1>{onTrial}</h1>
 
       </div>
       <div className="court-decision not-guilty-wrapper">

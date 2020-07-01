@@ -50,6 +50,34 @@ function Column3({isDay}) {
     </div>
   )
 }
+
+function mapStateToPropsC2(state, ownProps) {
+
+  return {
+    ...ownProps,
+    numAbstain: state.playState.mafia.numAbstain,
+    targetIndex: state.playState.mafia.myTarget,
+  };
+}
+function Column2({myIndex, phase, targetIndex, numAbstain}) {
+  console.log(targetIndex);
+  return (
+    <div className="column2">
+      <SubscribedPlayerList
+        phase={phase}
+        myIndex={myIndex}
+        targetIndex={targetIndex}
+      />
+      <Court 
+        myIndex={myIndex}
+        isSelected={targetIndex === -2}
+        numAbstain={numAbstain}
+      />
+    </div>
+  );
+}
+const SubcribedColumn2 = connect(mapStateToPropsC2)(Column2);
+
 function Column1() {
   return (
     <div className="column1">
@@ -79,19 +107,6 @@ const SubscribedClock = connect(mapStateToPropsClock)(Clock);
 function handlePlayerClick(index) {
   console.log('voting for ' + index);
 }
-  
-function renderMembers(members, phase, myIndex, playerProfiles) {
-  return members.map( (member, index) => {
-    return <PlayerCard 
-      key={`${member}${index}`} 
-      phase={phase}
-      member={member} 
-      profile={playerProfiles[index]}
-      index={index}
-      myIndex={myIndex}
-    />
-  });
-}
 
 function mapStateToPropsPL(state, ownProps) {
   return {
@@ -104,12 +119,25 @@ function PlayerList(props) {
     phase,
     myIndex,
     playerProfiles,
+    targetIndex,
   } = props;
-
+console.log(targetIndex);
   const [members,] = useState(store.getState().gameData.members);
   return (
     <div className="player-list">
-      {renderMembers(members, phase, myIndex, playerProfiles)}
+      {
+        members.map( (member, index) => {
+          return <PlayerCard 
+            key={`${member}${index}`} 
+            phase={phase}
+            member={member} 
+            profile={playerProfiles[index]}
+            index={index}
+            isSelected={targetIndex === index}
+            myIndex={myIndex}
+          />
+        })
+      }
     </div>
   );
 }
@@ -153,13 +181,7 @@ function Mafia(props) {
       <div className="mafia-game-info">
 
         <Column1 />
-        <div className="column2">
-          <SubscribedPlayerList
-          phase={phase}
-          myIndex={myIndex}/>
-          
-          <Court />
-        </div>
+        <SubcribedColumn2 myIndex={myIndex} phase={phase} />
         <Column3 isDay={isDay}/>
       </div>
     </div>
