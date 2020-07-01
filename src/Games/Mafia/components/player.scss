@@ -67,8 +67,9 @@
       display: flex;
       height: 45px;
       align-items: center;
+      justify-content: space-between;
       .vote-button {
-        width: 100%;
+        width: 45%;
         height: 100%;
         background-color: #64b5f6;
         border-radius: 4px;
@@ -82,9 +83,12 @@
       .vote-button:hover {
         background-color: #ef9a9a;
       }
+      .vote-button.selected {
+
+      }
       .vote-count {
         text-align: center;
-        width: 135px;
+        width: 50%;
         .count {
           margin-top: 5px;
         }

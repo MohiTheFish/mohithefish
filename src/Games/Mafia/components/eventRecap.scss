@@ -4,7 +4,8 @@
   grid-row: 1/2;
   max-height: 550px;
   overflow-y: scroll;
-  overflow-x: unset;
+  overflow-x: hidden;
+  width: 100%;
   
   background-color: white;
   color: black;
@@ -24,10 +25,12 @@
     box-sizing: border-box;
     padding: 0 5px;
     list-style-position: inside;
-
+    width: 100%;
     li {
       margin-top: 5px;
-      width: fit-content;
+      width: 100%;
+      overflow-wrap: break-word;
+      text-align: left;
     }
   }
 }
