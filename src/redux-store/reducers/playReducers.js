@@ -15,6 +15,17 @@ import {
   CLEAR_MAFIA_BOARD,
 } from 'redux-store/actions/mafiaActions';
 
+const defaultMafiaState = {
+  phase: 0,
+  time: 0,
+  role: -1,
+  roleCount: {},
+  chatHistory: [[]],
+  playerProfiles: [],
+  numAbstain: 0,
+  myTarget: -1,
+  onTrial: '',
+}
 export const initialState = {
   time: 0,
   spyfall: {
@@ -24,17 +35,7 @@ export const initialState = {
     locations: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
     secretLocation: "",
   },
-  mafia: {
-    phase: 0,
-    time: 0,
-    role: -1,
-    roleCount: {},
-    chatHistory: [[]],
-    playerProfiles: [],
-    numAbstain: 0,
-    myTarget: -1,
-    onTrial: '',
-  }
+  mafia: defaultMafiaState
 };
 
 const NUM_STATES_LOCATIONS = 3;
@@ -135,6 +136,7 @@ function mafiaReducers(state, action) {
       const oldChatHistory =  state.mafia.chatHistory;
       let newChatHistory = oldChatHistory;
       let newProfiles = state.mafia.playerProfiles;
+      let numAbstain = state.mafia.numAbstain;
       if (action.phase !== state.mafia.phase) {
         if (action.phase % 2 === 0) {
           newProfiles = state.mafia.playerProfiles.map((val) => {
@@ -143,6 +145,7 @@ function mafiaReducers(state, action) {
               isAlive: val.isAlive,
             };
           });
+          numAbstain = 0;
         }
         newChatHistory = oldChatHistory.filter(item => item);
         newChatHistory.push([]);
@@ -155,22 +158,14 @@ function mafiaReducers(state, action) {
           chatHistory: newChatHistory,
           phase: action.phase,
           playerProfiles: newProfiles,
+          numAbstain
         }
       };
     }
     case CLEAR_MAFIA_BOARD: {
       return {
         ...state,
-        mafia: {
-          phase: 0,
-          time: 0,
-          role: -1,
-          roleCount: {},
-          chatHistory: [[]],
-          playerProfiles: [],
-          myTarget: -1,
-          onTrial: '',
-        }
+        mafia: defaultMafiaState
       };
     }
     default: return state;

@@ -67,7 +67,7 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
       gameType: "Locations"
     },
     mafia: {
-      dayTimeLimit: 300, //seconds
+      dayTimeLimit: 5, //seconds
       nightTimeLimit: 1, //seconds
       defenseTimeLimit: 25, //seconds
       numMafia: -1,
