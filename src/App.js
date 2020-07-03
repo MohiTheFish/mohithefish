@@ -44,7 +44,7 @@ function App() {
     <Provider store={store}>
     <HashRouter basename="/">
         <Switch>
-          <Route exact path="/" component={MainPage} />
+          <Route exact path="/" component={Games} />
           <Route path="/testing" component={Testing} /> 
           <Route path="/testcomponent" component={BackToLobby} />
 

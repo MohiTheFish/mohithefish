@@ -153,7 +153,6 @@ export function connectToServer() {
 
   newSocket.on('othersJoined', function(roomInfo){
     store.dispatch(roomUpdated({
-      hostname: roomInfo.hostname,
       roomId: roomInfo.roomId, 
       members: roomInfo.members,
     }));

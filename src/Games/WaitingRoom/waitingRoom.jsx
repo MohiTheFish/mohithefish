@@ -8,7 +8,7 @@ import BackToGameSelect from 'components/BackToGameSelect/backToGameSelect';
 import RoomInfo from './roomInfo';
 import ConnectedChoices from './connectedChoices';
 import { clearRoomInfo } from 'redux-store/actions/gameSetupActions';
-import { ejectFromRoom, connectToServer } from '../socketHandlers';
+import { connectToServer } from '../socketHandlers';
 import store, { saveState } from 'redux-store';
 
 const storageType = sessionStorage;
@@ -24,7 +24,6 @@ function mapStateToPropsWR(state) {
 }
 
 function WaitingRoom(props) {
-  
   const { gamename, username, isConnected, isPlaying } = props;
   
   useEffect(() => {
@@ -37,8 +36,7 @@ function WaitingRoom(props) {
     saveState(store.getState());
   }, [username]);
 
-  if(!gamename) {
-    ejectFromRoom();
+  if(!gamename || !username) {
     store.dispatch(clearRoomInfo());
     return <Redirect to="/games" />;
   }
@@ -46,7 +44,7 @@ function WaitingRoom(props) {
   if (isPlaying) {
     storageType.setItem('gameData', JSON.stringify(store.getState().gameData));
     return (
-      <Redirect push to={`/games/${gamename}/play`} />
+      <Redirect to={`/games/${gamename}/play`} />
     );
   }
 
