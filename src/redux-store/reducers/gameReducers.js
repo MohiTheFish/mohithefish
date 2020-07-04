@@ -106,7 +106,7 @@ export function gameData(state = initialState, action) {
       });
     }
     case ROOM_SETTINGS_UPDATED: {
-      const newSettings = action.settings.settings;
+      const newSettings = action.settings;
 
       return Object.assign({}, state, {
         settings: newSettings,
@@ -120,15 +120,16 @@ export function gameData(state = initialState, action) {
     }
     case VISIBLE_ROOMS: {
       return Object.assign({}, state, {
-        rooms: action.data.rooms,
+        rooms: action.data,
         isLoadingRoom: false, 
       });
     }
     case ROOM_JOINED: {
+      console.log(action.data);
       const { members, roomId, settings: newSettings } = action.data;
       return Object.assign({}, state, {
-        members: members,
-        roomId: roomId,
+        members,
+        roomId,
         myIndex: members.length-1,
         selectedChoice: lobbyStates.JOINED,
         settings: newSettings,
@@ -142,6 +143,7 @@ export function gameData(state = initialState, action) {
         myIndex: spectators.length-1,
         selectedChoice: lobbyStates.JOINED,
         settings: newSettings,
+        spectators,
       })
     }
     case PLAYER_LEFT: {

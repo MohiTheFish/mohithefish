@@ -116,18 +116,11 @@ export function connectToServer() {
   });
 
   newSocket.on('createdRoom', function(roomInfo){
-    store.dispatch(roomCreated({
-      hostname: roomInfo.hostname,
-      roomId: roomInfo.roomId,
-      members: roomInfo.members,
-      isPrivate: roomInfo.isPrivate,
-    }));
+    store.dispatch(roomCreated(roomInfo));
   });
 
   newSocket.on('settingsUpdated', function(settings){
-    store.dispatch(roomSettingsUpdated({
-      settings,
-    }));
+    store.dispatch(roomSettingsUpdated(settings));
   });
   
   newSocket.on('togglePrivate', function(newState){
@@ -135,9 +128,7 @@ export function connectToServer() {
   })
 
   newSocket.on('availableRooms', function(rooms) {
-    store.dispatch(visibleRooms({
-      rooms
-    }));
+    store.dispatch(visibleRooms(rooms));
   });
 
   newSocket.on('needId', function() {
