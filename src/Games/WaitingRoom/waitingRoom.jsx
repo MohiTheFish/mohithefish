@@ -36,13 +36,13 @@ function WaitingRoom(props) {
     saveState(store.getState());
   }, [username]);
 
-  if(!gamename || !username) {
+  if(!gamename) {
     store.dispatch(clearRoomInfo());
     return <Redirect to="/games" />;
   }
 
   if (isPlaying) {
-    storageType.setItem('gameData', JSON.stringify(store.getState().gameData));
+    // storageType.setItem('gameData', JSON.stringify(store.getState().gameData));
     return (
       <Redirect to={`/games/${gamename}/play`} />
     );

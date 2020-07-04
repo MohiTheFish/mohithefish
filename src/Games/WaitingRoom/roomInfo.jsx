@@ -27,13 +27,15 @@ function mapStateToPropsRI(state) {
     selectedChoice: gd.selectedChoice,
     isLoadingRoom: gd.isLoadingRoom,
     members: gd.members,
+    spectators: gd.spectators,
+    isSpectator: gd.isSpectator,
     roomId: gd.roomId,
     myIndex: gd.myIndex,
     rooms: gd.rooms,
   };
 }
 
-function renderMembers(members, myIndex) {
+function renderMembers(members, myIndex, spectators, isSpectator) {
   if (members.length === 0) {
     return (
       <div className="members">
@@ -52,13 +54,33 @@ function renderMembers(members, myIndex) {
           else {
             return (
               <h4 
-                className={index === myIndex ? "my-name" : ""}
-                key={`${m}${index}`}>{m}
+                className={index === myIndex && !isSpectator ? "my-name" : ""}
+                key={`${m}${index}`}>
+                  {m}
               </h4>
             );
           }
         })
       }
+      {
+        spectators.length > 0 
+        ? (<>
+          <h3 className="others spectators">Spectators</h3>
+          {
+            spectators.map((spectator, index) => {
+              return (
+                <h4 
+                className={index === myIndex && isSpectator ? "my-name" : ""}
+                key={`${spectator}${index}`}>
+                  {spectator}
+                </h4>
+              );
+            })
+          }
+          </>)
+        : ''
+      }
+      
     </div>
   );
 }
@@ -107,7 +129,7 @@ function renderStartButton(canEdit, numMembers) {
 }
 
 function RoomInfo(props) {
-  const { isConnected, selectedChoice, roomId, members, myIndex, rooms, isLoadingRoom } = props;
+  const { isConnected, selectedChoice, roomId, members, spectators, isSpectator, myIndex, rooms, isLoadingRoom } = props;
   if (!isConnected || !selectedChoice) { return ""; }
 
   function copyToClipboard(e) {
@@ -161,7 +183,7 @@ function RoomInfo(props) {
         </div>
         <RulesBoard />
         {renderStartButton(canEdit, members.length)}
-        {renderMembers(members, myIndex)}
+        {renderMembers(members, myIndex, spectators, isSpectator)}
       </div>
     );
   }
