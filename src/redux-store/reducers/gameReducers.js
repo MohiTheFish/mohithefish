@@ -23,6 +23,21 @@ import {
   CLEAR_MAFIA_BOARD,
 } from 'redux-store/actions/mafiaActions';
 
+
+const defaultSpyfallSettings = {
+  time: "8", // minutes
+  gameType: "Locations",
+};
+
+const defaultMafiaSettings =  {
+  dayTimeLimit: 300, //seconds
+  nightTimeLimit: 60, //seconds
+  defenseTimeLimit: 25, //seconds
+  numMafia: -1,
+  allowSK: false,
+  allowJoker: false,
+}
+
 export const initialState = process.env.REACT_APP_DESIGN === 'true' 
 ? {
   selectedChoice: lobbyStates.CREATED,
@@ -31,24 +46,15 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
   numPlayers: 4,
   members: ["Mohitheifhs", "other guy", "nobody", 'zendaya', 'is', 'my', 'queen', 'zendaya', 'is', 'my', 'queen'],
   spectators: [],
+  isSpectator: false,
   roomId: "fwef98c09we-89w-efcab-aew-9gfw",
   rooms: [],
   isPlaying: false,
   isUpdating: false,
   settings: {
     isPrivate: true,
-    spyfall: {
-      time: "8", // minutes
-      gameType: "Locations",
-    },
-    mafia: {
-      dayTimeLimit: 300, //seconds
-      nightTimeLimit: 5, //seconds
-      defenseTimeLimit: 25, //seconds
-      numMafia: -1,
-      allowSK: false,
-      allowJoker: false,
-    }
+    spyfall: defaultSpyfallSettings,
+    mafia: defaultMafiaSettings
   }
 }
 : {
@@ -58,24 +64,15 @@ export const initialState = process.env.REACT_APP_DESIGN === 'true'
   numPlayers: 1,
   members: [],
   spectators: [],
+  isSpectator: false,
   roomId: "",
   rooms: [],
   isPlaying: false,
   isUpdating: false,
   settings: {
     isPrivate: true,
-    spyfall: {
-      time: "8", // minutes
-      gameType: "Locations"
-    },
-    mafia: {
-      dayTimeLimit: 5, //seconds
-      nightTimeLimit: 1, //seconds
-      defenseTimeLimit: 25, //seconds
-      numMafia: -1,
-      allowSK: false,
-      allowJoker: false,
-    }
+    spyfall: defaultSpyfallSettings,
+    mafia: defaultMafiaSettings
   }
 }
 
@@ -180,6 +177,8 @@ export function gameData(state = initialState, action) {
         isLoadingRoom: false,
         numPlayers: 1,
         members: [],
+        spectators: [],
+        isSpectator: false,
         roomId: "",
         myIndex: -1,
         rooms: [],
@@ -187,20 +186,14 @@ export function gameData(state = initialState, action) {
         isUpdating: false,
         settings: {
           isPrivate: true,
-          spyfall: {
-            time: "8", // minutes
-            gameType: "Locations",
-          },
-          mafia: {
-            dayTimeLimit: 300, //seconds
-            nightTimeLimit: 60, //seconds
-            defenseTimeLimit: 25, //seconds
-            numMafia: 2,
-            allowSK: false,
-            allowJoker: false,
-          }
+          spyfall: defaultSpyfallSettings,
+          mafia: defaultMafiaSettings
         }
-      })
+      }
+      
+      
+      
+      )
     }
     default:
       return state;
