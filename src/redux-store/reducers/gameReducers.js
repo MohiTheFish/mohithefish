@@ -4,6 +4,7 @@ import {
   VISIBLE_ROOMS,
   ROOM_MEMBERS_UPDATED,
   ROOM_JOINED,
+  ROOM_SPECTATED,
   PLAYER_LEFT,
   SET_IS_PRIVATE,
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
@@ -133,6 +134,16 @@ export function gameData(state = initialState, action) {
         settings: newSettings,
       });
     }
+    case ROOM_SPECTATED: {
+      const { members, roomId, settings: newSettings, spectators } = action.data;
+      return Object.assign({}, state, {
+        members,
+        roomId,
+        myIndex: spectators.length-1,
+        selectedChoice: lobbyStates.JOINED,
+        settings: newSettings,
+      })
+    }
     case PLAYER_LEFT: {
       const { members, myIndex } = state;
       const { index: deletedIndex } = action;
@@ -190,9 +201,6 @@ export function gameData(state = initialState, action) {
           mafia: defaultMafiaSettings
         }
       }
-      
-      
-      
       )
     }
     default:

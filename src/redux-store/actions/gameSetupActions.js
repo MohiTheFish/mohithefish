@@ -6,6 +6,7 @@ export const SET_SETTINGS_IS_UPDATING = "SET_SETTINGS_IS_UPDATING";
 export const ROOM_SETTINGS_UPDATED = "ROOM_SETTINGS_UPDATED";
 export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
 export const ROOM_JOINED = "ROOM_JOINED";
+export const ROOM_SPECTATED = "ROOM_SPECTATED";
 export const PLAYER_LEFT = "PLAYER_LEFT";
 export const SET_IS_PRIVATE = "SET_IS_PRIVATE";
 export const GO_BACK_TO_LOBBY = "GO_BACK_TO_LOBBY";
@@ -71,6 +72,13 @@ export function roomJoined(data) {
     type: ROOM_JOINED,
     data,
   }
+}
+
+export function roomSpectated(data) {
+  return {
+    type: ROOM_SPECTATED,
+    data,
+  };
 }
 
 export function playerLeft(index) {

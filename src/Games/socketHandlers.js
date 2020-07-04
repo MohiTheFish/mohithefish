@@ -12,6 +12,7 @@ import {
   roomUpdated,
   visibleRooms,
   roomJoined,
+  roomSpectated,
   playerLeft,
   roomPrivacyToggled,
   roomSettingsUpdated,
@@ -144,18 +145,15 @@ export function connectToServer() {
   });
 
   newSocket.on('youJoined', function(roomInfo){
-    store.dispatch(roomJoined({
-      roomId: roomInfo.roomId, 
-      members: roomInfo.members,
-      settings: roomInfo.settings
-    }))
+    store.dispatch(roomJoined(roomInfo))
   });
 
+  newSocket.on('youSpectated', function(roomInfo) {
+    store.dispatch(roomSpectated(roomInfo))
+  })
+
   newSocket.on('othersJoined', function(roomInfo){
-    store.dispatch(roomUpdated({
-      roomId: roomInfo.roomId, 
-      members: roomInfo.members,
-    }));
+    store.dispatch(roomUpdated(roomInfo));
   })
 
   newSocket.on('gameStarted', function(gameState){
