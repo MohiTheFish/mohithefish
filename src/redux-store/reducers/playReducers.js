@@ -25,16 +25,18 @@ const defaultMafiaState = {
   numAbstain: 0,
   myTarget: -1,
   onTrial: '',
-}
+};
+const defaultSpyfallState = {
+  selectedLocations: new Map(),
+  selectedNamesByIndex: new Set(),
+  spyIndex: 0,
+  locations: [],
+  secretLocation: "",
+};
+
 export const initialState = {
   time: 0,
-  spyfall: {
-    selectedLocations: new Map(),
-    selectedNamesByIndex: new Set(),
-    spyIndex: 0,
-    locations: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
-    secretLocation: "",
-  },
+  spyfall: defaultSpyfallState,
   mafia: defaultMafiaState
 };
 
@@ -233,13 +235,7 @@ function spyfallReducers(state, action) {
     }
     case CLEAR_SPYFALL_BOARD: {
       return Object.assign({}, state, {
-        spyfall: {
-          selectedLocations: new Map(),
-          selectedNamesByIndex: new Set(),
-          locations: [],
-          spyIndex: 0,
-          secretLocation: "",
-        }
+        spyfall: defaultSpyfallState,
       });
     }
     default:

@@ -9,10 +9,11 @@ import {
 import {
   setIsLoadingRoom,
   roomCreated,
-  roomUpdated,
   visibleRooms,
   roomJoined,
   roomSpectated,
+  setMyIndex,
+  playerAdded,
   playerLeft,
   roomPrivacyToggled,
   roomSettingsUpdated,
@@ -74,13 +75,16 @@ function addMafiaEventListeners(newSocket) {
     newSocket.on('mainTimeUpdate', function(time) {
       store.dispatch(updateMainMafiaTime(time));
     });
+    
     newSocket.on('mafiaChatUpdated', function (data) {
       store.dispatch(chatUpdated(data));
     });
+
     newSocket.on('otherPlayerVotedMafia', function(data) {
       console.log('other player voted');
       store.dispatch(otherPlayerVotedMafia(data));
     });
+
     newSocket.on('iVotedMafia', function(data){
       console.log('I voted');
       store.dispatch(iVotedMafia(data));
@@ -144,7 +148,7 @@ export function connectToServer() {
   })
 
   newSocket.on('othersJoined', function(roomInfo){
-    store.dispatch(roomUpdated(roomInfo));
+    store.dispatch(playerAdded(roomInfo));
   })
 
   newSocket.on('gameStarted', function(gameState){
@@ -169,6 +173,13 @@ export function connectToServer() {
     }
   });
 
+  newSocket.on('myIndex', function(data){
+    store.dispatch(setMyIndex(data));
+  })
+
+  newSocket.on('roomReady', function() {
+    store.dispatch(setIsLoadingRoom(false));
+  })
   newSocket.on('playerLeft', function(index) {
     store.dispatch(playerLeft(index));
   });
@@ -210,11 +221,11 @@ export function updateRoomSettings(settings) {
   socket.emit('updateSettings', [userId, settings]);
 }
 
-export function forceDisconnect() {
-  invalidSocket(socket);
+// export function forceDisconnect() {
+//   invalidSocket(socket);
 
-  socket.emit('forceDisconnect');
-}
+//   socket.emit('forceDisconnect');
+// }
 
 export function getAvailableRooms() {
   invalidSocket(socket);

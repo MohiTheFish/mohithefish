@@ -2,9 +2,10 @@ import {
   SET_IS_LOADINGROOM,
   ROOM_CREATED,
   VISIBLE_ROOMS,
-  ROOM_MEMBERS_UPDATED,
   ROOM_JOINED,
   ROOM_SPECTATED,
+  SET_MY_INDEX,
+  PLAYER_ADDED,
   PLAYER_LEFT,
   SET_IS_PRIVATE,
   SET_IS_LOADING_ROOM_SELECTED_CHOICE,
@@ -97,17 +98,8 @@ export function gameData(state = initialState, action) {
         selectedChoice: lobbyStates.CREATED,
       });
     }
-    case ROOM_MEMBERS_UPDATED: {
-      const { members, roomId } = action.data;
-      return Object.assign({}, state, {
-        members: members,
-        roomId: roomId,
-        myIndex: state.myIndex,
-      });
-    }
     case ROOM_SETTINGS_UPDATED: {
       const newSettings = action.settings;
-
       return Object.assign({}, state, {
         settings: newSettings,
         isUpdating: false,
@@ -146,6 +138,23 @@ export function gameData(state = initialState, action) {
         spectators,
       })
     }
+    case SET_MY_INDEX: {
+      const { members, myIndex } = action.data;
+      return {
+        ...state,
+        members,
+        myIndex,
+        isSpectator: false, 
+        spectators: [],
+      }
+    }
+    case PLAYER_ADDED: {
+      const { members, roomId } = action.data;
+      return Object.assign({}, state, {
+        members: members,
+        roomId: roomId,
+      });
+    }
     case PLAYER_LEFT: {
       const { members, myIndex } = state;
       const { index: deletedIndex } = action;
@@ -173,6 +182,7 @@ export function gameData(state = initialState, action) {
     case CLEAR_SPYFALL_BOARD: {
       return Object.assign({}, state, {
         isPlaying: false,
+        isLoadingRoom: true,
       });
     }
     case SET_IS_PRIVATE: {

@@ -1,12 +1,13 @@
 export const SET_IS_LOADINGROOM = 'SET_IS_LOADINGROOM';
 export const SET_IS_LOADING_ROOM_SELECTED_CHOICE = "SET_IS_LOADING_ROOM_SELECTED_CHOICE";
 export const ROOM_CREATED = "ROOM_CREATED";
-export const ROOM_MEMBERS_UPDATED = "ROOM_MEMBERS_UPDATED";
 export const SET_SETTINGS_IS_UPDATING = "SET_SETTINGS_IS_UPDATING";
 export const ROOM_SETTINGS_UPDATED = "ROOM_SETTINGS_UPDATED";
 export const VISIBLE_ROOMS = "VISIBLE_ROOMS";
 export const ROOM_JOINED = "ROOM_JOINED";
 export const ROOM_SPECTATED = "ROOM_SPECTATED";
+export const SET_MY_INDEX = "SET_MY_INDEX";
+export const PLAYER_ADDED = "PLAYER_ADDED";
 export const PLAYER_LEFT = "PLAYER_LEFT";
 export const SET_IS_PRIVATE = "SET_IS_PRIVATE";
 export const GO_BACK_TO_LOBBY = "GO_BACK_TO_LOBBY";
@@ -36,13 +37,6 @@ export function setIsLoadingRoom(isLoadingRoom) {
 export function roomCreated(data) {
   return {
     type: ROOM_CREATED,
-    data,
-  };
-}
-
-export function roomUpdated(data) {
-  return {
-    type: ROOM_MEMBERS_UPDATED,
     data,
   };
 }
@@ -77,6 +71,20 @@ export function roomJoined(data) {
 export function roomSpectated(data) {
   return {
     type: ROOM_SPECTATED,
+    data,
+  };
+}
+
+export function setMyIndex(data) {
+  return {
+    type: SET_MY_INDEX,
+    data,
+  }
+}
+
+export function playerAdded(data) {
+  return {
+    type: PLAYER_ADDED,
     data,
   };
 }
