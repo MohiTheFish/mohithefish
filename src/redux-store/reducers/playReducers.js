@@ -17,6 +17,7 @@ import {
 
 const defaultMafiaState = {
   phase: 0,
+  isRecapPeriod: true,
   time: 0,
   role: -1,
   roleCount: {},
@@ -135,12 +136,14 @@ function mafiaReducers(state, action) {
       }
     }
     case UPDATE_MAIN_TIME: {
+      console.log(action.data);
+      const [phase, time, isRecapPeriod] = action.data;
       const oldChatHistory =  state.mafia.chatHistory;
       let newChatHistory = oldChatHistory;
       let newProfiles = state.mafia.playerProfiles;
       let numAbstain = state.mafia.numAbstain;
-      if (action.phase !== state.mafia.phase) {
-        if (action.phase % 2 === 0) {
+      if (phase !== state.mafia.phase) {
+        if (phase % 2 === 0) {
           newProfiles = state.mafia.playerProfiles.map((val) => {
             return {
               numVotes: 0,
@@ -154,13 +157,14 @@ function mafiaReducers(state, action) {
       }
       return {
         ...state,
-        time: action.time,
+        time: time,
         mafia: {
           ...state.mafia,
           chatHistory: newChatHistory,
-          phase: action.phase,
+          phase,
+          isRecapPeriod,
           playerProfiles: newProfiles,
-          numAbstain
+          numAbstain,
         }
       };
     }

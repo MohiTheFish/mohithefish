@@ -9,7 +9,7 @@ import { votePlayer } from 'Games/socketHandlers';
 const aliveStatus = <h4 className="alive">Alive</h4>
 const deadStatus = <h4 className="dead">Dead</h4>
 
-function renderInteraction(profile, phase, index, myIndex, isSelected) {
+function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod) {
   if (!profile.isAlive) {
     return (
       <div className="dead-img-wrapper">
@@ -17,7 +17,7 @@ function renderInteraction(profile, phase, index, myIndex, isSelected) {
       </div>
     );
   }
-  if (phase === 0) {
+  if (isRecapPeriod || phase === 0) {
     return (
       <div className="empty-area-wrapper">
         <div className="empty-area">
@@ -55,7 +55,7 @@ function renderInteraction(profile, phase, index, myIndex, isSelected) {
 }
 
 function PlayerCard(props) {
-  const { member, index, myIndex, profile, phase, isSelected, } = props;
+  const { member, index, myIndex, profile, phase, isSelected, isRecapPeriod, } = props;
 
   const playerClass = `papermui player${index === myIndex ? ' my-player' : ''}`;
   return (
@@ -64,7 +64,7 @@ function PlayerCard(props) {
         <h3 className="name">{member}</h3>
         {profile.isAlive ? aliveStatus : deadStatus}
       </div>
-      {renderInteraction(profile, phase, index, myIndex, isSelected)}
+      {renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod)}
     </div>
   )
 }

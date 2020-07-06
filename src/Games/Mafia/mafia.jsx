@@ -52,24 +52,26 @@ function Column3({isDay}) {
 }
 
 function mapStateToPropsC2(state, ownProps) {
-
+  const { numAbstain, myTarget, isRecapPeriod } = state.playState.mafia;
   return {
     ...ownProps,
-    numAbstain: state.playState.mafia.numAbstain,
-    targetIndex: state.playState.mafia.myTarget,
+    numAbstain,
+    targetIndex: myTarget,
+    isRecapPeriod, 
   };
 }
-function Column2({myIndex, phase, targetIndex, numAbstain}) {
-  console.log(targetIndex);
+function Column2({myIndex, phase, targetIndex, isRecapPeriod, numAbstain}) {
   return (
     <div className="column2">
       <SubscribedPlayerList
         phase={phase}
+        isRecapPeriod={isRecapPeriod}
         myIndex={myIndex}
         targetIndex={targetIndex}
       />
-      <Court 
+      <Court
         myIndex={myIndex}
+        isRecapPeriod={isRecapPeriod}
         isSelected={targetIndex === -2}
         numAbstain={numAbstain}
       />
@@ -119,6 +121,7 @@ function PlayerList(props) {
     phase,
     myIndex,
     playerProfiles,
+    isRecapPeriod,
     targetIndex,
   } = props;
 console.log(targetIndex);
@@ -130,6 +133,7 @@ console.log(targetIndex);
           return <PlayerCard 
             key={`${member}${index}`} 
             phase={phase}
+            isRecapPeriod={isRecapPeriod}
             member={member} 
             profile={playerProfiles[index]}
             index={index}
@@ -152,6 +156,13 @@ function Mafia(props) {
     phase,
     isPlaying,
   } = props;
+
+  if(!isPlaying && (process.env.NODE_ENV === 'production' || (process.env.NODE_ENV === 'development' && process.env.REACT_APP_DESIGN === 'false'))) {
+    return (
+      <Redirect to="/games/mafia" />
+    );
+  }
+  
   const theme = interpretPhase(phase);
   const isDay = theme === 'day';
 
@@ -164,12 +175,6 @@ function Mafia(props) {
   : <div className="header-row">
       <h1>Play Mafia</h1>
     </div>
-
-  if(!isPlaying && (process.env.NODE_ENV === 'production' || (process.env.NODE_ENV === 'development' && process.env.REACT_APP_DESIGN === 'false'))) {
-    return (
-      <Redirect to="/games/mafia" />
-    );
-  }
 
   return (
     <div className={`wrapper play-games-wrapper mafia-page-wrapper ${theme}`}>
