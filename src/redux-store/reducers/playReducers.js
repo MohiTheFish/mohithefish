@@ -11,6 +11,8 @@ import {
   START_GAME_MAFIA,
   CHAT_UPDATED,
   OTHER_PLAYER_VOTED,
+  BEGIN_TRIAL,
+  SECONDARY_TIME_UPDATE,
   I_VOTED,
   CLEAR_MAFIA_BOARD,
 } from 'redux-store/actions/mafiaActions';
@@ -18,7 +20,7 @@ import {
 const defaultMafiaState = {
   phase: 0,
   isRecapPeriod: true,
-  time: 0,
+  secondaryTime: 0,
   role: -1,
   roleCount: {},
   chatHistory: [[]],
@@ -136,7 +138,6 @@ function mafiaReducers(state, action) {
       }
     }
     case UPDATE_MAIN_TIME: {
-      console.log(action.data);
       const [phase, time, isRecapPeriod] = action.data;
       const oldChatHistory =  state.mafia.chatHistory;
       let newChatHistory = oldChatHistory;
@@ -157,7 +158,7 @@ function mafiaReducers(state, action) {
       }
       return {
         ...state,
-        time: time,
+        time,
         mafia: {
           ...state.mafia,
           chatHistory: newChatHistory,
@@ -165,6 +166,26 @@ function mafiaReducers(state, action) {
           isRecapPeriod,
           playerProfiles: newProfiles,
           numAbstain,
+        }
+      };
+    }
+    case BEGIN_TRIAL: {
+      const name = action.data;
+      return {
+        ...state,
+        mafia: {
+          ...state.mafia,
+          onTrial: name,
+        }
+      }
+    }
+    case SECONDARY_TIME_UPDATE: {
+      const [phase, secondaryTime] = action.data;
+      return {
+        ...state,
+        mafia: {
+          ...state.mafia,
+          secondaryTime,
         }
       };
     }

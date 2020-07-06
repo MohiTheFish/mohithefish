@@ -1,6 +1,8 @@
 import {UPDATE_MAIN_TIME} from './spyfallActions';
 
 export const START_GAME_MAFIA = 'START_GAME_MAFIA';
+export const SECONDARY_TIME_UPDATE = "SECONDARY_TIME_UPDATE";
+export const BEGIN_TRIAL = "BEGIN_TRIAL";
 export const CLEAR_MAFIA_BOARD = 'CLEAR_MAFIA_BOARD';
 export const CHAT_UPDATED = "CHAT_UPDATED";
 export const OTHER_PLAYER_VOTED = 'OTHER_PLAYER_VOTED';
@@ -20,6 +22,22 @@ export function updateMainMafiaTime(time) {
     type: UPDATE_MAIN_TIME,
     data: time,
   };
+}
+
+export function beginTrial(name) {
+  return {
+    game: 'mafia',
+    type: BEGIN_TRIAL,
+    data: name,
+  };
+}
+
+export function secondaryTimeUpdate(time) {
+  return {
+    game: 'mafia',
+    type: SECONDARY_TIME_UPDATE,
+    data: time,
+  }
 }
 
 export function clearMafiaBoard() {

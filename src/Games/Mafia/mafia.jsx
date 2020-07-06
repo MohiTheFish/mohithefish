@@ -52,15 +52,14 @@ function Column3({isDay}) {
 }
 
 function mapStateToPropsC2(state, ownProps) {
-  const { numAbstain, myTarget, isRecapPeriod } = state.playState.mafia;
+  const { myTarget, isRecapPeriod } = state.playState.mafia;
   return {
     ...ownProps,
-    numAbstain,
     targetIndex: myTarget,
     isRecapPeriod, 
   };
 }
-function Column2({myIndex, phase, targetIndex, isRecapPeriod, numAbstain}) {
+function Column2({myIndex, phase, targetIndex, isRecapPeriod}) {
   return (
     <div className="column2">
       <SubscribedPlayerList
@@ -73,7 +72,6 @@ function Column2({myIndex, phase, targetIndex, isRecapPeriod, numAbstain}) {
         myIndex={myIndex}
         isRecapPeriod={isRecapPeriod}
         isSelected={targetIndex === -2}
-        numAbstain={numAbstain}
       />
     </div>
   );

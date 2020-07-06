@@ -28,7 +28,9 @@ import {
 import {
   startMafia,
   clearMafiaBoard,
+  beginTrial,
   updateMainMafiaTime,
+  secondaryTimeUpdate,
   chatUpdated,
   otherPlayerVotedMafia,
   iVotedMafia,
@@ -75,6 +77,15 @@ function addMafiaEventListeners(newSocket) {
     newSocket.on('mainTimeUpdate', function(time) {
       store.dispatch(updateMainMafiaTime(time));
     });
+
+
+    newSocket.on('beginTrial', function(name) {
+      // console.log(name);
+      store.dispatch(beginTrial(name));
+    })
+    newSocket.on('secondaryTimeUpdate', function(time) {
+      store.dispatch(secondaryTimeUpdate(time));
+    })
     
     newSocket.on('mafiaChatUpdated', function (data) {
       store.dispatch(chatUpdated(data));

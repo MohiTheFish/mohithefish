@@ -2,9 +2,27 @@ import React from 'react';
 
 import './court.scss';
 import { votePlayer } from 'Games/socketHandlers';
+import { connect } from 'react-redux';
 
-export default function Court(props) {
-  const { onTrial, myIndex, isSelected, numAbstain } = props;
+function mapStateToPropsClock(state) {
+  return {
+    time: state.playState.mafia.secondaryTime,
+  };
+}
+function Clock({time}) {
+  const minutes = Math.floor(time / 60); 
+  const seconds = time % 60;
+
+  return (
+    <div className="time-wrapper">
+      <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
+    </div>
+  );
+}
+const SubscribedClock = connect(mapStateToPropsClock)(Clock);
+
+function Court(props) {
+  const { onTrial, myIndex, isRecapPeriod, secondaryTime, isSelected, numAbstain } = props;
   if (!onTrial) {
     return (
       <div className="flex vertically-center-text empty-court">
@@ -23,7 +41,7 @@ export default function Court(props) {
       <div className="on-trial">
         <h2>On trial</h2>
         <h1>{onTrial}</h1>
-
+        <SubscribedClock />
       </div>
       <div className="court-decision not-guilty-wrapper">
         <div className="button">
@@ -66,3 +84,16 @@ export default function Court(props) {
     </div>
   );
 }
+
+function mapStateToProps(state, ownProps) {
+  const { numAbstain, secondaryTime, onTrial, } = state.playState.mafia;
+  return {
+    ...ownProps,
+    numAbstain,
+    secondaryTime,
+    onTrial,
+  }
+}
+
+const SubscribedCourt = connect(mapStateToProps)(Court);
+export default SubscribedCourt;
