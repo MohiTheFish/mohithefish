@@ -17,8 +17,6 @@ function EventRecap(props) {
 
   useLayoutEffect(() => {
     const element = document.getElementById("event-recap");
-    console.log(element.scrollHeight);
-    console.log(element.scrollTop);
     
     if (element.scrollHeight - element.scrollTop < SCROLL_THRESHOLD + CHAT_BOX_HEIGHT) {
       element.scrollTo(0, element.scrollHeight);
