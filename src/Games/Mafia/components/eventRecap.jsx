@@ -3,7 +3,8 @@ import React, {useLayoutEffect} from 'react';
 import {connect} from 'react-redux';
 
 import './eventRecap.scss';
-
+const SCROLL_THRESHOLD = 30;
+const CHAT_BOX_HEIGHT = 550;
 function interpretPhase(phase) {
   const isEven = phase % 2 === 0;
   if (isEven) {
@@ -16,7 +17,12 @@ function EventRecap(props) {
 
   useLayoutEffect(() => {
     const element = document.getElementById("event-recap");
-    element.scrollTo(0, element.scrollHeight);
+    console.log(element.scrollHeight);
+    console.log(element.scrollTop);
+    
+    if (element.scrollHeight - element.scrollTop < SCROLL_THRESHOLD + CHAT_BOX_HEIGHT) {
+      element.scrollTo(0, element.scrollHeight);
+    }
   });
   
   return (
