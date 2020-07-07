@@ -39,7 +39,7 @@ function Column3({isDay}) {
       
       <div className="day-night-time">
         <div className="row">
-          <h1>{isDay ? 'Day' : 'Night '}</h1>
+          <h1>{isDay ? 'Day' : 'Night  '}</h1>
           {isDay ? <Brightness7Icon/> : <Brightness2Icon/>}
         </div>
       </div>
@@ -70,6 +70,7 @@ function Column2({myIndex, phase, targetIndex, isRecapPeriod}) {
       />
       <Court
         myIndex={myIndex}
+        phase={phase}
         isRecapPeriod={isRecapPeriod}
         isSelected={targetIndex === -2}
       />

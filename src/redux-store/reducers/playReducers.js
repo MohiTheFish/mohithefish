@@ -28,6 +28,9 @@ const defaultMafiaState = {
   numAbstain: 0,
   myTarget: -1,
   onTrial: '',
+  myGuiltyDecision: '',
+  numGuilty: 0,
+  numNotGuilty: 0,
 };
 const defaultSpyfallState = {
   selectedLocations: new Map(),
