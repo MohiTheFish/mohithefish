@@ -16,6 +16,18 @@ const MAX_TIME = 600;
 export function isValidTimeLimit(time) {
   return /^\d+$/.test(time) && Number.parseInt(time) <= MAX_TIME;
 }
+export function isValidDayTimeLimit(time) {
+  const isInteger = /^(\+|-)?\d+$/.test(time);
+  if (!isInteger) {
+    return 'Must be an integer at most 600.';
+  }
+  const sizeMet = Number.parseInt(time) <= MAX_TIME;
+  if (!sizeMet) {
+    return 'Too large';
+  }
+  return '';
+
+}
 export function isValidMafia(num) {
   const isInteger = /^(\+|-)?\d+$/.test(num);
   if (!isInteger) {
@@ -84,12 +96,12 @@ function MafiaSettings(props) {
   const [defenseTimeLimit, setDefenseTimeLimit] = useState(store.getState().gameData.settings.mafia.defenseTimeLimit);
   const [numMafia, setNumMafia] = useState(store.getState().gameData.settings.mafia.numMafia);
 
-  const isValidDayTime = isValidTimeLimit(dayTimeLimit);
+  const dayTimeMessage = isValidDayTimeLimit(dayTimeLimit);
   const isValidNightTime = isValidTimeLimit(nightTimeLimit);
   const isValidDefenseTime = isValidTimeLimit(defenseTimeLimit);
   const mafiaMessage = isValidMafia(numMafia);
 
-  const allValid = isValidDayTime && isValidNightTime && isValidDefenseTime && !mafiaMessage;
+  const allValid = !dayTimeMessage && isValidNightTime && isValidDefenseTime && !mafiaMessage;
   
   const settings = {
     isPrivate: isLobbyPrivate, 
@@ -107,9 +119,10 @@ function MafiaSettings(props) {
       <div className="settings-wrapper mafia-settings">
         { showPrivacy ? <PrivateSwitch /> : ''}
 
-        <TimeLimit time={dayTimeLimit} setTime={setDayTimeLimit} validTime={isValidDayTime}>
+        <TimeLimit time={dayTimeLimit} setTime={setDayTimeLimit} validTime={!dayTimeMessage}>
           <h3>How long is the day phase?</h3>
-          <FormHelperText>Must be an integer at most {MAX_TIME}</FormHelperText>
+          <FormHelperText>{dayTimeMessage}</FormHelperText>
+          <h6>A negative value will have day time continue until everyone abstains or someone is killed.</h6>
         </TimeLimit>
 
         <TimeLimit time={nightTimeLimit} setTime={setNightTimeLimit} validTime={isValidNightTime}>
