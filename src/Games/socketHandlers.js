@@ -284,11 +284,19 @@ export function sendMafiaMessage(message, myIndex) {
 
 export function votePlayer(myIndex, targetIndex) {
   invalidSocket(socket);
-  console.log('myIndex:' + myIndex);
-  console.log('targetIndex:' + targetIndex);
+  
   socket.emit('voteMafiaPlayer', {
     userId,
     myIndex,
     targetIndex,
+  });
+}
+
+export function voteGuiltyMafia(myIndex, decision) {
+  invalidSocket(socket);
+  socket.emit('voteMafiaGuilty', {
+    userId,
+    myIndex,
+    decision,
   });
 }
