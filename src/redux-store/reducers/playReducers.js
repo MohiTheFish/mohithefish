@@ -15,6 +15,8 @@ import {
   SECONDARY_TIME_UPDATE,
   I_VOTED,
   CLEAR_MAFIA_BOARD,
+  OTHER_PLAYER_GUILTY_VOTED,
+  I_GUILTY_VOTED,
 } from 'redux-store/actions/mafiaActions';
 
 const defaultMafiaState = {
@@ -28,6 +30,7 @@ const defaultMafiaState = {
   numAbstain: 0,
   myTarget: -1,
   onTrial: '',
+  isDefending: true,
   myGuiltyDecision: '',
   numGuilty: 0,
   numNotGuilty: 0,
@@ -122,6 +125,63 @@ function mafiaReducers(state, action) {
         mafia: newMafiaState,
       }
     }
+    
+    case I_GUILTY_VOTED: //These two cases will be identical, apart from setting the myGuiltyDecision field
+    case OTHER_PLAYER_GUILTY_VOTED: {
+      const {
+        audience,
+        phase,
+        message,
+        newDecision,
+        oldDecision,
+      } = action;
+
+      const oldChatHistory =  state.mafia.chatHistory;
+      const newChatHistory = oldChatHistory.filter(item => item);
+      newChatHistory[phase].push({audience, message});
+
+      let numGuilty = state.mafia.numGuilty;
+      let numNotGuilty = state.mafia.numNotGuilty;
+      if (oldDecision === '') {
+        if (newDecision[0] === 'g') {
+          numGuilty++;
+        }
+        else if (newDecision[0] === 'n') {
+          numNotGuilty++;
+        }
+      }
+      else if (oldDecision[0] === 'g') {
+        numGuilty--;
+        if (newDecision[0] === 'n') {
+          numNotGuilty++;
+        }
+      }
+      else if (oldDecision[0] === 'n') {
+        numNotGuilty--;
+        if (newDecision[0] === 'g') {
+          numGuilty++;
+        }
+
+      }
+
+      const newMafiaState = {
+        ...state.mafia,
+        chatHistory: newChatHistory,
+        numGuilty,
+        numNotGuilty,
+      };
+
+      if (action.type === I_GUILTY_VOTED) {
+        console.log('I Voted Guilty');
+        newMafiaState.myGuiltyDecision = newDecision;
+      }
+
+      return {
+        ...state,
+        mafia: newMafiaState,
+      }
+    }
+
     case CHAT_UPDATED: {
       const {audience, phase, message} = action;
       const oldChatHistory =  state.mafia.chatHistory;
@@ -183,12 +243,13 @@ function mafiaReducers(state, action) {
       }
     }
     case SECONDARY_TIME_UPDATE: {
-      const [phase, secondaryTime] = action.data;
+      const [phase, secondaryTime, isDefending] = action.data;
       return {
         ...state,
         mafia: {
           ...state.mafia,
           secondaryTime,
+          isDefending,
         }
       };
     }

@@ -25,7 +25,7 @@ function Clock({time}) {
 const SubscribedClock = connect(mapStateToPropsClock)(Clock);
 
 function Court(props) {
-  const { onTrial, myIndex, phase, isRecapPeriod, isSelected, numAbstain, numGuilty, numNotGuilty, myGuiltyDecision } = props;
+  const { onTrial, isDefending, myIndex, phase, isRecapPeriod, isSelected, numAbstain, numGuilty, numNotGuilty, myGuiltyDecision } = props;
   function voteGuilty() {
     voteGuiltyMafia(myIndex, 'guilty');
   }
@@ -56,9 +56,10 @@ function Court(props) {
       );
     }
     // IS on trial && isDay
+    console.log('myGuiltyDecision:' + myGuiltyDecision);
     let notGuiltyClass = `papermui button`;
     let guiltyClass = `papermui button`;
-    if (!myGuiltyDecision) {
+    if (myGuiltyDecision !== '') {
       const isG = myGuiltyDecision[0] === 'g';
       if (isG) {
         notGuiltyClass += ' inactive';
@@ -77,24 +78,31 @@ function Court(props) {
           <SubscribedClock />
           <h4>Need a simple majority (more guilty votes than non-guilty).</h4>
         </div>
-        <div className="court-decision not-guilty-wrapper">
-          <div className={notGuiltyClass} onClick={voteNotGuilty}>
-            <h2>Not Guilty</h2>
+        {
+          !isDefending
+          ? 
+          <>
+          <div className="court-decision not-guilty-wrapper">
+            <div className={notGuiltyClass} onClick={voteNotGuilty}>
+              <h2>Not Guilty</h2>
+            </div>
+            <div className="voters">
+              <h3>Total Votes</h3>
+              <h2>{numNotGuilty}</h2>
+            </div>
           </div>
-          <div className="voters">
-            <h3>Total Votes</h3>
-            <h2>{numNotGuilty}</h2>
+          <div className="court-decision guilty-wrapper">
+            <div className={guiltyClass} onClick={voteGuilty}>
+              <h2>Guilty</h2>
+            </div>
+            <div className="voters">
+              <h3>Total Votes</h3>
+              <h2>{numGuilty}</h2>
+            </div>
           </div>
-        </div>
-        <div className="court-decision guilty-wrapper">
-          <div className={guiltyClass} onClick={voteGuilty}>
-            <h2>Guilty</h2>
-          </div>
-          <div className="voters">
-            <h3>Total Votes</h3>
-            <h2>{numGuilty}</h2>
-          </div>
-        </div>
+          </>
+          : ''
+        }
       </div>
     );
   }
@@ -108,11 +116,12 @@ function Court(props) {
 }
 
 function mapStateToProps(state, ownProps) {
-  const { numAbstain, onTrial, numGuilty, numNotGuilty, myGuiltyDecision} = state.playState.mafia;
+  const { numAbstain, onTrial, isDefending, numGuilty, numNotGuilty, myGuiltyDecision} = state.playState.mafia;
   return {
     ...ownProps,
     numAbstain,
     onTrial,
+    isDefending,
     numGuilty,
     numNotGuilty,
     myGuiltyDecision,

@@ -7,6 +7,8 @@ export const CLEAR_MAFIA_BOARD = 'CLEAR_MAFIA_BOARD';
 export const CHAT_UPDATED = "CHAT_UPDATED";
 export const OTHER_PLAYER_VOTED = 'OTHER_PLAYER_VOTED';
 export const I_VOTED = 'I_VOTED';
+export const OTHER_PLAYER_GUILTY_VOTED = 'OTHER_PLAYER_GUILTY_VOTED';
+export const I_GUILTY_VOTED = 'I_GUILTY_VOTED';
 
 export function startMafia(gameState) {
   return {
@@ -69,4 +71,20 @@ export function iVotedMafia(data) {
     type: I_VOTED,
     ...data,
   };
+}
+
+export function otherPlayerGuiltyVotedMafia(data) {
+  return {
+    game: 'mafia',
+    type: OTHER_PLAYER_GUILTY_VOTED,
+    ...data,
+  }
+}
+
+export function iGuiltyVotedMafia(data) {
+  return {
+    game: 'mafia',
+    type: I_GUILTY_VOTED,
+    ...data,
+  }
 }
