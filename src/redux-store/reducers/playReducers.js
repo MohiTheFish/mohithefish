@@ -17,6 +17,7 @@ import {
   CLEAR_MAFIA_BOARD,
   OTHER_PLAYER_GUILTY_VOTED,
   I_GUILTY_VOTED,
+  COURT_RESULT,
 } from 'redux-store/actions/mafiaActions';
 
 const defaultMafiaState = {
@@ -34,6 +35,8 @@ const defaultMafiaState = {
   myGuiltyDecision: '',
   numGuilty: 0,
   numNotGuilty: 0,
+
+  iAmDead: false,
 };
 const defaultSpyfallState = {
   selectedLocations: new Map(),
@@ -257,6 +260,50 @@ function mafiaReducers(state, action) {
           isDefending,
         }
       };
+    }
+    case COURT_RESULT: {
+      const {
+        message,
+        audience,
+        phase,
+        isAlive,
+        killedIndex,
+      } = action.data;
+      console.log(action.data);
+      const oldChatHistory =  state.mafia.chatHistory;
+      const newChatHistory = oldChatHistory.filter(item => item);
+      newChatHistory[phase].push({audience, message});
+      let myNewTarget = state.mafia.myTarget;
+      // If targeting player on trial, our new target will be nobody.
+      if (killedIndex === state.mafia.myTarget) {
+        myNewTarget = -1;
+      }
+      const newProfiles = state.mafia.playerProfiles.filter(item => item);
+      const profile = newProfiles[killedIndex];
+      profile.numVotes = 0;
+      profile.isAlive = isAlive;
+      let iAmDead = state.mafia.iAmDead;
+      if(!isAlive && store.getState().gameData.myIndex  === killedIndex) {
+        iAmDead = true;
+      }
+      
+      return {
+        ...state,
+        mafia: {
+          ...state.mafia,
+          chatHistory: newChatHistory,
+          myTarget: myNewTarget,
+          playerProfiles: newProfiles,
+          myGuiltyDecision: '',
+          numGuilty: 0,
+          numNotGuilty: 0,
+          onTrial: -1,
+          isDefending: true,
+          iAmDead,
+        }
+      };
+
+
     }
     case CLEAR_MAFIA_BOARD: {
       return {

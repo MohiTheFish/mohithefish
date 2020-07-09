@@ -36,6 +36,7 @@ import {
   iVotedMafia,
   otherPlayerGuiltyVotedMafia,
   iGuiltyVotedMafia,
+  courtResult,
 } from 'redux-store/actions/mafiaActions';
 
 var socket = null;
@@ -111,6 +112,10 @@ function addMafiaEventListeners(newSocket) {
     newSocket.on('iVotedGuiltyDecision', function(data) {
       store.dispatch(iGuiltyVotedMafia(data));
     });
+
+    newSocket.on('courtResult', function(data) {
+      store.dispatch(courtResult(data));
+    })
     
   }
 }

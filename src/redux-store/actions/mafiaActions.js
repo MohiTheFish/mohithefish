@@ -9,6 +9,7 @@ export const OTHER_PLAYER_VOTED = 'OTHER_PLAYER_VOTED';
 export const I_VOTED = 'I_VOTED';
 export const OTHER_PLAYER_GUILTY_VOTED = 'OTHER_PLAYER_GUILTY_VOTED';
 export const I_GUILTY_VOTED = 'I_GUILTY_VOTED';
+export const COURT_RESULT = 'COURT_RESULT';
 
 export function startMafia(gameState) {
   return {
@@ -86,5 +87,13 @@ export function iGuiltyVotedMafia(data) {
     game: 'mafia',
     type: I_GUILTY_VOTED,
     ...data,
+  }
+}
+
+export function courtResult(data) {
+  return {
+    game: 'mafia',
+    type: COURT_RESULT,
+    data,
   }
 }
