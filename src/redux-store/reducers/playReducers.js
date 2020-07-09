@@ -1,3 +1,4 @@
+import store from 'redux-store';
 import {
   HANDLE_LOCATION_SPYFALL,
   ADD_NAME_SPYFALL,
@@ -256,6 +257,7 @@ function mafiaReducers(state, action) {
         ...state,
         mafia: {
           ...state.mafia,
+          phase,
           secondaryTime,
           isDefending,
         }
@@ -283,7 +285,8 @@ function mafiaReducers(state, action) {
       profile.numVotes = 0;
       profile.isAlive = isAlive;
       let iAmDead = state.mafia.iAmDead;
-      if(!isAlive && store.getState().gameData.myIndex  === killedIndex) {
+      console.log(state);
+      if(!isAlive && state.myIndex  === killedIndex) {
         iAmDead = true;
       }
       

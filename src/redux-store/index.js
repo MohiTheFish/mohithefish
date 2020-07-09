@@ -1,8 +1,5 @@
 import { createStore } from 'redux';
-import MohiApp from './reducers';
-import {initialState as initialGameData} from './reducers/gameReducers';
-import {initialState as initialGameCredentialState} from './reducers/nameReducers';
-import {initialState as initialPlayState} from './reducers/playReducers';
+import MohiApp, {defaultState} from './reducers';
 
 /**
  * REDUX WORK FLOW
@@ -15,12 +12,6 @@ import {initialState as initialPlayState} from './reducers/playReducers';
  * Maybe 4) Sometimes you may want to create a whole separate data flow. Simply create the relevant files
  *  and then make sure to update this default state to include those changes. 
  */
-const defaultState = {
-  gameData: initialGameData,
-  gameCredentials: initialGameCredentialState,
-  playState: initialPlayState,
-};
-
 export const storageType = sessionStorage;
 
 function loadState() {
@@ -45,10 +36,10 @@ function loadState() {
     myState.gameData = gameData;
   }
   else {
-    myState.gameData = initialGameData;
+    myState.gameData = defaultState.gameData;
   }
 
-  myState.playState = initialPlayState;
+  myState.playState = defaultState.playState;
 
   return myState;
 }

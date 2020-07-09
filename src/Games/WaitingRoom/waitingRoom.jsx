@@ -11,7 +11,7 @@ import { clearRoomInfo } from 'redux-store/actions/gameSetupActions';
 import { connectToServer } from '../socketHandlers';
 import store, { saveState } from 'redux-store';
 
-const storageType = sessionStorage;
+// const storageType = sessionStorage;
 
 function mapStateToPropsWR(state) {
   const { gamename, username, isConnected } = state.gameCredentials

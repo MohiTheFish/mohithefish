@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
@@ -52,11 +51,12 @@ function Column3({isDay}) {
 }
 
 function mapStateToPropsC2(state, ownProps) {
-  const { myTarget, isRecapPeriod } = state.playState.mafia;
+  const { myTarget, isRecapPeriod, iAmDead } = state.playState.mafia;
   return {
     ...ownProps,
     targetIndex: myTarget,
     isRecapPeriod, 
+    iAmDead,
   };
 }
 function Column2({myIndex, phase, targetIndex, isRecapPeriod}) {
