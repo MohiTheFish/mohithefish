@@ -35,7 +35,8 @@ const defaultMafiaSettings =  {
   dayTimeLimit: 300, //seconds
   // nightTimeLimit: 60, //seconds
   nightTimeLimit: 2, //seconds
-  defenseTimeLimit: 25, //seconds
+  // defenseTimeLimit: 25, //seconds
+  defenseTimeLimit: 2, 
   numMafia: -1,
   allowSK: false,
   allowJoker: false,

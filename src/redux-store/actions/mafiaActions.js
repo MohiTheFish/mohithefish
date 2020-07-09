@@ -26,11 +26,11 @@ export function updateMainMafiaTime(time) {
   };
 }
 
-export function beginTrial(name) {
+export function beginTrial(nameIndex) {
   return {
     game: 'mafia',
     type: BEGIN_TRIAL,
-    data: name,
+    data: nameIndex,
   };
 }
 

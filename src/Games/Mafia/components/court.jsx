@@ -25,7 +25,21 @@ function Clock({time}) {
 const SubscribedClock = connect(mapStateToPropsClock)(Clock);
 
 function Court(props) {
-  const { onTrial, isDefending, myIndex, phase, isRecapPeriod, isSelected, numAbstain, numGuilty, numNotGuilty, myGuiltyDecision } = props;
+  const {
+    onTrialName,
+    onTrialIndex,
+    isDefending,
+    myIndex,
+    phase,
+    isRecapPeriod,
+    isSelected,
+    numAbstain,
+    numGuilty,
+    numNotGuilty,
+    myGuiltyDecision,
+  } = props;
+
+  const iAmOnTrial = onTrialIndex === myIndex;
   function voteGuilty() {
     voteGuiltyMafia(myIndex, 'guilty');
   }
@@ -34,7 +48,7 @@ function Court(props) {
     voteGuiltyMafia(myIndex, 'not guilty');
   }
   if(phase%2 === 0){ //isDay
-    if (!onTrial) { //no one on trial && isDay
+    if (!onTrialName) { //no one on trial && isDay
       if (!isRecapPeriod) { // is not RecapPeriod && no one on trial && isDay
         return (
           <div className="flex vertically-center-text empty-court">
@@ -74,7 +88,7 @@ function Court(props) {
       <div className="court">
         <div className="on-trial">
           <h2>On Trial</h2>
-          <h1>{onTrial}</h1>
+          <h1>{onTrialName}</h1>
           <SubscribedClock />
           <h4>Need a simple majority (more guilty votes than non-guilty).</h4>
         </div>
@@ -116,11 +130,13 @@ function Court(props) {
 }
 
 function mapStateToProps(state, ownProps) {
+  const members = state.gameData.members;
   const { numAbstain, onTrial, isDefending, numGuilty, numNotGuilty, myGuiltyDecision} = state.playState.mafia;
   return {
     ...ownProps,
     numAbstain,
-    onTrial,
+    onTrialName: members[onTrial],
+    onTrialIndex: onTrial,
     isDefending,
     numGuilty,
     numNotGuilty,

@@ -29,7 +29,7 @@ const defaultMafiaState = {
   playerProfiles: [],
   numAbstain: 0,
   myTarget: -1,
-  onTrial: '',
+  onTrial: -1,
   isDefending: true,
   myGuiltyDecision: '',
   numGuilty: 0,
@@ -233,12 +233,17 @@ function mafiaReducers(state, action) {
       };
     }
     case BEGIN_TRIAL: {
-      const name = action.data;
+      const {audience, phase, name, onTrial} = action.data;
+      const oldChatHistory =  state.mafia.chatHistory;
+      const newChatHistory = oldChatHistory.filter(item => item);
+      newChatHistory[phase].push({audience, message: `${name} is on trial!`})
+      
       return {
         ...state,
         mafia: {
           ...state.mafia,
-          onTrial: name,
+          chatHistory: newChatHistory,
+          onTrial,
         }
       }
     }
