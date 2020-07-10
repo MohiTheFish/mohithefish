@@ -51,7 +51,7 @@ function Column3({isDay}) {
 }
 
 function mapStateToPropsC2(state, ownProps) {
-  const { myTarget, isRecapPeriod, iAmDead } = state.playState.mafia;
+  const { myTarget, isRecapPeriod, iAmDead, onTrial } = state.playState.mafia;
   return {
     ...ownProps,
     targetIndex: myTarget,
@@ -59,7 +59,7 @@ function mapStateToPropsC2(state, ownProps) {
     iAmDead,
   };
 }
-function Column2({myIndex, phase, targetIndex, isRecapPeriod}) {
+function Column2({myIndex, phase, targetIndex, isRecapPeriod, iAmDead}) {
   return (
     <div className="column2">
       <SubscribedPlayerList
@@ -67,12 +67,14 @@ function Column2({myIndex, phase, targetIndex, isRecapPeriod}) {
         isRecapPeriod={isRecapPeriod}
         myIndex={myIndex}
         targetIndex={targetIndex}
+        iAmDead={iAmDead}
       />
       <Court
         myIndex={myIndex}
         phase={phase}
         isRecapPeriod={isRecapPeriod}
         isSelected={targetIndex === -2}
+        iAmDead={iAmDead}
       />
     </div>
   );
@@ -112,6 +114,7 @@ function handlePlayerClick(index) {
 function mapStateToPropsPL(state, ownProps) {
   return {
     ...ownProps,
+    someoneOnTrial: state.playState.mafia.onTrial>=0,
     playerProfiles: state.playState.mafia.playerProfiles,
   }
 }
@@ -122,6 +125,8 @@ function PlayerList(props) {
     playerProfiles,
     isRecapPeriod,
     targetIndex,
+    someoneOnTrial,
+    iAmDead,
   } = props;
 console.log(targetIndex);
   const [members,] = useState(store.getState().gameData.members);
@@ -138,6 +143,8 @@ console.log(targetIndex);
             index={index}
             isSelected={targetIndex === index}
             myIndex={myIndex}
+            someoneOnTrial={someoneOnTrial}
+            iAmDead={iAmDead}
           />
         })
       }

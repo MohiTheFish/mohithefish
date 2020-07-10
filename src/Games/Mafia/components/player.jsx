@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,13 +9,27 @@ import { votePlayer } from 'Games/socketHandlers';
 const aliveStatus = <h4 className="alive">Alive</h4>
 const deadStatus = <h4 className="dead">Dead</h4>
 
-function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod) {
+function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead) {
+  
   if (!profile.isAlive) {
     return (
       <div className="dead-img-wrapper">
         <img className="dead-img" alt="dead" src={deadimg} />
       </div>
     );
+  }
+  if (iAmDead) {
+    return (
+      <div className="vote-button-wrapper">
+        <div>
+          <h4>You have died. You can no longer interact</h4>
+        </div>
+        <div className="vote-count">
+          <h4>Role:</h4>
+          <h4>Villager</h4>
+        </div>
+      </div>
+    )
   }
   if (isRecapPeriod || phase === 0) {
     return (
@@ -28,14 +42,21 @@ function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPe
   }
   
   const isDay = phase % 2 === 0;
-  const selectClass = `${isSelected ? ' selected' : ''}`;
+  let selectClass = '';
+  if(isSelected) {
+    selectClass="selected ";
+  }
+  if(someoneOnTrial) {
+    selectClass +="disabled";
+  }
   if (isDay) {
     function onClick() {
+      if(someoneOnTrial) {return;}
       votePlayer(myIndex, index);
     }
     return (
       <div className="vote-button-wrapper">
-        <div className={`vote-button${selectClass}`} onClick={onClick}><h2>Vote</h2></div>
+        <div className={`vote-button ${selectClass}`} onClick={onClick}><h2>Vote</h2></div>
         <div className="vote-count">
           <h4>Total count</h4>
           <h4 className="count">{profile.numVotes}</h4>
@@ -55,7 +76,7 @@ function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPe
 }
 
 function PlayerCard(props) {
-  const { member, index, myIndex, profile, phase, isSelected, isRecapPeriod, } = props;
+  const { member, index, myIndex, profile, phase, isSelected, isRecapPeriod, someoneOnTrial, iAmDead, } = props;
 
   const playerClass = `papermui player${index === myIndex ? ' my-player' : ''}`;
   return (
@@ -64,7 +85,7 @@ function PlayerCard(props) {
         <h3 className="name">{member}</h3>
         {profile.isAlive ? aliveStatus : deadStatus}
       </div>
-      {renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod)}
+      {renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead)}
     </div>
   )
 }

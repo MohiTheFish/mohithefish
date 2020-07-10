@@ -1,5 +1,6 @@
 .empty-court {
 
+  flex: 1;
   .abstain {
     padding: 5px;
     width: 200px;
@@ -14,17 +15,16 @@
     background-color: #4dd0e1;
   }
 }
-.flex {
-  flex: 1;
-}
 .court {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
   
   .court-decision {
-    .button {
+    .button-padding {
       padding: 10px;
+    }
+    .button {
       cursor: pointer;
       transition-duration: .3s;
     }

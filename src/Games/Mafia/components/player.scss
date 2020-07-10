@@ -31,7 +31,7 @@
     .dead-img-wrapper {
       height: 40px;
       width: 40px;
-      margin: auto;;
+      margin: auto;
       .dead-img {
         height: 40px;
         width: 40px;
@@ -88,6 +88,14 @@
       .vote-button.selected {
         background-color: #e98181;
         transition-duration: .2s;
+      }
+      .vote-button.disabled {
+        cursor: not-allowed;
+        background-color: gray;
+      }
+      .vote-button.selected.disabled {
+        background-color: #995656;
+
       }
       .vote-count {
         text-align: center;
