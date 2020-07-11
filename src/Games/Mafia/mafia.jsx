@@ -128,8 +128,9 @@ function PlayerList(props) {
     someoneOnTrial,
     iAmDead,
   } = props;
-console.log(targetIndex);
+  
   const [members,] = useState(store.getState().gameData.members);
+  console.log(playerProfiles);
   return (
     <div className="player-list">
       {

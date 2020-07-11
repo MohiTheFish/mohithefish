@@ -21,7 +21,42 @@ import {
   COURT_RESULT,
 } from 'redux-store/actions/mafiaActions';
 
-const defaultMafiaState = {
+const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
+  phase: 2,
+  isRecapPeriod: false,
+  secondaryTime: 0,
+  role: -1,
+  roleCount: {},
+  chatHistory: [
+    [{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},],
+    [{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},{audience: 0, message: 'bye'},],
+    [{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},{audience: 0, message: 'cya'},],
+    [{audience: 0, message: 'my name is alexander hamilton'},{audience: 0, message: 'my name is alexander hamilton'},{audience: 0, message: 'my name is alexander hamilton'},{audience: 0, message: 'my name is alexander hamilton'},{audience: 0, message: 'my name is alexander hamilton'},],
+    [{audience: 0, message: 'lafayette'}]
+  ],
+  playerProfiles: [
+    {numVotes: 0, isAlive: true},
+    {numVotes: 0, isAlive: true},
+    {numVotes: 0, isAlive: true}, 
+    {numVotes: 0, isAlive: true},
+    {numVotes: 0, isAlive: true},
+    {numVotes: 0, isAlive: true}, 
+    {numVotes: 0, isAlive: true},
+    {numVotes: 0, isAlive: true},
+    {numVotes: 0, isAlive: true},
+    {numVotes: 0, isAlive: true},
+    {numVotes: 0, isAlive: true}
+  ],
+  numAbstain: 0,
+  myTarget: -1,
+  onTrial: -1,
+  isDefending: true,
+  myGuiltyDecision: '',
+  numGuilty: 0,
+  numNotGuilty: 0,
+
+  iAmDead: false,
+} : {
   phase: 0,
   isRecapPeriod: true,
   secondaryTime: 0,
@@ -38,6 +73,7 @@ const defaultMafiaState = {
   numNotGuilty: 0,
 
   iAmDead: false,
+
 };
 const defaultSpyfallState = {
   selectedLocations: new Map(),
