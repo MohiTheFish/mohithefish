@@ -19,6 +19,7 @@ import {
   OTHER_PLAYER_GUILTY_VOTED,
   I_GUILTY_VOTED,
   COURT_RESULT,
+  USED_POWER,
 } from 'redux-store/actions/mafiaActions';
 
 const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
@@ -341,8 +342,23 @@ function mafiaReducers(state, action) {
           iAmDead,
         }
       };
+    }
+    case USED_POWER: {
+      const { message, audience, phase, myIndex, targetIndex } = action.data;
+      const oldChatHistory =  state.mafia.chatHistory;
+      const newChatHistory = oldChatHistory.filter(item => item);
+      newChatHistory[phase].push({audience, message});
 
-
+      const isMe = myIndex === state.myIndex;
+      console.log('used power and isMe:' + isMe);
+      return {
+        ...state,
+        mafia: {
+          ...state.mafia,
+          myTarget: isMe ? targetIndex : state.mafia.myTarget,
+          chatHistory: newChatHistory,
+        }
+      };
     }
     case CLEAR_MAFIA_BOARD: {
       return {

@@ -10,6 +10,7 @@ export const I_VOTED = 'I_VOTED';
 export const OTHER_PLAYER_GUILTY_VOTED = 'OTHER_PLAYER_GUILTY_VOTED';
 export const I_GUILTY_VOTED = 'I_GUILTY_VOTED';
 export const COURT_RESULT = 'COURT_RESULT';
+export const USED_POWER = 'USED_POWER';
 
 export function startMafia(gameState) {
   return {
@@ -95,5 +96,13 @@ export function courtResult(data) {
     game: 'mafia',
     type: COURT_RESULT,
     data,
-  }
+  };
+}
+
+export function usedPower(data) {
+  return {
+    game: 'mafia',
+    type: USED_POWER,
+    data,
+  };
 }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import deadimg from 'assets/images/dead.png';
 import './player.scss';
-import { votePlayer } from 'Games/socketHandlers';
+import { votePlayer, interactMafia } from 'Games/socketHandlers';
 
 const aliveStatus = <h4 className="alive">Alive</h4>
 const deadStatus = <h4 className="dead">Dead</h4>
@@ -65,9 +65,12 @@ function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPe
     );
   } 
   else {
+    function interact() {
+      interactMafia(myIndex, index);
+    }
     return (
       <div className="interact-button-wrapper">
-        <div className={`interact-button${selectClass}`}>
+        <div className={`interact-button ${selectClass}`} onClick={interact}>
           <h2>Interact</h2>
         </div>
       </div>

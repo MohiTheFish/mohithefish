@@ -51,7 +51,7 @@ function Column3({isDay}) {
 }
 
 function mapStateToPropsC2(state, ownProps) {
-  const { myTarget, isRecapPeriod, iAmDead, onTrial } = state.playState.mafia;
+  const { myTarget, isRecapPeriod, iAmDead } = state.playState.mafia;
   return {
     ...ownProps,
     targetIndex: myTarget,
