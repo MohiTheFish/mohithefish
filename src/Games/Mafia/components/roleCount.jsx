@@ -24,13 +24,11 @@ function RoleItem(props) {
 }
 
 function mapStateToProps(state) {
-  console.log(state.playState.mafia.roleCount);
   return {
     roleCount: state.playState.mafia.roleCount
   };
 }
 function RoleCount(props) {
-  console.log(props);
   const roles = [];
   const { mafiaCount, villagerCount, jokerCount, skCount, crazyExCount} = props.roleCount;
   if (mafiaCount) {

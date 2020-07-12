@@ -38,6 +38,8 @@ import {
   iGuiltyVotedMafia,
   courtResult,
   usedPower,
+  publicNightResult,
+  privateNightResult,
 } from 'redux-store/actions/mafiaActions';
 
 var socket = null;
@@ -95,17 +97,14 @@ function addMafiaEventListeners(newSocket) {
     });
 
     newSocket.on('otherPlayerVotedMafia', function(data) {
-      console.log('other player voted');
       store.dispatch(otherPlayerVotedMafia(data));
     });
 
     newSocket.on('iVotedMafia', function(data){
-      console.log('I voted');
       store.dispatch(iVotedMafia(data));
     });
 
     newSocket.on('otherPlayerVotedGuiltyDecision', function(data) {
-      console.log('other guilty voted');
       store.dispatch(otherPlayerGuiltyVotedMafia(data));
     });
 
@@ -120,6 +119,14 @@ function addMafiaEventListeners(newSocket) {
     newSocket.on('usedPower', function(data) {
       store.dispatch(usedPower(data));
     });
+
+    newSocket.on('nightResult', function(data) {
+      store.dispatch(privateNightResult(data));
+    })
+
+    newSocket.on('publicNightResult', function(data) {
+      store.dispatch(publicNightResult(data));
+    })
   }
 }
 

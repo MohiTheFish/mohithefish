@@ -86,7 +86,6 @@ function PlayerCard(props) {
     <div className={playerClass}>
       <div className="info">
         <h3 className="name">{member}</h3>
-        {profile.isAlive ? aliveStatus : deadStatus}
       </div>
       {renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead)}
     </div>

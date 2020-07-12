@@ -107,10 +107,6 @@ function Clock({time}) {
 }
 const SubscribedClock = connect(mapStateToPropsClock)(Clock);
 
-function handlePlayerClick(index) {
-  console.log('voting for ' + index);
-}
-
 function mapStateToPropsPL(state, ownProps) {
   return {
     ...ownProps,
@@ -130,7 +126,6 @@ function PlayerList(props) {
   } = props;
   
   const [members,] = useState(store.getState().gameData.members);
-  console.log(playerProfiles);
   return (
     <div className="player-list">
       {
@@ -162,6 +157,8 @@ function Mafia(props) {
   const {
     phase,
     isPlaying,
+    wasAttacked,
+    wasSaved
   } = props;
 
   if(!isPlaying && (process.env.NODE_ENV === 'production' || (process.env.NODE_ENV === 'development' && process.env.REACT_APP_DESIGN === 'false'))) {
@@ -183,8 +180,11 @@ function Mafia(props) {
       <h1>Play Mafia</h1>
     </div>
 
+  const savedClass = wasSaved ? 'saved' : '';
+  const attackedClass = wasAttacked ? 'attacked' : '';
+
   return (
-    <div className={`wrapper play-games-wrapper mafia-page-wrapper ${theme}`}>
+    <div className={`wrapper play-games-wrapper mafia-page-wrapper ${theme} ${savedClass} ${attackedClass}`}>
       <div className="header">
         {headerRow}
         <SubscribedClock />
@@ -207,6 +207,8 @@ function mapStateToProps(state) {
   return {
     phase: game.phase,
     isPlaying: gd.isPlaying,
+    wasAttacked: game.wasAttacked,
+    wasSaved: game.wasSaved,
   };
 }
 

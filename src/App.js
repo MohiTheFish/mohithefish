@@ -3,6 +3,7 @@ import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import Testing from 'pages/testing'
+// eslint-disable-next-line
 import MainPage from 'pages/MainPage/mainPage';
 import Games from 'pages/games';
 import Spyfall from 'Games/Spyfall';

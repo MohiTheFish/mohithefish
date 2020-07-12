@@ -33,8 +33,8 @@ const defaultSpyfallSettings = {
 
 const defaultMafiaSettings =  {
   dayTimeLimit: 300, //seconds
-  nightTimeLimit: 60, //seconds
-  // nightTimeLimit: 2, //seconds
+  // nightTimeLimit: 60, //seconds
+  nightTimeLimit: 2, //seconds
   // defenseTimeLimit: 25, //seconds
   defenseTimeLimit: 2, 
   numMafia: -1,
@@ -119,7 +119,6 @@ export function gameData(state = initialState, action) {
       });
     }
     case ROOM_JOINED: {
-      console.log(action.data);
       const { members, roomId, settings: newSettings } = action.data;
       return Object.assign({}, state, {
         members,

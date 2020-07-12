@@ -11,6 +11,8 @@ export const OTHER_PLAYER_GUILTY_VOTED = 'OTHER_PLAYER_GUILTY_VOTED';
 export const I_GUILTY_VOTED = 'I_GUILTY_VOTED';
 export const COURT_RESULT = 'COURT_RESULT';
 export const USED_POWER = 'USED_POWER';
+export const PRIVATE_NIGHT_RESULT = 'PRIVATE_NIGHT_RESULT';
+export const PUBLIC_NIGHT_RESULT = 'PUBLIC_NIGHT_RESULT';
 
 export function startMafia(gameState) {
   return {
@@ -103,6 +105,22 @@ export function usedPower(data) {
   return {
     game: 'mafia',
     type: USED_POWER,
+    data,
+  };
+}
+
+export function privateNightResult(data) {
+  return {
+    game: 'mafia',
+    type: PRIVATE_NIGHT_RESULT,
+    data,
+  };
+}
+
+export function publicNightResult(data) {
+  return {
+    game: 'mafia',
+    type: PUBLIC_NIGHT_RESULT,
     data,
   };
 }
