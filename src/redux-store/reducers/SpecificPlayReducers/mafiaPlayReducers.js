@@ -52,7 +52,7 @@ export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
   myGuiltyDecision: '',
   numGuilty: 0,
   numNotGuilty: 0,
-  iAmDead: false,
+  iAmDead: true,
 } : {
   phase: 0,
   isRecapPeriod: true,

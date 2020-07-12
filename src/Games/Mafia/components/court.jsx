@@ -40,9 +40,13 @@ function Court(props) {
   } = props;
 
   if (iAmDead) {
+    const isDay = phase%2 === 0;
     return (
       <div className="vertically-center-text empty-court">
         <h2>You have died. You can no longer interact.</h2>
+        {isDay 
+        ? <h2>Number of abstainees: {numAbstain}</h2>
+        : ''}
       </div>
     )
   }

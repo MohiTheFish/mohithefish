@@ -15,15 +15,22 @@ function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPe
     );
   }
   if (iAmDead) {
+    const isDay = phase%2 === 0;
     return (
       <div className="vote-button-wrapper">
-        <div>
-          <h4>You have died. You can no longer interact</h4>
-        </div>
         <div className="vote-count">
           <h4>Role:</h4>
           <h4>Villager</h4>
         </div>
+        {
+          isDay
+          ? 
+          <div className="vote-count">
+            <h4>Total count</h4>
+            <h4 className="count">{profile.numVotes}</h4>
+          </div>
+          : ''
+        }
       </div>
     )
   }
