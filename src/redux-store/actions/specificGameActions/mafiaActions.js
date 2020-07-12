@@ -13,6 +13,7 @@ export const COURT_RESULT = 'COURT_RESULT';
 export const USED_POWER = 'USED_POWER';
 export const PRIVATE_NIGHT_RESULT = 'PRIVATE_NIGHT_RESULT';
 export const PUBLIC_NIGHT_RESULT = 'PUBLIC_NIGHT_RESULT';
+export const MAFIA_GAME_END = 'MAFIA_GAME_END';
 
 export function startMafia(gameState) {
   return {
@@ -121,6 +122,14 @@ export function publicNightResult(data) {
   return {
     game: 'mafia',
     type: PUBLIC_NIGHT_RESULT,
+    data,
+  };
+}
+
+export function mafiaGameEnd(data) {
+  return {
+    game: 'mafia',
+    type: MAFIA_GAME_END,
     data,
   };
 }

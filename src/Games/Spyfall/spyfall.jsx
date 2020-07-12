@@ -9,7 +9,7 @@ import {
   handleLocationSpyfall,
   addNameSpyfall,
   removeNameSpyfall,
-} from 'redux-store/actions/spyfallActions';
+} from 'redux-store/actions/specificGameActions/spyfallActions';
 import store from 'redux-store';
 
 function mapStateToProps(state) {

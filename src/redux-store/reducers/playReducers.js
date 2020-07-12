@@ -6,7 +6,7 @@ import {
   START_GAME_SPYFALL,
   UPDATE_MAIN_TIME,
   CLEAR_SPYFALL_BOARD
-} from 'redux-store/actions/spyfallActions';
+} from 'redux-store/actions/specificGameActions/spyfallActions';
 
 import {
   START_GAME_MAFIA,
@@ -22,7 +22,8 @@ import {
   USED_POWER,
   PRIVATE_NIGHT_RESULT,
   PUBLIC_NIGHT_RESULT,
-} from 'redux-store/actions/mafiaActions';
+  MAFIA_GAME_END,
+} from 'redux-store/actions/specificGameActions/mafiaActions';
 
 const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
   phase: 2,
@@ -416,6 +417,14 @@ function mafiaReducers(state, action) {
           playerProfiles: newPlayerProfiles,
           chatHistory: newChatHistory,
           iAmDead,
+        }
+      }
+    }
+    case MAFIA_GAME_END: {
+      return {
+        ...state,
+        mafia: {
+          ...state.mafia,
         }
       }
     }

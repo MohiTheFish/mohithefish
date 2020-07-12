@@ -23,7 +23,7 @@ import {
   startSpyfall,
   updateSpyfallTime,
   clearSpyfallBoard,
-} from 'redux-store/actions/spyfallActions';
+} from 'redux-store/actions/specificGameActions/spyfallActions';
 
 import {
   startMafia,
@@ -40,7 +40,8 @@ import {
   usedPower,
   publicNightResult,
   privateNightResult,
-} from 'redux-store/actions/mafiaActions';
+  mafiaGameEnd,
+} from 'redux-store/actions/specificGameActions/mafiaActions';
 
 var socket = null;
 let userId = null;
@@ -122,11 +123,16 @@ function addMafiaEventListeners(newSocket) {
 
     newSocket.on('nightResult', function(data) {
       store.dispatch(privateNightResult(data));
-    })
+    });
 
     newSocket.on('publicNightResult', function(data) {
       store.dispatch(publicNightResult(data));
-    })
+    });
+
+    newSocket.on('gameEnd', function(data) {
+      store.dispatch(mafiaGameEnd(data));
+    });
+
   }
 }
 
@@ -213,11 +219,12 @@ export function connectToServer() {
 
   newSocket.on('myIndex', function(data){
     store.dispatch(setMyIndex(data));
-  })
+  });
 
   newSocket.on('roomReady', function() {
     store.dispatch(setIsLoadingRoom(false));
-  })
+  });
+  
   newSocket.on('playerLeft', function(index) {
     store.dispatch(playerLeft(index));
   });
