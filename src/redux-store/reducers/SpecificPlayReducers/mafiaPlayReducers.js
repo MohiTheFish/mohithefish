@@ -16,11 +16,12 @@ import {
   USED_POWER,
   PRIVATE_NIGHT_RESULT,
   PUBLIC_NIGHT_RESULT,
+  PLAYER_KILLED,
   MAFIA_GAME_END,
 } from 'redux-store/actions/specificGameActions/mafiaActions';
 
 export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
-  phase: 2,
+  phase: 3,
   isRecapPeriod: false,
   secondaryTime: 0,
   role: -1,
@@ -33,17 +34,17 @@ export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
     [{audience: 0, message: 'lafayette'}]
   ],
   playerProfiles: [
-    {numVotes: 0, isAlive: true, role: -1},
-    {numVotes: 0, isAlive: false, role: -1},
-    {numVotes: 0, isAlive: true, role: -1}, 
-    {numVotes: 0, isAlive: true, role: -1},
-    {numVotes: 0, isAlive: false, role: -1},
-    {numVotes: 0, isAlive: true, role: -1}, 
-    {numVotes: 0, isAlive: false, role: -1},
-    {numVotes: 0, isAlive: false, role: -1},
-    {numVotes: 0, isAlive: true, role: -1},
-    {numVotes: 0, isAlive: true, role: -1},
-    {numVotes: 0, isAlive: true, role: -1}
+    {numVotes: 0, isAlive: true, role: 2},
+    {numVotes: 0, isAlive: false, role: 0},
+    {numVotes: 0, isAlive: true, role: 0}, 
+    {numVotes: 0, isAlive: true, role: 2},
+    {numVotes: 0, isAlive: false, role: 0},
+    {numVotes: 0, isAlive: true, role: 1}, 
+    {numVotes: 0, isAlive: false, role: 4},
+    {numVotes: 0, isAlive: false, role: 3},
+    {numVotes: 0, isAlive: true, role: 2},
+    {numVotes: 0, isAlive: true, role: 3},
+    {numVotes: 0, isAlive: true, role: 5}
   ],
   numAbstain: 0,
   myTarget: -1,
@@ -87,6 +88,7 @@ export function mafiaReducers(state, action) {
         playerProfiles.push({
           numVotes: 0,
           isAlive: true,
+          role: -1,
         });
       }
       return {
@@ -234,8 +236,8 @@ export function mafiaReducers(state, action) {
         if (phase % 2 === 0) {
           newProfiles = state.mafia.playerProfiles.map((val) => {
             return {
+              ...val,
               numVotes: 0,
-              isAlive: val.isAlive,
             };
           });
           numAbstain = 0;
@@ -296,6 +298,8 @@ export function mafiaReducers(state, action) {
         audience,
         phase,
         isAlive,
+        killedRole,
+        playerRoles,
         killedIndex,
       } = action.data;
       const oldChatHistory =  state.mafia.chatHistory;
@@ -311,10 +315,16 @@ export function mafiaReducers(state, action) {
       profile.numVotes = 0;
       profile.isAlive = isAlive;
       let iAmDead = state.mafia.iAmDead;
-      if(!isAlive && state.myIndex  === killedIndex) {
-        iAmDead = true;
+      if(!isAlive) {
+        profile.role = killedRole;
+        if (state.myIndex === killedIndex) {
+          iAmDead = true;
+          playerRoles.forEach((val, index) => {
+            const p = newProfiles[index];
+            p.role = val;
+          });
+        }
       }
-      
       return {
         ...state,
         mafia: {
@@ -364,28 +374,35 @@ export function mafiaReducers(state, action) {
 
     }
     case PUBLIC_NIGHT_RESULT: {
-      const { phase, events } = action.data;
+      const { 
+        phase, 
+        index,
+        audience,
+        message,
+        wasKilled,
+        killedRole,
+        playerRoles,
+      } = action.data;
       
-      let newChatHistory =  state.mafia.chatHistory;
       let newPlayerProfiles = state.mafia.playerProfiles;
       let iAmDead = state.mafia.iAmDead;
-      if(events.length > 0) {
-        newChatHistory = state.mafia.chatHistory.filter(item => item);
-        while(newChatHistory.length <= phase) {
-          newChatHistory.push([]);
+
+      let newChatHistory =  state.mafia.chatHistory.filter(item => item);
+      while(newChatHistory.length <= phase) {
+        newChatHistory.push([]);
+      }
+      newChatHistory[phase].push({audience, message});
+
+      if(wasKilled) {
+        newPlayerProfiles = state.mafia.playerProfiles.filter(item => item);
+        newPlayerProfiles[index].isAlive = false;
+        newPlayerProfiles[index].role = killedRole;
+        if (index === state.myIndex) {
+          iAmDead = true;
+          newPlayerProfiles.forEach((profile, index) => {
+            profile.role = playerRoles[index];
+          });
         }
-        events.forEach(event => {
-          const { index, audience, message, wasKilled} = event;
-          newChatHistory[phase].push({audience, message});
-          if(wasKilled) {
-            newPlayerProfiles = state.mafia.playerProfiles.filter(item => item);
-            newPlayerProfiles[index].isAlive = false;
-            if (index === state.myIndex) {
-              iAmDead = true;
-            }
-          }
-          
-        });
       }
       
       return {
@@ -397,6 +414,43 @@ export function mafiaReducers(state, action) {
           iAmDead,
         }
       }
+    }
+    case PLAYER_KILLED: {
+      const { index, audience, message, phase, playerRoles, } = action.data;
+      
+      let newPlayerProfiles = state.mafia.playerProfiles.filter(item => item);
+      let iAmDead = state.mafia.iAmDead;
+
+      let newChatHistory =  state.mafia.chatHistory.filter(item => item);
+      while(newChatHistory.length <= phase) {
+        newChatHistory.push([]);
+      }
+      console.log(newChatHistory);
+      console.log(newChatHistory.length);
+      console.log(phase);
+      console.log(newChatHistory[phase]);
+      for (let i=0; i<newChatHistory.length; i++) {
+        console.log(newChatHistory[i]);
+      }
+      newChatHistory[phase].push({audience, message});
+
+      newPlayerProfiles[index].isAlive = false;
+      if (index === state.myIndex) {
+        iAmDead = true;
+        newPlayerProfiles.forEach((profile, index) => {
+          profile.role = playerRoles[index];
+        });
+      }
+
+      return {
+        ...state,
+        mafia: {
+          ...state.mafia,
+          iAmDead,
+          chatHistory: newChatHistory,
+          playerProfiles: newPlayerProfiles,
+        }
+      };
     }
     case MAFIA_GAME_END: {
       return {

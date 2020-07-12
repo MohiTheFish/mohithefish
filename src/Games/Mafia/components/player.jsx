@@ -4,36 +4,73 @@ import PropTypes from 'prop-types';
 
 import deadimg from 'assets/images/dead.png';
 import { votePlayer, interactMafia } from 'Games/socketHandlers';
+import {ROLES} from './role';
+
+const DEAD_IMAGE = 
+<div className="dead-img-wrapper">
+  <img className="dead-img" alt="dead" src={deadimg} />
+</div>;
+
+function interpretRole(role) {
+  switch(role) {
+    case ROLES.VILLAGER : {
+      return 'VILLAGER';
+    }
+    case ROLES.DETECTIVE : {
+      return 'DETECTIVE';
+    }
+    case ROLES.MEDIC : {
+      return 'MEDIC';
+    }
+    case ROLES.MAFIA : {
+      return 'MAFIA';
+    }
+    case ROLES.GODFATHER : {
+      return 'GODFATHER';
+    }
+    case ROLES.SK : {
+      return 'SERIAL KILLER';
+    }
+    case ROLES.JOKER : {
+      return 'JOKER';
+    }
+    default: {
+      return 'VILLAGER';
+    }
+  }
+}
 
 function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead) {
-  
-  if (!profile.isAlive) {
-    return (
-      <div className="dead-img-wrapper">
-        <img className="dead-img" alt="dead" src={deadimg} />
-      </div>
-    );
-  }
   if (iAmDead) {
     const isDay = phase%2 === 0;
+    const isDead = !profile.isAlive;
     return (
       <div className="vote-button-wrapper">
         <div className="vote-count">
           <h4>Role:</h4>
-          <h4>Villager</h4>
+          <h4>{interpretRole(profile.role)}</h4>
         </div>
         {
-          isDay
-          ? 
-          <div className="vote-count">
-            <h4>Total count</h4>
-            <h4 className="count">{profile.numVotes}</h4>
-          </div>
-          : ''
+          isDead
+          ? DEAD_IMAGE
+          : (
+            isDay
+            ? <div className="vote-count">
+                <h4>Total count</h4>
+                <h4 className="count">{profile.numVotes}</h4>
+              </div>
+            : ''
+
+          )
         }
       </div>
     )
   }
+  
+  if (!profile.isAlive) {
+    return DEAD_IMAGE;
+  }
+
   if (isRecapPeriod || phase === 0) {
     return (
       <div className="empty-area-wrapper">

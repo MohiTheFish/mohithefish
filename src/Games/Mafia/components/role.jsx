@@ -5,7 +5,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import store from 'redux-store';
 
 // Enum from server
-const ROLES = {
+export const ROLES = {
   VILLAGER : 0,
   DETECTIVE : 1,
   MEDIC : 2,
@@ -64,10 +64,10 @@ function getRoleDetails(role) {
       }
     }
 
-    default: {
+    default: { //ROLES.VILLAGER
       return {
         teamName: 'Village',
-        roleName: 'Detective',
+        roleName: 'Villager',
         powerInfo: 'None',
         winCondition: 'All Non-Villagers are eliminated.',
       }
