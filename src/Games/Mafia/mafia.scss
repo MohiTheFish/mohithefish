@@ -1,4 +1,10 @@
 @use "variables" as *;
+@use './styles/court.scss';
+@use './styles/eventRecap.scss';
+@use './styles/player.scss';
+@use './styles/role.scss';
+@use './styles/roleCount.scss';
+
 .mafia-page-wrapper {
   background-color: white;
   color: black;

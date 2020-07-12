@@ -1,8 +1,6 @@
-/* eslint-disable */
 import React, {useLayoutEffect} from 'react';
 import {connect} from 'react-redux';
 
-import './eventRecap.scss';
 const SCROLL_THRESHOLD = 30;
 const CHAT_BOX_HEIGHT = 550;
 function interpretPhase(phase) {
@@ -63,96 +61,3 @@ function mapStateToProps(state) {
 
 const SubscribedEventRecap = connect(mapStateToProps)(EventRecap);
 export default SubscribedEventRecap;
-
-
-
-{/* <div className="new-phase">
-        <h4>Day 0</h4>
-      </div>
-      <ul>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-      </ul>
-      <div className="new-phase">
-        <h4>Night 1</h4>
-      </div>
-      
-      <ul>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-        <li>
-          zendaya voted for nobody
-        </li>
-        <li>
-          nobody was lynched!
-        </li>
-      </ul> */}

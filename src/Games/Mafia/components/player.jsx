@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import deadimg from 'assets/images/dead.png';
-import './player.scss';
 import { votePlayer, interactMafia } from 'Games/socketHandlers';
 
 function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead) {

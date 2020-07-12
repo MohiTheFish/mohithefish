@@ -33,17 +33,17 @@ export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
     [{audience: 0, message: 'lafayette'}]
   ],
   playerProfiles: [
-    {numVotes: 0, isAlive: true},
-    {numVotes: 0, isAlive: true},
-    {numVotes: 0, isAlive: true}, 
-    {numVotes: 0, isAlive: true},
-    {numVotes: 0, isAlive: true},
-    {numVotes: 0, isAlive: true}, 
-    {numVotes: 0, isAlive: true},
-    {numVotes: 0, isAlive: true},
-    {numVotes: 0, isAlive: true},
-    {numVotes: 0, isAlive: true},
-    {numVotes: 0, isAlive: true}
+    {numVotes: 0, isAlive: true, role: -1},
+    {numVotes: 0, isAlive: false, role: -1},
+    {numVotes: 0, isAlive: true, role: -1}, 
+    {numVotes: 0, isAlive: true, role: -1},
+    {numVotes: 0, isAlive: false, role: -1},
+    {numVotes: 0, isAlive: true, role: -1}, 
+    {numVotes: 0, isAlive: false, role: -1},
+    {numVotes: 0, isAlive: false, role: -1},
+    {numVotes: 0, isAlive: true, role: -1},
+    {numVotes: 0, isAlive: true, role: -1},
+    {numVotes: 0, isAlive: true, role: -1}
   ],
   numAbstain: 0,
   myTarget: -1,

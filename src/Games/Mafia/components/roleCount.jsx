@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import './roleCount.scss';
 function RoleName(props) {
   return (
     <div className="name">

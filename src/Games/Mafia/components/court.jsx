@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './court.scss';
 import { 
   votePlayer,
   voteGuiltyMafia,

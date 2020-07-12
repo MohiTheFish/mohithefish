@@ -3,7 +3,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 import store from 'redux-store';
-import './role.scss';
 
 // Enum from server
 const ROLES = {
