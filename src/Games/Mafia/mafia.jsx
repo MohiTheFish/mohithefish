@@ -5,6 +5,7 @@ import Brightness2Icon from '@material-ui/icons/Brightness2';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import BackToLobby from 'components/BackToLobby/backToLobby';
+import Clock from 'components/GameClock/gameClock';
 import {RoleCard} from './components/role';
 import {PlayerCard} from './components/player';
 import EventRecap from './components/eventRecap';
@@ -90,23 +91,6 @@ function Column1() {
   )
 }
 
-function mapStateToPropsClock(state) {
-  return {
-    time: state.playState.time,
-  };
-}
-function Clock({time}) {
-  const minutes = Math.floor(time / 60); 
-  const seconds = time % 60;
-
-  return (
-    <div className="time-wrapper">
-      <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
-    </div>
-  );
-}
-const SubscribedClock = connect(mapStateToPropsClock)(Clock);
-
 function mapStateToPropsPL(state, ownProps) {
   return {
     ...ownProps,
@@ -187,7 +171,7 @@ function Mafia(props) {
     <div className={`wrapper play-games-wrapper mafia-page-wrapper ${theme} ${savedClass} ${attackedClass}`}>
       <div className="header">
         {headerRow}
-        <SubscribedClock />
+        <Clock />
       </div>
 
       <div className="mafia-game-info">

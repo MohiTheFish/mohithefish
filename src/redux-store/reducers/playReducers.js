@@ -1,5 +1,5 @@
-import {defaultMafiaState, mafiaReducers } from './SpecificPlayReducers/mafiaPlayReducers';
-import {defaultSpyfallState, spyfallReducers } from './SpecificPlayReducers/spyfallPlayReducers';
+import {defaultMafiaState, mafiaReducers } from './specificPlayReducers/mafiaPlayReducers';
+import {defaultSpyfallState, spyfallReducers } from './specificPlayReducers/spyfallPlayReducers';
 export const initialState = {
   time: 0,
   spyfall: defaultSpyfallState,

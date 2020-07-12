@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom';
 import './spyfall.scss';
 
 import BackToLobby from 'components/BackToLobby/backToLobby';
+import Clock from 'components/GameClock/gameClock';
 
 import { 
   handleLocationSpyfall,
@@ -160,9 +161,7 @@ function Spyfall(props) {
             : <h4>You are NOT the spy. <br/> The {getDescriptor(gameType)} is <span className="secret-location">{secretLocation}</span></h4>
           }
         
-        <div className="time-wrapper">
-          {renderTime()}
-        </div>
+        <Clock />
       </div>
 
       <div className="players-list">
