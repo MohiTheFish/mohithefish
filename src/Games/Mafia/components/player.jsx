@@ -6,9 +6,6 @@ import deadimg from 'assets/images/dead.png';
 import './player.scss';
 import { votePlayer, interactMafia } from 'Games/socketHandlers';
 
-const aliveStatus = <h4 className="alive">Alive</h4>
-const deadStatus = <h4 className="dead">Dead</h4>
-
 function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead) {
   
   if (!profile.isAlive) {
