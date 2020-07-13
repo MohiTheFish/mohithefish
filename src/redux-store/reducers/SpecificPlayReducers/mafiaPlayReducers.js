@@ -18,6 +18,7 @@ import {
   PUBLIC_NIGHT_RESULT,
   PLAYER_KILLED,
   MAFIA_GAME_END,
+  CLOSE_DIALOG,
 } from 'redux-store/actions/specificGameActions/mafiaActions';
 
 export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
@@ -54,6 +55,9 @@ export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
   numGuilty: 0,
   numNotGuilty: 0,
   iAmDead: true,
+  gameOver: true,
+  showGameOverDialog: true,
+  winners: [1, 4, 6],
 } : {
   phase: 0,
   isRecapPeriod: true,
@@ -73,6 +77,8 @@ export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
   wasAttacked: false,
   iAmDead: false,
   gameOver: false,
+  showGameOverDialog: false,
+  winners: [],
 };
 
 export function mafiaReducers(state, action) {
@@ -425,13 +431,6 @@ export function mafiaReducers(state, action) {
       while(newChatHistory.length <= phase) {
         newChatHistory.push([]);
       }
-      console.log(newChatHistory);
-      console.log(newChatHistory.length);
-      console.log(phase);
-      console.log(newChatHistory[phase]);
-      for (let i=0; i<newChatHistory.length; i++) {
-        console.log(newChatHistory[i]);
-      }
       newChatHistory[phase].push({audience, message});
 
       newPlayerProfiles[index].isAlive = false;
@@ -453,12 +452,33 @@ export function mafiaReducers(state, action) {
       };
     }
     case MAFIA_GAME_END: {
+      const { audience, phase, message, winners } = action.data;
+
+      let newChatHistory =  state.mafia.chatHistory.filter(item => item);
+      while(newChatHistory.length <= phase) {
+        newChatHistory.push([]);
+      }
+      newChatHistory[phase].push({audience, message});
+
       return {
         ...state,
         mafia: {
           ...state.mafia,
+          chatHistory: newChatHistory,
+          gameOver: true,
+          showGameOverDialog: true,
+          winners,
         }
       }
+    }
+    case CLOSE_DIALOG: {
+      return {
+        ...state,
+        mafia: {
+          ...state.mafia,
+          showGameOverDialog: false,
+        }
+      };
     }
     case CLEAR_MAFIA_BOARD: {
       return {

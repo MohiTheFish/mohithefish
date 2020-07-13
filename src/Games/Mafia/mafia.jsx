@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
@@ -11,12 +11,10 @@ import {PlayerCard} from './components/player';
 import EventRecap from './components/eventRecap';
 import EventInput from './components/eventRecapInput';
 import RoleCount from './components/roleCount';
+import GameOverDialog from './components/gameOverDialog';
 import Court from './components/court';
 import store from 'redux-store';
-
 import './mafia.scss';
-import { useState } from 'react';
-import { useEffect } from 'react';
 // window.onscroll = function(ev) {
 //   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
 //       // you're at the bottom of the page
@@ -142,7 +140,7 @@ function Mafia(props) {
     phase,
     isPlaying,
     wasAttacked,
-    wasSaved
+    wasSaved,
   } = props;
 
   if(!isPlaying && (process.env.NODE_ENV === 'production' || (process.env.NODE_ENV === 'development' && process.env.REACT_APP_DESIGN === 'false'))) {
@@ -169,13 +167,13 @@ function Mafia(props) {
 
   return (
     <div className={`wrapper play-games-wrapper mafia-page-wrapper ${theme} ${savedClass} ${attackedClass}`}>
+      <GameOverDialog/> 
       <div className="header">
         {headerRow}
         <Clock />
       </div>
 
       <div className="mafia-game-info">
-
         <Column1 />
         <SubcribedColumn2 myIndex={myIndex} phase={phase} />
         <Column3 isDay={isDay}/>
@@ -195,6 +193,7 @@ function mapStateToProps(state) {
     wasSaved: game.wasSaved,
   };
 }
+
 
 const SubscribedMafia = connect(mapStateToProps)(Mafia);
 export default SubscribedMafia;

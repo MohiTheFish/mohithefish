@@ -15,6 +15,7 @@ export const PRIVATE_NIGHT_RESULT = 'PRIVATE_NIGHT_RESULT';
 export const PUBLIC_NIGHT_RESULT = 'PUBLIC_NIGHT_RESULT';
 export const MAFIA_GAME_END = 'MAFIA_GAME_END';
 export const PLAYER_KILLED = 'PLAYER_KILLED';
+export const CLOSE_DIALOG = 'CLOSE_DIALOG';
 
 export function startMafia(gameState) {
   return {
@@ -140,5 +141,12 @@ export function mafiaGameEnd(data) {
     game: 'mafia',
     type: MAFIA_GAME_END,
     data,
+  };
+}
+
+export function closeDialog() {
+  return {
+    game: 'mafia',
+    type: CLOSE_DIALOG,
   };
 }

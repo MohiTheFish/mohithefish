@@ -1,0 +1,25 @@
+.my-dialog{
+  box-sizing: border-box;
+  h2 {
+    text-align: center;
+  }
+  .winners-wrapper{
+    width: 420px;
+    .header {
+      margin-top: 10px;
+      text-decoration: underline;
+      text-align: center;
+    }
+    .winners-list {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;;
+      h3 {
+        width: 50%;
+        text-align: center;
+        margin-top: 5px;
+      }
+
+    }
+  }
+}
