@@ -10,7 +10,6 @@ const DEAD_IMAGE =
 <div className="dead-img-wrapper">
   <img className="dead-img" alt="dead" src={deadimg} />
 </div>;
-
 function iHavePower(role) {
   return role === 1 || role === 2 || role === 3;
 }
@@ -64,7 +63,6 @@ function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPe
                 <h4 className="count">{profile.numVotes}</h4>
               </div>
             : ''
-
           )
         }
       </div>
@@ -72,7 +70,15 @@ function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPe
   }
   
   if (!profile.isAlive) {
-    return DEAD_IMAGE;
+    return (
+      <div className="vote-button-wrapper">
+      <div className="vote-count">
+        <h4>Role:</h4>
+        <h4>{interpretRole(profile.role)}</h4>
+      </div>
+      {DEAD_IMAGE}
+    </div>
+    );
   }
 
   if (isRecapPeriod || phase === 0) {

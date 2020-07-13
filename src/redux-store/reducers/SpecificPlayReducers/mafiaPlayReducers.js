@@ -22,10 +22,10 @@ import {
 } from 'redux-store/actions/specificGameActions/mafiaActions';
 
 export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
-  phase: 3,
+  phase: 4,
   isRecapPeriod: false,
   secondaryTime: 0,
-  role: -1,
+  role: 1,
   roleCount: {},
   chatHistory: [
     [{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},{audience: 0, message: 'hi'},],
@@ -54,9 +54,9 @@ export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
   myGuiltyDecision: '',
   numGuilty: 0,
   numNotGuilty: 0,
-  iAmDead: true,
-  gameOver: true,
-  showGameOverDialog: true,
+  iAmDead: false,
+  gameOver: false,
+  showGameOverDialog: false,
   winners: [1, 4, 6],
 } : {
   phase: 0,
