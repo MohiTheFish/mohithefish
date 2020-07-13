@@ -46,7 +46,7 @@ const DialogContent = withStyles((theme) => ({
 function GameOverDialog(props) {
   const {showGameOverDialog, winners, closeDialog} = props;
   const [members, ] = useState(store.getState().gameData.members);
-  const [profiles, ] = useState(store.getState().playState.playerProfiles);
+  // const [profiles, ] = useState(store.getState().playState.playerProfiles);
   let iWin = winners.indexOf(store.getState().gameData.myIndex) >= 0;
   console.log(winners);
   return (

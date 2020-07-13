@@ -13,7 +13,7 @@ export const COURT_RESULT = 'COURT_RESULT';
 export const USED_POWER = 'USED_POWER';
 export const PRIVATE_NIGHT_RESULT = 'PRIVATE_NIGHT_RESULT';
 export const PUBLIC_NIGHT_RESULT = 'PUBLIC_NIGHT_RESULT';
-export const MAFIA_GAME_END = 'MAFIA_GAME_END';
+export const MAFIA_GAME_OVER = 'MAFIA_GAME_OVER';
 export const PLAYER_KILLED = 'PLAYER_KILLED';
 export const CLOSE_DIALOG = 'CLOSE_DIALOG';
 
@@ -136,10 +136,10 @@ export function playerKilled(data) {
   };
 }
 
-export function mafiaGameEnd(data) {
+export function mafiaGameOver(data) {
   return {
     game: 'mafia',
-    type: MAFIA_GAME_END,
+    type: MAFIA_GAME_OVER,
     data,
   };
 }

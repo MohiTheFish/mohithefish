@@ -62,6 +62,14 @@ function RoleCount(props) {
       </RoleItem>
     )
   }
+  if (crazyExCount) {
+    roles.push(
+      <RoleItem key="crazy-ex">
+        <RoleName>Crazy Ex</RoleName>
+        <RoleValue>{crazyExCount}</RoleValue>
+      </RoleItem>
+    )
+  }
   return (
     <div className="papermui role-count-wrapper">
       <h2>Role Distribution</h2>

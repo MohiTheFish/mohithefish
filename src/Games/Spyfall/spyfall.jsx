@@ -53,7 +53,6 @@ function getDescriptor(gameType) {
 function Spyfall(props) {
   const {
     gameCredentials,
-    time,
     gameType,
     selectedLocations,
     selectedNamesByIndex,
@@ -131,13 +130,6 @@ function Spyfall(props) {
         </div>
       );
     });
-  }
-
-  function renderTime() {
-    const minutes = Math.floor(time / 60); 
-    const seconds = time % 60;
-
-    return <h3>{minutes}:{seconds.toString().padStart(2, '0')}</h3>
   }
   
   const headerRow = myIndex === 0

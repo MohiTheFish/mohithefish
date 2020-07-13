@@ -41,7 +41,7 @@ import {
   publicNightResult,
   privateNightResult,
   playerKilled,
-  mafiaGameEnd,
+  mafiaGameOver,
 } from 'redux-store/actions/specificGameActions/mafiaActions';
 
 var socket = null;
@@ -135,8 +135,8 @@ function addMafiaEventListeners(newSocket) {
       store.dispatch(playerKilled(data));
     });
 
-    newSocket.on('gameEnd', function(data) {
-      store.dispatch(mafiaGameEnd(data));
+    newSocket.on('gameOver', function(data) {
+      store.dispatch(mafiaGameOver(data));
     });
 
   }

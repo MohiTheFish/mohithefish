@@ -17,7 +17,7 @@ import {
   PRIVATE_NIGHT_RESULT,
   PUBLIC_NIGHT_RESULT,
   PLAYER_KILLED,
-  MAFIA_GAME_END,
+  MAFIA_GAME_OVER,
   CLOSE_DIALOG,
 } from 'redux-store/actions/specificGameActions/mafiaActions';
 
@@ -451,8 +451,8 @@ export function mafiaReducers(state, action) {
         }
       };
     }
-    case MAFIA_GAME_END: {
-      const { audience, phase, message, winners } = action.data;
+    case MAFIA_GAME_OVER: {
+      const { audience, phase, message, winners, playerRoles, } = action.data;
 
       let newChatHistory =  state.mafia.chatHistory.filter(item => item);
       while(newChatHistory.length <= phase) {
@@ -460,12 +460,19 @@ export function mafiaReducers(state, action) {
       }
       newChatHistory[phase].push({audience, message});
 
+      let newPlayerProfiles = state.mafia.playerProfiles.filter(item => item);
+      newPlayerProfiles.forEach((profile, index) => {
+        profile.role = playerRoles[index];
+      });
+
       return {
         ...state,
         mafia: {
           ...state.mafia,
+          playerProfiles: newPlayerProfiles,
           chatHistory: newChatHistory,
           gameOver: true,
+          iAmDead: true,
           showGameOverDialog: true,
           winners,
         }
