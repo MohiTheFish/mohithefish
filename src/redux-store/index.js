@@ -44,7 +44,9 @@ function loadState() {
   return myState;
 }
 
-const store = createStore(MohiApp, loadState());
+const store = process.env.REACT_APP_DESIGN === 'true' ? 
+createStore(MohiApp)
+:createStore(MohiApp, loadState());
 
 /**
  * Saves a piece of the state that will be useful in cases of refresh or disconnects.

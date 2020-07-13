@@ -27,7 +27,7 @@ function WaitingRoom(props) {
   const { gamename, username, isConnected, isPlaying } = props;
   
   useEffect(() => {
-    if (!isConnected) {
+    if (!isConnected && process.env.NODE_ENV === 'production') {
       connectToServer();
     }
   }, [isConnected, username]);
@@ -47,7 +47,6 @@ function WaitingRoom(props) {
       <Redirect to={`/games/${gamename}/play`} />
     );
   }
-
   return (
     <div className="wrapper waiting-room-wrapper">
       <div className="header">
