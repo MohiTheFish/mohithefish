@@ -92,6 +92,12 @@ function Games(props) {
           )
         }
       </div>
+      <div className="suggestions-wrapper">
+        <h3>Wanna see a new feature or notice a bug? Open an issue on the repo:</h3>
+        <h4>For User Interface features or enhancements: <a href="https://github.com/MohiTheFish/mohithefish/issues" target="_blank" rel="noopener noreferrer">Open an issue.</a></h4>
+        <h4>For Game Functionality: <a href="https://github.com/MohiTheFish/mohithefish-server/issues" target="_blank" rel="noopener noreferrer">Open an issue.</a></h4>
+        <h4>Unsure/Other: <a href="https://github.com/MohiTheFish/mohithefish/issues" target="_blank" rel="noopener noreferrer">Open an issue.</a></h4>
+      </div>
     </div>
   );
 }
