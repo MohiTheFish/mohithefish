@@ -80,7 +80,6 @@ function Court(props) {
       );
     }
     // IS on trial && isDay
-    console.log('myGuiltyDecision:' + myGuiltyDecision);
     const iAmOnTrial = onTrialIndex === myIndex;
     // const iAmOnTrial = false;
     let notGuiltyClass = `papermui button-padding`;

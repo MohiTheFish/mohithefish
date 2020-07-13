@@ -131,7 +131,6 @@ function addMafiaEventListeners(newSocket) {
     });
 
     newSocket.on('playerKilled', function(data) {
-      console.log(data);
       store.dispatch(playerKilled(data));
     });
 

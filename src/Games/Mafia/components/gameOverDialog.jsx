@@ -48,7 +48,6 @@ function GameOverDialog(props) {
   const [members, ] = useState(store.getState().gameData.members);
   // const [profiles, ] = useState(store.getState().playState.playerProfiles);
   let iWin = winners.indexOf(store.getState().gameData.myIndex) >= 0;
-  console.log(winners);
   return (
     <div>
       <Dialog className="my-dialog" onClose={closeDialog} aria-labelledby="customized-dialog-title" open={showGameOverDialog}>
@@ -84,7 +83,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     closeDialog: () => {
-      console.log('close dialog');
       dispatch(closeDialog())
     }
   };

@@ -11,6 +11,10 @@ const DEAD_IMAGE =
   <img className="dead-img" alt="dead" src={deadimg} />
 </div>;
 
+function iHavePower(role) {
+  return role === 1 || role === 2 || role === 3;
+}
+
 function interpretRole(role) {
   switch(role) {
     case ROLES.VILLAGER : {
@@ -40,7 +44,7 @@ function interpretRole(role) {
   }
 }
 
-function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead) {
+function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead, role) {
   if (iAmDead) {
     const isDay = phase%2 === 0;
     const isDead = !profile.isAlive;
@@ -105,21 +109,30 @@ function renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPe
     );
   } 
   else {
-    function interact() {
-      interactMafia(myIndex, index);
-    }
-    return (
-      <div className="interact-button-wrapper">
-        <div className={`interact-button ${selectClass}`} onClick={interact}>
-          <h2>Interact</h2>
+    if(iHavePower(role)) {
+      function interact() {
+        interactMafia(myIndex, index);
+      }
+      return (
+        <div className="interact-button-wrapper">
+          <div className={`interact-button ${selectClass}`} onClick={interact}>
+            <h2>Interact</h2>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
+    else {
+      return (
+        <div className="interact-button-wrapper">
+          <h2 style={{textAlign: 'center'}}>No Power</h2>
+        </div>
+      )
+    }
   }
 }
 
 function PlayerCard(props) {
-  const { member, index, myIndex, profile, phase, isSelected, isRecapPeriod, someoneOnTrial, iAmDead, } = props;
+  const { member, index, myIndex, profile, phase, isSelected, isRecapPeriod, someoneOnTrial, iAmDead, role } = props;
 
   const playerClass = `papermui player${index === myIndex ? ' my-player' : ''}`;
   return (
@@ -127,7 +140,7 @@ function PlayerCard(props) {
       <div className="info">
         <h3 className="name">{member}</h3>
       </div>
-      {renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead)}
+      {renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead, role)}
     </div>
   )
 }

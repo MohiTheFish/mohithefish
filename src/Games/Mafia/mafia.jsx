@@ -92,6 +92,7 @@ function Column1() {
 function mapStateToPropsPL(state, ownProps) {
   return {
     ...ownProps,
+    role: state.playState.mafia.role,
     someoneOnTrial: state.playState.mafia.onTrial>=0,
     playerProfiles: state.playState.mafia.playerProfiles,
   }
@@ -99,6 +100,7 @@ function mapStateToPropsPL(state, ownProps) {
 function PlayerList(props) {
   const {
     phase,
+    role,
     myIndex,
     playerProfiles,
     isRecapPeriod,
@@ -123,6 +125,7 @@ function PlayerList(props) {
             myIndex={myIndex}
             someoneOnTrial={someoneOnTrial}
             iAmDead={iAmDead}
+            role={role}
           />
         })
       }
