@@ -47,6 +47,7 @@ function WaitingRoom(props) {
       <Redirect to={`/games/${gamename}/play`} />
     );
   }
+
   return (
     <div className="wrapper waiting-room-wrapper">
       <div className="header">
