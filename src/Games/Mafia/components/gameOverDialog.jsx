@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import {closeDialog} from 'redux-store/actions/specificGameActions/mafiaActions';
 import store from 'redux-store';
 
-import './gameOverDialog.scss';
 const styles = (theme) => ({
   root: {
     margin: 0,
