@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "89af065f69199bacf6bb6fade6900438",
+    "revision": "11493f727e622d18c74e8d5f656fcf01",
     "url": "/mohithefish/index.html"
   },
   {
-    "revision": "242d38d07c52dfe105b1",
+    "revision": "44c9d5779a29ce316bb0",
     "url": "/mohithefish/static/css/main.7552a991.chunk.css"
   },
   {
-    "revision": "69c59c09d3c55ca0e7a2",
-    "url": "/mohithefish/static/js/2.69a6613c.chunk.js"
+    "revision": "475e18ae14fba74b7b32",
+    "url": "/mohithefish/static/js/2.1eae0368.chunk.js"
   },
   {
     "revision": "3be25bf51018a491ef7f73dfd2dd74c4",
-    "url": "/mohithefish/static/js/2.69a6613c.chunk.js.LICENSE.txt"
+    "url": "/mohithefish/static/js/2.1eae0368.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "242d38d07c52dfe105b1",
-    "url": "/mohithefish/static/js/main.0a2137de.chunk.js"
+    "revision": "44c9d5779a29ce316bb0",
+    "url": "/mohithefish/static/js/main.e278c7ad.chunk.js"
   },
   {
     "revision": "7e980584c8107d96e38a",
