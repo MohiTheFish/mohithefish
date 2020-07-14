@@ -4,6 +4,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
+// import Switch from '@material-ui/core/Switch';
 
 import SubmitSettings from 'Games/Settings/submitSettings';
 import PrivateSwitch from '../privateSwitch';
@@ -81,6 +82,31 @@ function TimeLimit(props) {
   );
 }
 
+// function FormSwitch(props) {
+//   const {isActive, setIsActive, children} = props;
+//   const question = children[0];
+//   const explanation = children[1];
+//   function handleChange(e) {
+//     setIsActive(!isActive);
+//   }
+//   return (
+//     <div className="setting">
+//       {question}
+//       <div className="switch-wrapper">
+//         <p>Public</p>
+//         <Switch
+//           checked={true}
+//           onChange={()=>{console.log('switched')}}
+//           color="primary"
+//           name="checked"
+//           inputProps={{ 'aria-label': 'primary checkbox' }}
+//         />
+//         <p>Private</p>
+//       </div>
+//     </div>
+//   )
+// }
+
 function mapStateToPropsMS(state, ownProps) {
   return {
     numMembers: state.gameData.members.length,
@@ -140,6 +166,7 @@ function MafiaSettings(props) {
           <FormHelperText>{mafiaMessage}</FormHelperText>
           <h6>A negative value will have the server pick an optimal number of mafia.</h6>
         </TimeLimit>
+
       </div>
       <SubmitSettings isValid={allValid} settings={settings}/>
     </> 
