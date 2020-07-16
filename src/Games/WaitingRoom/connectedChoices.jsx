@@ -30,12 +30,10 @@ function ConnectedChoices(props) {
 
   if (selectedChoice === lobbyStates.CREATE || selectedChoice === lobbyStates.CREATED) {
     setDisableProps(joinButtonProps);
-    delete createButtonProps.onClick;
     createButtonProps.disableRipple = true;
   }
   else if (selectedChoice === lobbyStates.JOIN || selectedChoice === lobbyStates.JOINED) {
     setDisableProps(createButtonProps);
-    delete joinButtonProps.onClick;
     joinButtonProps.disableRipple = true;
   }
   return (
