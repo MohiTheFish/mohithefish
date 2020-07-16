@@ -1,6 +1,5 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import deadimg from 'assets/images/dead.png';
 import { votePlayer, interactMafia } from 'Games/socketHandlers';
@@ -149,13 +148,6 @@ function PlayerCard(props) {
       {renderInteraction(profile, phase, index, myIndex, isSelected, isRecapPeriod, someoneOnTrial, iAmDead, role)}
     </div>
   )
-}
-
-
-
-PlayerCard.propTypes = {
-  member: PropTypes.string.isRequired,
-  isAlive: PropTypes.bool.isRequired,
 }
 
 export { PlayerCard };

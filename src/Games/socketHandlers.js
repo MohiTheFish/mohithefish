@@ -286,6 +286,7 @@ export function getAvailableRooms() {
 
 export function ejectFromRoom() {
   invalidSocket(socket);
+  console.log('eject from room');
   
   socket.emit('ejectPlayerFromRoom', userId);
 }
@@ -302,6 +303,7 @@ export function joinRoom(targetRoom) {
 export function returnToLobby() {
   invalidSocket(socket);
 
+  console.log('return to lobby');
   socket.emit('returnToLobby', userId);
 }
 

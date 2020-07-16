@@ -27,7 +27,7 @@ function WaitingRoom(props) {
   const { gamename, username, isConnected, isPlaying } = props;
   
   useEffect(() => {
-    if (!isConnected && process.env.NODE_ENV === 'production') {
+    if (!isConnected && (process.env.NODE_ENV === 'production' || process.env.REACT_APP_DESIGN === 'false')) {
       connectToServer();
     }
   }, [isConnected, username]);
