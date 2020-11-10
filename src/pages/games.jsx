@@ -11,6 +11,7 @@ import {
 } from 'redux-store/actions/nameActions';
 
 import './games.scss';
+import { gamesJourney } from 'constants/constants';
 
 /**
  * List of all games available to play. Make sure this matches up with the server
@@ -57,7 +58,7 @@ function Games(props) {
   if (Boolean(gamename) && isConnected && isUpdatingName) {
     if (((process.env.NODE_ENV === "development" && process.env.REACT_APP_DESIGN === 'false') || process.env.NODE_ENV==="production")) {
       return (
-        <Redirect push to={`/games/${gamename}`}/>
+        <Redirect push to={`${gamesJourney}/games/${gamename}`}/>
       );
     }
   }

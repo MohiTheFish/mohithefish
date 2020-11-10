@@ -1,3 +1,4 @@
+import { gamesJourney } from 'constants/constants';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ export default function MainPage() {
         <h1>Muhammed Imran</h1>
         <h2>MohiTheFish</h2>
 
-        <Link to="/games">Click me to see some games.</Link> 
+        <Link to={`${gamesJourney}/games`}>Click me to see some games.</Link> 
 
       </div>
     </div>

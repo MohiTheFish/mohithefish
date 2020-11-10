@@ -12,6 +12,7 @@ import {
   removeNameSpyfall,
 } from 'redux-store/actions/specificGameActions/spyfallActions';
 import store from 'redux-store';
+import { gamesJourney } from 'constants/constants';
 
 function mapStateToProps(state) {
   const gd = state.gameData;
@@ -69,7 +70,7 @@ function Spyfall(props) {
   } = obj;
 
   if(!isPlaying) {
-    return <Redirect to="/games/spyfall" />;
+    return <Redirect to={`${gamesJourney}/games/spyfall`} />;
   }
 
 

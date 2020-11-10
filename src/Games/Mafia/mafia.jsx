@@ -15,6 +15,7 @@ import GameOverDialog from './components/gameOverDialog';
 import Court from './components/court';
 import store from 'redux-store';
 import './mafia.scss';
+import { gamesJourney } from 'constants/constants';
 // window.onscroll = function(ev) {
 //   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
 //       // you're at the bottom of the page
@@ -148,7 +149,7 @@ function Mafia(props) {
 
   if(!isPlaying && (process.env.NODE_ENV === 'production' || (process.env.NODE_ENV === 'development' && process.env.REACT_APP_DESIGN === 'false'))) {
     return (
-      <Redirect to="/games/mafia" />
+      <Redirect to={`${gamesJourney}/games/mafia`} />
     );
   }
   

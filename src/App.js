@@ -1,16 +1,9 @@
 import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
-import Testing from 'pages/testing'
-// eslint-disable-next-line
 import MainPage from 'pages/MainPage/mainPage';
-import Games from 'pages/games';
-import Spyfall from 'Games/Spyfall';
-import Mafia from 'Games/Mafia';
-import WaitingRoom from 'Games/WaitingRoom/waitingRoom';
-import BackToLobby from 'components/BackToLobby/backToLobby';
-import store from 'redux-store';
+import GamesJourney from 'pages/GamesJourney';
+import {gamesJourney} from 'constants/constants';
 
 import './App.css';
 
@@ -42,25 +35,16 @@ const theme = createMuiTheme({
 function App() {  
   return (
     <ThemeProvider theme={theme}>
-    <Provider store={store}>
     <HashRouter basename="/">
-        <Switch>
-          <Route exact path="/" component={Games} />
-          <Route path="/testing" component={Testing} /> 
-          <Route path="/testcomponent" component={BackToLobby} />
+      <Switch>
+        <Route exact path="/" component={MainPage} />
+        <Route path={gamesJourney} component={GamesJourney} />
 
-          <Route path="/games/mafia/play" component={Mafia} />
-          <Route path="/games/spyfall/play" component={Spyfall} />
-          <Route path="/games/:name" component={WaitingRoom} />
-          
-          <Route path="/games" component={Games} />
-
-          <Route>
-            <Redirect to="/" />
-          </Route>
-        </Switch>
+        <Route>
+          <Redirect to="/" />
+        </Route>
+      </Switch>
     </HashRouter>
-    </Provider>
     </ThemeProvider>
   );
 }

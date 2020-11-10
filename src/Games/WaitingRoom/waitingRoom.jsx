@@ -10,6 +10,7 @@ import ConnectedChoices from './connectedChoices';
 import { clearRoomInfo } from 'redux-store/actions/gameSetupActions';
 import { connectToServer } from '../socketHandlers';
 import store, { saveState } from 'redux-store';
+import {gamesJourney} from 'constants/constants';
 
 // const storageType = sessionStorage;
 
@@ -38,13 +39,13 @@ function WaitingRoom(props) {
 
   if(!gamename) {
     store.dispatch(clearRoomInfo());
-    return <Redirect to="/games" />;
+    return <Redirect to={`${gamesJourney}/games`} />;
   }
 
   if (isPlaying) {
     // storageType.setItem('gameData', JSON.stringify(store.getState().gameData));
     return (
-      <Redirect to={`/games/${gamename}/play`} />
+      <Redirect to={`${gamesJourney}/games/${gamename}/play`} />
     );
   }
 
