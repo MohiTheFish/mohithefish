@@ -4,12 +4,12 @@ import {Redirect} from 'react-router-dom';
 
 import './waitingRoom.scss';
 
-import BackToGameSelect from 'components/BackToGameSelect/backToGameSelect';
+import BackToGameSelect from 'Games/components/BackToGameSelect/backToGameSelect';
 import RoomInfo from './roomInfo';
 import ConnectedChoices from './connectedChoices';
-import { clearRoomInfo } from 'redux-store/actions/gameSetupActions';
+import { clearRoomInfo } from 'Games/redux-store/actions/gameSetupActions';
 import { connectToServer } from '../socketHandlers';
-import store, { saveState } from 'redux-store';
+import store, { saveState } from 'Games/redux-store';
 import {gamesJourney} from 'constants/constants';
 
 // const storageType = sessionStorage;

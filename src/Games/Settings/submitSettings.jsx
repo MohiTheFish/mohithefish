@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Button from '@material-ui/core/Button';
 
-import store from 'redux-store';
+import store from 'Games/redux-store';
 import { createRoomWithSettings, updateRoomSettings } from 'Games/socketHandlers';
-import { setSettingsIsUpdating, lobbyStates } from 'redux-store/actions/gameSetupActions';
+import { setSettingsIsUpdating, lobbyStates } from 'Games/redux-store/actions/gameSetupActions';
 
 function mapStateToProps(state, ownProps) {
   const selectedChoice = state.gameData.selectedChoice;

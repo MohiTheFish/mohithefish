@@ -6,7 +6,7 @@ import {
   START_GAME_SPYFALL,
   UPDATE_MAIN_TIME,
   CLEAR_SPYFALL_BOARD
-} from 'redux-store/actions/specificGameActions/spyfallActions';
+} from 'Games/redux-store/actions/specificGameActions/spyfallActions';
 
 export const defaultSpyfallState = {
   selectedLocations: new Map(),

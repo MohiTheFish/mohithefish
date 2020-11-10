@@ -3,15 +3,15 @@ import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import './spyfall.scss';
 
-import BackToLobby from 'components/BackToLobby/backToLobby';
-import Clock from 'components/GameClock/gameClock';
+import BackToLobby from 'Games/components/BackToLobby/backToLobby';
+import Clock from 'Games/components/GameClock/gameClock';
 
 import { 
   handleLocationSpyfall,
   addNameSpyfall,
   removeNameSpyfall,
-} from 'redux-store/actions/specificGameActions/spyfallActions';
-import store from 'redux-store';
+} from 'Games/redux-store/actions/specificGameActions/spyfallActions';
+import store from 'Games/redux-store';
 import { gamesJourney } from 'constants/constants';
 
 function mapStateToProps(state) {

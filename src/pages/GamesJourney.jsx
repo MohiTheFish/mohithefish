@@ -7,7 +7,7 @@ import Games from 'Games/games';
 import Spyfall from 'Games/Spyfall';
 import Mafia from 'Games/Mafia';
 import WaitingRoom from 'Games/WaitingRoom/waitingRoom';
-import store from 'redux-store';
+import store from 'Games/redux-store';
 
 const routes = [
   {

@@ -1,10 +1,10 @@
 import io from 'socket.io-client';
-import store from 'redux-store';
+import store from 'Games/redux-store';
 
 import {
   setIsConnected,
   setUserName,
-} from 'redux-store/actions/nameActions';
+} from 'Games/redux-store/actions/nameActions';
 
 import {
   setIsLoadingRoom,
@@ -17,13 +17,13 @@ import {
   playerLeft,
   roomPrivacyToggled,
   roomSettingsUpdated,
-} from 'redux-store/actions/gameSetupActions';
+} from 'Games/redux-store/actions/gameSetupActions';
 
 import {
   startSpyfall,
   updateSpyfallTime,
   clearSpyfallBoard,
-} from 'redux-store/actions/specificGameActions/spyfallActions';
+} from 'Games/redux-store/actions/specificGameActions/spyfallActions';
 
 import {
   startMafia,
@@ -42,7 +42,7 @@ import {
   privateNightResult,
   playerKilled,
   mafiaGameOver,
-} from 'redux-store/actions/specificGameActions/mafiaActions';
+} from 'Games/redux-store/actions/specificGameActions/mafiaActions';
 
 var socket = null;
 let userId = null;

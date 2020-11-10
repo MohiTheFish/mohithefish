@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Switch from '@material-ui/core/Switch';
 
-import { roomPrivacyToggled } from "redux-store/actions/gameSetupActions";
+import { roomPrivacyToggled } from "Games/redux-store/actions/gameSetupActions";
 
 import './aloneSwitch.scss';
 

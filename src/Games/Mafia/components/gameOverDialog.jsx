@@ -6,8 +6,8 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux';
-import {closeDialog} from 'redux-store/actions/specificGameActions/mafiaActions';
-import store from 'redux-store';
+import {closeDialog} from 'Games/redux-store/actions/specificGameActions/mafiaActions';
+import store from 'Games/redux-store';
 
 const styles = (theme) => ({
   root: {

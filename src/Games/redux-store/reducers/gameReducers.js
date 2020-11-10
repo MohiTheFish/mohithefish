@@ -18,12 +18,12 @@ import {
 import {
   START_GAME_SPYFALL,
   CLEAR_SPYFALL_BOARD, 
-} from 'redux-store/actions/specificGameActions/spyfallActions';
+} from 'Games/redux-store/actions/specificGameActions/spyfallActions';
 
 import {
   START_GAME_MAFIA,
   CLEAR_MAFIA_BOARD,
-} from 'redux-store/actions/specificGameActions/mafiaActions';
+} from 'Games/redux-store/actions/specificGameActions/mafiaActions';
 
 
 const defaultSpyfallSettings = {

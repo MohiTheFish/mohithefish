@@ -8,7 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import SubmitSettings from 'Games/Settings/submitSettings';
 import PrivateSwitch from '../privateSwitch';
-import store from 'redux-store';
+import store from 'Games/redux-store';
 
 import './mafiaSettings.scss';
 

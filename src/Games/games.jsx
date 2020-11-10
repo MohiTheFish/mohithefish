@@ -4,11 +4,11 @@ import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import store from 'redux-store';
+import store from 'Games/redux-store';
 import {connectToServer, updateMyName} from './socketHandlers';
 import {
   setGameName
-} from 'redux-store/actions/nameActions';
+} from 'Games/redux-store/actions/nameActions';
 
 import './games.scss';
 import { gamesJourney } from 'constants/constants';

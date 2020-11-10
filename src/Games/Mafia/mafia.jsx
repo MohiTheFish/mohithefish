@@ -4,8 +4,8 @@ import {Redirect} from 'react-router-dom';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 
-import BackToLobby from 'components/BackToLobby/backToLobby';
-import Clock from 'components/GameClock/gameClock';
+import BackToLobby from 'Games/components/BackToLobby/backToLobby';
+import Clock from 'Games/components/GameClock/gameClock';
 import {RoleCard} from './components/role';
 import {PlayerCard} from './components/player';
 import EventRecap from './components/eventRecap';
@@ -13,7 +13,7 @@ import EventInput from './components/eventRecapInput';
 import RoleCount from './components/roleCount';
 import GameOverDialog from './components/gameOverDialog';
 import Court from './components/court';
-import store from 'redux-store';
+import store from 'Games/redux-store';
 import './mafia.scss';
 import { gamesJourney } from 'constants/constants';
 // window.onscroll = function(ev) {

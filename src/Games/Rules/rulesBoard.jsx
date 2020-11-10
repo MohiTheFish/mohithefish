@@ -1,6 +1,6 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
-import store from 'redux-store';
+import store from 'Games/redux-store';
 import './rulesBoard.scss';
 
 const SpyfallRules = 

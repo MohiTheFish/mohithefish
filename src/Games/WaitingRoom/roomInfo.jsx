@@ -14,7 +14,7 @@ import PrivateSwitch from 'Games/Settings/privateSwitch';
 import SettingsBoard from 'Games/Settings/settingsBoard';
 import RulesBoard from 'Games/Rules/rulesBoard';
 
-import { lobbyStates } from 'redux-store/actions/gameSetupActions';
+import { lobbyStates } from 'Games/redux-store/actions/gameSetupActions';
 
 
 function mapStateToPropsRI(state) {

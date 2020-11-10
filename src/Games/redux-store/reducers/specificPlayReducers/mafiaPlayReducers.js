@@ -1,6 +1,6 @@
 import { 
   UPDATE_MAIN_TIME,
-} from 'redux-store/actions/specificGameActions/spyfallActions';
+} from 'Games/redux-store/actions/specificGameActions/spyfallActions';
 
 import {
   START_GAME_MAFIA,
@@ -19,7 +19,7 @@ import {
   PLAYER_KILLED,
   MAFIA_GAME_OVER,
   CLOSE_DIALOG,
-} from 'redux-store/actions/specificGameActions/mafiaActions';
+} from 'Games/redux-store/actions/specificGameActions/mafiaActions';
 
 export const defaultMafiaState = process.env.REACT_APP_DESIGN === 'true' ? {
   phase: 4,

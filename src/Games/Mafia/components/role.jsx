@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
-import store from 'redux-store';
+import store from 'Games/redux-store';
 
 // Enum from server
 export const ROLES = {

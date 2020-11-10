@@ -5,7 +5,7 @@ import MafiaView from './MafiaSettings/mafiaView';
 import MafiaSettings from './MafiaSettings/mafiaSettings';
 import SpyfallView from './SpyfallSettings/spyfallView';
 import SpyfallSettings from './SpyfallSettings/spyfallSettings';
-import store from 'redux-store';
+import store from 'Games/redux-store';
 
 import './settingsBoard.scss';
 import { connect } from 'react-redux';

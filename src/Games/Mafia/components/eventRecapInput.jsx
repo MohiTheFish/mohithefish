@@ -5,7 +5,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import ArrowForward from '@material-ui/icons/ArrowForward';
 
-import store from 'redux-store';
+import store from 'Games/redux-store';
 import { sendMafiaMessage } from 'Games/socketHandlers';
 
 const ENTER_KEY = 13;

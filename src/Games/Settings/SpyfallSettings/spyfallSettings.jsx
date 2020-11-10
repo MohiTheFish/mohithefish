@@ -9,7 +9,7 @@ import Select from '@material-ui/core/Select';
 
 import SubmitSettings from 'Games/Settings/submitSettings';
 import PrivateSwitch from '../privateSwitch';
-import store from 'redux-store';
+import store from 'Games/redux-store';
 
 import './spyfallSettings.scss';
 
