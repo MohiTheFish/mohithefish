@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import MainPage from 'pages/MainPage/mainPage';
+import MainPage from 'pages/MainPage';
 import GamesJourney from 'pages/GamesJourney';
 import {gamesJourney} from 'constants/constants';
 

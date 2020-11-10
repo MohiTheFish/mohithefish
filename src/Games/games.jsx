@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import store from 'redux-store';
-import {connectToServer, updateMyName} from '../Games/socketHandlers';
+import {connectToServer, updateMyName} from './socketHandlers';
 import {
   setGameName
 } from 'redux-store/actions/nameActions';

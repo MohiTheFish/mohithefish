@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import Testing from 'pages/testing'
-import Games from 'pages/games';
+import Games from 'Games/games';
 import Spyfall from 'Games/Spyfall';
 import Mafia from 'Games/Mafia';
 import WaitingRoom from 'Games/WaitingRoom/waitingRoom';
