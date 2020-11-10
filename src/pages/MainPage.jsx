@@ -12,6 +12,7 @@ export default function MainPage() {
         <h2>MohiTheFish</h2>
 
         <Link to={`${gamesJourney}/games`}>Click me to see some games.</Link> 
+        <Link to={`/about-me`}>Click me to learn about me!</Link>
 
       </div>
     </div>

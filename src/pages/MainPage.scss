@@ -1,7 +1,10 @@
+@use '~styles/constants' as k;
+
 .main-page-wrapper {
   width: 100%;
   height: 100%;
-
+  background-color: k.$blue-color;
+  color: white;
   .intro {
     width: inherit;
     height: inherit;
