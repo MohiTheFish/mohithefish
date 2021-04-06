@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import MainPage from 'pages/MainPage';
+import About from 'pages/About';
 import GamesJourney from 'pages/GamesJourney';
 import {gamesJourney} from 'constants/constants';
 
@@ -22,16 +23,6 @@ const theme = createMuiTheme({
   },
 });
 
-
-// function ComebackGame(props) {
-//   const { match: {params}} = props;
-//   return <div>
-//     <h1>
-//       <span style={{textTransform: "uppercase"}}>{params.name}</span> is not yet built. Come back soon.
-//       </h1>
-//   </div>;
-// }
-
 function App() {  
   return (
     <ThemeProvider theme={theme}>
@@ -39,7 +30,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route path={gamesJourney} component={GamesJourney} />
-
+        <Route path="/about-me" component={About} />
+        
         <Route>
           <Redirect to="/" />
         </Route>

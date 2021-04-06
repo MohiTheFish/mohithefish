@@ -9,6 +9,17 @@ import Mafia from 'Games/Mafia';
 import WaitingRoom from 'Games/WaitingRoom/waitingRoom';
 import store from 'Games/redux-store';
 
+function ComebackGame(props) {
+  const { match: {params}} = props;
+  return (
+    <div>
+      <h1>
+        <span style={{textTransform: "uppercase"}}>{params.name}</span> is not yet built. Come back soon.
+        </h1>
+    </div>
+  );
+}
+
 const routes = [
   {
     path: '/testing',
@@ -33,16 +44,20 @@ const routes = [
   {
     path: '/games',
     component: Games,
+  },
+  {
+    path: undefined, 
+    component: ComebackGame
   }
 ]
+
 export default function GamesJourney({ match }) {
   const base = match.url;
-
   return (
     <Provider store={store}>
       <Switch>
         {
-          routes.map(( {path, component }) => <Route key={path} path={`${base}${path}`} component={component} /> )
+          routes.map(( {path, component }) => <Route key={path ? path : 'undefined'} path={`${base}${path}`} component={component} /> )
         }
       </Switch>
     </Provider>
