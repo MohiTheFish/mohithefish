@@ -24,6 +24,4 @@ yarn-error.log*
 *.log
 
 .vscode/*
-
-
-src/pages/Games/socketHandler.js
+src/pages/mp3

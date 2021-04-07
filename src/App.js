@@ -1,8 +1,8 @@
 import React from 'react';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import MainPage from 'pages/MainPage';
-import About from 'pages/About';
+import LandingPage from 'pages/LandingPage';
+import About from 'pages/AboutJourney';
 import GamesJourney from 'pages/GamesJourney';
 import {gamesJourney} from 'constants/constants';
 
@@ -28,7 +28,7 @@ function App() {
     <ThemeProvider theme={theme}>
     <HashRouter basename="/">
       <Switch>
-        <Route exact path="/" component={MainPage} />
+        <Route exact path="/" component={LandingPage} />
         <Route path={gamesJourney} component={GamesJourney} />
         <Route path="/about-me" component={About} />
         
