@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
-import FlightSimulator from './mp3/MP3';
+import FlightSimulator from './flightsim_project';
 import AboutPage from './About';
 
 const routes = [

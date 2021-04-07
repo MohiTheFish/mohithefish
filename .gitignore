@@ -24,4 +24,4 @@ yarn-error.log*
 *.log
 
 .vscode/*
-src/pages/mp3
+src/pages/flightsim_project
