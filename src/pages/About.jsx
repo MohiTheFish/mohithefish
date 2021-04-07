@@ -6,6 +6,16 @@ import flightSimImg from 'assets/images/flightsim.png';
 
 import './About.scss';
 
+const projects = [
+  {
+    to: '/flight-sim',
+    title: "Flight Simulator",
+    image: flightSimImg,
+    alt: "A flight simulator game",
+    details: "This was an exercise in terrain generation and camera transformation as part of my computer graphics course at UIUC."
+  }
+]
+
 function LinkCard({ to, title, image, alt, details }) {
   return (
     <Link to={to} className="link-card">
@@ -25,13 +35,12 @@ export default function AboutPage({ match }) {
     <div className="about-page">
       <h1>Projects</h1>
       <div className="projects-container">
-        <LinkCard
-          to={`${base}/flight-sim`}
-          title="Flight Simulator"
-          image={flightSimImg}
-          alt="A flight simulator game"
-          details="This was an exercise in terrain generation and camera transformation as part of my computer graphics course at UIUC."
-        />
+        {
+          projects.map((p)=> {
+            const {to, title, image, alt, details} = p;
+            return <LinkCard to={`${base}${to}`} title={title} image={image} alt={alt} details={details} />;
+          })
+        }
       </div>
     </div>
   )
