@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c26691fcd36fbd372008b56810618e22",
+    "revision": "b3edff4d36f88110cb1c63d2a85837b9",
     "url": "/mohithefish/index.html"
   },
   {
-    "revision": "6fd9f139f6157a8c317c",
-    "url": "/mohithefish/static/css/main.7552a991.chunk.css"
+    "revision": "fccef6a7ce4d36f55415",
+    "url": "/mohithefish/static/css/main.a2a0e4ff.chunk.css"
   },
   {
-    "revision": "475e18ae14fba74b7b32",
-    "url": "/mohithefish/static/js/2.1eae0368.chunk.js"
+    "revision": "e938fd1bd10a380ca81d",
+    "url": "/mohithefish/static/js/2.d2fac29d.chunk.js"
   },
   {
     "revision": "3be25bf51018a491ef7f73dfd2dd74c4",
-    "url": "/mohithefish/static/js/2.1eae0368.chunk.js.LICENSE.txt"
+    "url": "/mohithefish/static/js/2.d2fac29d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "6fd9f139f6157a8c317c",
-    "url": "/mohithefish/static/js/main.5e7cff88.chunk.js"
+    "revision": "fccef6a7ce4d36f55415",
+    "url": "/mohithefish/static/js/main.05f5d714.chunk.js"
   },
   {
     "revision": "7e980584c8107d96e38a",
@@ -38,5 +38,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "9942588a6c84f959132556d99e83ded6",
     "url": "/mohithefish/static/media/Raleway-Regular.9942588a.ttf"
+  },
+  {
+    "revision": "6dff3192befb01b1056d8d1d6809d54a",
+    "url": "/mohithefish/static/media/flightsim.6dff3192.png"
   }
 ]);
