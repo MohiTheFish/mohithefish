@@ -13,6 +13,7 @@
     margin-top: 20px;
     height: 200px;
     transition: .3s;
+    border-radius: 4px;
   }
 }
 
@@ -28,6 +29,7 @@
 
 
 .about-page {
+  padding: k.$mohithefish-padding;
   h1 {
     padding: 5px;
     text-align: center;

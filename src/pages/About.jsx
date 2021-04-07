@@ -13,8 +13,8 @@ const projects = [
     image: flightSimImg,
     alt: "A flight simulator game",
     details: "This was an exercise in terrain generation and camera transformation as part of my computer graphics course at UIUC."
-  }
-]
+  },
+];
 
 function LinkCard({ to, title, image, alt, details }) {
   return (
@@ -38,7 +38,7 @@ export default function AboutPage({ match }) {
         {
           projects.map((p)=> {
             const {to, title, image, alt, details} = p;
-            return <LinkCard to={`${base}${to}`} title={title} image={image} alt={alt} details={details} />;
+            return <LinkCard key={to} to={`${base}${to}`} title={title} image={image} alt={alt} details={details} />;
           })
         }
       </div>

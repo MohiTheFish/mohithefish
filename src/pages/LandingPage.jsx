@@ -15,12 +15,12 @@ export default function MainPage() {
         <div className="journey-options">
           <Link to={`${gamesJourney}/games`}>
             <Paper className="papermui-clickable clickable">
-              Click here to see some web games.
+              Web games
             </Paper>
           </Link>
           <Link to="/about-me">
             <Paper className="papermui-clickable clickable">
-              Click here to learn more about me.
+              Learn more about me
             </Paper>
           </Link>
         </div>
