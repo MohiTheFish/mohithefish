@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 
 import './index.scss';
 
@@ -126,12 +127,14 @@ function checkIsValidMatrix(matrix) {
   for (let i=0; i<n; i++) {
     for (let j=0; j<=i; j++) {
       if (!isFloat(matrix[i][j])){
+        console.log(matrix[i][j]);
         return false;
       }
     }
   }
   return true;
 }
+
 export default function Alignment() {
   const [string1, setString1] = useState(DEFAULT_STRING_1); 
   const [string2, setString2] = useState(DEFAULT_STRING_2);
@@ -161,8 +164,7 @@ export default function Alignment() {
   const isString1Valid = checkIsValidString(string1);
   const isString2Valid = checkIsValidString(string2);
   const isValidMatrix = checkIsValidMatrix(matrix);
-
-
+  const shouldEnableButton = (!isString1Valid && !isString2Valid && isValidMatrix);
   return (
     <div className="alignment-wrapper">
       <h1> String Alignment </h1>
@@ -177,8 +179,13 @@ export default function Alignment() {
           </InputBox>
           <Matrix matrix={matrix} isValid={isValidMatrix} handleChange={handleMatrixChange}/>
 
+          <section>
+            <Button disabled={!shouldEnableButton} color="primary" variant="contained">Compute Alignment</Button>
+          </section>
         </div>
+        <div className="output">
 
+        </div>
       </div>
     </div>
   )
