@@ -136,17 +136,30 @@ function checkIsValidMatrix(matrix) {
   return true;
 }
 
+const BACKPOINTER_UP = 0;
+const BACKPOINTER_DIAG = 1;
+const BACKPOINTER_LEFT = 2;
+
 function OutputMatrix({decoder, similarityMatrix, string1, string2,}) {
   const n = similarityMatrix.length;
   const [isComputing, setIsComputing] = useState(true);
-  const [dpTable, setdpTable] = useState([]);
+  const [dpTable, setdpTable] = useState({
+    score: [],
+    bp: [],
+  });
 
   const s1 = string1.length;
   const s2 = string2.length;
 
+  function decode(symbol1, symbol2) {
+    return similarityMatrix[decoder[symbol1]][decoder[symbol2]];
+  }
+
+
   async function computeDPTable() {
     //compute here
     const table = [[]];
+    const bpointer = [];
     for (let j=0; j<s1; j++) {
       table[0].push(-j);
     }
@@ -160,8 +173,25 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2,}) {
     }
 
     for (let i=1; i<s2; i++) {
+      bpointer.push([]);
       for (let j=1; j<s1; j++) {
-        const downDir = table[i-1][j] 
+        const downDir = table[i-1][j] + decode('-', string2[i]);
+        const rightDir = table[i][j-1] + decode('-', string1[j]);
+        const diagonal = table[i-1][j-1] + decode(string1[j], string2[i]);
+        let choice = diagonal;
+        let backpointer = BACKPOINTER_DIAG;
+        
+        if (downDir > rightDir && downDir > diagonal) {
+          choice = downDir;
+          backpointer = BACKPOINTER_UP;
+        }
+        else if (rightDir > downDir && rightDir > diagonal) {
+          choice = rightDir;
+          backpointer = BACKPOINTER_LEFT;
+        }
+
+        table[i][j] = choice;
+        bpointer[i-1].push(backpointer);
       }
     }
     setdpTable(table);
@@ -169,48 +199,37 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2,}) {
   }
 
   useEffect(() => {
-    console.log(similarityMatrix, string1, string2);
     setIsComputing(true);
-    console.log('start computing');
     computeDPTable();
   }, [similarityMatrix, string1, string2]);
 
   const grid = [<p key="empty" className="empty" />,];
   for (let i=0; i<s1; i++) {
     const symbol = string1[i];
-    grid.push(<p key={`${symbol}${i}-top`} className="category output-top">{symbol}</p>);
+    grid.push(<p key={`${symbol}${i}-top`} className="category output output-top">{symbol}</p>);
   }
 
   if (!isComputing) {
     for (let i=0; i<s2; i++) {
-      grid.push(<p key={`${string2[i]}${i}-side`} className="category output-side">{string2[i]}</p>);
+      grid.push(<p key={`${string2[i]}${i}-side`} className="category output output-side">{string2[i]}</p>);
   
       for (let j=0; j<s1; j++) {
         grid.push(
-          <p key={`${i}${j}`}>{dpTable[i][j]}</p>
+          <p key={`${i}${j}`} className="output">{dpTable[i][j]}</p>
         );
       }
     }
   }
   else {
     for (let i=0; i<s2; i++) {
-      grid.push(<p key={`${string2[i]}${i}-side`} className="category output-side">{string2[i]}</p>);
+      grid.push(<p key={`${string2[i]}${i}-side`} className="category output output-side">{string2[i]}</p>);
     }
     grid.push(<Loading key="loading" style={{gridColumnEnd: `${s1 + 2}`, gridRowEnd: `${s2+ 2}`}} id="matrix-loading"/>);
   }
 
-  if (isComputing) {
-    return (
-      <div className="output-matrix">
-        <section className="matrix" style={{ gridTemplateColumns: `repeat(${s1+1}, 40px)`, gridTemplateRows: `repeat(${s2+1}, 30px)`}}>
-          {grid}
-        </section>
-      </div>
-    )
-  }
   return (
     <div className="output-matrix">
-      <section className="matrix" style={{ gridTemplateColumns: `repeat(${s1+1}, 40px)`, gridTemplateRows: `repeat(${s2+1}, 30px)`}}>
+      <section className="matrix" style={{ gridTemplateColumns: `repeat(${s1+1}, 60px)`, gridTemplateRows: `repeat(${s2+1}, 45px)`}}>
         {grid}
       </section>
     </div>
@@ -226,7 +245,7 @@ function convertToFloatMatrix(matrix) {
         newRow.push(-999999999);
       }
       else {
-        newRow.push(matrix[i][j]);
+        newRow.push(Number.parseFloat(matrix[i][j]));
       }
     }
     simMatrix.push(newRow);
