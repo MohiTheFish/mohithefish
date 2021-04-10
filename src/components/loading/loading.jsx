@@ -2,9 +2,9 @@ import React from 'react';
 
 import './loading.scss';
 
-export default function Loading() {
+export default function Loading({id}) {
   return (
-    <div className="lds-ripple">
+    <div id={id} className="lds-ripple">
       <div />
       <div />
     </div>
