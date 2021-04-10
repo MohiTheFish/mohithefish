@@ -13,6 +13,10 @@
   }
   .parameters {
     width: 350px;
+    margin-right: 20px;
+  }
+  h2 {
+    text-decoration: underline;
   }
 
   .full-width {
@@ -26,10 +30,18 @@
     height: 0;
     margin-top: 0;
   }
-  .matrix {
-    display: grid;
+
+  .similarity-matrix {
     grid-template-columns: repeat(6, 40px);
     grid-template-rows: repeat(6, 30px);
+  }
+  #matrix-loading {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    align-self: center;
+  }
+  .matrix {
+    display: grid;
 
     p {
       text-align: center;
@@ -46,7 +58,7 @@
       font-weight: bold;
       background-color: rgb(206, 206, 206);
     }
-    #empty {
+    p.empty {
       background-color: rgb(30, 30, 30);
     }
     input {
