@@ -4,8 +4,21 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import redArrow from 'assets/red_arrow.svg';
+import blueArrow from 'assets/blue_arrow.svg';
+import greenArrow from 'assets/green_arrow.svg';
 
 import './index.scss';
+
+function RedArrowImage() {
+  return <img src={redArrow} alt="Red arrow" className="arrow red-arrow"/>
+}
+function BlueArrowImage() {
+  return <img src={blueArrow} alt="Blue arrow" className="arrow blue-arrow"/>
+}
+function GreenArrowImage() {
+  return <img src={greenArrow} alt="Green arrow" className="arrow green-arrow"/>
+}
 
 function InputBox(props) {
   const { value, setValue, errormsg, children } = props;
@@ -140,67 +153,70 @@ const BACKPOINTER_DIAG = 1;
 const BACKPOINTER_LEFT = 2;
 
 function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing, setIsComputing}) {
-  const n = similarityMatrix.length;
   const [dpTable, setdpTable] = useState({
     score: [],
     bp: [],
   });
 
-  const s1 = string1.length;
-  const s2 = string2.length;
-
-  function decode(symbol1, symbol2) {
-    return similarityMatrix[decoder[symbol1]][decoder[symbol2]];
-  }
-
-  async function computeDPTable() {
-    //compute here
-    const table = [[]];
-    const bpointer = [];
-    for (let j=0; j<s1; j++) {
-      table[0].push(-j);
-    }
-    
-    for(let i=1; i<s2; i++) {
-      table.push([]);
-      table[i].push(-i);
-      for (let j=1; j<s1; j++) {
-        table[i].push(0);
-      }
-    }
-
-    for (let i=1; i<s2; i++) {
-      bpointer.push([]);
-      for (let j=1; j<s1; j++) {
-        const downDir = table[i-1][j] + decode('-', string2[i]);
-        const rightDir = table[i][j-1] + decode('-', string1[j]);
-        const diagonal = table[i-1][j-1] + decode(string1[j], string2[i]);
-        let choice = diagonal;
-        let backpointer = BACKPOINTER_DIAG;
-        
-        if (downDir > rightDir && downDir > diagonal) {
-          choice = downDir;
-          backpointer = BACKPOINTER_UP;
-        }
-        else if (rightDir > downDir && rightDir > diagonal) {
-          choice = rightDir;
-          backpointer = BACKPOINTER_LEFT;
-        }
-
-        table[i][j] = choice;
-        bpointer[i-1].push(backpointer);
-      }
-    }
-    setdpTable(table);
-    setIsComputing(false);
-  }
-
+  
   useEffect(() => {
     console.log('start computing');
     setIsComputing(true);
-    computeDPTable();
-  }, [similarityMatrix]);
 
+    async function computeDPTable() {
+      function decode(symbol1, symbol2) {
+        return similarityMatrix[decoder[symbol1]][decoder[symbol2]];
+      }
+    
+      //compute here
+      
+      const s1 = string1.length;
+      const s2 = string2.length;
+      const table = [[]];
+      const bpointer = [];
+      for (let j=0; j<s1; j++) {
+        table[0].push(-j);
+      }
+      
+      for(let i=1; i<s2; i++) {
+        table.push([]);
+        table[i].push(-i);
+        for (let j=1; j<s1; j++) {
+          table[i].push(0);
+        }
+      }
+  
+      for (let i=1; i<s2; i++) {
+        bpointer.push([]);
+        for (let j=1; j<s1; j++) {
+          const downDir = table[i-1][j] + decode('-', string2[i]);
+          const rightDir = table[i][j-1] + decode('-', string1[j]);
+          const diagonal = table[i-1][j-1] + decode(string1[j], string2[i]);
+          let choice = diagonal;
+          let backpointer = BACKPOINTER_DIAG;
+          
+          if (downDir > rightDir && downDir > diagonal) {
+            choice = downDir;
+            backpointer = BACKPOINTER_UP;
+          }
+          else if (rightDir > downDir && rightDir > diagonal) {
+            choice = rightDir;
+            backpointer = BACKPOINTER_LEFT;
+          }
+  
+          table[i][j] = choice;
+          bpointer[i-1].push(backpointer);
+        }
+      }
+      setdpTable(table);
+      setIsComputing(false);
+    }
+    computeDPTable();
+  }, [similarityMatrix, setIsComputing, string1, string2, decoder]);
+
+  
+  const s1 = string1.length;
+  const s2 = string2.length;
   const grid = [<p key="empty" className="empty" />,];
   for (let i=0; i<s1; i++) {
     const symbol = string1[i];
@@ -229,6 +245,10 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing,
     <div className="output-matrix">
       <section className="matrix" style={{ gridTemplateColumns: `repeat(${s1+1}, 60px)`, gridTemplateRows: `repeat(${s2+1}, 45px)`}}>
         {grid}
+      </section>
+      <section>
+        <h2>Answer:</h2>
+        <RedArrowImage />
       </section>
     </div>
   )
@@ -305,7 +325,6 @@ export default function Alignment() {
   }
 
   function generateOutput() {
-    const n = matrix.length;
     const simMatrix = convertToFloatMatrix(matrix);
     setInputParameters({
       similarityMatrix: simMatrix,
