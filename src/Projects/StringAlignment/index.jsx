@@ -157,6 +157,7 @@ export default function Alignment() {
     
     const mCopy = [...matrix];
     mCopy[row][col] = e.target.value;
+    mCopy[col][row] = e.target.value; // Symmetric over the diagonal.
     setMatrix(mCopy);
   }
 
