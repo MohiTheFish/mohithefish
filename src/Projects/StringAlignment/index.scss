@@ -2,4 +2,30 @@
 
 .alignment-wrapper {
   padding: k.$mohithefish-padding;
+
+  section {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .full-width {
+    width: 100%;
+    padding-left: 20px;
+  }
+  .hidden {
+    visibility: hidden;
+  }
+  .no-height {
+    height: 0;
+    margin-top: 0;
+  }
+  .possible-symbols {
+    p {
+      margin-top: 5px;
+      span {
+        border: 1px solid black;
+        padding: 2px 8px;
+      }
+    }
+  }
 }

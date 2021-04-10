@@ -1,3 +1,8 @@
+/**
+ * @author Muhammed Imran (Mohithefish)
+ * @description Holds some constants used in the application to decrease individual file sizes.
+ */
+
 import FlightSimulator from 'pages/flightsim_temp';
 import AboutPage from 'pages/About';
 import StringAlignment from 'Projects/StringAlignment';
