@@ -68,20 +68,33 @@ function initalizeSimilarityMatrix() {
     [-1, -1, -1, -1, 1],
   ];
 }
-function Matrix({ matrix }) {
+function Matrix({ matrix, handleChange, isValid }) {
   const n = matrix.length; 
   
-  const grid = [];
+  const grid = [
+    <p key="empty" id="empty" />,
+    <p key="blank-top" className="category blank-top">-</p>,
+  ];
+  VALID_SYMBOLS.forEach((symbol) => {
+    grid.push(<p key={`${symbol}-top`} className={`category ${symbol}-top`}>{symbol}</p>);
+  })
   for (let i=0; i<n; i++) {
+    if (i === 0) {
+      grid.push(<p key="blank-side" className="category blank-side">-</p>);
+    }
+    else {
+      grid.push(<p key={`${VALID_SYMBOLS[i-1]}-side`} className={`category ${VALID_SYMBOLS[i-1]}-side`}>{VALID_SYMBOLS[i-1]}</p>);
+    }
+
     for (let j=0; j<n; j++) {
       if (j <= i) {
         grid.push(
-          <input key={`${i}${j}`} value={matrix[i][j]} className="value" />
+          <input key={`${i}${j}`} id={i*n + j} onChange={handleChange} value={matrix[i][j]} className="value" />
         )
       }
       else {
         grid.push(
-          <p key={`${i}${j}`}className="value" > {matrix[i][j]} </p>
+          <p key={`${i}${j}`} className="value" > {matrix[i][j]} </p>
         )
         
       }
@@ -89,14 +102,37 @@ function Matrix({ matrix }) {
   }
 
   return (
-    <section className="matrix">
-      {grid}
+    <section>
+      <h3>Similarity Matrix:</h3>
+      <div className="matrix">
+        {grid}
+      </div>
+      {
+        isValid
+        ? null
+        : <p className="error-matrix">Please ensure all weights are numbers.</p>
+      }
     </section>
   )
 }
 
-export default function Alignment() {
 
+function isFloat(num) {
+  // return /^(\+|-)?\d+$/.test(num);
+  return /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/.test(num);
+}
+function checkIsValidMatrix(matrix) {
+  const n = matrix.length;
+  for (let i=0; i<n; i++) {
+    for (let j=0; j<=i; j++) {
+      if (!isFloat(matrix[i][j])){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+export default function Alignment() {
   const [string1, setString1] = useState(DEFAULT_STRING_1); 
   const [string2, setString2] = useState(DEFAULT_STRING_2);
   const [matrix, setMatrix] = useState(initalizeSimilarityMatrix());
@@ -109,22 +145,40 @@ export default function Alignment() {
     return '';
   }
 
+
+  function handleMatrixChange(e) {
+    const num = Number.parseInt(e.target.id);
+    const n = matrix.length;
+    const col = num % n;
+    const row = Math.floor(num / n);
+    
+    const mCopy = [...matrix];
+    mCopy[row][col] = e.target.value;
+    setMatrix(mCopy);
+  }
+
+
   const isString1Valid = checkIsValidString(string1);
   const isString2Valid = checkIsValidString(string2);
+  const isValidMatrix = checkIsValidMatrix(matrix);
 
 
   return (
     <div className="alignment-wrapper">
       <h1> String Alignment </h1>
-      <div className="functionality">
-        <ValidSymbols symbols={VALID_SYMBOLS} />
-        <InputBox value={string1} setValue={setString1} errormsg={isString1Valid}>
-          <h3>First string:</h3>
-        </InputBox>
-        <InputBox value={string2} setValue={setString2} errormsg={isString2Valid}>
-          <h3>Second string:</h3>
-        </InputBox>
-        <Matrix matrix={matrix} />
+      <div className="algorithm">
+        <div className="parameters">
+          <ValidSymbols symbols={VALID_SYMBOLS} />
+          <InputBox value={string1} setValue={setString1} errormsg={isString1Valid}>
+            <h3>First string:</h3>
+          </InputBox>
+          <InputBox value={string2} setValue={setString2} errormsg={isString2Valid}>
+            <h3>Second string:</h3>
+          </InputBox>
+          <Matrix matrix={matrix} isValid={isValidMatrix} handleChange={handleMatrixChange}/>
+
+        </div>
+
       </div>
     </div>
   )
