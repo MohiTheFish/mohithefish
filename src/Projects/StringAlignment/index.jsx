@@ -128,7 +128,6 @@ function checkIsValidMatrix(matrix) {
       if (i+j === 0) // we should ignore this entry
         continue;
       if (!isFloat(matrix[i][j])){
-        console.log(matrix[i][j]);
         return false;
       }
     }
@@ -140,9 +139,8 @@ const BACKPOINTER_UP = 0;
 const BACKPOINTER_DIAG = 1;
 const BACKPOINTER_LEFT = 2;
 
-function OutputMatrix({decoder, similarityMatrix, string1, string2,}) {
+function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing, setIsComputing}) {
   const n = similarityMatrix.length;
-  const [isComputing, setIsComputing] = useState(true);
   const [dpTable, setdpTable] = useState({
     score: [],
     bp: [],
@@ -154,7 +152,6 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2,}) {
   function decode(symbol1, symbol2) {
     return similarityMatrix[decoder[symbol1]][decoder[symbol2]];
   }
-
 
   async function computeDPTable() {
     //compute here
@@ -199,9 +196,10 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2,}) {
   }
 
   useEffect(() => {
+    console.log('start computing');
     setIsComputing(true);
     computeDPTable();
-  }, [similarityMatrix, string1, string2]);
+  }, [similarityMatrix]);
 
   const grid = [<p key="empty" className="empty" />,];
   for (let i=0; i<s1; i++) {
@@ -281,6 +279,7 @@ export default function Alignment() {
     inputString1: ` ${DEFAULT_STRING_1}`,
     inputString2: ` ${DEFAULT_STRING_2}`,
   });
+  const [isComputing, setIsComputing] = useState(true);
   const [decoder, ] = useState(initalizeDecoder());
   const { similarityMatrix, inputString1, inputString2 } = inputParameters;
 
@@ -313,6 +312,7 @@ export default function Alignment() {
       inputString1: ` ${string1}`,
       inputString2: ` ${string2}`,
     });
+    setIsComputing(true);
   }
 
 
@@ -323,7 +323,7 @@ export default function Alignment() {
 
   return (
     <div className="alignment-wrapper">
-      <h1> String Alignment </h1>
+      <h1> String (Sequence) Alignment </h1>
       <div className="algorithm">
         <div className="parameters">
           <h2>Parameters</h2>
@@ -342,7 +342,12 @@ export default function Alignment() {
         </div>
         <div className="output">
           <h2>Output</h2>
-          <OutputMatrix decoder={decoder} similarityMatrix={similarityMatrix} string1={inputString1} string2={inputString2} />
+          <OutputMatrix
+            isComputing={isComputing} setIsComputing={setIsComputing}
+            decoder={decoder}
+            similarityMatrix={similarityMatrix}
+            string1={inputString1} string2={inputString2}
+          />
         </div>
       </div>
     </div>
