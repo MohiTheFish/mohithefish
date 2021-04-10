@@ -39,7 +39,7 @@ function InputBox(props) {
   );
 }
 
-const DEFAULT_STRING_1 = 'GGTAGP';
+const DEFAULT_STRING_1 = 'GGTAG';
 const DEFAULT_STRING_2 = 'GGCAGT';
 
 function ValidSymbols({symbols}) {
@@ -58,10 +58,48 @@ function ValidSymbols({symbols}) {
 
 const VALID_SYMBOLS = ['A', 'T', 'C', 'G'];
 const VALID_SYMBOLS_LOOKUP = new Set(VALID_SYMBOLS);
+
+function initalizeSimilarityMatrix() {
+  return [
+    [1, -1, -1, -1, -1],
+    [-1, 1, -1, -1, -1],
+    [-1, -1, 1, -1, -1],
+    [-1, -1, -1, 1, -1],
+    [-1, -1, -1, -1, 1],
+  ];
+}
+function Matrix({ matrix }) {
+  const n = matrix.length; 
+  
+  const grid = [];
+  for (let i=0; i<n; i++) {
+    for (let j=0; j<n; j++) {
+      if (j <= i) {
+        grid.push(
+          <input key={`${i}${j}`} value={matrix[i][j]} className="value" />
+        )
+      }
+      else {
+        grid.push(
+          <p key={`${i}${j}`}className="value" > {matrix[i][j]} </p>
+        )
+        
+      }
+    }
+  }
+
+  return (
+    <section className="matrix">
+      {grid}
+    </section>
+  )
+}
+
 export default function Alignment() {
 
   const [string1, setString1] = useState(DEFAULT_STRING_1); 
   const [string2, setString2] = useState(DEFAULT_STRING_2);
+  const [matrix, setMatrix] = useState(initalizeSimilarityMatrix());
 
   function checkIsValidString(str) {
     for(let i=0; i<str.length; i++) {
@@ -86,6 +124,7 @@ export default function Alignment() {
         <InputBox value={string2} setValue={setString2} errormsg={isString2Valid}>
           <h3>Second string:</h3>
         </InputBox>
+        <Matrix matrix={matrix} />
       </div>
     </div>
   )

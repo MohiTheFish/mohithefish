@@ -19,6 +19,25 @@
     height: 0;
     margin-top: 0;
   }
+  .matrix {
+    display: grid;
+    grid-template-columns: repeat(5, 40px);
+    grid-template-rows: repeat(5, 30px);
+
+    p {
+      text-align: center;
+      border: 1px solid black;
+      font-size: 16px;
+      line-height: 30px;
+      background-color: rgb(172, 172, 172);
+      border-radius: 2px;
+    }
+    input {
+      font-family: Raleway;
+      text-align: center;
+      font-size: 16px;
+    }
+  }
   .possible-symbols {
     p {
       margin-top: 5px;
