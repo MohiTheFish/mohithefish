@@ -14,6 +14,10 @@
   .parameters {
     width: 350px;
     margin-right: 20px;
+    position: sticky;
+    left: 0;
+    top: 0;
+    height: fit-content;
   }
   h2 {
     text-decoration: underline;
@@ -96,6 +100,27 @@
   // .green-arrow {
   //   transform: rotate(-135deg);
   // }
+  $answer-row-height: 30px;
+  .answer-alignment {
+    display: grid;
+    grid-template-rows: repeat(2, $answer-row-height);
+  }
+  .answer-entry {
+    border: 1px solid black;
+    border-right: none;
+    font-size: 18px;
+    line-height: $answer-row-height;
+    text-align: center;
+  }
+  .answer-entry.top-row {
+    border-bottom: none;
+  }
+  .answer-entry:last-of-type {
+    border-right: 1px solid black;
+  }
+  .no-border-right {
+    border-right: 1px solid black;
+  }
   .error-matrix {
     color: #f44336;
   }

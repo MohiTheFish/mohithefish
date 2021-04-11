@@ -34,6 +34,59 @@ function getArrow(bpEntry) {
   return <BlueArrowImage />;
 }
 
+function Answer({string1, string2, solution}) {
+  let solutionIndex = 0;
+  let s1Index = solution[solutionIndex][1];
+  let s2Index = solution[solutionIndex][0];
+  let nextS1Index = s1Index;
+  let nextS2Index = s2Index;
+  const ans = [[],[]];
+
+
+  solutionIndex++;
+  while (solutionIndex < solution.length) {
+    nextS1Index = solution[solutionIndex][1];
+    nextS2Index = solution[solutionIndex][0];
+    
+    if ((nextS1Index === s1Index+1) && (nextS2Index === s2Index+1)) {
+      ans[0].push(string1[nextS1Index]);
+      ans[1].push(string2[nextS2Index]);
+    }
+    else if((nextS1Index === s1Index+1)) {
+      ans[0].push(string1[nextS1Index]);
+      ans[1].push("_");
+    }
+    else {
+      ans[0].push("_");
+      ans[1].push(string2[nextS2Index]);
+    }
+
+    solutionIndex++;
+    s1Index = nextS1Index;
+    s2Index = nextS2Index;
+  }
+  const n = ans[0].length;
+  const grid = [];
+  for(let i=0; i<n-1; i++) {
+    grid.push(
+      <p className="answer-entry top-row" key={i}>{ans[0][i]}</p>
+    )
+  }
+  grid.push(
+    <p className="answer-entry top-row no-border-right" key={n-1}>{ans[0][n-1]}</p>
+  )
+  for(let i=0; i<n; i++) {
+    grid.push(
+      <p className="answer-entry" key={n+i}>{ans[1][i]}</p>
+    )
+  }
+  return (
+    <section className="answer-alignment" style={{ gridTemplateColumns: `repeat(${n}, 30px)`}}>
+      {grid}
+    </section>
+  );
+}
+
 export default function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing, setIsComputing}) {
   const [dpTable, setdpTable] = useState({
     score: [],
@@ -41,7 +94,7 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
     solution: [],
   });
   const [showOnlySolutionArrows, setShowOnlySolutionArrows] = useState(true);
-  console.log(string1, string2);
+  
   useEffect(() => {
     console.log('start computing');
     setIsComputing(true);
@@ -158,7 +211,6 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
   if (!isComputing) {
     const {score, bp, solution} = dpTable;
     let solutionIndex = 0;
-    const n = similarityMatrix.length;
     for (let i=0; i<s2; i++) {
       grid.push(<p key={`${string2[i]}${i}-side`} className="category output output-side">{string2[i]}</p>);
   
@@ -172,7 +224,6 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
         const entryClass = `output${isSol ? ' answer' : ''}`;
         const key = i*s1+j;
         if (i > 0 || j > 0){
-          console.log(i*n + j);
           grid.push(
             <p key={key} className={entryClass}>
               {score[i][j]}
@@ -210,6 +261,11 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
       </div>
       <section>
         <h2>Answer:</h2>
+        {
+          isComputing
+          ? null
+          : <Answer string1={string1} string2={string2} solution={dpTable.solution} />
+        }
       </section>
     </div>
   )
