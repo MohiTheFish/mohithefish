@@ -41,7 +41,7 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
     solution: [],
   });
   const [showOnlySolutionArrows, setShowOnlySolutionArrows] = useState(true);
-
+  console.log(string1, string2);
   useEffect(() => {
     console.log('start computing');
     setIsComputing(true);
@@ -101,7 +101,7 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
       let curr_row = s2 - 1;
       let curr_col = s1 - 1;
       while(curr_row !== 0 && curr_col !== 0) {
-        console.log([curr_row, curr_col]);
+        // console.log([curr_row, curr_col]);
         solution.push([curr_row, curr_col]);
         const dir = bpointer[curr_row][curr_col];
         switch(dir) {
@@ -119,23 +119,21 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
             curr_col--;
             break;
           }
-          default:  {
-            console.log('reading garbage');
-          }
+          default:
         }
       }
       while(curr_col !== 0) {
-        console.log([curr_row, curr_col]);
+        // console.log([curr_row, curr_col]);
         solution.push([curr_row, curr_col]);
         curr_col--;
       }
       while(curr_row !== 0) {
-        console.log([curr_row, curr_col]);
+        // console.log([curr_row, curr_col]);
         solution.push([curr_row, curr_col]);
         curr_row--;
       }
       
-      console.log([curr_row, curr_col]);
+      // console.log([curr_row, curr_col]);
       solution.push([0,0]);
       solution.reverse();
       setdpTable({
@@ -160,6 +158,7 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
   if (!isComputing) {
     const {score, bp, solution} = dpTable;
     let solutionIndex = 0;
+    const n = similarityMatrix.length;
     for (let i=0; i<s2; i++) {
       grid.push(<p key={`${string2[i]}${i}-side`} className="category output output-side">{string2[i]}</p>);
   
@@ -171,9 +170,11 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
         }
         
         const entryClass = `output${isSol ? ' answer' : ''}`;
+        const key = i*s1+j;
         if (i > 0 || j > 0){
+          console.log(i*n + j);
           grid.push(
-            <p key={`${i}${j}`} className={entryClass}>
+            <p key={key} className={entryClass}>
               {score[i][j]}
               {(showOnlySolutionArrows && isSol) || (!showOnlySolutionArrows) ? getArrow(bp[i][j]) : null}
             </p>
@@ -181,7 +182,7 @@ export default function OutputMatrix({decoder, similarityMatrix, string1, string
         }
         else {
           grid.push(
-            <p key={`${i}${j}`} className={entryClass}>{score[i][j]}</p>
+            <p key={key} className={entryClass}>{score[i][j]}</p>
           );
         }
       }

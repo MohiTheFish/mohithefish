@@ -3,6 +3,9 @@ const VALID_SYMBOLS_LOOKUP = new Set(VALID_SYMBOLS);
 const DEFAULT_STRING_1 = 'GGTAG';
 const DEFAULT_STRING_2 = 'GGCAGT';
 
+// const DEFAULT_STRING_1 = 'GGTAGGTACCTATACTGTA';
+// const DEFAULT_STRING_2 = 'GGCAGTACTTGTA';
+
 function isFloat(num) {
   // return /^(\+|-)?\d+$/.test(num);
   return /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/.test(num);
