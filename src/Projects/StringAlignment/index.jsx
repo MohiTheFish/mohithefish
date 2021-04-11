@@ -1,9 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import Loading from 'components/Loading/loading';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import Switch from '@material-ui/core/Switch';
+
+import Matrix from './Matrix';
+import ValidSymbols from './ValidSymbols';
+import InputBox from 'components/InputBox';
+import {
+  isFloat,
+  initalizeSimilarityMatrix,
+  VALID_SYMBOLS,
+  VALID_SYMBOLS_LOOKUP,
+} from './utils';
+
 import redArrow from 'assets/red_arrow.svg';
 import blueArrow from 'assets/blue_arrow.svg';
 import greenArrow from 'assets/green_arrow.svg';
@@ -13,127 +22,16 @@ import './index.scss';
 function RedArrowImage() {
   return <img src={redArrow} alt="Red arrow" className="arrow red-arrow"/>
 }
-function BlueArrowImage() {
-  return <img src={blueArrow} alt="Blue arrow" className="arrow blue-arrow"/>
+function BlueArrowImage({ up }) {
+  return <img src={blueArrow} alt="Blue arrow" className={`arrow blue-arrow-${up ? 'up' : 'left'}`}/>
 }
 function GreenArrowImage() {
   return <img src={greenArrow} alt="Green arrow" className="arrow green-arrow"/>
 }
 
-function InputBox(props) {
-  const { value, setValue, errormsg, children } = props;
-  // const question = children[0];
-  let error = Boolean(errormsg);
-
-  let inputProps = {
-    className: "time-input",
-    label: "Time",
-    value: value,
-    onChange: handleChange, 
-  }
-
-  function handleChange(e) {
-    setValue(e.target.value.toUpperCase());
-  }
-  return (
-    <section className="setting">
-      {children}
-      <FormControl error={error} className="full-width">
-        <Input
-          fullWidth={true}
-          {...inputProps}
-        />
-        {
-          error
-          ? <FormHelperText>{errormsg}</FormHelperText>
-          : null
-        }
-      </FormControl>
-    </section>
-  );
-}
-
 const DEFAULT_STRING_1 = 'GGTAG';
 const DEFAULT_STRING_2 = 'GGCAGT';
 
-function ValidSymbols({symbols}) {
-  return (
-    <section className="possible-symbols">
-      <h3>Valid Symbols:</h3>
-      <p>
-        {
-          symbols.map(symbol => <span key={symbol}>{symbol}</span>)
-        }
-      </p>
-
-    </section>
-  );
-}
-
-const VALID_SYMBOLS = ['A', 'T', 'C', 'G'];
-const VALID_SYMBOLS_LOOKUP = new Set(VALID_SYMBOLS);
-
-function initalizeSimilarityMatrix() {
-  return [
-    ['-inf', -1, -1, -1, -1],
-    [-1, 1, -1, -1, -1],
-    [-1, -1, 1, -1, -1],
-    [-1, -1, -1, 1, -1],
-    [-1, -1, -1, -1, 1],
-  ];
-}
-function Matrix({ matrix, handleChange, isValid }) {
-  const n = matrix.length; 
-  
-  const grid = [
-    <p key="empty" className="empty" />,
-    <p key="blank-top" className="category blank-top">-</p>,
-  ];
-  VALID_SYMBOLS.forEach((symbol) => {
-    grid.push(<p key={`${symbol}-top`} className={`category ${symbol}-top`}>{symbol}</p>);
-  })
-  for (let i=0; i<n; i++) {
-    if (i === 0) {
-      grid.push(<p key="blank-side" className="category blank-side">-</p>);
-    }
-    else {
-      grid.push(<p key={`${VALID_SYMBOLS[i-1]}-side`} className={`category ${VALID_SYMBOLS[i-1]}-side`}>{VALID_SYMBOLS[i-1]}</p>);
-    }
-
-    for (let j=0; j<n; j++) {
-      if ((i+j) === 0 || j>i) {
-        grid.push(
-          <p key={`${i}${j}`} className="value" > {matrix[i][j]} </p>
-        )
-      }
-      else {
-        grid.push(
-          <input key={`${i}${j}`} id={i*n + j} onChange={handleChange} value={matrix[i][j]} className="value" />
-        )
-      }
-    }
-  }
-
-  return (
-    <section>
-      <h3>Similarity Matrix:</h3>
-      <div className="matrix similarity-matrix">
-        {grid}
-      </div>
-      {
-        isValid
-        ? null
-        : <p className="error-matrix">Please ensure all weights are numbers.</p>
-      }
-    </section>
-  )
-}
-
-
-function isFloat(num) {
-  // return /^(\+|-)?\d+$/.test(num);
-  return /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/.test(num);
-}
 function checkIsValidMatrix(matrix) {
   const n = matrix.length;
   for (let i=0; i<n; i++) {
@@ -152,13 +50,27 @@ const BACKPOINTER_UP = 0;
 const BACKPOINTER_DIAG = 1;
 const BACKPOINTER_LEFT = 2;
 
+function getArrow(bpEntry) {
+  if (bpEntry === BACKPOINTER_DIAG) {
+    return <GreenArrowImage />;
+  }
+  if (bpEntry === -BACKPOINTER_DIAG) {
+    return <RedArrowImage />;
+  }
+  if (bpEntry === BACKPOINTER_UP) {
+    return <BlueArrowImage up />
+  }
+  return <BlueArrowImage />;
+}
+
 function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing, setIsComputing}) {
   const [dpTable, setdpTable] = useState({
     score: [],
     bp: [],
+    solution: [],
   });
+  const [showOnlySolutionArrows, setShowOnlySolutionArrows] = useState(true);
 
-  
   useEffect(() => {
     console.log('start computing');
     setIsComputing(true);
@@ -174,6 +86,7 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing,
       const s2 = string2.length;
       const table = [[]];
       const bpointer = [];
+      const solution = [];
       for (let j=0; j<s1; j++) {
         table[0].push(-j);
       }
@@ -193,7 +106,7 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing,
           const rightDir = table[i][j-1] + decode('-', string1[j]);
           const diagonal = table[i-1][j-1] + decode(string1[j], string2[i]);
           let choice = diagonal;
-          let backpointer = BACKPOINTER_DIAG;
+          let backpointer = string1[j] === string2[i] ? BACKPOINTER_DIAG : -BACKPOINTER_DIAG;
           
           if (downDir > rightDir && downDir > diagonal) {
             choice = downDir;
@@ -208,7 +121,36 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing,
           bpointer[i-1].push(backpointer);
         }
       }
-      setdpTable(table);
+      let curr_row = s2 - 1;
+      let curr_col = s1 - 1;
+      while(curr_row !== 0 && curr_col !== 0) {
+        solution.push([curr_row, curr_col]);
+        const dir = bpointer[curr_row-1][curr_col-1];
+        switch(dir) {
+          case BACKPOINTER_UP: {
+            curr_row--;
+            break;
+          }
+          case BACKPOINTER_LEFT: {
+            curr_col--;
+            break;
+          }
+          case BACKPOINTER_DIAG:
+          case -BACKPOINTER_DIAG: {
+            curr_row--;
+            curr_col--;
+            break;
+          }
+          default: 
+        }
+      }
+      solution.push([0,0]);
+      solution.reverse();
+      setdpTable({
+        score: table,
+        bp: bpointer,
+        solution,
+      });
       setIsComputing(false);
     }
     computeDPTable();
@@ -224,13 +166,32 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing,
   }
 
   if (!isComputing) {
+    const {score, bp, solution} = dpTable;
+    let solutionIndex = 0;
     for (let i=0; i<s2; i++) {
       grid.push(<p key={`${string2[i]}${i}-side`} className="category output output-side">{string2[i]}</p>);
   
       for (let j=0; j<s1; j++) {
-        grid.push(
-          <p key={`${i}${j}`} className="output">{dpTable[i][j]}</p>
-        );
+        const [solrow, solcol] = solution[solutionIndex];
+        const isSol = (i===solrow) && (j===solcol)
+        if (isSol) {
+          solutionIndex++;
+        }
+        
+        const entryClass = `output${isSol ? ' answer' : ''}`;
+        if (i > 0 && j > 0){
+          grid.push(
+            <p key={`${i}${j}`} className={entryClass}>
+              {score[i][j]}
+              {(showOnlySolutionArrows && isSol) || (!showOnlySolutionArrows) ? getArrow(bp[i-1][j-1]) : null}
+            </p>
+          );
+        }
+        else {
+          grid.push(
+            <p key={`${i}${j}`} className={entryClass}>{score[i][j]}</p>
+          );
+        }
       }
     }
   }
@@ -246,9 +207,16 @@ function OutputMatrix({decoder, similarityMatrix, string1, string2, isComputing,
       <section className="matrix" style={{ gridTemplateColumns: `repeat(${s1+1}, 60px)`, gridTemplateRows: `repeat(${s2+1}, 45px)`}}>
         {grid}
       </section>
+      <div className="switch-wrapper">
+        <Switch
+          onChange={() => setShowOnlySolutionArrows(!showOnlySolutionArrows)}
+          checked={showOnlySolutionArrows}
+          color="primary"
+        />
+        <p>Only show solution arrows?</p>
+      </div>
       <section>
         <h2>Answer:</h2>
-        <RedArrowImage />
       </section>
     </div>
   )
@@ -280,16 +248,7 @@ function convertToFloatMatrix(matrix) {
   return simMatrix;
 }
 
-function initalizeDecoder() {
-  const map = {
-    '-': 0,
-    'A': 1,
-    'T': 2,
-    'C': 3.,
-    'G': 4,
-  };
-  return map;
-}
+
 export default function Alignment() {
   const [string1, setString1] = useState(DEFAULT_STRING_1); 
   const [string2, setString2] = useState(DEFAULT_STRING_2);
@@ -347,10 +306,10 @@ export default function Alignment() {
         <div className="parameters">
           <h2>Parameters</h2>
           <ValidSymbols symbols={VALID_SYMBOLS} />
-          <InputBox value={string1} setValue={setString1} errormsg={isString1Valid}>
+          <InputBox value={string1} setValue={setString1} errormsg={isString1Valid} className="padleft">
             <h3>First string:</h3>
           </InputBox>
-          <InputBox value={string2} setValue={setString2} errormsg={isString2Valid}>
+          <InputBox value={string2} setValue={setString2} errormsg={isString2Valid} className="padleft">
             <h3>Second string:</h3>
           </InputBox>
           <Matrix matrix={matrix} isValid={isValidMatrix} handleChange={handleMatrixChange}/>
