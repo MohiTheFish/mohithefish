@@ -81,15 +81,17 @@
   }
   .arrow {
     position: absolute;
+    left: 0;
+    top: 0;
   }
   .red-arrow, .green-arrow {
-    transform: translate(-51px, -14px) rotate(-135deg);
+    transform: translate(-16px, -12px) rotate(-135deg);
   }
   .blue-arrow-up {
-    transform: translate(-18px, -12px) rotate(-90deg);
+    transform: translate(15px, -12px) rotate(-90deg);
   }
   .blue-arrow-left {
-    transform: translate(-50px, 10px) rotate(-180deg);
+    transform: translate(-17px, 10px) rotate(-180deg);
   }
   // .green-arrow {
   //   transform: rotate(-135deg);
