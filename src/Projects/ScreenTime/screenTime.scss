@@ -7,31 +7,67 @@
     width: 100%;
     border: 1px solid gray;
     border-radius: 4px;
-    padding: 5px;
-    align-items: center;
   }
   .row-header {
+    padding: 5px;
     width: 120px;
     text-align: center;
     flex-grow: 0;
+    border-right: 1px solid black;
+    align-self: center;
   }
-  .date-entry {
+  input {
+    justify-self: center;
     border: none;
     outline: none;
+    margin: 0 5px;
+    margin-bottom: -1px;
+    border-bottom: 1px solid gray;
+    font-size: 20px;
   }
-  .date-entry:focus {
+
+  .data-entry-container {
+    text-align: center;
+    padding: 0 5px;
+  }
+  
+  .date-entry-container {
+    border-right: 1px solid black;
+    width: 200px;
+  }
+  .time-entry {
+    width: 25px;
+  }
+  .date-entry {
+    padding-bottom: 0;
+    width: 25px;
+  }
+  .date-entry.year {
+    width: 50px;
+  }
+
+  input:hover {
     border-bottom: 1px solid black;
   }
+  
+  input:focus {
+    border-bottom: 2px solid rgb(0, 124, 207);
+  }
+
+  input:first-of-type::before {
+    content: 'h';
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  // .date-entry:focus {
+  //   border-bottom: 2px solid black;
+  // }
   .time-entry {
     align-self: center;
     // margin-left: 20px;
-  }
-  .setting {
-    flex: 1;
-    margin: 0 20px;
-  }
-  input {
-    height: 24px;
-    justify-self: center;
   }
 }

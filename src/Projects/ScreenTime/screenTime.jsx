@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import InputBox, {isInteger, InputDate} from 'components/InputBox';
+import Button from '@material-ui/core/Button';
 
 import './screenTime.scss';
 
@@ -25,6 +26,7 @@ function isValidDay(day, month, year) {
 
 function checkDateValid(date) {
   const {d: day, m: month, y: year} = date;
+  console.log(date);
   const errors = {
     d: '',
     m: '',
@@ -96,10 +98,33 @@ function checkMinuteValid(min) {
 
 
 export default function ScreenTime() {
+  const [altPressed, setAltPressed] = useState(false);
+
+  useEffect(() => {
+    const originalOnKeyDown = window.onkeydown;
+    const originalOnKeyUp = window.onkeyup;
+
+    window.onkeydown = (e) => {
+      if (e.key === 'Alt') {
+        setAltPressed(true);
+      }
+    }
+    window.onkeyup = (e) => {
+      if (e.key === 'Alt') {
+        setAltPressed(false);
+      }
+    }
+    
+    return () => {
+      window.onkeydown = originalOnKeyDown;
+      window.onkeyup = originalOnKeyUp;
+    }
+  })
+
   const [date, setDay] = useState({
-    d: '2',
-    m: '2',
-    y: '2',
+    d: '02',
+    m: '02',
+    y: '2020',
   });
   const [hour, setHour] = useState("0");
   const [minute, setMinute] = useState("0");
@@ -110,8 +135,9 @@ export default function ScreenTime() {
 
   const handleDay = (e) => {
     const {m,y} = date;
+    console.log(e.target.value);
     setDay({
-      d: e.value,
+      d: e.target.value,
       m,
       y,
     });
@@ -120,7 +146,7 @@ export default function ScreenTime() {
     const {d,y} = date;
     setDay({
       d,
-      m: e.value,
+      m: e.target.value,
       y,
     });
   }
@@ -129,14 +155,14 @@ export default function ScreenTime() {
     setDay({
       d,
       m,
-      y: e.value,
+      y: e.target.value,
     });
   }
   const handleHour = (e) => {
-    setHour(e.value);
+    setHour(e.target.value);
   };
   const handleMinute = (e) => {
-    setMinute(e.value);
+    setMinute(e.target.value);
   };
 
   console.log(isDateValid);
@@ -146,16 +172,24 @@ export default function ScreenTime() {
       <h1>Some ScreenTime</h1>
       <div className="data-entry">
         <h2 className="row-header">Data Point Entry</h2>
-        <input type="text" defaultValue={2} onChange={handleDay} className="date-entry"/>
-        <input type="text" defaultValue={2} onChange={handleMonth} className="date-entry"/>
-        <input type="text" defaultValue={2} onChange={handleYear} className="date-entry"/>
-        <input type="text" defaultValue={2} onChange={handleHour} className="time-entry"/>
-        <input type="text" defaultValue={2} onChange={handleMinute} className="time-entry"/>
+        <div className="data-entry-container date-entry-container">
+          <h3>Date (mm/dd/yyyy)</h3>
+          <input type="text" defaultValue={d} onChange={handleDay} className="date-entry"/>
+          <span className="slash">/</span>
+          <input type="text" defaultValue={m} onChange={handleMonth} className="date-entry"/>
+          <span className="slash">/</span>
+          <input type="text" defaultValue={y} onChange={handleYear} className="date-entry year"/>
+        </div>
 
-        {/* <InputDate value={date} setValue={setDate} errormsg={isDateValid} className="time-entry">
-          <h3>Date:</h3>
-        </InputDate>
-        <InputBox value={hour} setValue={setHour} errormsg={isHourValid} className="time-entry">
+        <div className="data-entry-container time-entry-container">
+          <h3>Total Time</h3>
+          <input type="text" defaultValue={hour} onChange={handleHour} className="time-entry"/>
+          <input type="text" defaultValue={minute} onChange={handleMinute} className="time-entry"/>
+        </div>
+        
+        <Button color="primary" variant="contained" disableRipple>Add Entry</Button>
+
+        {/* <InputBox value={hour} setValue={setHour} errormsg={isHourValid} className="time-entry">
           <h3>Hour:</h3>
         </InputBox>
         <InputBox value={minute} setValue={setMinute} errormsg={isMinuteValid} className="time-entry">
