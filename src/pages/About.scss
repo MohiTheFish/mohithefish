@@ -29,7 +29,7 @@
 
 
 .about-page {
-  padding: k.$mohithefish-padding;
+  // padding: k.$mohithefish-padding;
   h1 {
     padding: 5px;
     text-align: center;
@@ -44,4 +44,8 @@
     grid-auto-rows: auto;
     gap: 30px;
   }
+}
+
+.about-wrapper {
+  padding: k.$mohithefish-padding;
 }
