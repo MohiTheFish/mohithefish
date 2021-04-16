@@ -1,3 +1,10 @@
 .full-width-input {
   width: 100%;
 }
+
+.full-width-input.setting-date {
+  display: inline;
+  > * {
+    width: 20%;
+  }
+}
