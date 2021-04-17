@@ -1,5 +1,20 @@
 @use '~styles/constants' as k;
 
+#dropdown {
+  position: absolute;
+  left: 20px;
+  top: 25px;
+  width: 190px;
+  background-color: gray;
+  z-index: 1;
+  border-radius: 4px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+#dropdown.hidden{
+  visibility: hidden;
+}
+
 .screentime-wrapper {
   width: 100%;
   .row-header {
@@ -26,9 +41,12 @@
     display: grid;
     grid-template-columns: 200px 50px 50px 50px;
     align-items: start;
+    position: relative;
   }
 
   .activity-entry {
+    position: relative;
+    z-index: 1;
   }
   
   .date-entry-container {

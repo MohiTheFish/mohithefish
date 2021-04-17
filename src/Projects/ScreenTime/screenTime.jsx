@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {isPositiveInteger} from 'components/InputBox';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -145,6 +145,33 @@ function DataErrors(props) {
   )
 }
 
+const ACTIVITY_NAMES = [
+  'Netflix',
+  'Disney+',
+  'Reddit',
+  'Fire Emblem Heroes',
+  'Messenger',
+  'iMessage (Messages)',
+  'Discord',
+  'Manga Reader',
+  'WebToons',
+  'Manga Storm',
+  'Shounen Jump',
+];
+
+function Dropdown({ dropdownIndex, dropdownCallback }) {
+
+  let hiddenClass='';
+  if (dropdownIndex === -1)
+    hiddenClass='hidden';
+  return (
+    <div id="dropdown" className={hiddenClass} ref={dropdownCallback}>
+      <p>Netflix</p>
+      <p>Fire Emblem Heroes</p>
+    </div>
+  )
+}
+
 export default function ScreenTime() {
 
   useEffect(() => {
@@ -163,6 +190,8 @@ export default function ScreenTime() {
     min: '0',
   }]);
 
+  let mydropdown = useRef();
+  const actRefs = useRef([]);
   const [date, setDay] = useState({
     d: '02',
     m: '02',
@@ -170,6 +199,7 @@ export default function ScreenTime() {
   });
   const [hour, setHour] = useState("0");
   const [minute, setMinute] = useState("0");
+  const [dropdownIndex, setDropdownIndex] = useState(0);
 
   const {
     d: isDayValid,
@@ -179,8 +209,26 @@ export default function ScreenTime() {
   const isHourValid = checkHourValid(hour);
   const isMinuteValid = checkMinuteValid(minute);
   const areActivitiesValid = checkActivitiesValid(activities);
-  console.log(areActivitiesValid);
 
+  useEffect(() => {
+    
+    const hideDropDown = (e) => {
+      if (!actRefs.current[dropdownIndex].contains(e.target)
+       && !mydropdown.current.contains(e.target)){
+        setDropdownIndex(-1);
+      }
+    }
+    if (dropdownIndex !== -1) {
+      window.addEventListener('click', hideDropDown);
+    }
+    else {
+      window.removeEventListener('click', hideDropDown);
+    }
+  }, [dropdownIndex]);
+
+  useEffect(() => {
+    actRefs.current = actRefs.current.slice(0, activities.length);
+  }, [activities.length]);
 
   const addActivity = () => {
     const actCopy = activities.map(e => e);
@@ -247,10 +295,14 @@ export default function ScreenTime() {
     setActivities(actCopy);
   }
 
+  const showDropdown = (index) => {
+    setDropdownIndex(index);
+  }
+
   const {d,m,y} = date;
 
   // console.log(isDayValid, isMonthValid, isYearValid, isHourValid, isMinuteValid);
-  // console.log(activities);
+  // console.log(dropdownIndex);
 
   const errored = !(!isDayValid && !isMonthValid && !isYearValid && !isHourValid & !isMinuteValid);
   return (
@@ -278,7 +330,14 @@ export default function ScreenTime() {
               activities.map(({key, name, h, min}, index) => {
                 return (
                   <React.Fragment key={key}>
-                    <input type="text" className="activity-entry" defaultValue={name} onChange={(e) => handleActivityKey(index, e)} />
+                    <input
+                      type="text"
+                      className="activity-entry"
+                      defaultValue={name}
+                      ref={(el) => (actRefs.current[index] = el)}
+                      onChange={(e) => handleActivityKey(index, e)}
+                      onClick={() => showDropdown(index)}
+                    />
                     <TimeEntry isHour time={h} onChange={(e) => handleActivityHour(index, e)} />
                     <TimeEntry time={min} onChange={(e) => handleActivityMin(index, e)} />
                     <IconButton size='small' aria-label="delete" onClick={() => handleActivityDelete(index)}>
@@ -288,6 +347,7 @@ export default function ScreenTime() {
                 );
               })
             }
+            <Dropdown dropdownCallback={(el) => (mydropdown.current = el)} dropdownIndex={dropdownIndex} />
           </div>
         </div>
         <Button
