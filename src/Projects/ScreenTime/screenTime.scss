@@ -54,15 +54,21 @@
     border-bottom: 2px solid rgb(0, 124, 207);
   }
 
-  input:first-of-type::before {
-    content: 'h';
-    z-index: 2;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+  .time-container {
+    position: relative;
+    display: inline;
+    input {
+      padding-right: 15px;
+    }
+    p {
+      position: absolute;
+      top: 0;
+      right: 5px;
+      height:0;
+      color: gray;
+    }
   }
+
   // .date-entry:focus {
   //   border-bottom: 2px solid black;
   // }

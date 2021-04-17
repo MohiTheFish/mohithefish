@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import InputBox, {isInteger, InputDate} from 'components/InputBox';
+import {isPositiveInteger} from 'components/InputBox';
 import Button from '@material-ui/core/Button';
 
 import './screenTime.scss';
@@ -35,8 +35,10 @@ function checkDateValid(date) {
   let monthNum = 0;
   let dayNum = 0;
   let yearNum = 0;
-  
-  if (!isInteger(year)) {
+  if (year.length !== 4) {
+    errors.y = 'Year must have length 4';
+  }
+  else if (!isPositiveInteger(year)) {
     errors.y = 'Year must be an integer';
   }
   else {
@@ -49,7 +51,10 @@ function checkDateValid(date) {
     }
   }
 
-  if(!isInteger(month)) {
+  if (month.length > 2) {
+    errors.m = 'Month has too many digits.';
+  }
+  else if(!isPositiveInteger(month)) {
     errors.m = 'Month must be an integer';
   }
   else {
@@ -62,7 +67,13 @@ function checkDateValid(date) {
     }
   }
 
-  if (!isInteger(day)) {
+
+  console.log(day.length);
+
+  if (day.length > 2) {
+    errors.d = 'Day has too many digits';
+  }
+  else if (!isPositiveInteger(day)) {
     errors.d = 'Day must be an integer.';
   }
   else {
@@ -78,7 +89,7 @@ function checkDateValid(date) {
 }
 
 function checkHourValid(hour) {
-  if(!isInteger(hour)) {
+  if(!isPositiveInteger(hour)) {
     return 'Hour must be a positive integer';
   }
   if (Number.parseInt(hour) >= 60) {
@@ -87,7 +98,7 @@ function checkHourValid(hour) {
   return '';
 }
 function checkMinuteValid(min) {
-  if(!isInteger(min)) {
+  if(!isPositiveInteger(min)) {
     return 'Minute must be a positive integer';
   }
   if (Number.parseInt(min) >= 60) {
@@ -96,6 +107,25 @@ function checkMinuteValid(min) {
   return '';
 }
 
+function DataErrors(props) {
+  const {
+    isDayValid,
+    isMonthValid,
+    isYearValid,
+    isHourValid,
+    isMinuteValid,
+  } = props;
+
+  return (
+    <div className="errors">
+      <p>{isDayValid}</p>
+      <p>{isMonthValid}</p>
+      <p>{isYearValid}</p>
+      <p>{isHourValid}</p>
+      <p>{isMinuteValid}</p>
+    </div>
+  )
+}
 
 export default function ScreenTime() {
   const [altPressed, setAltPressed] = useState(false);
@@ -129,7 +159,11 @@ export default function ScreenTime() {
   const [hour, setHour] = useState("0");
   const [minute, setMinute] = useState("0");
 
-  const isDateValid = checkDateValid(date);
+  const {
+    d: isDayValid,
+    m: isMonthValid,
+    y: isYearValid,
+  } = checkDateValid(date);
   const isHourValid = checkHourValid(hour);
   const isMinuteValid = checkMinuteValid(minute);
 
@@ -165,8 +199,9 @@ export default function ScreenTime() {
     setMinute(e.target.value);
   };
 
-  console.log(isDateValid);
   const {d,m,y} = date;
+  console.log(isDayValid, isMonthValid, isYearValid, isHourValid, isMinuteValid);
+  const errored = !(!isDayValid && !isMonthValid && !isYearValid && !isHourValid & !isMinuteValid);
   return (
     <div className="screentime-wrapper">
       <h1>Some ScreenTime</h1>
@@ -183,11 +218,17 @@ export default function ScreenTime() {
 
         <div className="data-entry-container time-entry-container">
           <h3>Total Time</h3>
-          <input type="text" defaultValue={hour} onChange={handleHour} className="time-entry"/>
-          <input type="text" defaultValue={minute} onChange={handleMinute} className="time-entry"/>
+          <div className="time-container hour-container">
+            <input type="text" defaultValue={hour} onChange={handleHour} className="time-entry"/>
+            <p>h</p>
+          </div>
+          <div className="time-container hour-container">
+            <input type="text" defaultValue={minute} onChange={handleMinute} className="time-entry"/>
+            <p>m</p>
+          </div>
         </div>
         
-        <Button color="primary" variant="contained" disableRipple>Add Entry</Button>
+        <Button color="primary" variant="contained" disableRipple disabled={errored}>Add Entry</Button>
 
         {/* <InputBox value={hour} setValue={setHour} errormsg={isHourValid} className="time-entry">
           <h3>Hour:</h3>
@@ -196,6 +237,16 @@ export default function ScreenTime() {
           <h3>Minute:</h3>
         </InputBox> */}
       </div>
+      {
+        errored 
+        ? <DataErrors
+          isDayValid={isDayValid}
+          isMonthValid={isMonthValid}
+          isYearValid={isYearValid}
+          isHourValid={isHourValid}
+          isMinuteValid={isMinuteValid} />
+        : null
+      }
     </div>
   )
 }
