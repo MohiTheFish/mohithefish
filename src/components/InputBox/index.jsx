@@ -10,6 +10,9 @@ import './index.scss';
 export function isInteger(arg) {
   return /^(\+|-)?\d+$/.test(arg);
 }
+export function isPositiveInteger(arg) {
+  return /^\d+$/.test(arg);
+}
 
 export function isFloat(arg) {
   return /^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$/.test(arg);
