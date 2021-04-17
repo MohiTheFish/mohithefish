@@ -1,8 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {isPositiveInteger} from 'components/InputBox';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import './screenTime.scss';
+
+function TimeEntry({isHour, time, onChange}) {
+  return (
+    <div className="time-container">
+      <input type="text" defaultValue={time} onChange={onChange} className="time-entry"/>
+      <p>{isHour ? 'h' : 'm'}</p>
+    </div>
+  )
+}
 
 function isValidDay(day, month, year) {
   const thirtyOneDayMonths = new Set([1,3,5,7,8,10,12]);
@@ -26,7 +37,6 @@ function isValidDay(day, month, year) {
 
 function checkDateValid(date) {
   const {d: day, m: month, y: year} = date;
-  console.log(date);
   const errors = {
     d: '',
     m: '',
@@ -67,9 +77,6 @@ function checkDateValid(date) {
     }
   }
 
-
-  console.log(day.length);
-
   if (day.length > 2) {
     errors.d = 'Day has too many digits';
   }
@@ -92,8 +99,8 @@ function checkHourValid(hour) {
   if(!isPositiveInteger(hour)) {
     return 'Hour must be a positive integer';
   }
-  if (Number.parseInt(hour) >= 60) {
-    return 'Hour must be less than equal to 60.'
+  if (Number.parseInt(hour) >= 24) {
+    return 'Hour must be less than or equal to 24.'
   }
   return '';
 }
@@ -102,9 +109,20 @@ function checkMinuteValid(min) {
     return 'Minute must be a positive integer';
   }
   if (Number.parseInt(min) >= 60) {
-    return 'Minute must be less than equal to 60.'
+    return 'Minute must be less than or equal to 60.'
   }
   return '';
+}
+
+function checkActivitiesValid(acts) {
+  const ans = [];
+  acts.forEach(({name, h, min}) => {
+    ans.push({
+      h: checkHourValid(h),
+      min: checkMinuteValid(min),
+    });
+  });
+  return ans;
 }
 
 function DataErrors(props) {
@@ -128,28 +146,22 @@ function DataErrors(props) {
 }
 
 export default function ScreenTime() {
-  const [altPressed, setAltPressed] = useState(false);
 
   useEffect(() => {
     const originalOnKeyDown = window.onkeydown;
     const originalOnKeyUp = window.onkeyup;
-
-    window.onkeydown = (e) => {
-      if (e.key === 'Alt') {
-        setAltPressed(true);
-      }
-    }
-    window.onkeyup = (e) => {
-      if (e.key === 'Alt') {
-        setAltPressed(false);
-      }
-    }
     
     return () => {
       window.onkeydown = originalOnKeyDown;
       window.onkeyup = originalOnKeyUp;
     }
   })
+  const [activities, setActivities] = useState([{
+    key: 0,
+    name: '',
+    h: '0',
+    min: '0',
+  }]);
 
   const [date, setDay] = useState({
     d: '02',
@@ -166,10 +178,22 @@ export default function ScreenTime() {
   } = checkDateValid(date);
   const isHourValid = checkHourValid(hour);
   const isMinuteValid = checkMinuteValid(minute);
+  const areActivitiesValid = checkActivitiesValid(activities);
+  console.log(areActivitiesValid);
 
+
+  const addActivity = () => {
+    const actCopy = activities.map(e => e);
+    actCopy.push({
+      key: activities[activities.length-1].key + 1,
+      name: '',
+      h: '0',
+      min: '0',
+    });
+    setActivities(actCopy);
+  }
   const handleDay = (e) => {
     const {m,y} = date;
-    console.log(e.target.value);
     setDay({
       d: e.target.value,
       m,
@@ -199,54 +223,95 @@ export default function ScreenTime() {
     setMinute(e.target.value);
   };
 
+  const handleActivityKey = (index, e) => {
+    const actCopy = activities.map(e => e);
+    actCopy[index].name = e.target.value;
+    setActivities(activities);
+  }
+
+  const handleActivityHour = (index, e) => {
+    console.log('act hour');
+    const actCopy = [...activities];
+    actCopy[index].h = e.target.value;
+    setActivities(actCopy);
+  }
+
+  const handleActivityMin = (index, e) => {
+    const actCopy = activities.map(e => e);
+    actCopy[index].min = e.target.value;
+    setActivities(actCopy);
+  }
+
+  const handleActivityDelete = (index) => {
+    const actCopy = activities.filter((v,i) => (i!==index));
+    setActivities(actCopy);
+  }
+
   const {d,m,y} = date;
-  console.log(isDayValid, isMonthValid, isYearValid, isHourValid, isMinuteValid);
+
+  // console.log(isDayValid, isMonthValid, isYearValid, isHourValid, isMinuteValid);
+  // console.log(activities);
+
   const errored = !(!isDayValid && !isMonthValid && !isYearValid && !isHourValid & !isMinuteValid);
   return (
     <div className="screentime-wrapper">
-      <h1>Some ScreenTime</h1>
-      <div className="data-entry">
+      <h1>Some ScreenTime Data</h1>
         <h2 className="row-header">Data Point Entry</h2>
         <div className="data-entry-container date-entry-container">
           <h3>Date (mm/dd/yyyy)</h3>
-          <input type="text" defaultValue={d} onChange={handleDay} className="date-entry"/>
-          <span className="slash">/</span>
           <input type="text" defaultValue={m} onChange={handleMonth} className="date-entry"/>
+          <span className="slash">/</span>
+          <input type="text" defaultValue={d} onChange={handleDay} className="date-entry"/>
           <span className="slash">/</span>
           <input type="text" defaultValue={y} onChange={handleYear} className="date-entry year"/>
         </div>
 
         <div className="data-entry-container time-entry-container">
           <h3>Total Time</h3>
-          <div className="time-container hour-container">
-            <input type="text" defaultValue={hour} onChange={handleHour} className="time-entry"/>
-            <p>h</p>
-          </div>
-          <div className="time-container hour-container">
-            <input type="text" defaultValue={minute} onChange={handleMinute} className="time-entry"/>
-            <p>m</p>
+          <TimeEntry isHour time={hour} onChange={handleHour} />
+          <TimeEntry time={minute} onChange={handleMinute} />
+        </div>
+        <div className="data-entry-container">
+          <h3>Activities</h3>
+          <div className="activity-entry-container" style={{gridTemplateRows: `repeat(${activities.length}, 35px)`}}>
+            {
+              activities.map(({key, name, h, min}, index) => {
+                return (
+                  <React.Fragment key={key}>
+                    <input type="text" className="activity-entry" defaultValue={name} onChange={(e) => handleActivityKey(index, e)} />
+                    <TimeEntry isHour time={h} onChange={(e) => handleActivityHour(index, e)} />
+                    <TimeEntry time={min} onChange={(e) => handleActivityMin(index, e)} />
+                    <IconButton size='small' aria-label="delete" onClick={() => handleActivityDelete(index)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </React.Fragment>
+                );
+              })
+            }
           </div>
         </div>
+        <Button
+          className="btn"
+          color="primary"
+          variant="contained"
+          disableRipple
+          onClick={addActivity}
+          size="small"
+        >
+          Add Activity
+        </Button>
         
-        <Button color="primary" variant="contained" disableRipple disabled={errored}>Add Entry</Button>
-
-        {/* <InputBox value={hour} setValue={setHour} errormsg={isHourValid} className="time-entry">
-          <h3>Hour:</h3>
-        </InputBox>
-        <InputBox value={minute} setValue={setMinute} errormsg={isMinuteValid} className="time-entry">
-          <h3>Minute:</h3>
-        </InputBox> */}
-      </div>
-      {
-        errored 
-        ? <DataErrors
-          isDayValid={isDayValid}
-          isMonthValid={isMonthValid}
-          isYearValid={isYearValid}
-          isHourValid={isHourValid}
-          isMinuteValid={isMinuteValid} />
-        : null
-      }
+        
+        {
+          errored 
+          ? <DataErrors
+            isDayValid={isDayValid}
+            isMonthValid={isMonthValid}
+            isYearValid={isYearValid}
+            isHourValid={isHourValid}
+            isMinuteValid={isMinuteValid} />
+          : null
+        }
     </div>
   )
 }
