@@ -1,133 +1,23 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {isPositiveInteger} from 'components/InputBox';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import download from 'downloadjs';
+
 import './screenTime.scss';
 import Loading from 'components/Loading/loading';
-import fs from 'fs';
-
-const VERTICAL_ACTIVITY_SPACING = 35;
-
-function TimeEntry({isHour, time, onChange, onFocus}) {
-  return (
-    <div className="time-container">
-      <input type="text" defaultValue={time} onFocus={onFocus} onChange={onChange} className="time-entry"/>
-      <p>{isHour ? 'h' : 'm'}</p>
-    </div>
-  )
-}
-
-function isValidDay(day, month, year) {
-  const thirtyOneDayMonths = new Set([1,3,5,7,8,10,12]);
-  if (day < 1 || day > 31) {
-    return false;
-  }
-  if (day < 29) { // We don't need to do other checks
-    return true;
-  }
-  if (day <= 31 && thirtyOneDayMonths.has(day)) {
-    return true;
-  }
-  if (day <= 30 && month !== 2) {
-    return true;
-  }
-  if (day === 29 && month === 2 && (year % 4 === 0)) {
-    return true;
-  }
-  return false;
-}
-
-function checkDateValid(date) {
-  const {d: day, m: month, y: year} = date;
-  const errors = {
-    d: '',
-    m: '',
-    y: '',
-  };
-  let monthNum = 0;
-  let dayNum = 0;
-  let yearNum = 0;
-  if (year.length !== 4) {
-    errors.y = 'Year must have length 4';
-  }
-  else if (!isPositiveInteger(year)) {
-    errors.y = 'Year must be an integer';
-  }
-  else {
-    yearNum = Number.parseInt(year);
-    if (yearNum > 2021) {
-      errors.y = 'Must be a valid year';
-    }
-    else {
-      errors.y = '';
-    }
-  }
-
-  if (month.length > 2) {
-    errors.m = 'Month has too many digits.';
-  }
-  else if(!isPositiveInteger(month)) {
-    errors.m = 'Month must be an integer';
-  }
-  else {
-    monthNum = Number.parseInt(month);
-    if (monthNum < 1 || monthNum > 12) {
-      errors.m = 'Month must be 1-12';
-    }
-    else {
-      errors.m = '';
-    }
-  }
-
-  if (day.length > 2) {
-    errors.d = 'Day has too many digits';
-  }
-  else if (!isPositiveInteger(day)) {
-    errors.d = 'Day must be an integer.';
-  }
-  else {
-    dayNum = Number.parseInt(day);
-    if (dayNum < 1 || !isValidDay(dayNum, monthNum, yearNum)) {
-      errors.d = 'Must be a valid day';
-    }
-    else {
-      errors.d = '';
-    }
-  }
-  return errors;
-}
-
-function checkHourValid(hour) {
-  if(!isPositiveInteger(hour)) {
-    return 'Hour must be a positive integer';
-  }
-  if (Number.parseInt(hour) >= 24) {
-    return 'Hour must be less than or equal to 24.'
-  }
-  return '';
-}
-function checkMinuteValid(min) {
-  if(!isPositiveInteger(min)) {
-    return 'Minute must be a positive integer';
-  }
-  if (Number.parseInt(min) >= 60) {
-    return 'Minute must be less than or equal to 60.'
-  }
-  return '';
-}
-
-function checkActivitiesValid(acts) {
-  const ans = [];
-  acts.forEach(({name, h, min}) => {
-    ans.push({
-      h: checkHourValid(h),
-      min: checkMinuteValid(min),
-    });
-  });
-  return ans;
-}
+import {
+  ACTIVITY_NAMES,
+  VERTICAL_ACTIVITY_SPACING,
+  initSeen,
+  checkDateValid,
+  checkHourValid,
+  checkMinuteValid, 
+  checkActivitiesValid,
+} from './util';
+import Dropdown from './dropdown';
+import TimeEntry from './timeEntry';
 
 function DataErrors(props) {
   const {
@@ -149,72 +39,24 @@ function DataErrors(props) {
   )
 }
 
-const ACTIVITY_NAMES = [
-  'Netflix',
-  'Disney+',
-  'Reddit',
-  'Fire Emblem Heroes',
-  'Messenger',
-  'iMessage',
-  'Discord',
-  'Manga Reader',
-  'WebToons',
-  'Manga Storm',
-  'Shounen Jump',
-  'Gmail',
-];
-
-function Dropdown({ dropdownIndex, dropdownCallback, activeDropdown, seenActivities, selectDropdownEntry }) {
-
-  let currStyle={};
-  if (dropdownIndex === -1){
-    currStyle = { left: '-9999px'};
-  }
-  else {
-    const total = VERTICAL_ACTIVITY_SPACING*dropdownIndex;
-    currStyle = { left: '20px', top: `${25+total}px`};
-  }
-
-  console.log(seenActivities);
-  const handleButtonClick = (index) => {
-    selectDropdownEntry(dropdownIndex, index);
-  }
-
-  return (
-    <div id="dropdown" style={currStyle} ref={dropdownCallback}>
-      {
-        ACTIVITY_NAMES.map((act, index) => {
-          if (!seenActivities.get(act)) {
-            return <button key={act} onClickCapture={() => handleButtonClick(index)} className={activeDropdown === index ? 'active' : ''}>{act}</button>;
-          }
-          return null;
-        })
-      }
-    </div>
-  )
-}
-
-function initSeen() {
-  const ans = new Map();
-
-  ACTIVITY_NAMES.forEach((act) => {
-    ans.set(act, false);
-  });
-
-  return ans;
-}
-
 export default function ScreenTime() {
 
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const originalOnKeyDown = window.onkeydown;
     const originalOnKeyUp = window.onkeyup;
+
+    async function getScreenTimeData() {
+      setIsLoading(false);
+    }
+
+    getScreenTimeData();
 
     return () => {
       window.onkeydown = originalOnKeyDown;
       window.onkeyup = originalOnKeyUp;
     }
-  })
+  });
 
   const [isSaving, setIsSaving] = useState(false);
   const [activities, setActivities] = useState([]);
@@ -417,21 +259,6 @@ export default function ScreenTime() {
 
   const saveData = async function() {
     setIsSaving(true);
-    fetch(process.env.PUBLIC_URL + '/screen.json',{
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       }
-     }
-    )
-    .then(function(response){
-      console.log(response)
-      return response.json();
-    })
-    .then(function(myJson) {
-      console.log(myJson);
-    });
-
   }
 
   // console.log('render');
