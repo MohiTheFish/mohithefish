@@ -269,7 +269,6 @@ export default function ScreenTime() {
   const errored = !(!isDayValid && !isMonthValid && !isYearValid && !isHourValid & !isMinuteValid);
   return (
     <div className="screentime-editor">
-      <h1>Some ScreenTime Data</h1>
         <h2 className="row-header">Data Point Entry</h2>
         <div className="data-entry-container date-entry-container">
           <h3>Date (mm/dd/yyyy)</h3>
