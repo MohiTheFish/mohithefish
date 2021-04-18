@@ -18,16 +18,20 @@ export default function Dropdown({ dropdownIndex, dropdownCallback, activeDropdo
     selectDropdownEntry(dropdownIndex, index);
   }
 
+  let dropdownActs = ACTIVITY_NAMES.map((act, index) => {
+    if (!seenActivities.get(act)) {
+      return <button key={act} onClickCapture={() => handleButtonClick(index)} className={activeDropdown === index ? 'active' : ''}>{act}</button>;
+    }
+    return null;
+  })
+
+  if (dropdownActs.length === 0) {
+    dropdownActs = <p>No results found</p>;
+  }
+
   return (
     <div id="dropdown" style={currStyle} ref={dropdownCallback}>
-      {
-        ACTIVITY_NAMES.map((act, index) => {
-          if (!seenActivities.get(act)) {
-            return <button key={act} onClickCapture={() => handleButtonClick(index)} className={activeDropdown === index ? 'active' : ''}>{act}</button>;
-          }
-          return null;
-        })
-      }
+      {dropdownActs}
     </div>
   )
 }

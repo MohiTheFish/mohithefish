@@ -182,14 +182,24 @@ export default function ScreenTime() {
     setMinute(e.target.value);
   };
 
-  const handleActivityFocus = (index, e) => {
+  const handleActChange = (index, e) => {
     const actCopy = activities.map(e => e);
     actCopy[index].name = e.target.value;
     setDropdownInfo({
       dropdownIndex: index,
       activeDropdown: -1,
     });
-    setActivities(activities);
+    setActivities(actCopy);
+  }
+  const handleActivityFocus = (index, e) => {
+    handleBlur();
+    const actCopy = activities.map(e => e);
+    actCopy[index].name = e.target.value;
+    setDropdownInfo({
+      dropdownIndex: index,
+      activeDropdown: -1,
+    });
+    setActivities(actCopy);
   }
 
   const handleActivityHour = (index, e) => {
@@ -204,6 +214,15 @@ export default function ScreenTime() {
     setActivities(actCopy);
   }
   const handleBlur = () => {
+    const newSeenActivities = initSeen();
+    activities.forEach(({name}) => {
+      console.log(name);
+      if (newSeenActivities.has(name)) {
+        newSeenActivities.set(name, true);
+      }
+    })
+    console.log(newSeenActivities);
+    setSeenActivities(newSeenActivities);
     showDropdown(-1);
   }
 
@@ -214,43 +233,98 @@ export default function ScreenTime() {
   }
 
   const selectDropdownEntry = (index, activeDropdownIndex) => {
-    activities[index] = {
-      ...activities[index],
+    const actCopy = activities.map(e => e);
+    actCopy[index] = {
+      ...actCopy[index],
       name: ACTIVITY_NAMES[activeDropdownIndex],
     }
     // LITERALLY 0 CLUE WHY SET STATE WAS NOT UPDATING. MANUALLY UPDATE VIA REF HERE.
-    actRefs.current[index].value = ACTIVITY_NAMES[activeDropdownIndex];
+    // actRefs.current[index].value = ACTIVITY_NAMES[activeDropdownIndex];
     const newSeenActivities = initSeen();
-    activities.forEach(({name}) => {
+    actCopy.forEach(({name}) => {
       if (newSeenActivities.has(name)) {
         newSeenActivities.set(name, true);
       }
     })
-    console.log(newSeenActivities);
     handleBlur();
-    setActivities(activities);
+    console.log(actCopy);
+    setActivities(actCopy);
     setSeenActivities(newSeenActivities); 
+    mydropdown.current.scrollTop = 0;
+  }
+
+  const updatedropdownScrollDown = (newActiveDropdown) => {
+    const MAX_ELEMS = 10;
+    const currentdropdownTop = Math.floor((mydropdown.current.scrollTop) / 20);
+    if ( newActiveDropdown < currentdropdownTop || newActiveDropdown >= currentdropdownTop + MAX_ELEMS ) {
+      const diff = (newActiveDropdown - currentdropdownTop);
+      const newScrollPos = mydropdown.current.scrollTop + 20 * diff;
+      if (newScrollPos < mydropdown.current.scrollHeight) {
+        mydropdown.current.scrollTop = newScrollPos;
+      }
+    }
+  }
+  const updatedropdownScrollUp = (newActiveDropdown, ) => {
+    const MAX_ELEMS = 10;
+    const currentelems = Math.floor(mydropdown.current.scrollHeight / 20);
+    const currentdropdownTop = Math.floor((mydropdown.current.scrollTop) / 20);
+    const activePosition = newActiveDropdown - (ACTIVITY_NAMES.length - currentelems);
+    if ( activePosition < currentdropdownTop || activePosition >= currentdropdownTop + MAX_ELEMS ) {
+      const diff = (activePosition - currentdropdownTop);
+      const newScrollPos = mydropdown.current.scrollTop + 20 * diff;
+      if (newScrollPos < mydropdown.current.scrollHeight) {
+        mydropdown.current.scrollTop = newScrollPos;
+      }
+    }
   }
   const handleActKeyDown = (index, e) => {
     if (e.key === 'ArrowDown') {
       let newActiveDropdown = activeDropdown + 1;
-      if (newActiveDropdown === ACTIVITY_NAMES.length) {
-        newActiveDropdown = 0;
+      let i = 0;
+      while (i < ACTIVITY_NAMES.length) {
+        if (newActiveDropdown === ACTIVITY_NAMES.length) {
+          newActiveDropdown = 0;
+        }
+        if (seenActivities.get(ACTIVITY_NAMES[newActiveDropdown])){
+          newActiveDropdown += 1;
+          if (newActiveDropdown === activeDropdown){ // we have looped around
+            break;
+          }
+        }
+        else {
+          break;
+        }
+        i++;
       }
       setDropdownInfo({
         dropdownIndex,
         activeDropdown: newActiveDropdown
       });
+      updatedropdownScrollDown(newActiveDropdown);
     }
     if (e.key === 'ArrowUp') {
       let newActiveDropdown = activeDropdown - 1;
-      if (newActiveDropdown < 0) {
-        newActiveDropdown = ACTIVITY_NAMES.length - 1;
+      let i = 0;
+      while (i < ACTIVITY_NAMES.length) {
+        if (newActiveDropdown < 0) {
+          newActiveDropdown = ACTIVITY_NAMES.length - 1;
+        }
+        if (seenActivities.get(ACTIVITY_NAMES[newActiveDropdown])){
+          newActiveDropdown -= 1;
+          if (newActiveDropdown === activeDropdown){ // we have looped around
+            break;
+          }
+        }
+        else {
+          break;
+        }
+        i++;
       }
       setDropdownInfo({
         dropdownIndex,
         activeDropdown: newActiveDropdown
       });
+      updatedropdownScrollUp(newActiveDropdown);
     }
     if (e.key === 'Enter') {
       selectDropdownEntry(index, activeDropdown);
@@ -263,6 +337,7 @@ export default function ScreenTime() {
 
   // console.log('render');
   const {d,m,y} = date;
+  console.log(activities);
 
   // console.log(isDayValid, isMonthValid, isYearValid, isHourValid, isMinuteValid);
 
@@ -272,11 +347,11 @@ export default function ScreenTime() {
         <h2 className="row-header">Data Point Entry</h2>
         <div className="data-entry-container date-entry-container">
           <h3>Date (mm/dd/yyyy)</h3>
-          <input type="text" defaultValue={m} onChange={handleMonth} className="date-entry"/>
+          <input type="text" value={m} onChange={handleMonth} className="date-entry"/>
           <span className="slash">/</span>
-          <input type="text" defaultValue={d} onChange={handleDay} className="date-entry"/>
+          <input type="text" value={d} onChange={handleDay} className="date-entry"/>
           <span className="slash">/</span>
-          <input type="text" defaultValue={y} onChange={handleYear} className="date-entry year"/>
+          <input type="text" value={y} onChange={handleYear} className="date-entry year"/>
         </div>
 
         <div className="data-entry-container time-entry-container">
@@ -284,7 +359,7 @@ export default function ScreenTime() {
           <TimeEntry isHour time={hour} onChange={handleHour} />
           <TimeEntry time={minute} onChange={handleMinute} />
         </div>
-        <div className="data-entry-container">
+        <div className="data-entry-container activity-entry-container">
           <h3>Activities</h3>
           <Button
             className="btn"
@@ -296,7 +371,7 @@ export default function ScreenTime() {
           >
             Add Activity
           </Button>
-          <div className="activity-entry-container" style={{gridTemplateRows: `repeat(${activities.length}, ${VERTICAL_ACTIVITY_SPACING}px)`}}>
+          <div className="activity-entry-grid-container" style={{gridTemplateRows: `repeat(${activities.length}, ${VERTICAL_ACTIVITY_SPACING}px)`}}>
             {
               activities.map(({key, name, h, min}, index) => {
                 return (
@@ -305,8 +380,9 @@ export default function ScreenTime() {
                     <input
                       type="text"
                       className="activity-entry"
-                      defaultValue={name}
+                      value={name}
                       ref={(el) => (actRefs.current[index] = el)}
+                      onChange={(e) => handleActChange(index, e)}
                       onFocusCapture={(e) => handleActivityFocus(index, e)}
                       onKeyDown={(e) => handleActKeyDown(index, e)}
                       onClick={() => showDropdown(index)}

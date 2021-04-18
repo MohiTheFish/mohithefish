@@ -32,6 +32,9 @@
 .screentime-editor {
   margin-top: 20px;
   width: 100%;
+  // display: grid;
+  // grid-template-columns: 150px 1fr;
+  // grid-template-rows: 100px 100px 100px 100px;
   .row-header {
     padding: 5px;
   }
@@ -54,6 +57,8 @@
     position: relative;
   }
   .activity-entry-container {
+  }
+  .activity-entry-grid-container {
     padding-left: 15px;
     display: grid;
     grid-template-columns: 200px 50px 50px 50px;

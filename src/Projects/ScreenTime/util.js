@@ -1,5 +1,25 @@
 import {isPositiveInteger} from 'components/InputBox';
 
+
+
+export const ACTIVITY_NAMES = [
+  'Netflix',
+  'Disney+',
+  'Reddit',
+  'Fire Emblem Heroes',
+  'Messenger',
+  'iMessage',
+  'Discord',
+  'Manga Reader',
+  'WebToons',
+  'Manga Storm',
+  'Shounen Jump',
+  'Gmail',
+];
+
+
+export const VERTICAL_ACTIVITY_SPACING=35;
+
 function isValidDay(day, month, year) {
   const thirtyOneDayMonths = new Set([1,3,5,7,8,10,12]);
   if (day < 1 || day > 31) {
@@ -110,24 +130,6 @@ export function checkActivitiesValid(acts) {
   });
   return ans;
 }
-
-export const ACTIVITY_NAMES = [
-  'Netflix',
-  'Disney+',
-  'Reddit',
-  'Fire Emblem Heroes',
-  'Messenger',
-  'iMessage',
-  'Discord',
-  'Manga Reader',
-  'WebToons',
-  'Manga Storm',
-  'Shounen Jump',
-  'Gmail',
-];
-
-
-export const VERTICAL_ACTIVITY_SPACING=35;
 
 export function initSeen() {
   const ans = new Map();

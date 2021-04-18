@@ -8,7 +8,7 @@ import './screenTimeHome.scss';
 
 export default function ScreenTimeHome() {
 
-  const [editData, setEditData] = useState(false);
+  const [editData, setEditData] = useState(true);
 
   return (
     <div className="screentime-wrapper">
