@@ -3,10 +3,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import download from 'downloadjs';
-
 import './screenTime.scss';
-import Loading from 'components/Loading/loading';
 import {
   ACTIVITY_NAMES,
   VERTICAL_ACTIVITY_SPACING,
@@ -39,6 +36,14 @@ function DataErrors(props) {
   )
 }
 
+function JsonifiedData({hour, minute, activities, date}) {
+  return (
+    <code>
+      Hi
+    </code>
+  )
+}
+
 export default function ScreenTime() {
 
   const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +52,11 @@ export default function ScreenTime() {
     const originalOnKeyUp = window.onkeyup;
 
     async function getScreenTimeData() {
+      fetch(process.env.PUBLIC_URL + '/screen.json', {
+        "content-type": 'application/json',
+      }).then(res => res.json())
+      .then(res => console.log(res));
+
       setIsLoading(false);
     }
 
@@ -58,7 +68,6 @@ export default function ScreenTime() {
     }
   });
 
-  const [isSaving, setIsSaving] = useState(false);
   const [activities, setActivities] = useState([]);
   const [seenActivities, setSeenActivities] = useState(initSeen());
 
@@ -331,13 +340,11 @@ export default function ScreenTime() {
     }
   }
 
-  const saveData = async function() {
-    setIsSaving(true);
-  }
-
   // console.log('render');
   const {d,m,y} = date;
   console.log(activities);
+
+
 
   // console.log(isDayValid, isMonthValid, isYearValid, isHourValid, isMinuteValid);
 
@@ -418,12 +425,8 @@ export default function ScreenTime() {
           : null
         }
 
-        <Button variant="contained" color="primary" onClick={saveData}>Save Data</Button>
-        {
-          isSaving
-          ? <Loading style={{marginLeft: '0'}}/>
-          : null
-        }
+        {/* <Button variant="contained" color="primary" onClick={saveData}>Get Data</Button> */}
+        <JsonifiedData activities={activities} date={date} hour={hour} minute={minute}/>
     </div>
   )
 }
