@@ -6,7 +6,7 @@
 import FlightSimulator from 'pages/flightsim_temp';
 import AboutPage from 'pages/About';
 import StringAlignment from 'Projects/StringAlignment';
-import ScreenTime from 'Projects/ScreenTime/screenTime';
+import ScreenTime from 'Projects/ScreenTime/screenTimeHome';
 
 import flightSimImg from 'assets/images/flightsim.png';
 
