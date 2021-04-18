@@ -3,16 +3,30 @@
 #dropdown {
   position: absolute;
   left: 20px;
-  top: 25px;
+  top: 60px;
   width: 190px;
   background-color: gray;
   z-index: 1;
-  border-radius: 4px;
-  max-height: 400px;
+  max-height: 200px;
   overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  button {
+    box-sizing: border-box;
+    line-height: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  button.active, button:hover {
+    background-color: red;
+  }
 }
 #dropdown.hidden{
-  visibility: hidden;
+  // visibility: hidden;
+  left: -9999px;
 }
 
 .screentime-wrapper {
@@ -30,11 +44,13 @@
     margin: 0 5px;
     border-bottom: 1px solid gray;
     font-size: 20px;
+    height: 22px;
   }
 
   .data-entry-container {
     margin-top: 20px;
     padding: 0 5px;
+    position: relative;
   }
   .activity-entry-container {
     padding-left: 15px;
@@ -45,7 +61,6 @@
   }
 
   .activity-entry {
-    position: relative;
     z-index: 1;
   }
   
@@ -88,9 +103,9 @@
   }
 
   .btn {
-    margin-top: 20px;
+    margin-bottom: 15px;
   }
-  .error {
+  .errors {
     color: k.$error-color;
   }
 }
