@@ -11,7 +11,6 @@ import {
   checkDateValid,
   checkHourValid,
   checkMinuteValid, 
-  checkActivitiesValid,
 } from './util';
 import Dropdown from './dropdown';
 import TimeEntry from './timeEntry';
@@ -36,31 +35,72 @@ function DataErrors(props) {
   )
 }
 
+function parseTime(num) {
+  const ret = Number.parseInt(num);
+  if (Number.isNaN(ret)) {
+    return 'Invalid Format';
+  }
+  return ret;
+}
+
 function JsonifiedData({hour, minute, activities, date}) {
+  const [isCopying, setIsCopying] = useState(false);
+  const obj = {
+    date: `${date.m.padStart(2, '0')}/${date.d.padStart(2, '0')}/${date.y}`,
+    total: {
+      hour: parseTime(hour),
+      minute: parseTime(minute),
+    },
+  };
+  if (activities.length > 0) {
+    const apps = [];
+    activities.forEach(({name, h, min}) => {
+      apps.push({
+        name: name,
+        hour: parseTime(h),
+        minute: parseTime(min),
+      })
+    });
+    obj.apps = apps;
+  }
+
+  const str = JSON.stringify(obj, null, 2);
+
+  function copyToClipboard() {
+    setIsCopying(true);
+    navigator.clipboard.writeText(str).then(() => {
+      setIsCopying(false);
+    })
+  }
+
   return (
-    <code>
-      Hi
-    </code>
+    <div className='json-string'>
+      <Button onClick={copyToClipboard} color="primary">Copy to Clipboard</Button>
+      {isCopying ? <p className="copying">Copying...</p> : <p className="copying done">Done!</p>}
+      <pre>
+        {str}
+      </pre>
+    </div>
   )
 }
 
 export default function ScreenTime() {
 
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const originalOnKeyDown = window.onkeydown;
     const originalOnKeyUp = window.onkeyup;
 
-    async function getScreenTimeData() {
-      fetch(process.env.PUBLIC_URL + '/screen.json', {
-        "content-type": 'application/json',
-      }).then(res => res.json())
-      .then(res => console.log(res));
+    // async function getScreenTimeData() {
+    //   fetch(process.env.PUBLIC_URL + '/screen.json', {
+    //     "content-type": 'application/json',
+    //   }).then(res => res.json())
+    //   .then(res => console.log(res));
 
-      setIsLoading(false);
-    }
+    //   setIsLoading(false);
+    // }
 
-    getScreenTimeData();
+    // getScreenTimeData();
 
     return () => {
       window.onkeydown = originalOnKeyDown;
@@ -95,7 +135,7 @@ export default function ScreenTime() {
   } = checkDateValid(date);
   const isHourValid = checkHourValid(hour);
   const isMinuteValid = checkMinuteValid(minute);
-  const areActivitiesValid = checkActivitiesValid(activities);
+  // const areActivitiesValid = checkActivitiesValid(activities);
 
   useEffect(() => {
     
