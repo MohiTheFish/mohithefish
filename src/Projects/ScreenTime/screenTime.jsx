@@ -55,13 +55,16 @@ function JsonifiedData({hour, minute, activities, date}) {
   if (activities.length > 0) {
     const apps = [];
     activities.forEach(({name, h, min}) => {
-      apps.push({
-        name: name,
-        hour: parseTime(h),
-        minute: parseTime(min),
-      })
+      if (name.length > 0) {
+        apps.push({
+          name: name,
+          hour: parseTime(h),
+          minute: parseTime(min),
+        })
+      }
     });
-    obj.apps = apps;
+    if (apps.length > 0)
+      obj.apps = apps;
   }
 
   const str = JSON.stringify(obj, null, 2);
