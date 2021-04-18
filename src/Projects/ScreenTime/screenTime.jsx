@@ -5,6 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import './screenTime.scss';
+import Loading from 'components/Loading/loading';
+import fs from 'fs';
 
 const VERTICAL_ACTIVITY_SPACING = 35;
 
@@ -414,8 +416,22 @@ export default function ScreenTime() {
   }
 
   const saveData = async function() {
+    setIsSaving(true);
+    fetch(process.env.PUBLIC_URL + '/screen.json',{
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+     }
+    )
+    .then(function(response){
+      console.log(response)
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log(myJson);
+    });
 
-    console.log('save!');
   }
 
   // console.log('render');
@@ -499,7 +515,13 @@ export default function ScreenTime() {
             isMinuteValid={isMinuteValid} />
           : null
         }
+
         <Button variant="contained" color="primary" onClick={saveData}>Save Data</Button>
+        {
+          isSaving
+          ? <Loading style={{marginLeft: '0'}}/>
+          : null
+        }
     </div>
   )
 }
