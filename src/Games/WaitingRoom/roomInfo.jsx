@@ -133,9 +133,7 @@ function RoomInfo(props) {
   if (!isConnected || !selectedChoice) { return ""; }
 
   function copyToClipboard(e) {
-    navigator.clipboard.writeText(roomId).then(() => {
-      console.log('copied');
-    })
+    navigator.clipboard.writeText(roomId);
   }
 
   if (selectedChoice === lobbyStates.CREATE) {
