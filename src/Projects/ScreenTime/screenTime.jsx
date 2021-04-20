@@ -278,6 +278,7 @@ export default function ScreenTime() {
     actCopy[index].min = e.target.value;
     setActivities(actCopy);
   }
+  /** Recreates the list of items in the dropdown */
   const generateNewSeenActivities = (act) => {
     const newSeenActivities = [];
     ACTIVITY_NAMES.forEach((name) => {
@@ -376,12 +377,7 @@ export default function ScreenTime() {
     }
   }
 
-  // console.log('render');
   const {d,m,y} = date;
-
-
-
-  // console.log(isDayValid, isMonthValid, isYearValid, isHourValid, isMinuteValid);
 
   const errored = !(!isDayValid && !isMonthValid && !isYearValid && !isHourValid & !isMinuteValid);
   return (
