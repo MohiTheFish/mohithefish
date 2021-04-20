@@ -90,10 +90,16 @@ export default function Alignment() {
           <h2>Parameters</h2>
           <ValidSymbols symbols={VALID_SYMBOLS} />
           <InputBox value={string1} setValue={setString1} errormsg={isString1Valid} className="padleft">
-            <h3>First string:</h3>
+            <h3 className="hoverable">
+              First string:
+              <span className="tooltip">The first DNA Sequence to align.</span>
+            </h3>
           </InputBox>
           <InputBox value={string2} setValue={setString2} errormsg={isString2Valid} className="padleft">
-            <h3>Second string:</h3>
+            <h3 className="hoverable">
+              Second string:
+              <span className="tooltip">The second DNA Sequence to align</span>
+            </h3>
           </InputBox>
           <Matrix matrix={matrix} isValid={isValidMatrix} handleChange={handleMatrixChange}/>
 
