@@ -1,7 +1,7 @@
 @use '~styles/constants' as k;
 
 .alignment-wrapper {
-
+  width: fit-content;
   section {
     margin-top: 20px;
     width: 100%;
@@ -12,10 +12,15 @@
   }
   .parameters {
     width: 350px;
-    margin-right: 20px;
+    height: 100%;
+    margin-left: -20px;
+    border-radius: 4px;
+    padding: 20px;
     position: sticky;
     left: 0;
     top: 0;
+    z-index: 1;
+    background-color: rgb(255, 255, 255);
     height: fit-content;
   }
   h2 {

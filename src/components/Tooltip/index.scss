@@ -1,0 +1,38 @@
+@use '~styles/constants' as k;
+
+.hoverable {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  cursor: default;
+  position: relative;
+  width: fit-content;
+}
+$tooltip-color: rgb(46,46,46);
+.tooltip {
+  top: 50%;
+  left: 110%;
+  opacity: 0;
+  z-index: 1;
+  transition: .3s opacity;
+  position: absolute;
+  font-size: 14px;
+  padding: 5px;
+  border-radius: 4px;
+  width: 150px;
+  background-color: $tooltip-color;
+  color: white;
+  transform: translate(0, -50%);
+}
+.hover-trigger:hover + .tooltip {
+  opacity: 1;
+}
+.hover-trigger + .tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent $tooltip-color transparent transparent;
+}

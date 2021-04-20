@@ -9,6 +9,7 @@ import StringAlignment from 'Projects/StringAlignment';
 import ScreenTime from 'Projects/ScreenTime/screenTimeHome';
 
 import flightSimImg from 'assets/images/flightsim.png';
+import stringAlignImg from 'assets/images/string_align.png';
 
 
 const FLIGHTSIM_ENDPOINT = '/flight-sim';
@@ -50,9 +51,9 @@ export const projectCards = [
   {
     to: STRINGALIGNMENT_ENDPOINT, 
     title: "String Alignment",
-    image: undefined,
-    alt: '',
-    details: "This is a project to explain string alignment and align strings on demand."
+    image: stringAlignImg,
+    alt: "A local string alignment",
+    details: "This is a project to illustrate string alignment and allow users to align strings on demand."
   },
   {
     to: SCREENTIME_ENDPOINT,
