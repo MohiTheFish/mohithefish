@@ -28,7 +28,7 @@ function isValidDay(day, month, year) {
   if (day < 29) { // We don't need to do other checks
     return true;
   }
-  if (day <= 31 && thirtyOneDayMonths.has(day)) {
+  if (day <= 31 && thirtyOneDayMonths.has(month)) {
     return true;
   }
   if (day <= 30 && month !== 2) {
@@ -128,11 +128,11 @@ export function checkActivitiesValid(acts) {
   return ans;
 }
 
-export function initSeen() {
-  const ans = new Map();
+export function initDropdownOptions() {
+  const ans = [];
 
   ACTIVITY_NAMES.forEach((act) => {
-    ans.set(act, false);
+    ans.push(act);
   });
 
   return ans;

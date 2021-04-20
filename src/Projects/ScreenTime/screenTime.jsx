@@ -7,12 +7,12 @@ import './screenTime.scss';
 import {
   ACTIVITY_NAMES,
   VERTICAL_ACTIVITY_SPACING,
-  initSeen,
+  initDropdownOptions,
   checkDateValid,
   checkHourValid,
   checkMinuteValid, 
 } from './util';
-// import Dropdown from './dropdown';
+import Dropdown from './dropdown';
 import TimeEntry from './timeEntry';
 
 function DataErrors(props) {
@@ -94,6 +94,15 @@ function JsonifiedData({hour, minute, activities, date}) {
   )
 }
 
+function initDay() {
+  const today = new Date();
+  return {
+    d: today.getDate().toString(),
+    m: (today.getMonth()+1).toString(),
+    y: today.getFullYear().toString(),
+  };
+}
+
 export default function ScreenTime() {
 
   // const [isLoading, setIsLoading] = useState(true);
@@ -119,16 +128,12 @@ export default function ScreenTime() {
   });
 
   const [activities, setActivities] = useState([]);
-  const [seenActivities, setSeenActivities] = useState(initSeen());
+  const [seenActivities, setSeenActivities] = useState(initDropdownOptions());
 
 
   let mydropdown = useRef();
   const actRefs = useRef([]);
-  const [date, setDay] = useState({
-    d: '02',
-    m: '02',
-    y: '2020',
-  });
+  const [date, setDay] = useState(initDay());
   const [hour, setHour] = useState("0");
   const [minute, setMinute] = useState("0");
   const [dropdownInfo, setDropdownInfo] = useState({
@@ -157,12 +162,12 @@ export default function ScreenTime() {
     const hideDropDown = (e) => {
       let newindex = -1;
       if (!actRefs.current[dropdownIndex].contains(e.target) //did not click on the current input box
-       && (true || !mydropdown.current.contains(e.target))) // and did not click on the dropdown 
+       && (!mydropdown.current.contains(e.target))) // and did not click on the dropdown 
       {
         newindex = -1;
       }
       for (let i=0; i<actRefs.current.length; i++) {
-        if (actRefs.current[i].contains(e.target)) {
+        if (actRefs.current[i] && actRefs.current[i].contains(e.target)) {
           newindex = i;
           break;
         }
@@ -242,24 +247,24 @@ export default function ScreenTime() {
     setMinute(e.target.value);
   };
 
-  const handleActChange = (index, e) => {
+  const updateActivities = (index, e) => {
     const actCopy = activities.map(e => e);
     actCopy[index].name = e.target.value;
-    setDropdownInfo({
-      dropdownIndex: index,
-      activeDropdown: -1,
-    });
     setActivities(actCopy);
+    const newSeenActivities = generateNewSeenActivities(actCopy).filter((str) => {
+      console.log(str.toLowerCase(), e.target.value.toLowerCase(), str.toLowerCase().startsWith(e.target.value.toLowerCase()));
+      return (!e.target.value || str.toLowerCase().startsWith(e.target.value.toLowerCase()))
+    });
+    setSeenActivities(newSeenActivities);
+  }
+
+  const handleActChange = (index, e) => {
+    updateActivities(index, e);
+    showDropdown(index);
   }
   const handleActivityFocus = (index, e) => {
-    handleBlur();
-    const actCopy = activities.map(e => e);
-    actCopy[index].name = e.target.value;
-    setDropdownInfo({
-      dropdownIndex: index,
-      activeDropdown: -1,
-    });
-    setActivities(actCopy);
+    updateActivities(index, e);
+    showDropdown(index); /** @Todo Handle blur sets dropdownIndex to -1, but this is 'undoing' that. Prolly should consider a different option... */
   }
 
   const handleActivityHour = (index, e) => {
@@ -273,21 +278,33 @@ export default function ScreenTime() {
     actCopy[index].min = e.target.value;
     setActivities(actCopy);
   }
-  const handleBlur = () => {
-    const newSeenActivities = initSeen();
-    activities.forEach(({name}) => {
-      console.log(name);
-      if (newSeenActivities.has(name)) {
-        newSeenActivities.set(name, true);
+  const generateNewSeenActivities = (act) => {
+    const newSeenActivities = [];
+    ACTIVITY_NAMES.forEach((name) => {
+      let addThisName = true;
+      for (let i = 0; i<act.length; i++) {
+        const actName = act[i].name;
+        if (name === actName) {
+          addThisName = false;
+          break;
+        }
       }
-    })
-    setSeenActivities(newSeenActivities);
+      if (addThisName) {
+        newSeenActivities.push(name);
+      }
+    });
+    return newSeenActivities;
+  }
+  const handleBlur = (actCopy) => {
+    let act = actCopy ? actCopy : activities;
+    const newSeenActivities = generateNewSeenActivities(act);
     showDropdown(-1);
+    setSeenActivities(newSeenActivities);
   }
 
   const handleActivityDelete = (index) => {
     const actCopy = activities.filter((v,i) => (i!==index));
-    handleBlur();
+    handleBlur(actCopy);
     setActivities(actCopy);
   }
 
@@ -295,21 +312,14 @@ export default function ScreenTime() {
     const actCopy = activities.map(e => e);
     let name = activities[index].name;
     if (activeDropdownIndex >= 0) {
-      name = ACTIVITY_NAMES[activeDropdownIndex];
+      name = seenActivities[activeDropdownIndex];
     }
     actCopy[index] = {
       ...actCopy[index],
       name,
     }
-    const newSeenActivities = initSeen();
-    actCopy.forEach(({name}) => {
-      if (newSeenActivities.has(name)) {
-        newSeenActivities.set(name, true);
-      }
-    })
-    handleBlur();
+    handleBlur(actCopy);
     setActivities(actCopy);
-    setSeenActivities(newSeenActivities); 
     mydropdown.current.scrollTop = 0;
   }
 
@@ -340,21 +350,8 @@ export default function ScreenTime() {
   const handleActKeyDown = (index, e) => {
     if (e.key === 'ArrowDown') {
       let newActiveDropdown = activeDropdown + 1;
-      let i = 0;
-      while (i < ACTIVITY_NAMES.length) {
-        if (newActiveDropdown === ACTIVITY_NAMES.length) {
-          newActiveDropdown = 0;
-        }
-        if (seenActivities.get(ACTIVITY_NAMES[newActiveDropdown])){
-          newActiveDropdown += 1;
-          if (newActiveDropdown === activeDropdown){ // we have looped around
-            break;
-          }
-        }
-        else {
-          break;
-        }
-        i++;
+      if (newActiveDropdown === seenActivities.length) {
+        newActiveDropdown = 0;
       }
       setDropdownInfo({
         dropdownIndex,
@@ -364,21 +361,9 @@ export default function ScreenTime() {
     }
     if (e.key === 'ArrowUp') {
       let newActiveDropdown = activeDropdown - 1;
-      let i = 0;
-      while (i < ACTIVITY_NAMES.length) {
-        if (newActiveDropdown < 0) {
-          newActiveDropdown = ACTIVITY_NAMES.length - 1;
-        }
-        if (seenActivities.get(ACTIVITY_NAMES[newActiveDropdown])){
-          newActiveDropdown -= 1;
-          if (newActiveDropdown === activeDropdown){ // we have looped around
-            break;
-          }
-        }
-        else {
-          break;
-        }
-        i++;
+      
+      if (newActiveDropdown < 0) {
+        newActiveDropdown = seenActivities.length - 1;
       }
       setDropdownInfo({
         dropdownIndex,
@@ -393,7 +378,6 @@ export default function ScreenTime() {
 
   // console.log('render');
   const {d,m,y} = date;
-  console.log(activities);
 
 
 
@@ -454,14 +438,14 @@ export default function ScreenTime() {
                 );
               })
             }
-            {/* <Dropdown
+            <Dropdown
               dropdownCallback={(el ) => (mydropdown.current = el)}
               dropdownIndex={dropdownIndex} 
               activeDropdown={activeDropdown}
               activities={activities}
               seenActivities={seenActivities}
               selectDropdownEntry={selectDropdownEntry}
-            /> */}
+            />
           </div>
         </div>
         

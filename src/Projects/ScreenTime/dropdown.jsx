@@ -1,12 +1,14 @@
 import React from 'react';
 
-import {ACTIVITY_NAMES, VERTICAL_ACTIVITY_SPACING} from './util';
+import {VERTICAL_ACTIVITY_SPACING} from './util';
 
-export default function Dropdown({ dropdownIndex, dropdownCallback, activeDropdown, seenActivities, selectDropdownEntry }) {
+const HIDDEN_STYLE = { left: '-9999px'};
+
+export default function Dropdown({ dropdownIndex, dropdownCallback, activeDropdown, filter, seenActivities, selectDropdownEntry }) {
 
   let currStyle={};
   if (dropdownIndex === -1){
-    currStyle = { left: '-9999px'};
+    currStyle = HIDDEN_STYLE;
   }
   else {
     const total = VERTICAL_ACTIVITY_SPACING*dropdownIndex;
@@ -17,15 +19,12 @@ export default function Dropdown({ dropdownIndex, dropdownCallback, activeDropdo
     selectDropdownEntry(dropdownIndex, index);
   }
 
-  let dropdownActs = ACTIVITY_NAMES.map((act, index) => {
-    if (!seenActivities.get(act)) {
-      return <button key={act} onClickCapture={() => handleButtonClick(index)} className={activeDropdown === index ? 'active' : ''}>{act}</button>;
-    }
-    return null;
+  let dropdownActs = seenActivities.map((act, index) => {
+    return <button key={act} onClickCapture={() => handleButtonClick(index)} className={activeDropdown === index ? 'active' : ''}>{act}</button>;
   })
 
   if (dropdownActs.length === 0) {
-    dropdownActs = <p>No results found</p>;
+    dropdownActs = <div id="dropdown" style={HIDDEN_STYLE} ref={dropdownCallback} />
   }
 
   return (
