@@ -13,7 +13,6 @@ export default function Dropdown({ dropdownIndex, dropdownCallback, activeDropdo
     currStyle = { left: '20px', top: `${25+total}px`};
   }
 
-  console.log(seenActivities);
   const handleButtonClick = (index) => {
     selectDropdownEntry(dropdownIndex, index);
   }

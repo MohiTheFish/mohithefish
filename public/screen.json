@@ -1,3 +1,295 @@
 [
-  
+  {
+    "date": "03/21/2021",
+    "total": {
+      "hour": 1,
+      "minute": 56
+    },
+    "apps": [
+      {
+        "name": "Youtube",
+        "hour": 0,
+        "minute": 52
+      },
+      {
+        "name": "Fire Emblem Heroes",
+        "hour": 0,
+        "minute": 23
+      },
+      {
+        "name": "Reddit",
+        "hour": "Invalid Format",
+        "minute": 15
+      },
+      {
+        "name": "Google Chrome",
+        "hour": 0,
+        "minute": 14
+      }
+    ]
+  },
+  {
+    "date": "03/22/2021",
+    "total": {
+      "hour": 7,
+      "minute": 4
+    },
+    "apps": [
+      {
+        "name": "Youtube",
+        "hour": 2,
+        "minute": 37
+      },
+      {
+        "name": "Fire Emblem Heroes",
+        "hour": 0,
+        "minute": 29
+      },
+      {
+        "name": "Reddit",
+        "hour": 0,
+        "minute": 21
+      },
+      {
+        "name": "Messenger",
+        "hour": 0,
+        "minute": 28
+      },
+      {
+        "name": "iMessage",
+        "hour": 0,
+        "minute": 2
+      },
+      {
+        "name": "Google Maps",
+        "hour": 2,
+        "minute": 7
+      }
+    ]
+  },
+  {
+    "date": "03/23/2021",
+    "total": {
+      "hour": 2,
+      "minute": 43
+    },
+    "apps": [
+      {
+        "name": "Youtube",
+        "hour": 0,
+        "minute": 52
+      },
+      {
+        "name": "Netflix",
+        "hour": 0,
+        "minute": 22
+      },
+      {
+        "name": "Fire Emblem Heroes",
+        "hour": 0,
+        "minute": 29
+      },
+      {
+        "name": "Reddit ",
+        "hour": 0,
+        "minute": 37
+      },
+      {
+        "name": "Google Chrome",
+        "hour": 0,
+        "minute": 4
+      },
+      {
+        "name": "Messenger ",
+        "hour": 0,
+        "minute": 1
+      }
+    ]
+  },
+  {
+    "date": "03/24/2021",
+    "total": {
+      "hour": 6,
+      "minute": 13
+    },
+    "apps": [
+      {
+        "name": "Youtube",
+        "hour": 2,
+        "minute": 54
+      },
+      {
+        "name": "Fire Emblem Heroes",
+        "hour": 1,
+        "minute": 27
+      },
+      {
+        "name": "Reddit",
+        "hour": 0,
+        "minute": 40
+      },
+      {
+        "name": "Google Chrome",
+        "hour": 0,
+        "minute": 32
+      },
+      {
+        "name": "Messenger",
+        "hour": 0,
+        "minute": 2
+      },
+      {
+        "name": "Discord",
+        "hour": 0,
+        "minute": 14
+      },
+      {
+        "name": "iMessage",
+        "hour": 0,
+        "minute": 3
+      }
+    ]
+  },
+  {
+    "date": "03/25/2021",
+    "total": {
+      "hour": 7,
+      "minute": 34
+    },
+    "apps": [
+      {
+        "name": "Youtube",
+        "hour": 1,
+        "minute": 41
+      },
+      {
+        "name": "Netflix",
+        "hour": 1,
+        "minute": 38
+      },
+      {
+        "name": "Fire Emblem Heroes",
+        "hour": 1,
+        "minute": 39
+      },
+      {
+        "name": "Reddit",
+        "hour": 1,
+        "minute": 1
+      },
+      {
+        "name": "Google Chrome",
+        "hour": 0,
+        "minute": 19
+      },
+      {
+        "name": "Messenger",
+        "hour": 0,
+        "minute": 37
+      },
+      {
+        "name": "Discord",
+        "hour": 0,
+        "minute": 4
+      }
+    ]
+  },
+  {
+    "date": "03/26/2021",
+    "total": {
+      "hour": 8,
+      "minute": 24
+    },
+    "apps": [
+      {
+        "name": "Youtube",
+        "hour": 2,
+        "minute": 38
+      },
+      {
+        "name": "Netflix",
+        "hour": 2,
+        "minute": 17
+      },
+      {
+        "name": "Fire Emblem Heroes",
+        "hour": 1,
+        "minute": 55
+      },
+      {
+        "name": "Reddit",
+        "hour": 0,
+        "minute": 13
+      },
+      {
+        "name": "Gmail",
+        "hour": 0,
+        "minute": 4
+      },
+      {
+        "name": "Google Chrome",
+        "hour": 0,
+        "minute": 8
+      },
+      {
+        "name": "Messenger",
+        "hour": 0,
+        "minute": 2
+      },
+      {
+        "name": "Discord",
+        "hour": 0,
+        "minute": 1
+      }
+    ]
+  },
+  {
+    "date": "03/27/2021",
+    "total": {
+      "hour": 6,
+      "minute": 30
+    },
+    "apps": [
+      {
+        "name": "Youtube",
+        "hour": 2,
+        "minute": 1
+      },
+      {
+        "name": "Netflix",
+        "hour": 1,
+        "minute": 55
+      },
+      {
+        "name": "Fire Emblem Heroes",
+        "hour": 1,
+        "minute": 20
+      },
+      {
+        "name": "Reddit",
+        "hour": 0,
+        "minute": 6
+      },
+      {
+        "name": "Google Chrome",
+        "hour": 0,
+        "minute": 4
+      },
+      {
+        "name": "Messenger",
+        "hour": 0,
+        "minute": 19
+      },
+      {
+        "name": "Discord",
+        "hour": 0,
+        "minute": 9
+      },
+      {
+        "name": "iMessage",
+        "hour": 0,
+        "minute": 3
+      }
+    ]
+  }
 ]

@@ -12,7 +12,7 @@ import {
   checkHourValid,
   checkMinuteValid, 
 } from './util';
-import Dropdown from './dropdown';
+// import Dropdown from './dropdown';
 import TimeEntry from './timeEntry';
 
 function DataErrors(props) {
@@ -59,12 +59,12 @@ function JsonifiedData({hour, minute, activities, date}) {
         let numMin = parseTime(min);
         let numHours = parseTime(h);
         if (numMin > 60) {
-          const addHours = numMin / 60;
+          const addHours = Math.floor(numMin / 60);
           numMin = numMin % 60;
           numHours += addHours;
         }
         apps.push({
-          name: name,
+          name: name.replace(/\s+/g, ' ').trim(),
           hour: numHours,
           minute: numMin,
         })
@@ -147,12 +147,17 @@ export default function ScreenTime() {
   const isMinuteValid = checkMinuteValid(minute);
   // const areActivitiesValid = checkActivitiesValid(activities);
 
+
+  useEffect(() => {
+    actRefs.current = actRefs.current.slice(0, activities.length);
+  }, [activities.length]);
+
   useEffect(() => {
     
     const hideDropDown = (e) => {
       let newindex = -1;
       if (!actRefs.current[dropdownIndex].contains(e.target) //did not click on the current input box
-       && !mydropdown.current.contains(e.target)) // and did not click on the dropdown 
+       && (true || !mydropdown.current.contains(e.target))) // and did not click on the dropdown 
       {
         newindex = -1;
       }
@@ -176,10 +181,6 @@ export default function ScreenTime() {
 
     return () => (window.onclick = undefined);
   }, [dropdownIndex]);
-
-  useEffect(() => {
-    actRefs.current = actRefs.current.slice(0, activities.length);
-  }, [activities.length]);
 
   const addActivity = () => {
     const actCopy = activities.map(e => e);
@@ -453,13 +454,14 @@ export default function ScreenTime() {
                 );
               })
             }
-            <Dropdown
+            {/* <Dropdown
               dropdownCallback={(el ) => (mydropdown.current = el)}
               dropdownIndex={dropdownIndex} 
               activeDropdown={activeDropdown}
+              activities={activities}
               seenActivities={seenActivities}
               selectDropdownEntry={selectDropdownEntry}
-            />
+            /> */}
           </div>
         </div>
         

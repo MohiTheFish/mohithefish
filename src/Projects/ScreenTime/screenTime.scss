@@ -130,7 +130,6 @@
     grid-column: 3 / 4;
     position: relative;
 
-
     .copying {
       position: absolute;
       left: 200px;
@@ -140,6 +139,10 @@
     .copying.done {
       transition: opacity 1s;
       opacity: 0;
+    }
+
+    button {
+      min-width: 200px;
     }
   }
 }
