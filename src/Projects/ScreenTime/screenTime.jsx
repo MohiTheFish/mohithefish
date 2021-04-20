@@ -252,7 +252,6 @@ export default function ScreenTime() {
     actCopy[index].name = e.target.value;
     setActivities(actCopy);
     const newSeenActivities = generateNewSeenActivities(actCopy).filter((str) => {
-      console.log(str.toLowerCase(), e.target.value.toLowerCase(), str.toLowerCase().startsWith(e.target.value.toLowerCase()));
       return (!e.target.value || str.toLowerCase().startsWith(e.target.value.toLowerCase()))
     });
     setSeenActivities(newSeenActivities);
