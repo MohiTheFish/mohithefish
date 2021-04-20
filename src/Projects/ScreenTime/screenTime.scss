@@ -83,6 +83,9 @@
   .time-entry {
     width: 25px;
   }
+  .minute-entry {
+    width: 40px;
+  }
   .date-entry {
     padding-bottom: 0;
     width: 25px;
@@ -103,6 +106,7 @@
   .time-container {
     position: relative;
     display: inline;
+    width: fit-content;
     input {
       padding-right: 15px;
     }

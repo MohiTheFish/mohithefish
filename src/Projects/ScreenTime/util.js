@@ -114,9 +114,6 @@ export function checkMinuteValid(min) {
   if(!isPositiveInteger(min)) {
     return 'Minute must be a positive integer';
   }
-  if (Number.parseInt(min) >= 60) {
-    return 'Minute must be less than or equal to 60.'
-  }
   return '';
 }
 

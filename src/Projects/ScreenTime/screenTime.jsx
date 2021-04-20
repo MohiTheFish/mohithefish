@@ -56,10 +56,17 @@ function JsonifiedData({hour, minute, activities, date}) {
     const apps = [];
     activities.forEach(({name, h, min}) => {
       if (name.length > 0) {
+        let numMin = parseTime(min);
+        let numHours = parseTime(h);
+        if (numMin > 60) {
+          const addHours = numMin / 60;
+          numMin = numMin % 60;
+          numHours += addHours;
+        }
         apps.push({
           name: name,
-          hour: parseTime(h),
-          minute: parseTime(min),
+          hour: numHours,
+          minute: numMin,
         })
       }
     });
@@ -273,7 +280,6 @@ export default function ScreenTime() {
         newSeenActivities.set(name, true);
       }
     })
-    console.log(newSeenActivities);
     setSeenActivities(newSeenActivities);
     showDropdown(-1);
   }
@@ -286,12 +292,14 @@ export default function ScreenTime() {
 
   const selectDropdownEntry = (index, activeDropdownIndex) => {
     const actCopy = activities.map(e => e);
+    let name = activities[index].name;
+    if (activeDropdownIndex >= 0) {
+      name = ACTIVITY_NAMES[activeDropdownIndex];
+    }
     actCopy[index] = {
       ...actCopy[index],
-      name: ACTIVITY_NAMES[activeDropdownIndex],
+      name,
     }
-    // LITERALLY 0 CLUE WHY SET STATE WAS NOT UPDATING. MANUALLY UPDATE VIA REF HERE.
-    // actRefs.current[index].value = ACTIVITY_NAMES[activeDropdownIndex];
     const newSeenActivities = initSeen();
     actCopy.forEach(({name}) => {
       if (newSeenActivities.has(name)) {
@@ -299,7 +307,6 @@ export default function ScreenTime() {
       }
     })
     handleBlur();
-    console.log(actCopy);
     setActivities(actCopy);
     setSeenActivities(newSeenActivities); 
     mydropdown.current.scrollTop = 0;
