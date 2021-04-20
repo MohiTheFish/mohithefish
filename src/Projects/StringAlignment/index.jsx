@@ -5,6 +5,7 @@ import Matrix from './Matrix';
 import ValidSymbols from './ValidSymbols';
 import InputBox from 'components/InputBox';
 import OutputMatrix from './Output';
+import Tooltip from 'components/Tooltip';
 import {
   isFloat,
   initalizeSimilarityMatrix,
@@ -90,16 +91,16 @@ export default function Alignment() {
           <h2>Parameters</h2>
           <ValidSymbols symbols={VALID_SYMBOLS} />
           <InputBox value={string1} setValue={setString1} errormsg={isString1Valid} className="padleft">
-            <h3 className="hoverable">
-              First string:
-              <span className="tooltip">The first DNA Sequence to align.</span>
-            </h3>
+            <Tooltip
+             text="The first DNA Sequence to align"
+             Header={(props) => <h3 {...props}>First String:</h3>}
+            />
           </InputBox>
           <InputBox value={string2} setValue={setString2} errormsg={isString2Valid} className="padleft">
-            <h3 className="hoverable">
-              Second string:
-              <span className="tooltip">The second DNA Sequence to align</span>
-            </h3>
+            <Tooltip
+             text="The second DNA Sequence to align"
+             Header={(props) => <h3 {...props}>Second String:</h3>}
+            />
           </InputBox>
           <Matrix matrix={matrix} isValid={isValidMatrix} handleChange={handleMatrixChange}/>
 
