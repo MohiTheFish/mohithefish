@@ -21,13 +21,15 @@ $tooltip-color: rgb(46,46,46);
   background-color: $tooltip-color;
   color: white;
   transform: translate(0, -50%);
+}
+.anim-tooltip {
   animation: tooltip-fade-out .3s linear forwards;
 }
-.hover-trigger:hover + .tooltip {
+.hover-trigger:hover + .anim-tooltip {
   animation: tooltip-fade-in .3s linear forwards;
 }
 // The little triangle connected to the tooltip box.
-.hover-trigger + .tooltip::after {
+.hover-trigger + .anim-tooltip::after {
   content: " ";
   position: absolute;
   top: 50%;

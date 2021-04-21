@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './index.scss';
 
 export default function ToolTip({Header, style, className, text}) {
+  const [hovered, setHovered] = useState(false);
+
+  const props = {
+    className: 'hover-trigger',
+  };
+
+  if (!hovered) {
+    props.onMouseEnter = () => setHovered(true);
+  }
+
+
   return (
     <div className={`hoverable ${className ? className :''}`} style={style}>
-      <Header className="hover-trigger"/>
-      <span className="tooltip">{text}</span>
+      <Header {...props} />
+      <span className={`tooltip ${hovered ? 'anim-tooltip': ''}`}>{text}</span>
     </div> 
   );
 }
