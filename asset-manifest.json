@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/mohithefish/static/css/main.206aa7d0.chunk.css",
+    "main.css": "/mohithefish/static/css/main.6a650368.chunk.css",
     "main.js": "/mohithefish/static/js/main.0536b49a.chunk.js",
     "main.js.map": "/mohithefish/static/js/main.0536b49a.chunk.js.map",
     "runtime-main.js": "/mohithefish/static/js/runtime-main.a7b87382.js",
@@ -8,9 +8,9 @@
     "static/js/2.cc21317f.chunk.js": "/mohithefish/static/js/2.cc21317f.chunk.js",
     "static/js/2.cc21317f.chunk.js.map": "/mohithefish/static/js/2.cc21317f.chunk.js.map",
     "index.html": "/mohithefish/index.html",
-    "precache-manifest.f8a589486e8dd92e9f09ec2127ce2139.js": "/mohithefish/precache-manifest.f8a589486e8dd92e9f09ec2127ce2139.js",
+    "precache-manifest.2cd3969cc705a0b5533255408e8037a4.js": "/mohithefish/precache-manifest.2cd3969cc705a0b5533255408e8037a4.js",
     "service-worker.js": "/mohithefish/service-worker.js",
-    "static/css/main.206aa7d0.chunk.css.map": "/mohithefish/static/css/main.206aa7d0.chunk.css.map",
+    "static/css/main.6a650368.chunk.css.map": "/mohithefish/static/css/main.6a650368.chunk.css.map",
     "static/js/2.cc21317f.chunk.js.LICENSE.txt": "/mohithefish/static/js/2.cc21317f.chunk.js.LICENSE.txt",
     "static/media/App.css": "/mohithefish/static/media/Raleway-Regular.9942588a.ttf",
     "static/media/blue_arrow.svg": "/mohithefish/static/media/blue_arrow.450ed3a9.svg",
@@ -22,7 +22,7 @@
   "entrypoints": [
     "static/js/runtime-main.a7b87382.js",
     "static/js/2.cc21317f.chunk.js",
-    "static/css/main.206aa7d0.chunk.css",
+    "static/css/main.6a650368.chunk.css",
     "static/js/main.0536b49a.chunk.js"
   ]
 }
