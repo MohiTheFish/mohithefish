@@ -1,11 +1,60 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Loading from 'components/Loading/loading';
+import buildVisual from './builder';
 
 import './screenTimeVisualizor.scss';
 
-const d3 = window.d3;
-
-const data = [{
+const temp_data = [
+  {
+    "date": "03/29/2021",
+    "total": {
+      "hour": 6,
+      "minute": 5
+    },
+    "apps": [
+      {
+        "name": "Youtube",
+        "hour": 2,
+        "minute": 57
+      },
+      {
+        "name": "Netflix",
+        "hour": 1,
+        "minute": 9
+      },
+      {
+        "name": "Fire Emblem Heroes",
+        "hour": 0,
+        "minute": 39
+      },
+      {
+        "name": "Reddit",
+        "hour": 0,
+        "minute": 20
+      },
+      {
+        "name": "Messenger",
+        "hour": 0,
+        "minute": 15
+      },
+      {
+        "name": "Gmail",
+        "hour": 0,
+        "minute": 11
+      },
+      {
+        "name": "Chrome",
+        "hour": 0,
+        "minute": 9
+      },
+      {
+        "name": "Messages",
+        "hour": 0,
+        "minute": 1
+      }
+    ]
+  },
+  {
   "date": "03/30/2021",
   "total": {
     "hour": 8,
@@ -61,35 +110,48 @@ const data = [{
 }];
 
 export default function ScreenTimeVisualizor() {
-  let d3Div = useRef();
+  const d3Div = useRef();
   const [isLoading, setIsLoading] = useState(true);
+  const [screenData, setScreenData] = useState();
+  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [load,] = useState(false);
 
   useEffect(() => {
-    if (d3Div) {
-      const svgCanvas = d3.select(d3Div)
-        .append("svg")
-        .attr("width", "100%")
-        .attr("height", "100%")
-        .style("border", "1px solid black")
-
-      svgCanvas.selectAll("rect")
-        .data(data).enter()
-          .append("rect")
-          .attr("width", "100%")
-          .attr("height", "100%")
-          .attr("fill", "orange");
+    function buildVisualization(data, target) {
+      buildVisual(data, target);
+        
       setIsLoading(false);
     }
-  }, [d3Div])
+
+    async function getScreenTimeData() {
+      fetch(process.env.PUBLIC_URL + '/screen.json', {
+        "content-type": 'application/json',
+      }).then(res => res.json())
+      .then(res => {
+        setScreenData(res);
+        setIsLoadingData(false);
+        buildVisualization(res, d3Div.current);
+      });
+    }
+
+    if (load) {
+      getScreenTimeData();
+    }
+    else {
+      buildVisualization(temp_data, d3Div.current);
+    }
+  }, [load])
 
   return (
     <div className="screentime-visualizor">
       {
-        isLoading
+        (isLoadingData&&load) || isLoading 
         ? <Loading />
         : null
       }
-      <div id="d3div" className={isLoading ? 'hidden' : ''} ref={el => d3Div = el} />
+      <div id="d3-wrapper" className={isLoading ? 'hidden' : ''} >
+        <svg id="d3div" ref={el => d3Div.current = el}/>
+      </div>
     </div>
   )
 }
