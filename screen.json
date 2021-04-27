@@ -18,7 +18,7 @@
       },
       {
         "name": "Reddit",
-        "hour": "Invalid Format",
+        "hour": 0,
         "minute": 15
       },
       {
@@ -616,7 +616,7 @@
       },
       {
         "name": "Chrome",
-        "hour": 1,
+        "hour": 0,
         "minute": 59
       },
       {
