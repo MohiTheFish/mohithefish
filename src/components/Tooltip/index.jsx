@@ -17,7 +17,7 @@ export default function ToolTip({Header, style, className, text}) {
   return (
     <div className={`hoverable ${className ? className :''}`} style={style}>
       <Header {...props} />
-      <span className={`tooltip ${hovered ? 'anim-tooltip': ''}`}>{text}</span>
+      <span className={`mohi-tooltip ${hovered ? 'anim-tooltip': ''}`}>{text}</span>
     </div> 
   );
 }
