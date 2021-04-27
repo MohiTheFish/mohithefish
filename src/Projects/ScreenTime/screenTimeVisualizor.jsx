@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useReducer } from 'react';
 import Loading from 'components/Loading/loading';
 import buildVisual from './builder';
 
@@ -115,10 +115,11 @@ export default function ScreenTimeVisualizor() {
   const [screenData, setScreenData] = useState();
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [load,] = useState(false);
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
   useEffect(() => {
     function buildVisualization(data, target) {
-      buildVisual(data, target);
+      buildVisual(data, target, forceUpdate);
         
       setIsLoading(false);
     }
@@ -140,7 +141,7 @@ export default function ScreenTimeVisualizor() {
     else {
       buildVisualization(temp_data, d3Div.current);
     }
-  }, [load])
+  }, [load]);
 
   return (
     <div className="screentime-visualizor">

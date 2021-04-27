@@ -1,3 +1,5 @@
+import {renderToolTip} from './builderJSX';
+
 const d3 = window.d3;
 
 function getMax(d) {
@@ -37,9 +39,10 @@ export default function buildVisual(data, target) {
     .attr("height", height)
     .attr("border", "1px solid black");
   
-  const div = d3.select(target).append("div")
+  const tooltip = d3.select("body").append("div")
     .attr("class", "tooltip-donut")
-    .style("opacity", 0);
+    .style("opacity", 1)
+    .style('display', 'none');
 
   const n = data.length;
   let barWidth = Math.min(MAX_BAR_WIDTH, (width - 2 * marginLeftRight) / n - MIN_SPACING_BARS);
@@ -60,7 +63,7 @@ export default function buildVisual(data, target) {
     .attr("transform", `translate(${marginLeftRight}, 0)`)
     .call(d3.axisLeft(y_axis));
 
-  svgCanvas.selectAll("rect")
+  const rects = svgCanvas.selectAll("rect")
     .data(data).enter()
       .append("rect")
       .attr("width", barWidth)
@@ -75,20 +78,32 @@ export default function buildVisual(data, target) {
       })
       .attr("y", (d, i) => {
         return `${height - height * totals[i]}`;
-      })
-      .on('mousemove', function(d, i) {
-        d3.select(this).attr('opacity', .85);
+      });
 
-        console.log(target.event);
+  rects.on('mousemove', function(e, d) {
+    // The rectangle.
+    d3.select(this).attr('opacity', .85);
+    // const i = rects.nodes().indexOf(this);
+    // console.log(d, i);
+    // const mydata = d.apps[i];
+    // console.log(d);
 
-        // div.transition()		
-        //     .duration(200)		
-        //     .style("opacity", .9);		
-        div.html('test')
-          .style("left", (d.pageX + 10) + "px")
-          .style("top", (d.pageY - 15) + "px");
-        })
-      .on('mouseout', function(d, i) {
-        d3.select(this).attr('opacity', 1);
-      })
+    const tooltipHTML = renderToolTip(d);
+
+    let tooltipClass = `tooltip-donut above`;
+    if (e.pageY < 200) {
+      tooltipClass = 'tooltip-donut';
+    }
+    
+    tooltip.html(tooltipHTML)
+      .style('display', 'block')
+      .style("left", (e.pageX + 10) + "px")
+      .style("top", (e.pageY) + "px")
+      .attr('class', tooltipClass);
+    })
+  .on('mouseout', function(d, i) {
+    d3.select(this).attr('opacity', 1);
+
+    tooltip.style('display', 'none');
+  })
 }
