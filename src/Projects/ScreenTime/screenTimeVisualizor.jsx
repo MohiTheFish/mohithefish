@@ -67,21 +67,6 @@ const temp_data = [
       "minute": 48
     },
     {
-      "name": "Youtube",
-      "hour": 1,
-      "minute": 51
-    },
-    {
-      "name": "Netflix",
-      "hour": 1,
-      "minute": 8
-    },
-    {
-      "name": "Reddit",
-      "hour": 0,
-      "minute": 29
-    },
-    {
       "name": "Messenger",
       "hour": 0,
       "minute": 11
@@ -114,12 +99,11 @@ export default function ScreenTimeVisualizor() {
   const [isLoading, setIsLoading] = useState(true);
   const [screenData, setScreenData] = useState();
   const [isLoadingData, setIsLoadingData] = useState(true);
-  const [load,] = useState(false);
-  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+  const [load,] = useState(true);
 
   useEffect(() => {
     function buildVisualization(data, target) {
-      buildVisual(data, target, forceUpdate);
+      buildVisual(data, target);
         
       setIsLoading(false);
     }

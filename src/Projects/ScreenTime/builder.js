@@ -33,7 +33,6 @@ export default function buildVisual(data, target) {
   const marginTopBottom = 30;
 
 
-
   const svgCanvas = d3.select(target)
     .attr("width", width)
     .attr("height", height)
@@ -57,11 +56,18 @@ export default function buildVisual(data, target) {
   const y_axis = d3.scaleLinear()
     .domain([max, 0])
     .range([0, height])
+    
   
 
   svgCanvas.append("g")
     .attr("transform", `translate(${marginLeftRight}, 0)`)
-    .call(d3.axisLeft(y_axis));
+    .call(d3.axisLeft(y_axis)
+    .ticks(5)
+    .tickSize(-width, 0, 0)
+    .tickFormat( function(d) { return d } ));
+
+  const color = `rgb(45, 207, 17)`;
+  const lightColor = `rgb(54, 242, 22)`;
 
   const rects = svgCanvas.selectAll("rect")
     .data(data).enter()
@@ -71,7 +77,7 @@ export default function buildVisual(data, target) {
         console.log(parseDate(d.date).getTime());
         return height * totals[i];
       })
-      .attr("fill", "orange")
+      .attr("fill", color)
       .attr("x", (d, i) => {
         const val = 2 + marginLeftRight + i/n * width;
         return val;
@@ -81,8 +87,6 @@ export default function buildVisual(data, target) {
       });
 
   rects.on('mousemove', function(e, d) {
-    // The rectangle.
-    d3.select(this).attr('opacity', .85);
     // const i = rects.nodes().indexOf(this);
     // console.log(d, i);
     // const mydata = d.apps[i];
@@ -90,20 +94,25 @@ export default function buildVisual(data, target) {
 
     const tooltipHTML = renderToolTip(d);
 
-    let tooltipClass = `tooltip-donut above`;
-    if (e.pageY < 200) {
-      tooltipClass = 'tooltip-donut';
-    }
+    const shouldMoveBelow = e.pageY >= 200;
+    const shouldMoveLeft = (e.pageX + 10) >= 1000;
+    const xVal = shouldMoveLeft ? e.pageX - 10 : e.pageX + 10;
     
+    let tooltipClass = `tooltip-donut ${shouldMoveBelow ? 'moveBelow' : ''} ${shouldMoveLeft ? 'moveLeft' : ''}`;
     tooltip.html(tooltipHTML)
-      .style('display', 'block')
-      .style("left", (e.pageX + 10) + "px")
+      .style("left", xVal + "px")
       .style("top", (e.pageY) + "px")
       .attr('class', tooltipClass);
     })
   .on('mouseout', function(d, i) {
-    d3.select(this).attr('opacity', 1);
+    // This rectangle
+    d3.select(this).attr('fill', color);
 
     tooltip.style('display', 'none');
   })
+  .on('mouseenter', function(d, i) {
+    // This rectangle
+    d3.select(this).attr('fill', lightColor);
+    tooltip.style('display', null);
+  });
 }

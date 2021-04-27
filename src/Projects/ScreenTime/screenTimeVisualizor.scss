@@ -10,8 +10,18 @@
   position: relative;
 }
 
-.above {
+.moveBelow {
   transform: translate(0, -100%);
+}
+.moveLeft {
+  transform: translate(-100%, 0);
+}
+
+.moveBelow.moveLeft {
+  transform: translate(-100%, -100%);
+}
+.tiny-text {
+  font-size: 10px;
 }
 div.tooltip-donut {
   position: absolute;
@@ -23,6 +33,13 @@ div.tooltip-donut {
   border-radius: 8px;
   pointer-events: none;
   font-size: 1rem;
+  width: fit-content;
+
+  .tooltip-content {
+    h3 {
+      text-decoration: underline;
+    }
+  }
 }
 
 #d3div.hidden {
