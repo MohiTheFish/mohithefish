@@ -105,22 +105,9 @@ function initDay() {
 
 export default function ScreenTime() {
 
-  // const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const originalOnKeyDown = window.onkeydown;
     const originalOnKeyUp = window.onkeyup;
-
-    // async function getScreenTimeData() {
-    //   fetch(process.env.PUBLIC_URL + '/screen.json', {
-    //     "content-type": 'application/json',
-    //   }).then(res => res.json())
-    //   .then(res => console.log(res));
-
-    //   setIsLoading(false);
-    // }
-
-    // getScreenTimeData();
-
     return () => {
       window.onkeydown = originalOnKeyDown;
       window.onkeyup = originalOnKeyUp;
