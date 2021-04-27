@@ -74,7 +74,7 @@ export default function buildVisual(data, target) {
       .append("rect")
       .attr("width", barWidth)
       .attr("height", (d, i) => {
-        console.log(parseDate(d.date).getTime());
+        // console.log(parseDate(d.date).getTime());
         return height * totals[i];
       })
       .attr("fill", color)
