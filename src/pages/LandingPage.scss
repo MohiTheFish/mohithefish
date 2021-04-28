@@ -13,6 +13,7 @@
   .journey-options {
     display: flex;
     margin-top: 20px;
+
     a {
       width: 50%;
       margin: 0 20px;
@@ -23,6 +24,18 @@
     }
     .clickable:hover {
       box-shadow: k.$paper-mui-hover-box-shadow;
+    }
+  }
+  
+  @media only screen and (max-width: 720px) {
+    .journey-options {
+      flex-direction: column;
+
+      a {
+        width: 100%;
+        margin: 20px 0;
+      }
+
     }
   }
 }
