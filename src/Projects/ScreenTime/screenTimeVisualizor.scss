@@ -49,3 +49,15 @@ div.tooltip-donut {
 .screentime-visualizor {
   flex-grow: 1;
 }
+
+#y_axis {
+  text {
+    z-index: 2;
+  }
+}
+
+#daily-average {
+  .tiny-text {
+    font-size: 12px;
+  }
+}

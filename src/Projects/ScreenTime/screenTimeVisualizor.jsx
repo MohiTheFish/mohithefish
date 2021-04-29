@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect, useReducer } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Loading from 'components/Loading/loading';
 import buildVisual from './builder';
+import Button from '@material-ui/core/Button'
 
 import './screenTimeVisualizor.scss';
 
@@ -97,7 +98,6 @@ const temp_data = [
 export default function ScreenTimeVisualizor() {
   const d3Div = useRef();
   const [isLoading, setIsLoading] = useState(true);
-  const [screenData, setScreenData] = useState();
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [load,] = useState(true);
 
@@ -113,7 +113,6 @@ export default function ScreenTimeVisualizor() {
         "content-type": 'application/json',
       }).then(res => res.json())
       .then(res => {
-        setScreenData(res);
         setIsLoadingData(false);
         buildVisualization(res, d3Div.current);
       });
@@ -135,6 +134,16 @@ export default function ScreenTimeVisualizor() {
         : null
       }
       <div id="d3-wrapper" className={isLoading ? 'hidden' : ''} >
+        <div className="summary">
+          <h3>Days Recorded: <span id="num-days"></span></h3>
+          <h3>Total Time: <span id="total-time"></span></h3>
+          <h3>Daily Average: <span id="daily-average"></span></h3>
+        </div>
+        <div className="controls">
+          <h3>Currently Viewing: <span id="current-date"></span></h3>
+          <Button color="primary" id="see-prev">See Prev</Button>
+          <Button color="primary" id="see-next">See Next</Button>
+        </div>
         <svg id="d3div" ref={el => d3Div.current = el}/>
       </div>
     </div>
