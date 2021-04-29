@@ -3,15 +3,15 @@ import React from 'react';
 
 function tagTime(t, tag) {
   return (
-    <>
+    <React.Fragment key={`${tag}-${t}`}>
     {t}
     <span className='tiny-text'>{`${tag} `}</span>
-    </>
+    </React.Fragment>
   )
 }
 
 function buildTooltipTime(name, hour, minute) {
-  let str = [<span>{`${name}: `}</span>];
+  let str = [<span key={name}>{`${name}: `}</span>];
   if (hour > 0) {
     str.push(tagTime(hour, 'h'));
   }
