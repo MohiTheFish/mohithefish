@@ -133,8 +133,8 @@ export default function ScreenTimeVisualizor() {
         ? <Loading />
         : null
       }
-      <div id="d3-wrapper" className={isLoading ? 'hidden' : ''} >
-        <div className="summary">
+      
+      <div className="summary">
           <h3>Days Recorded: <span id="num-days"></span></h3>
           <h3>Total Time: <span id="total-time"></span></h3>
           <h3>Daily Average: <span id="daily-average"></span></h3>
@@ -144,6 +144,7 @@ export default function ScreenTimeVisualizor() {
           <Button color="primary" id="see-prev">See Prev</Button>
           <Button color="primary" id="see-next">See Next</Button>
         </div>
+      <div id="d3-wrapper" className={isLoading ? 'hidden' : ''} >
         <svg id="d3div" ref={el => d3Div.current = el}/>
       </div>
     </div>

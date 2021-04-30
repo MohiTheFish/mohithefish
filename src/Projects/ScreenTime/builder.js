@@ -46,7 +46,6 @@ export default function buildVisual(data, target) {
   for (let i=0; i<Math.min(MAX_DAYS, data.length); i++) {
     subset.push(data[i]);
   }
-
   let n = subset.length;
 
   const wrapper = document.getElementById('d3-wrapper');
@@ -56,7 +55,7 @@ export default function buildVisual(data, target) {
   const marginLeftRight = 0;
   const marginTopBottom = 20;
 
-  const widthExcludingMargin = width - 2*marginLeftRight;
+  const widthExcludingMargin = width - 100 - 2*marginLeftRight;
   const heightExcludingMargin = height - marginTopBottom;
 
   const svgCanvas = d3.select(target)
@@ -97,16 +96,17 @@ export default function buildVisual(data, target) {
     .domain([max, 0])
     .range([0, heightExcludingMargin])
     
+  const lenAlongXAxis = widthExcludingMargin;
   var x_axis = d3.scaleTime()
-    .domain([parseDate(subset[0].date), getOneAfter(subset[n-1].date)])
-    .range([2, 2 + (width - marginLeftRight) / MAX_DAYS * (n)])
+    .domain([parseDate(subset[0].date), parseDate(subset[n-1].date)])
+    .range([2, 2 + lenAlongXAxis / MAX_DAYS * (n-1)])
     
   svgCanvas.append("g")
     .attr("id", "y_axis")
     .attr("transform", `translate(${marginLeftRight}, 0)`)
     .call(d3.axisLeft(y_axis)
     .ticks(5)
-    .tickSize(-(width - marginLeftRight), 0, 0)
+    .tickSize(-lenAlongXAxis, 0, 0)
     .tickFormat( function(d) { return d } ))
     .selectAll("text")
     .attr("transform", `translate(30, -5)`);
@@ -130,12 +130,11 @@ export default function buildVisual(data, target) {
       .append("rect")
       .attr("width", barWidth)
       .attr("height", (d, i) => {
-        // console.log(parseDate(d.date).getTime());
         return heightExcludingMargin * totals[i];
       })
       .attr("fill", color)
       .attr("x", (d, i) => {
-        const val = 2 + marginLeftRight + i/n * (width - marginLeftRight);
+        const val = 2 + marginLeftRight + i/n * lenAlongXAxis;
         return val;
       })
       .attr("y", (d, i) => {
@@ -143,11 +142,6 @@ export default function buildVisual(data, target) {
       });
 
   rects.on('mousemove', function(e, d) {
-    // const i = rects.nodes().indexOf(this);
-    // console.log(d, i);
-    // const mydata = d.apps[i];
-    // console.log(d);
-
     const tooltipHTML = renderToolTip(d);
 
     const shouldMoveBelow = e.pageY >= 200;
@@ -161,12 +155,10 @@ export default function buildVisual(data, target) {
       .attr('class', tooltipClass);
     })
   .on('mouseout', function(d, i) {
-    // This rectangle
     d3.select(this).attr('fill', color);
     tooltip.style('display', 'none');
   })
   .on('mouseenter', function(d, i) {
-    // This rectangle
     d3.select(this).attr('fill', lightColor);
     tooltip.style('display', null);
   });
@@ -174,7 +166,7 @@ export default function buildVisual(data, target) {
 
   function rerenderRects(offset) {
     rects.transition().duration(1000).attr("x", (d, i) => {
-      const val = 2 + marginLeftRight + (i-offset)/n * (width - marginLeftRight);
+      const val = 2 + marginLeftRight + (i-offset)/n * lenAlongXAxis;
       return val;
     })
   }
@@ -188,9 +180,11 @@ export default function buildVisual(data, target) {
   function rerenderXAxis(offset) {
     const endElement = Math.min(data.length -1 , offset+MAX_DAYS-1);
     const numElements = endElement - offset;
+
+    console.log(offset, endElement);
     x_axis = d3.scaleTime()
     .domain([parseDate(data[offset].date), parseDate(data[endElement].date)])
-    .range([2, 2 + (width - marginLeftRight) / MAX_DAYS * (numElements)])
+    .range([2, 2 + lenAlongXAxis / MAX_DAYS * (numElements)])
     
     document.getElementById('current-date').innerHTML = `${data[offset].date} - ${data[endElement].date}`
     d3.select('#x_axis').call(
@@ -219,7 +213,7 @@ export default function buildVisual(data, target) {
   d3.select('#see-prev')
   .on("click", function(d) {
     
-    if (currentIndex === 0) {
+    if (currentIndex === 0) { // don't do anything if we are at the beginning of history
       return;
     }
     currentIndex -= 1;
@@ -227,16 +221,5 @@ export default function buildVisual(data, target) {
     
     rerenderRects(offset);
     rerenderXAxis(offset);
-    // const endElement = Math.min(data.length -1 , offset+MAX_DAYS-1);
-    // const numElements = endElement - offset;
-    // x_axis = d3.scaleTime()
-    // .domain([parseDate(data[offset].date), parseDate(data[endElement].date)])
-    // .range([2, 2 + (width - marginLeftRight) / MAX_DAYS * (numElements)])
-    
-    // d3.select('#x_axis').call(
-    //   d3.axisBottom(x_axis)
-    //   .ticks(numElements)
-    //   .tickFormat(formatDate)
-    //   );
   })
 }

@@ -1,12 +1,12 @@
 @use '~styles/constants' as k;
 
 #d3-wrapper {
-  height: 100%;
   width: 100%;
+  height: 645px;
 }
 #d3div {
+  padding: 0 50px;
   margin: auto;
-  width: 100%;
   position: relative;
 }
 
@@ -48,6 +48,7 @@ div.tooltip-donut {
 
 .screentime-visualizor {
   flex-grow: 1;
+  padding-bottom: 10px;
 }
 
 #y_axis {
