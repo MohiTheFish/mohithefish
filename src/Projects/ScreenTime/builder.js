@@ -64,8 +64,9 @@ export default function buildVisual(data, target) {
     .attr("border", "1px solid black");
 
   
-  const tooltip = d3.select("body").append("div")
+  let tooltip = d3.select("body").append("div")
     .attr("class", "tooltip-donut")
+    .attr("id", "d3-tooltip")
     .style("opacity", 1)
     .style('display', 'none');
 

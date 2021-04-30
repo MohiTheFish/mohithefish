@@ -124,6 +124,13 @@ export default function ScreenTimeVisualizor() {
     else {
       buildVisualization(temp_data, d3Div.current);
     }
+
+    return () => {
+      const toolTip = document.getElementById('d3-tooltip');
+      if (toolTip) {
+        toolTip.remove();
+      }
+    }
   }, [load]);
 
   return (
