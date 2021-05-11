@@ -21,7 +21,7 @@
   transform: translate(-100%, -100%);
 }
 .tiny-text {
-  font-size: 10px;
+  font-size: 13px;
 }
 div.tooltip-donut {
   position: absolute;
@@ -54,11 +54,5 @@ div.tooltip-donut {
 #y_axis {
   text {
     z-index: 2;
-  }
-}
-
-#daily-average {
-  .tiny-text {
-    font-size: 12px;
   }
 }
