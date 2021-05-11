@@ -149,7 +149,7 @@ export default function ScreenTime() {
     const hideDropDown = (e) => {
       let newindex = -1;
       if (!actRefs.current[dropdownIndex].contains(e.target) //did not click on the current input box
-       && (!mydropdown.current.contains(e.target))) // and did not click on the dropdown 
+       && (mydropdown.current && !mydropdown.current.contains(e.target))) // and did not click on the dropdown 
       {
         newindex = -1;
       }
@@ -420,14 +420,14 @@ export default function ScreenTime() {
                 );
               })
             }
-            <Dropdown
+            {/* <Dropdown
               dropdownCallback={(el ) => (mydropdown.current = el)}
               dropdownIndex={dropdownIndex} 
               activeDropdown={activeDropdown}
               activities={activities}
               seenActivities={seenActivities}
               selectDropdownEntry={selectDropdownEntry}
-            />
+            /> */}
           </div>
         </div>
         

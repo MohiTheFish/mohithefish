@@ -16,6 +16,17 @@ function getTotalMin({total}) {
   return total.hour*60 + total.minute;
 }
 
+function collectUniqueActivities(data) {
+  const keys = new Set();
+  data.forEach(({apps}) => {
+    apps.forEach(({name}) => {
+      keys.add(name);
+    })
+  })
+
+  return keys;
+}
+
 function formatDate(date) {
   const [month, day, year] = date.toLocaleString("en-US", {
     day: "numeric",
@@ -35,6 +46,7 @@ function getOneAfter(date) {
 
 const MIN_SPACING_BARS = 5;
 const MAX_BAR_WIDTH = 30;
+const ADDITIONAL_PADDING = 2;
 
 const MAX_DAYS = 28;
 let currentIndex = 0;
@@ -74,6 +86,9 @@ export default function buildVisual(data, target) {
 
 
   let totals = data.map((d) => getTotalMin(d));
+  const uniqueActivities = [...collectUniqueActivities(data)];
+  console.log(uniqueActivities.sort());
+  
   let totalCompleteTime = 0;
   const max = getMax(totals);
   for (let i=0; i<totals.length; i++) {
@@ -98,10 +113,18 @@ export default function buildVisual(data, target) {
     .range([0, heightExcludingMargin])
     
   const lenAlongXAxis = widthExcludingMargin;
+  function calcBarPositions(i, offset) {
+    return ADDITIONAL_PADDING + marginLeftRight + (i-offset)/n * lenAlongXAxis;
+  }
   var x_axis = d3.scaleTime()
-    .domain([parseDate(subset[0].date), parseDate(subset[n-1].date)])
-    .range([2, 2 + lenAlongXAxis / MAX_DAYS * (n-1)])
-    
+    .domain([parseDate(data[0].date), parseDate(data[data.length-1].date)])
+    .range([0, (data.length-1) * (lenAlongXAxis / MAX_DAYS) ])
+  
+  var z_axis = d3.scaleOrdinal().range(['#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b','#d53e4f','#fc8d59','#fee08b',]);
+  z_axis.domain(data.map(function(d) { return d.keys; }));
+
+
+
   svgCanvas.append("g")
     .attr("id", "y_axis")
     .attr("transform", `translate(${marginLeftRight}, 0)`)
@@ -114,10 +137,10 @@ export default function buildVisual(data, target) {
 
   svgCanvas.append("g")
   .attr("id", "x_axis")
-    .attr("transform", `translate(${marginLeftRight + 2 + barWidth/2}, ${height-marginTopBottom})`)
+    .attr("transform", `translate(${marginLeftRight + ADDITIONAL_PADDING + barWidth/2}, ${height-marginTopBottom})`)
     .call(
       d3.axisBottom(x_axis)
-      .ticks(n)
+      .ticks(data.length)
       .tickFormat( formatDate )
     )
     .selectAll("text")
@@ -126,6 +149,28 @@ export default function buildVisual(data, target) {
   const color = `rgb(45, 207, 17)`;
   const lightColor = `rgb(54, 242, 22)`;
 
+
+  // const bars =
+  //   svgCanvas.selectAll(".bar").data(data).enter().append('g')
+  //     .attr('class', 'bar')
+  //     .attr("x", (d, i) => {
+  //       return 2 + marginLeftRight + i / n * lenAlongXAxis;
+  //     })
+  //     .attr("height", 400)
+  //   .selectAll('rect').data(d => d).enter()
+  //     .append('rect')
+  //     .attr("width", barWidth)
+  //     .attr("height", (d, i) => {
+  //       console.log(d);
+  //       return heightExcludingMargin * totals[i];
+  //     })
+  //     .attr("x", (d, i) => {
+  //       const val = 2 + marginLeftRight + i/n * lenAlongXAxis;
+  //       return val;
+  //     })
+  //     .attr("y", (d, i) => {
+  //       return `${heightExcludingMargin - heightExcludingMargin * totals[i]}`;
+  //     });
   const rects = svgCanvas.selectAll("rect")
     .data(data).enter()
       .append("rect")
@@ -134,10 +179,7 @@ export default function buildVisual(data, target) {
         return heightExcludingMargin * totals[i];
       })
       .attr("fill", color)
-      .attr("x", (d, i) => {
-        const val = 2 + marginLeftRight + i/n * lenAlongXAxis;
-        return val;
-      })
+      .attr("x", (d, i) => { return calcBarPositions(i, 0) })
       .attr("y", (d, i) => {
         return `${heightExcludingMargin - heightExcludingMargin * totals[i]}`;
       });
@@ -147,6 +189,8 @@ export default function buildVisual(data, target) {
 
     const shouldMoveBelow = e.pageY >= 200;
     const shouldMoveLeft = (e.pageX + 10) >= 1000;
+
+    // Move the position of the tooltip origin if switching between left and right.
     const xVal = shouldMoveLeft ? e.pageX - 10 : e.pageX + 10;
     
     let tooltipClass = `tooltip-donut ${shouldMoveBelow ? 'moveBelow' : ''} ${shouldMoveLeft ? 'moveLeft' : ''}`;
@@ -166,34 +210,33 @@ export default function buildVisual(data, target) {
 
 
   function rerenderRects(offset) {
-    rects.transition().duration(1000).attr("x", (d, i) => {
-      const val = 2 + marginLeftRight + (i-offset)/n * lenAlongXAxis;
-      return val;
-    })
+    rects.transition().duration(1000).attr("x", (d, i) => { return calcBarPositions(i, offset); });
   }
-  function translateXAxis(offset) {
+  function rerenderXAxis(offset) {
+    const endElement = Math.min(data.length -1 , offset+MAX_DAYS-1);
+
     d3.select('#x_axis')
     .transition()
     .duration(1000)
-    .attr("transform", `translate(${marginLeftRight + 2 + barWidth/2}, ${height-marginTopBottom})`)
-  }
+    .attr("transform", `translate(${marginLeftRight + ADDITIONAL_PADDING + barWidth/2 + -offset * (lenAlongXAxis / MAX_DAYS)}, ${height-marginTopBottom})`);
 
-  function rerenderXAxis(offset) {
-    const endElement = Math.min(data.length -1 , offset+MAX_DAYS-1);
-    const numElements = endElement - offset;
-
-    console.log(offset, endElement);
-    x_axis = d3.scaleTime()
-    .domain([parseDate(data[offset].date), parseDate(data[endElement].date)])
-    .range([2, 2 + lenAlongXAxis / MAX_DAYS * (numElements)])
-    
     document.getElementById('current-date').innerHTML = `${data[offset].date} - ${data[endElement].date}`
     d3.select('#x_axis').call(
       d3.axisBottom(x_axis)
-      .ticks(numElements)
+      .ticks(data.length)
       .tickFormat(formatDate)
     );
   }
+
+  // function rerenderXAxis(offset) {
+  //   const endElement = Math.min(data.length -1 , offset+MAX_DAYS-1);
+  //   const numElements = endElement - offset;
+
+  //   console.log(offset, endElement);
+  //   x_axis = d3.scaleTime()
+  //   .domain([parseDate(data[offset].date), parseDate(data[endElement].date)])
+  //   .range([2, ADDITIONAL_PADDING + lenAlongXAxis / MAX_DAYS * (numElements)])
+  // }
 
 
   d3.select('#see-next')
