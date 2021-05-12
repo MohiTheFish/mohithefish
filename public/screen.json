@@ -41,6 +41,11 @@
         "minute": 37
       },
       {
+        "name": "Google Maps",
+        "hour": 2,
+        "minute": 7
+      },
+      {
         "name": "Fire Emblem Heroes",
         "hour": 0,
         "minute": 29
@@ -59,11 +64,6 @@
         "name": "iMessage",
         "hour": 0,
         "minute": 2
-      },
-      {
-        "name": "Google Maps",
-        "hour": 2,
-        "minute": 7
       }
     ]
   },
