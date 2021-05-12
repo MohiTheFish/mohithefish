@@ -26,18 +26,11 @@ function buildTooltipTime(name, hour, minute) {
 }
 
 function D3Tooltip({data}) {
-  const {apps, total, date} = data;
-  let totalTime = 0;
+  const {apps, date} = data;
 
   const mostPElems = apps.map(({name, hour, minute}) => {
-    totalTime += hour*60 + minute;
     return buildTooltipTime(name, hour, minute);
   });
-
-  const incOther = total.hour * 60 + total.minute;
-  const diff = incOther - totalTime;
-
-  mostPElems.push(buildTooltipTime('Other', Math.floor(diff / 60), diff % 60));
 
 
   return (
