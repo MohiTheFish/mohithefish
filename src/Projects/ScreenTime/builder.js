@@ -16,6 +16,9 @@ function getTotalMin({total}) {
   return total.hour*60 + total.minute;
 }
 
+function getTotalTime(arg) {
+  return arg.hour*60 + arg.minute;
+}
 function collectUniqueActivities(data) {
   const keys = new Set();
   data.forEach(({apps}) => {
@@ -96,15 +99,48 @@ export default function buildVisual(data, target) {
     totals[i] = totals[i] / max;
   }
 
+  for (let i=0; i<data.length; i++) {
+    data[i].apps.sort((a, b) => getTotalTime(b) - getTotalTime(a));
+    for (let j=0; j<data[i].apps.length; j++) {
+      const app = data[i].apps[j];
+      app.range = getTotalTime(app) / getTotalMin(data[i]) * totals[i];
+      if (j !== 0) {
+        app.offset = data[i].apps[j-1].range + data[i].apps[j-1].offset;
+      }
+      else { // j === 0
+        app.offset = 0;
+      }
+    }
+
+
+    let totalTime = 0;
+    data[i].apps.forEach(({hour, minute}) => {
+      totalTime += hour*60 + minute;
+    });
+
+    const otherTime = getTotalMin(data[i]) - totalTime;
+    const lastapp = data[i].apps[data[i].apps.length - 1];
+
+    data[i].apps.push({
+      name: 'Other',
+      hour: Math.floor(otherTime / 60),
+      minute: otherTime % 60,
+      range: otherTime / getTotalMin(data[i]) * totals[i],
+      offset: lastapp.range + lastapp.offset
+    })
+  }
+
+  
+
   document.getElementById('num-days').innerHTML = data.length;
   let totalTotalHour = Math.floor(totalCompleteTime / 60);
   let totalTotalMinute = totalCompleteTime % 60;
   document.getElementById('total-time').innerHTML = `${totalTotalHour}<span class="tiny-text">h</span> ${totalTotalMinute}<span class="tiny-text">m</span>`
 
-  totalCompleteTime = totalCompleteTime / data.length;
-  totalTotalHour = Math.floor(totalCompleteTime / 60);
-  totalTotalMinute = Math.floor(totalCompleteTime) % 60;
-  document.getElementById('daily-average').innerHTML = `${totalTotalHour}<span class="tiny-text">h</span> ${totalTotalMinute}<span class="tiny-text">m</span>`
+  let avgCompleteTime = totalCompleteTime / data.length;
+  let avgTotalHour = Math.floor(avgCompleteTime / 60);
+  let avgTotalMinute = Math.floor(avgCompleteTime) % 60;
+  document.getElementById('daily-average').innerHTML = `${avgTotalHour}<span class="tiny-text">h</span> ${avgTotalMinute}<span class="tiny-text">m</span>`
 
 
   document.getElementById('current-date').innerHTML = `${data[0].date} - ${data[n-1].date}`
@@ -150,27 +186,89 @@ export default function buildVisual(data, target) {
   const lightColor = `rgb(54, 242, 22)`;
 
 
-  // const bars =
-  //   svgCanvas.selectAll(".bar").data(data).enter().append('g')
+  // const bars = svgCanvas.selectAll(".bar").data(data).enter().append('g')
   //     .attr('class', 'bar')
-  //     .attr("x", (d, i) => {
-  //       return 2 + marginLeftRight + i / n * lenAlongXAxis;
-  //     })
-  //     .attr("height", 400)
-  //   .selectAll('rect').data(d => d).enter()
-  //     .append('rect')
-  //     .attr("width", barWidth)
-  //     .attr("height", (d, i) => {
-  //       console.log(d);
-  //       return heightExcludingMargin * totals[i];
-  //     })
-  //     .attr("x", (d, i) => {
-  //       const val = 2 + marginLeftRight + i/n * lenAlongXAxis;
-  //       return val;
-  //     })
-  //     .attr("y", (d, i) => {
-  //       return `${heightExcludingMargin - heightExcludingMargin * totals[i]}`;
-  //     });
+  //     .attr('transform', (d, i) => `translate(${calcBarPositions(i, 0)}, 0)` );
+
+  // const rects = bars.selectAll('rect').data(d => d.apps).enter()
+  //   .append('rect')
+  //   .attr('fill', color)
+  //   .attr("width", barWidth)
+  //   .attr('y', (d, i) => heightExcludingMargin - (d.offset * heightExcludingMargin) - (d.range * heightExcludingMargin))
+  //   .attr("height", (d) => d.range * heightExcludingMargin);
+
+  // rects.on('mousemove', function(e, d) {
+  //   console.log(d);
+  //   const tooltipHTML = renderToolTip(d);
+
+  //   const shouldMoveBelow = e.pageY >= 200;
+  //   const shouldMoveLeft = (e.pageX + 10) >= 1000;
+
+  //   // Move the position of the tooltip origin if switching between left and right.
+  //   const xVal = shouldMoveLeft ? e.pageX - 10 : e.pageX + 10;
+    
+  //   let tooltipClass = `tooltip-donut ${shouldMoveBelow ? 'moveBelow' : ''} ${shouldMoveLeft ? 'moveLeft' : ''}`;
+  //   tooltip.html(tooltipHTML)
+  //     .style("left", xVal + "px")
+  //     .style("top", (e.pageY) + "px")
+  //     .attr('class', tooltipClass);
+  //   })
+  // .on('mouseout', function(d, i) {
+  //   d3.select(this).attr('fill', color);
+  //   tooltip.style('display', 'none');
+  // })
+  // .on('mouseenter', function(d, i) {
+  //   d3.select(this).attr('fill', lightColor);
+  //   tooltip.style('display', null);
+  // });
+
+  // function rerenderRects(offset) {
+  //   bars.transition().duration(1000).attr('transform', (d, i) => `translate(${calcBarPositions(i, offset)}, 0)` )
+  // }
+  // function rerenderXAxis(offset) {
+  //   const endElement = Math.min(data.length -1 , offset+MAX_DAYS-1);
+
+  //   d3.select('#x_axis')
+  //   .transition()
+  //   .duration(1000)
+  //   .attr("transform", `translate(${marginLeftRight + ADDITIONAL_PADDING + barWidth/2 + -offset * (lenAlongXAxis / MAX_DAYS)}, ${height-marginTopBottom})`);
+
+  //   document.getElementById('current-date').innerHTML = `${data[offset].date} - ${data[endElement].date}`
+  //   d3.select('#x_axis').call(
+  //     d3.axisBottom(x_axis)
+  //     .ticks(data.length)
+  //     .tickFormat(formatDate)
+  //   );
+  // }
+  // d3.select('#see-next')
+  // .on("click", function(d) {
+    
+  //   const offset = (currentIndex+1) * 7;
+  //   if (offset+1 > data.length) { //don't do anything if there aren't at least 7 days to display
+  //     return;
+  //   }
+  //   currentIndex += 1;
+
+
+  //   rerenderRects(offset);
+  //   rerenderXAxis(offset);
+    
+  // })
+
+  // d3.select('#see-prev')
+  // .on("click", function(d) {
+    
+  //   if (currentIndex === 0) { // don't do anything if we are at the beginning of history
+  //     return;
+  //   }
+  //   currentIndex -= 1;
+  //   const offset = currentIndex * 7;
+    
+  //   rerenderRects(offset);
+  //   rerenderXAxis(offset);
+  // })
+
+
   const rects = svgCanvas.selectAll("rect")
     .data(data).enter()
       .append("rect")
@@ -179,7 +277,7 @@ export default function buildVisual(data, target) {
         return heightExcludingMargin * totals[i];
       })
       .attr("fill", color)
-      .attr("x", (d, i) => { return calcBarPositions(i, 0) })
+      .attr("x", (d, i) => calcBarPositions(i, 0))
       .attr("y", (d, i) => {
         return `${heightExcludingMargin - heightExcludingMargin * totals[i]}`;
       });

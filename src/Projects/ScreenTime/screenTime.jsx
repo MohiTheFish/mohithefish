@@ -420,14 +420,14 @@ export default function ScreenTime() {
                 );
               })
             }
-            {/* <Dropdown
+            <Dropdown
               dropdownCallback={(el ) => (mydropdown.current = el)}
               dropdownIndex={dropdownIndex} 
               activeDropdown={activeDropdown}
               activities={activities}
               seenActivities={seenActivities}
               selectDropdownEntry={selectDropdownEntry}
-            /> */}
+            />
           </div>
         </div>
         
