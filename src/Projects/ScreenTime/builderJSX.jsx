@@ -25,22 +25,31 @@ function buildTooltipTime(name, hour, minute) {
   );
 }
 
-function D3Tooltip({data}) {
-  const {apps, date} = data;
+function D3Tooltip({data, flat}) {
+  let mostPElems = '';
+  if (flat) {
+    mostPElems = buildTooltipTime(data.name, data.hour, data.minute);
+  }
+  else {
+    const apps = data.apps;
 
-  const mostPElems = apps.map(({name, hour, minute}) => {
-    return buildTooltipTime(name, hour, minute);
-  });
-
+    mostPElems = apps.map(({name, hour, minute}) => {
+      return buildTooltipTime(name, hour, minute);
+    });
+  }
 
   return (
     <div className="tooltip-content">
-      <h3>{date}</h3>
+      <h3>{data.date}</h3>
       {mostPElems}
     </div>
   )
 }
 
 export function renderToolTip(data) {
-  return ReactDOMServer.renderToString(<D3Tooltip  data={data}/>);
+  return ReactDOMServer.renderToString(<D3Tooltip data={data}/>);
+}
+
+export function renderToolTipStacked(data) {
+  return ReactDOMServer.renderToString(<D3Tooltip flat data={data}/>)
 }

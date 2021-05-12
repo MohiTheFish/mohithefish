@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Loading from 'components/Loading/loading';
-import buildVisual from './builder';
+import buildVisual, {preprocess} from './builder';
 import Button from '@material-ui/core/Button'
 
 import './screenTimeVisualizor.scss';
@@ -100,21 +100,27 @@ export default function ScreenTimeVisualizor() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [load,] = useState(true);
+  const [data, setData] = useState([]);
+  const [visualOption, setVisualOption] = useState(0);
+
+  function incVisualOption() {
+    let next = visualOption + 1;
+    if (next === 2) {
+      next = 0;
+    }
+    setVisualOption(next);
+  }
 
   useEffect(() => {
-    function buildVisualization(data, target) {
-      buildVisual(data, target);
-        
-      setIsLoading(false);
-    }
 
     async function getScreenTimeData() {
       fetch(process.env.PUBLIC_URL + '/screen.json', {
         "content-type": 'application/json',
       }).then(res => res.json())
       .then(res => {
+        const processed_data = preprocess(res);
+        setData(processed_data);
         setIsLoadingData(false);
-        buildVisualization(res, d3Div.current);
       });
     }
 
@@ -122,7 +128,7 @@ export default function ScreenTimeVisualizor() {
       getScreenTimeData();
     }
     else {
-      buildVisualization(temp_data, d3Div.current);
+      setData(temp_data);
     }
 
     return () => {
@@ -132,6 +138,17 @@ export default function ScreenTimeVisualizor() {
       }
     }
   }, [load]);
+
+  useEffect(() => {
+    function buildVisualization(data, target, option) {
+      buildVisual(data, target, option);
+      setIsLoading(false);
+    }
+
+    if (data.length !== 0){
+      buildVisualization(data, d3Div.current, visualOption);
+    }
+  }, [data, d3Div.current, visualOption])
 
   return (
     <div className="screentime-visualizor">
@@ -150,6 +167,8 @@ export default function ScreenTimeVisualizor() {
           <h3>Currently Viewing: <span id="current-date"></span></h3>
           <Button color="primary" id="see-prev">See Prev</Button>
           <Button color="primary" id="see-next">See Next</Button>
+
+          <Button color="primary" id="inc-view-option" onClick={incVisualOption}>See Different View</Button>
         </div>
       <div id="d3-wrapper" className={isLoading ? 'hidden' : ''} >
         <svg id="d3div" ref={el => d3Div.current = el}/>
