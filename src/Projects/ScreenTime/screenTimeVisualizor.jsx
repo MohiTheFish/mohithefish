@@ -121,7 +121,8 @@ export default function ScreenTimeVisualizor() {
         const processed_data = preprocess(res);
         setData(processed_data);
         setIsLoadingData(false);
-      });
+      })
+      .catch(e => console.log(e));
     }
 
     if (load) {

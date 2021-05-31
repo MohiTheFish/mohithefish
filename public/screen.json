@@ -2471,6 +2471,53 @@
         "minute": 1
       }
     ]
+  },
+  {
+    "date": "05/02/2021",
+    "total": {
+      "hour": -1,
+      "minute": -1
+    },
+    "apps": []
+  },
+  {
+    "date": "05/03/2021",
+    "total": {
+      "hour": -1,
+      "minute": -1
+    },
+    "apps": []
+  },
+  {
+    "date": "05/04/2021",
+    "total": {
+      "hour": -1,
+      "minute": -1
+    },
+    "apps": []
+  },
+  {
+    "date": "05/05/2021",
+    "total": {
+      "hour": -1,
+      "minute": -1
+    },
+    "apps": []
+  },
+  {
+    "date": "05/06/2021",
+    "total": {
+      "hour": -1,
+      "minute": -1
+    },
+    "apps": []
+  },
+  {
+    "date": "05/07/2021",
+    "total": {
+      "hour": -1,
+      "minute": -1
+    },
+    "apps": []
   }
-
 ]

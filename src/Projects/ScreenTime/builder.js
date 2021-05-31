@@ -32,6 +32,16 @@ export function preprocess(data) {
   }
 
   for (let i=0; i<data.length; i++) {
+    if (data[i].apps.length === 0) {
+      data[i].apps.push({
+        name: 'Other',
+        hour: -1,
+        minute: -1,
+        range: .1,
+        offset: 0,
+      })
+      continue;
+    }
     data[i].apps.sort((a, b) => getTotalTime(b) - getTotalTime(a));
     for (let j=0; j<data[i].apps.length; j++) {
       const app = data[i].apps[j];
@@ -176,7 +186,6 @@ export default function buildVisual(preparedData, target, option) {
     );
   }
 
-
   svgCanvas.append("g")
     .attr("id", "y_axis")
     .attr("transform", `translate(${marginLeftRight}, 0)`)
@@ -187,9 +196,10 @@ export default function buildVisual(preparedData, target, option) {
     .selectAll("text")
     .attr("transform", `translate(30, -5)`);
 
+    
   svgCanvas.append("g")
   .attr("id", "x_axis")
-    .attr("transform", `translate(${marginLeftRight + ADDITIONAL_PADDING + barWidth/2 + -currentIndex * (lenAlongXAxis / MAX_DAYS)}, ${height-marginTopBottom})`)
+    .attr("transform", `translate(${marginLeftRight + ADDITIONAL_PADDING + barWidth/2 + -currentIndex*7 * (lenAlongXAxis / MAX_DAYS)}, ${height-marginTopBottom})`)
     .call(
       d3.axisBottom(x_axis)
       .ticks(data.length)
@@ -277,11 +287,17 @@ export default function buildVisual(preparedData, target, option) {
       .append("rect")
       .attr("width", barWidth)
       .attr("height", (d, i) => {
+        if (totals[i] < 0) {
+          return heightExcludingMargin * .1;
+        }
         return heightExcludingMargin * totals[i];
       })
       .attr("fill", color)
       .attr("x", (d, i) => calcBarPositions(i, currentIndex*7))
       .attr("y", (d, i) => {
+        if (totals[i] < 0) {
+          return heightExcludingMargin - (heightExcludingMargin * .1);
+        }
         return `${heightExcludingMargin - heightExcludingMargin * totals[i]}`;
       });
 
