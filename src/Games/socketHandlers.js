@@ -162,7 +162,7 @@ export function connectToServer() {
   if (process.env.NODE_ENV === 'development') {
     a = `http://localhost:5000`;
   }
-  const newSocket = io.connect(a, {
+  const newSocket = io(a, {
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionDelayMax : 5000,
