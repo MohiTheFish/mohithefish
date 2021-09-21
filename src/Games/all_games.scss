@@ -1,0 +1,39 @@
+.play-games-wrapper {
+  width: 100%;
+  .header {
+    width: 100%;
+    .header-row {
+      height: 48px; // Height of the IconButtons
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      h1 {
+        width: fit-content;
+      }
+    }
+  }
+
+  .time-wrapper {
+    line-height: 20px;
+  }
+
+  .players-list {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 500px;
+
+    .title {
+      padding: 10px;
+    }
+  }
+
+  
+  @media only screen and (max-width: 480px) {
+    .players-list {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+}
